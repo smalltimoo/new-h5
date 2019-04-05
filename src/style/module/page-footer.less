@@ -1,0 +1,108 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  //background-color: #fff;
+  //box-shadow: 0 2px 4px rgba(128,128,128,0.8);
+  width: 100%;
+  height: 65px;
+  background: url(../../assets/images/footer_border.png) 50% 0px no-repeat;
+  background-size: 50px auto;
+
+  & > ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 48px;
+    margin-top: 18px;
+    //border-top: solid 1px #cecece;
+    box-shadow: 0 2px 4px rgba(128,128,128,0.8);
+
+    & > li {
+      position: relative;
+      width: 25%;
+      height: 100%;
+      padding-top: 3px;
+      text-align: center;
+      line-height: 22px;
+      font-size: 12px;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+  }
+
+  .icon {
+    display: block;
+    height: 22px;
+    width: 22px;
+    margin: 0 auto;
+  }
+
+  .icon-home {
+    background: url(../../assets/images/home.png?__inline) 50% 50% no-repeat;
+    background-size: 20px auto;
+  }
+
+  .icon-activity {
+    background: url(../../assets/images/activity.png?__inline) 50% 50% no-repeat;
+    background-size: 20px auto;
+  }
+
+  .icon-deposit {
+    background: url(../../assets/images/deposit.png?__inline) 50% 50% no-repeat;
+    background-size: 22px auto;
+  }
+
+  .icon-score {
+    position: absolute;
+    width: 48px;
+    height: 46px;
+    top: -16px;
+    background: url(../../assets/images/score.png?__inline) 50% 50% no-repeat;
+    background-size: 37px auto;
+    border-radius: 50px;
+    background-color: #fff;
+  }
+
+  .icon-user {
+    background: url(../../assets/images/user.png?__inline) 50% 50% no-repeat;
+    background-size: 20px auto;
+  }
+
+  .active {
+    color: #D0021B;
+
+    .icon-home {
+      background: url(../../assets/images/home_press.png?__inline) 50% 50% no-repeat;
+      background-size: 20px auto;
+    }
+
+    .icon-activity {
+      background: url(../../assets/images/activity_press.png?__inline) 50% 50% no-repeat;
+      background-size: 20px auto;
+    }
+
+    .icon-deposit {
+      background: url(../../assets/images/deposit_press.png?__inline) 50% 50% no-repeat;
+      background-size: 22px auto;
+    }
+
+    .icon-score {
+      background: url(../../assets/images/score_press.png?__inline) 50% 50% no-repeat;
+      background-size: 37px auto;
+      background-color: #fff;
+    }
+
+    .icon-user {
+      background: url(../../assets/images/user_press.png?__inline) 50% 50% no-repeat;
+      background-size: 20px auto;
+    }
+  }
+
+  .score {
+    padding-top: 22px;
+  }
+}
