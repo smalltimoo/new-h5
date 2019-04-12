@@ -105,7 +105,7 @@
             <div class="activity">
                 <div class="title">
                     <span>优惠活动</span>
-                    <span>更多>>></span>
+                    <span><router-link :to="{name:'Discount'}">更多>>></router-link></span>
                 </div>
             </div>
 

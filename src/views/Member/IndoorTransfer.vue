@@ -59,6 +59,8 @@
                   :placeholder="$t('member.indoorTransfer.it7')"
                   maxlength="8"
                   type="number"
+                  step="1"
+                  min="1"
                   class="el-input__inner"
                   style="width: 80%;"
                 ><!-- 金额-->
@@ -144,6 +146,11 @@ export default {
           //请选择要操作的钱包
         this.mAlert(this.$t('member.indoorTransfer.it10'))
         return
+      }
+      if (this.vm.dealCoin%1!=0) {
+        //请输入整数
+        this.mAlert(this.$t("member.indoorTransfer.inputNumber"));
+        return;
       }
       if (this.vm.dealCoin < 1) {
           //转账金额必须大于1元

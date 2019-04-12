@@ -441,7 +441,6 @@ export default {
             conversion3:'联系电话en',
             conversion4:'兑换积分en',
             conversion5:'收货地址en',
-
         }
     },
     member:{
@@ -739,7 +738,7 @@ export default {
             it15:'游戏厅操作失败en',
             it16:'游戏厅未返回，请联系客服en',
             it17:'额度转换en',
-
+            inputNumber:'请输入整数！en'
         },
         financeDeposit:{
             fd1:'线下充值en',
