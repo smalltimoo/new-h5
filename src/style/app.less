@@ -1,0 +1,207 @@
+
+#app {
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #4c4c4c;
+  font-size: 14px;
+  height: 100%;
+}
+
+.page-body{
+  padding-top: 44px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  height: 44px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #cd0005;
+  padding: 0 10px;
+  width: 100%;
+  z-index: 999;
+}
+.header-left{
+  width: 20%;
+  display:flex;
+  justify-content: flex-start;
+  align-items: center;
+  .icon-menu {
+    font-size: 27px;
+    color: #fff;
+  }
+}
+.header-middle {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: bold;
+}
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.header-right {
+  width: 20%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  .message {
+    height: 32px;
+    width: 32px;
+    background: url("../assets/images/messageIcon@2x.png?__inline") 70% 70% no-repeat;
+    background-size: 16px auto;
+    display: flex;
+  }
+
+  .ivu-poptip-popper {
+    left: inherit!important;
+    right: 3px;
+    min-width: 120px;
+    width: 120px;
+
+    .ivu-poptip-body{
+      padding: 0;
+    }
+  }
+
+  & li{
+    height: 33px;
+    line-height: 33px;
+    padding-left: 37px;
+    border-bottom: 1px solid rgba(221,221,221,.5);
+    text-align: left;
+    &>a{
+      color:#4c4c4c;
+    }
+  }
+  .icon-kefu{
+    background: url("../assets/images/msgkefu@2x.png?__inline") 9% 50% no-repeat;
+    background-size: 20px auto;
+  }
+
+  .icon-qq{
+    background: url("../assets/images/home/qq.png?__inline") 9% 50% no-repeat;
+    background-size: 20px auto;
+  }
+}
+
+.el-carousel__indicator{
+  padding:12px 5px;
+}
+
+.el-carousel__button{
+  width: 7px;
+  height: 7px;
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.container{
+  margin-bottom: 46px;
+}
+
+.loading-error {
+  width: 100%;
+  height: 100%;
+  background: url("../assets/images/loading-error.png?__inline") 50% 50% no-repeat;
+  background-size: 35px auto;
+}
+
+.img-error {
+  width: 100%;
+  height: 100%;
+  background: url("../assets/images/img-error.png?__inline") 50% 50% no-repeat;
+  background-size: 35px auto;
+  background-color: #ccc;
+  cursor: pointer;
+}
+
+.icon-close{
+  width: 18px;
+  height: 18px;
+  background: url("../assets/images/close.png?__inline") 50% 50% no-repeat;
+  background-size: 18px auto;
+  cursor: pointer;
+}
+
+.cube-slide-dots{
+  bottom: 7px;
+}
+
+.el-message{
+  width: 80% !important;
+}
+
+
+
+
+
+
+::-webkit-input-placeholder { /* WebKit browsers */
+  color:    #ccc;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color:    #ccc;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:    #ccc;
+}
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color:    #ccc;
+}
+
+@media (max-width: 576px){
+  .ivu-modal {
+    width: 250px!important;
+    margin: 0 auto;
+    margin-top: 25%;
+
+    .ivu-modal-confirm-head{
+      margin-top: -3px;
+    }
+    .ivu-modal-confirm-body{
+      padding-top: 6px;
+    }
+    .ivu-modal-confirm-footer{
+      margin-top: 16px;
+    }
+    .ivu-modal-content{
+      border-radius: 3px;
+    }
+    .ivu-modal-body{
+      padding: 10px;
+    }
+    .ivu-btn-primary{
+      width: auto;
+      height: 30px;
+      line-height: 25px;
+      padding: 0 15px;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+@import "module/page-footer";
+@import "module/home";
+@import "module/login";
+@import "module/discount";
+@import "module/score";

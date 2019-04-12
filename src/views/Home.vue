@@ -1,12 +1,136 @@
 <template>
-    <div>
-        <div>品牌</div>
+    <div class="home">
+        <div class="get-app" v-if="sysPicObj.appUrl && showApp">
+            <i class="icon-close" style="margin-left: 12px" @click="closeApp"/>
+            <div class="img-app">
+                <img :src="sysPicObj.mobileLogo" class="img-logo"/>
+                <span style="color:#fff;padding-top: 2px"><b>打开{{sysPicObj.name}}App</b></span>
+                <span><b>走到哪，玩到哪</b></span>
+            </div>
+            <a class="download" :href="sysPicObj.appUrl">立即下载</a>
+        </div>
+        <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:6px' : 'margin-top:-44px'">
+            <div class="header-left">
+                <Icon type="md-menu" class="icon-menu"/>
+            </div>
+            <div class="header-middle">
+                <img :src="sysPicObj.mobilelongLogo" width="110px"/>
+            </div>
+            <div class="header-right">
+                <Poptip trigger="click" placement="bottom-end">
+                    <i class="icon-menu message"></i>
+                    <ul slot="content">
+                        <li class="icon-kefu" @click="mOpenCService">
+                            在线客服
+                        </li>
+                        <li class="icon-qq">
+                            <a v-if="cQQ1" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'">
+                                {{cQQ1}}
+                            </a>
+                            <a v-if="cQQ2" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ2+'&version=1&src_type=web'">
+                                {{cQQ2}}
+                            </a>
+                        </li>
+                        <li class="icon-qq">
+                            <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{agentQQ}}</a>
+                        </li>
+                    </ul>
+                </Poptip>
+            </div>
+        </div>
+        <div class="container">
+            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px">
+                <cube-slide-item v-for="(item, index) in getBanner" :key="index">
+                    <img :src="item" width="100%">
+                </cube-slide-item>
+                <cube-slide-item>
+                    <router-link :to="{name:'Draw'}">
+                        <img :src="drawBanner" width="100%"  height="100%"/>
+                    </router-link>
+                </cube-slide-item>
+            </cube-slide>
+
+            <div class="notice">
+                <i class="icon laba"/>
+                <marquee behavior="scroll" direction="left" scrollamount="4" id="mar0">
+                    <span v-for="(item,index) in cGongGaos" :key="index" v-text="item.content" style="margin-right: 100px"></span>
+                </marquee>
+            </div>
+
+            <div class="shortcut">
+                <router-link :to="{name:''}" tag="li">
+                    <i class="home-recharge"/>
+                    <span>用户充值</span>
+                </router-link>
+                <router-link :to="{name:''}" tag="li">
+                    <i class="home-deposit"/>
+                    <span>用户提款</span>
+                </router-link>
+                <li @click="mOpenCService" >
+                    <i class="home-custom"/>
+                    <span>在线客服</span>
+                </li>
+                <router-link :to="{name:''}" tag="li">
+                    <i class="home-bet"/>
+                    <span>投注记录</span>
+                </router-link>
+            </div>
+
+            <div class="game-center">
+                <div class="hot" :class="{active: gameType=='0'}" @click="gameType=0">热门游戏</div>
+                <div class="game-type">
+                    <div :class="{active: gameType=='1'}" @click="gameType=1">真人视讯</div>
+                    <div :class="{active: gameType=='2'}" @click="gameType=2">彩票游戏</div>
+                    <div :class="{active: gameType=='4'}" @click="gameType=4">体育竞技</div>
+                    <div :class="{active: gameType=='5'}" @click="gameType=5">电子游戏</div>
+                    <div :class="{active: gameType=='6'}" @click="gameType=6">棋牌游戏</div>
+                    <div :class="{active: gameType=='7'}" @click="gameType=7">电子竞技</div>
+                    <div :class="{active: gameType=='50'}" @click="gameType=50">捕鱼游戏</div>
+                </div>
+                <div class="game-rooms">
+                    <div v-for="(game, index) in selectedGames" :key="index"
+                         @click=""
+                         @click="mEnterGame(game.gameId==601?301:game.gameId,game.typeId==50?0:((game.gameId==601||(game.gameId==301&&game.typeId==6))?'ws00':''),game.typeId==50?'50':'',game.gameName)"
+                    >
+                        <img :src="game.mobileImg" width="100%" height="105px" v-if="game.mobileImg"/>
+                        <div class="img-error" style="height: 105px;" v-else></div>
+                        <div class="game-text">
+                            <span v-text="game.gameName"></span>
+                            <span v-text="game.typeName"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity">
+                <div class="title">
+                    <span>优惠活动</span>
+                    <span>更多>>></span>
+                </div>
+            </div>
+
+            <div class="activity-panel">
+                <el-carousel :interval="4000" type="card" height="140px" indicator-position="none">
+                    <el-carousel-item v-for="(item,index) in activities" :key="index" class="active-img">
+                        <router-link :to="{name:'Discount',query:{id:item.id}}">
+                            <div class="active-title">
+                                <span>{{ item.activityTitle }}</span>
+                                <span>{{ item.endTimeStr }}</span>
+                            </div>
+                            <img :src="item.activityImg" width="100%"/>
+                        </router-link>
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
+
+        </div>
     </div>
 </template>
 <script>
-    import types from '@/store/mutation-types'
-
-    var _this
+    let _this;
+    import types from '@/store/mutation-types';
+    import {mapState} from 'vuex';
+    import message from '@/mixins/message'
 
     function StartGameForIframe(gameId) {
         _this.mEnterGame(gameId)
@@ -22,31 +146,39 @@
 
     export default {
         name: 'Home',
+        mixins: [message],
         components: {},
         data() {
             return {
-                isDraw:false,
-                agentQQ:"",
+                showApp: true,
+                gameType: 0,
+                isDraw: false,
+                agentQQ: "",
                 lunBoTus: [],
                 activities: [],
-                tuiJianGames: [],
-                drawBanner:'',
+                drawBanner: '',
+                companyCustomGames: [],
             }
         },
         computed: {
-            cGongGaos: function () {
+            ...mapState({
+                sysPicObj: state => state.common.sysPicObj,
+            }),
+            selectedGames() {
+                return Object.values(this.companyCustomGames).filter(item => {
+                    if (this.gameType == 0) {
+                        return item.state == 3 || item.state == 2;
+                    } else if (this.gameType == 2) {
+                        return item.typeId == 2 || item.typeId == 3;
+                    } else {
+                        return this.gameType == item.typeId;
+                    }
+                })
+            },
+            cGongGaos() {
                 return this.$store.getters.getGonggaos
             },
-            getmobilelongLogoStyle: function () {
-                // background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;
-                var sysobj = this.$store.getters.getSysPicObj;
-                if (sysobj.mobilelongLogo != undefined) {
-                    var style = "background:url('" + sysobj.mobilelongLogo
-                        + "'); background-size:100%; height:35px;width:124px;"
-                    return style;
-                }
-            },
-            getBanner: function () {
+            getBanner() {
                 var mobileBanner = this.$store.getters.getSysPicObj.mobileBanner
                 var banner = [];
                 if (mobileBanner != undefined && mobileBanner != '') {
@@ -56,8 +188,8 @@
             },
             cQQ1() {
                 let sysInfo = this.$store.getters.getSysInfo;
-                this.drawBanner=sysInfo.rouletteSlide;
-                this.agentQQ=sysInfo.agentQQ;
+                this.drawBanner = sysInfo.rouletteSlide;
+                this.agentQQ = sysInfo.agentQQ;
                 return sysInfo.customQQ ? sysInfo.customQQ : '';
             },
             cQQ2() {
@@ -65,166 +197,95 @@
                     let qq = process.env.VUE_APP_QQ
                     return qq ? qq : ''
                 }
+            },
+        },
 
-            },
-            cTuiJianGames() {
-                let tjs = this.tuiJianGames.filter(
-                    ele => ele.state == 2 || ele.state == 3
-                )
-                if (tjs.length < 8) {
-                    let tmp = this.tuiJianGames.filter(ele => ele.state == 1)
-                    tjs = tjs.concat(tmp.slice(0, 8 - tjs.length))
-                }
-                return tjs
-            },
-            cGoodRoad() {
-                return process.env.VUE_APP_GOOD_ROAD_RECOMMENDATION
-            }
-        },
-        mounted() {
-            setTimeout(() => {
-                var lbSwiper = new Swiper('.swiper-container', {
-                    direction: 'horizontal',
-                    // effect : 'flip',
-                    loop: true,
-                    speed: 1 * 1000,
-                    autoplay: {
-                        delay: 3 * 1000
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true
-                    }
-                })
-                var ggSwiper = new Swiper('.swiper-container-gg', {
-                    direction: 'vertical',
-                    loop: this.cGongGaos.length > 1,
-                    autoplay: {
-                        delay: 5 * 1000,
-                        stopOnLastSlide: false,
-                        disableOnInteraction: false
-                    }
-                })
-            }, 1000)
-        },
         methods: {
-            drawGame(){
+            drawGame() {
                 this.$http.get('/integralDrawC/queryRouletteSettingSwitch.json').then(result => {
                     if (result.data) {
                         this.isDraw = result.data;
                     }
                 })
             },
-            mEnterGame(roomId, gameId, comGameType) {
-                if (this.cNeedLogin) {
-                    //请先登陆！
-                    this.mAlert( this.$t('home.home11'))
-                    return
+            mEnterGame(roomId, gameId, comGameType,gameName) {
+                if(!this.toNeedLogin()){return;}
+                if (!roomId) {roomId = 0}
+                if (!gameId) {gameId = 0}
+                if (!comGameType) {comGameType = ''}
+
+                if(this.gameType==5){
+                    this.$router.push({
+                        name: 'GameList',
+                        params: {
+                            gameCompanyId: roomId,
+                            gameName: gameName,
+                        }
+                    })
                 }
-                if (!roomId) {
-                    roomId = 0
+                else{
+                    this.$router.push({
+                        name: 'GameContainer',
+                        params: {
+                            gameCompanyId: roomId,
+                            gameId: gameId,
+                            comGameType: comGameType
+                        }
+                    })
                 }
-                if (!gameId) {
-                    gameId = 0
-                }
-                if (!comGameType) {
-                    comGameType = ''
-                }
-                this.$router.push({
-                    name: 'GameContainer',
-                    params: {
-                        gameCompanyId: roomId,
-                        gameId: gameId,
-                        comGameType: comGameType
+
+            },
+            allGame() {
+                this.$http.post('/gamesbytype.json', {playType: -1, state: 1, sysId: 0}).then(result => {
+                    if (result.code == 0) {
+                        this.companyCustomGames = Object.assign({}, result.data.companyCustomGames);
                     }
                 })
             },
-            mupnav(type, obj, baseUrl) {
-
-                var listStr = localStorage.getItem(types.BASE_URL_LIST)
-                if (!listStr || listStr == '[]') {
-                    this.$store.commit(types.CHANGE_URL, "")
-                    this.$store.dispatch(types.WEBNAV, {callback: this.mupnav, url: '', type: type})
-                } else {
-                    var dispatchdo = false;
-                    if (this.tuiJianGames == '' || this.tuiJianGames == '[]') {
-                        if (type == 'tuiJianGames') {
-                            dispatchdo = true;
-                        }
-                        ;
+            activity() {
+                this.$http.post('/activities.json', {sysId: 0}).then(result => {
+                    if (result.code == 0) {
+                        this.activities = Object.assign({}, result.data.activityVoList);
                     }
-                    if (this.activities == '' || this.activities == '[]') {
-                        if (type == 'activities') {
-                            if (baseUrl == undefined || baseUrl == '') {
-                                dispatchdo = true;
-                            }
-                        }
-                        ;
-                    }
-                    if (dispatchdo) {
-                        if (obj != 2) {
-                            var list = JSON.parse(listStr);
-                            list.filter(i => {
-                                this.$store.dispatch(types.WEBNAV, {callback: this.mupnav, url: i, type: type})
-                            });
-                        }
-                    }
-
-                }
-                if (obj == undefined) {
-                } else if (obj == 2) {
-                    //  this.$store.commit(types.CHANGE_URL,baseUrl)
-                } else {
-                    if (this.tuiJianGames == '' || this.tuiJianGames == '[]') {
-                        if (type == 'tuiJianGames') {
-                            this.tuiJianGames = obj
-                        }
-                        ;
-                    }
-                    if (this.activities == '' || this.activities == '[]') {
-                        if (type == 'activities') {
-                            this.activities = obj
-                        }
-                        ;
-                    }
-
-                }
+                })
+            },
+            closeApp() {
+                this.showApp = false;
+                localStorage.setItem('showApp', 'false')
             }
         },
         created() {
-            _this = this
-            this.mupnav('tuiJianGames');
-            this.mupnav('activities');
+            _this = this;
+            this.showApp = localStorage.getItem('showApp') ? false : true;
             this.drawGame();
-            this.lunBoTus=[
-                {
-                    title: this.$t('home.home12'),
-                    img: 'https://line.xwiht.cn/HG1/imgs/15351003513366hg全勤奖手机.jpg'
-                },
-                {
-                    title: this.$t('home.home13'),
-                    img: 'https://line.xwiht.cn/HG1/imgs/15348463340176hg嫩模手机.jpg'
-                },
-                {
-                    title: this.$t('home.home14'),
-                    img: 'https://line.xwiht.cn/HG1/imgs/15352721271386hg网银手机.jpg'
-                },
-                {
-                    title: this.$t('home.home15'),
-                    img: 'https://line.xwiht.cn/HG1/imgs/15352721688526HG首存手机.jpg'
-                },
-                {
-                    title: this.$t('home.home16'),
-                    img: 'https://line.xwiht.cn/HG1/imgs/15351813163036hg酒店手机.jpg'
-                },
-                {
-                    title: this.$t('home.home17'),
-                    img: 'https://line.xwiht.cn/HG1/imgs/15351770115516hg棋牌手机.jpg'
+            this.allGame();
+            this.activity();
+
+            window.onscroll = function () {
+                let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
+                    : document.body.scrollTop
+                if (scrollheight >= 44) {
+                    document.querySelector('.header').style.position = 'fixed';
+                    _this.sysPicObj.appUrl && _this.showApp ? document.querySelector('.header').style.marginTop = '0' :
+                        document.querySelector('.header').style.marginTop = '-44px';
+                    document.querySelector('.get-app') ? document.querySelector('.get-app').style.display = 'none' : null
+                } else {
+                    document.querySelector('.header').style.position = 'inherit';
+                    _this.sysPicObj.appUrl && _this.showApp ? document.querySelector('.header').style.marginTop = '6px' :
+                        document.querySelector('.header').style.marginTop = '-44px';
+                    document.querySelector('.get-app') ? document.querySelector('.get-app').style.display = 'flex' : null
                 }
-            ]
+
+            }
         },
         destroyed() {
-            _this = undefined
+            _this = undefined;
+            window.onscroll = function () {
+                if(document.querySelector('.header')){
+                    document.querySelector('.header').style.position = 'fixed';
+                    document.querySelector('.header').style.marginTop = '0';
+                }
+            }
         }
     }
 </script>

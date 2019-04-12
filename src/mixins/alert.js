@@ -3,9 +3,9 @@ export default {
     methods: {
         mAlert(content, okClose, type, title, width, duration) {
             let config = {
-                title: !!title ? title : this.$t('alert.tip'),
+                title: !!title ? title : localStorage.getItem('lang')=='zh' ? '提示消息' : 'Tips',
                 content: content,
-                width: !!width?width:400,
+                width: !!width?width:300,
                 closable: false,
                 scrollable: false,
                 onOk: () => {
@@ -40,10 +40,10 @@ export default {
         },
         mConfirm(content,okClose,cancel){
             this.$Modal.confirm({
-                title: this.$t('alert.confirm'),
+                title: localStorage.getItem('lang')=='zh' ? '请确认' : 'Confirm',
                 content: content,
-                okText:  this.$t('alert.okText'),
-                cancelText: this.$t('alert.cancelText'),
+                okText:  localStorage.getItem('lang')=='zh' ? '确定' : 'OK',
+                cancelText: localStorage.getItem('lang')=='zh' ? '取消' : 'Cancel',
                 onOk: () => {
                     if (typeof okClose == 'function') {
                         okClose();

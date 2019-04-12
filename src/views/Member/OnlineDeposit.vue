@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-
+123123
   </div>
 </template>
 <script>
@@ -235,6 +235,7 @@ export default {
     }
   },
   created() {
+    // this.$store.commit('CHANGE_TAB','deposit')
     this.mInit();
   }
 };

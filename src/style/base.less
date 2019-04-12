@@ -1,15 +1,20 @@
 //第三套
-@bodyColor: #FFFFFF;
+@bodyColor: #efeff4;
 @mainColor: #f5f5f5;
 @subheadColor: #f5f5f5;
 @otherColor: #f5f5f5;
 
+
 html {
   font-size: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
   background-color: @bodyColor;
+  margin: 0;
+  padding: 0;
 }
 
 ul, ul > li {
@@ -17,6 +22,17 @@ ul, ul > li {
   padding: 0;
 }
 
+input, img, a {
+  cursor: pointer;
+}
 
-@import "module/page-footer";
-@import "module/home";
+input{
+  outline: none;
+  padding-left: 10px;
+}
+[v-cloak] {
+  display: none;
+}
+
+
+@import "app.less";

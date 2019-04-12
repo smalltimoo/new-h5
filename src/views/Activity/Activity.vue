@@ -1,41 +1,6 @@
 <template>
-  <div id="app">
-    <div class="publicpage">
-      <div class="userSettings publicpage_view">
-        <div class="TopHeader">
-          <div id="return" style="position: absolute;">
-            <router-link :to="{name:'Discount'}">
-              <Icon type="ios-arrow-back"/>
-            </router-link>
-          </div>{{ $t('views.activities.extension')}}
-        </div><!--活动内容 -->
-        <div
-          class="G_AboutOne ount_view"
-          v-if="vm.infoMobileImgUrl!='' && vm.infoMobileImgUrl!=null"
-        >
-          <h1 class="G_AboutOne_title">
-            <Icon type="ios-radio-button-on" style="margin-right:10px;"/>
-            {{vm.activityTitle}}
-          </h1>
-          <img :src="vm.infoMobileImgUrl"
-               style="position: absolute;left: 0; right: 0; width: 100%;">
-        </div>
-        <div class="G_AboutOne ount_view" v-else>
-          <h1 class="G_AboutOne_title">
-            <Icon type="ios-radio-button-on" style="margin-right:10px;"/>
-            {{vm.activityTitle}}
-          </h1>
-          <h2 class="G_AboutOne_text">{{ $t('views.activities.effectiveTime')}}
-            <br><!--有效时间： -->
-            {{vm.startTimeStr}} {{ $t('views.activities.to')}} {{vm.endTimeStr}}
-          </h2><!--至 -->
-          <h1 class="G_AboutOne_title">
-            <Icon type="ios-radio-button-on" style="margin-right:10px;"/>{{ $t('views.activities.eventDescription')}}
-          </h1><!--活动说明 -->
-          <h2 class="G_AboutOne_text" v-html="vm.activityInfo"></h2>
-        </div>
-      </div>
-    </div>
+  <div class="activity">
+
   </div>
 </template>
 <script>
@@ -65,9 +30,9 @@ export default {
         }
       })
     },
-    mW() {
-      return window.innerWidth
-    }
+  },
+  created() {
+    // this.$store.commit('CHANGE_TAB','activity')
   }
 }
 </script>

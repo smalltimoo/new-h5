@@ -1,10 +1,13 @@
 <template>
     <div class="main-body">
         <div class="top">
-            <img class="lucky-img" src="../../assets/images/xingyun@2x.png">
-            <div class="lucky-score">{{ $t('member.draw.d1') }} <span v-text="consumptionIntegral"></span> {{ $t('member.draw.d2') }}</div><!--每次抽奖消耗 --> <!-- 积分-->
+            <img class="lucky-img" src="../../assets/images/draw/xingyun@2x.png">
+            <div class="lucky-score">{{ $t('member.draw.d1') }} <span v-text="consumptionIntegral"></span> {{
+                $t('member.draw.d2') }}
+            </div><!--每次抽奖消耗 --> <!-- 积分-->
             <div class="lucky-score">{{ $t('member.draw.d3') }}<span v-text="balanceIntegral"></span>,
-                {{ $t('member.draw.d4') }} <span class="lucky-big" v-text="luckyDrawTimes"></span> {{ $t('member.draw.d5') }}
+                {{ $t('member.draw.d4') }} <span class="lucky-big" v-text="luckyDrawTimes"></span> {{
+                $t('member.draw.d5') }}
             </div> <!--剩余积分  剩余 -->  <!--抽奖机会 -->
             <div class="banner">
                 <div class="turnplate">
@@ -18,7 +21,7 @@
                 </div>
                 <img class="pointer"
                      @click="draw()"
-                     src="../../assets/images/dianwo@3x.png" alt="award rotation start"
+                     src="../../assets/images/draw/dianwo@3x.png" alt="award rotation start"
                      width="76px"
                 />
             </div>
@@ -26,8 +29,10 @@
         <!--<button onclick="showMask();">111</button>-->
         <div class="awards">
             <div class="btns">
-                <p class="btn" :class="{btn_active : btn_active}" @click="changeBtn('winner')">{{ $t('member.draw.d6') }}</p><!-- 获奖名单-->
-                <p class="btn" :class="{btn_active : !btn_active}" @click="changeBtn('owner')">{{ $t('member.draw.d7') }}</p><!--我的奖品 -->
+                <p class="btn" :class="{btn_active : btn_active}" @click="changeBtn('winner')">{{ $t('member.draw.d6')
+                    }}</p><!-- 获奖名单-->
+                <p class="btn" :class="{btn_active : !btn_active}" @click="changeBtn('owner')">{{ $t('member.draw.d7')
+                    }}</p><!--我的奖品 -->
             </div>
             <div class="awards_info" v-show="btn_active">
                 <ul class="awards-ul" id="winnerList">
@@ -45,7 +50,7 @@
                     </li>
                 </ul>
             </div>
-            <img src="../../assets/images/guize@2x.png" width="50%" style="margin-top: 30px">
+            <img src="../../assets/images/draw/guize@2x.png" width="50%" style="margin-top: 30px">
         </div>
         <div class="rules">
             <p>{{rules.activityConditions}}</p>
@@ -57,11 +62,14 @@
 
 <script>
     var _this;
+    require("../../assets/lib/jQueryRotate.2.2");
+    require("../../assets/lib/scroll");
+
     export default {
         name: "draw",
         data() {
             return {
-                rules:{},
+                rules: {},
                 balanceIntegral: 0,//剩余积分
                 consumptionIntegral: 0,//抽奖消耗积分
                 luckyDrawTimes: 0,//抽奖次数
@@ -69,8 +77,8 @@
                 winnerList: [], //获奖名单
                 ownerList: [],  //中奖记录
                 btn_active: true,
-                drawOldTime:0,
-                drawNewTime:"",
+                drawOldTime: 0,
+                drawNewTime: "",
             }
         },
         filters: {
@@ -84,14 +92,14 @@
                 // 用户抽奖信息
                 this.$http.get('/integralDrawC/queryRouletteSettingList.json').then(result => {
                     if (result.code == "0") {
-                        this.rules=result.data[0];
+                        this.rules = result.data[0];
                         this.consumptionIntegral = result.data[0].consumptionIntegral;
                     }
                 })
                 // 用户积分信息
                 this.$http.get('/memberUser/memberinfo.json').then(result => {
                     if (result.code == "0") {
-                        this.balanceIntegral = parseInt(result.data.integral/100);
+                        this.balanceIntegral = parseInt(result.data.integral / 100);
                     }
                 })
                 // 轮盘奖品
@@ -106,7 +114,7 @@
                     if (result.code == "0") {
                         console.log(result);
                         this.winnerList = result.data;
-                        this.luckyDrawTimes = result.message <=0 ? 0 : result.message;
+                        this.luckyDrawTimes = result.message <= 0 ? 0 : result.message;
                         this.$nextTick(() => {
                             awards_scroll();
                         })
@@ -114,32 +122,32 @@
                 })
 
                 // 个人中奖接口
-                this.$http.get('/integralDrawC/getWinningListById.json').then(result => {
+                this.$http.post('/integralDrawC/getWinningListById.json',JSON.stringify({limit:8})).then(result => {
                     if (result.code == "0") {
                         this.ownerList = result.data;
                     }
                 })
             },
             draw() {
-                this.drawNewTime=new Date().getTime();
-                if(this.drawNewTime-this.drawOldTime>=6000){
+                this.drawNewTime = new Date().getTime();
+                if (this.drawNewTime - this.drawOldTime >= 6000) {
                     // this.drawLoading=false;
                     this.$http.post('/integralDrawC/lotteryDraw.json')
                         .then(result => {
-                            this.drawOldTime=new Date().getTime();
-                            if(result.code==0){
+                            this.drawOldTime = new Date().getTime();
+                            if (result.code == 0) {
                                 this.rotateFunc(result.message, 360 - 20 - (360 / 8 * result.message));
                             }
                         })
                         .catch(error => {
-                            this.drawOldTime=new Date().getTime();
+                            this.drawOldTime = new Date().getTime();
                             // this.drawLoading=true;
                             this.timeOut(error);
                         })
                 }
             },
 
-            rotateFunc(awards, angle){
+            rotateFunc(awards, angle) {
                 $('.turnplate').stopRotate();
 
                 $(".turnplate").rotate({
@@ -151,19 +159,18 @@
                     animateTo: angle + 1440, //angle是图片上各奖项对应的角度，1440是我要让指针旋转4圈。所以最后的结束的角度就是这样子^^
 
                     callback: function () {
-                        if(_this.awardsList[awards].isPrize){
+                        if (_this.awardsList[awards].isPrize) {
                             //恭喜您抽中
                             _this.mAlert(_this.$t('member.draw.d8') + _this.awardsList[awards].prizeName);
-                        }
-                        else{
-                            _this.mAlert( _this.awardsList[awards].prizeName)
+                        } else {
+                            _this.mAlert(_this.awardsList[awards].prizeName)
                         }
                         _this.mInit();
                     }
 
                 });
             },
-            timeOut(error){
+            timeOut(error) {
                 $(".turnplate").rotate({
 
                     angle: 0,
@@ -189,7 +196,7 @@
             this.mInit();
 
         },
-        beforeDestroy: function() {
+        beforeDestroy: function () {
             $(".HomeWrapper").removeClass('bg-color')
         }
     }
@@ -202,7 +209,7 @@
     }
 </script>
 <style>
-    .bg-color{
+    .bg-color {
         background-color: #ffffff;
     }
 </style>
@@ -242,6 +249,7 @@
     .main-body {
         background-color: #ffffff;
         overflow-x: hidden;
+        margin-top: -44px;
     }
 
     .top {
@@ -297,7 +305,7 @@
         display: block;
         width: 320px;
         position: relative;
-        background: url(../../assets/images/zhuangpan@2x.png) no-repeat 50% 0;
+        background: url(../../assets/images/draw/zhuangpan@2x.png) no-repeat 50% 0;
         background-size: 320px auto;
         transform: rotate(-20deg);
     }
@@ -354,7 +362,7 @@
         width: 100%;
         padding-top: 40%;
         margin-top: -23%;
-        background: url(../../assets/images/clould@2x.png) 0 0 no-repeat;
+        background: url(../../assets/images/draw/clould@2x.png) 0 0 no-repeat;
         background-size: 100% auto;
     }
 
@@ -448,7 +456,7 @@
 
     .rules > p {
         margin: 10px 0 0 0;
-        width:100%;
+        width: 100%;
         text-align: left;
     }
 

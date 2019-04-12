@@ -11,24 +11,24 @@ export default {
     return { amount: 0, agnetLevel: "", isDraw:false, };
   },
   mounted() {
-    this.mLoading(true);
-    this.$http.get("/memberUser/memberinfo.json").then(result => {
-      if (result.code == 0) {
-        this.agnetLevel = result.data.agnetLevel;
-      }
-    });
-    this.mMemberAmount();
-    this.drawGame();
+    // this.mLoading(true);
+    // this.$http.get("/memberUser/memberinfo.json").then(result => {
+    //   if (result.code == 0) {
+    //     this.agnetLevel = result.data.agnetLevel;
+    //   }
+    // });
+    // this.mMemberAmount();
+    // this.drawGame();
   },
   computed: {
-     getmobileLogoStyle: function() {
-        var sysobj = this.$store.getters.getSysPicObj;
-        if(sysobj.mobileLogo != undefined){
-        var style = "background:url('"+sysobj.mobileLogo
-                   +"'); background-size:100%; height:70px;width:70px;"
-                     return style;
-        }
-     },
+     // getmobileLogoStyle: function() {
+     //    var sysobj = this.$store.getters.getSysPicObj;
+     //    if(sysobj.mobileLogo != undefined){
+     //    var style = "background:url('"+sysobj.mobileLogo
+     //               +"'); background-size:100%; height:70px;width:70px;"
+     //                 return style;
+     //    }
+     // },
   },
   methods: {
     drawGame(){
@@ -49,13 +49,13 @@ export default {
     },
     mLoginOut() {
         //确定要退出账号吗
-      this.mConfirm(this.$t('member.userMember.um20'), () => {
+      this.mConfirm("确定要退出账号吗", () => {
           //请稍等...
-        this.mLoading(true, this.$t('member.userMember.um21'));
+        this.mLoading(true, "请稍等...");
         this.$http.post("/logout.json").then(result => {
           if (result.code === 0) {
               //退出成功！
-            this.mMessage(this.$t('member.userMember.um22'), "success", 0.5);
+            this.mMessage("退出成功", "success", 0.5);
             sessionStorage.removeItem(types.SESSION_TOKEN);
             this.$store.commit(types.SESSION_TOKEN);
             this.mReLogin();
@@ -63,7 +63,10 @@ export default {
           }
         });
       });
-    }
+    },
+  },
+  created(){
+    // this.$store.commit('CHANGE_TAB','user')
   }
 };
 </script>

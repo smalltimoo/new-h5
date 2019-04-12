@@ -1,5 +1,5 @@
 <template>
-    <div class="page-group">
+    <div class="page-body">
         <router-view></router-view>
         <page-footer></page-footer>
     </div>
