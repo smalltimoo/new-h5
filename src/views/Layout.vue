@@ -6,16 +6,20 @@
 </template>
 <script>
     import types from "@/store/mutation-types";
-    import PageFooter from "@/components/PageFooter";
+    import PageFooter from "@/views/components/PageFooter";
+    import message from '@/mixins/message'
 
     export default {
         name: "Layout",
+        mixins: [message],
         components: {
-            PageFooter
+            PageFooter,
         },
         data: () => ({}),
         created() {
+            this.mCheckLoginState();
             this.$store.dispatch(types.COMMON_GONGGAO, this);
+            // this.showFooter = ['Home', 'Discount', 'Score', 'OnlineDeposit', 'UserMember'].includes(this.$route.name);
         }
     };
 </script>

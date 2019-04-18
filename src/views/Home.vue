@@ -7,7 +7,7 @@
                 <span style="color:#fff;padding-top: 2px"><b>打开{{sysPicObj.name}}App</b></span>
                 <span><b>走到哪，玩到哪</b></span>
             </div>
-            <a class="download" :href="sysPicObj.appUrl">立即下载</a>
+            <a class="download" :href="sysPicObj.appUrl" target="_blank">立即下载</a>
         </div>
         <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:6px' : 'margin-top:-44px'">
             <div class="header-left">
@@ -45,7 +45,7 @@
                 </cube-slide-item>
                 <cube-slide-item>
                     <router-link :to="{name:'Draw'}">
-                        <img :src="drawBanner" width="100%"  height="100%"/>
+                        <img :src="drawBanner" width="100%" height="100%"/>
                     </router-link>
                 </cube-slide-item>
             </cube-slide>
@@ -53,7 +53,8 @@
             <div class="notice">
                 <i class="icon laba"/>
                 <marquee behavior="scroll" direction="left" scrollamount="4" id="mar0">
-                    <span v-for="(item,index) in cGongGaos" :key="index" v-text="item.content" style="margin-right: 100px"></span>
+                    <span v-for="(item,index) in cGongGaos" :key="index" v-text="item.content"
+                          style="margin-right: 100px"></span>
                 </marquee>
             </div>
 
@@ -66,7 +67,7 @@
                     <i class="home-deposit"/>
                     <span>用户提款</span>
                 </router-link>
-                <li @click="mOpenCService" >
+                <li @click="mOpenCService">
                     <i class="home-custom"/>
                     <span>在线客服</span>
                 </li>
@@ -208,13 +209,21 @@
                     }
                 })
             },
-            mEnterGame(roomId, gameId, comGameType,gameName) {
-                if(!this.toNeedLogin()){return;}
-                if (!roomId) {roomId = 0}
-                if (!gameId) {gameId = 0}
-                if (!comGameType) {comGameType = ''}
+            mEnterGame(roomId, gameId, comGameType, gameName) {
+                if (!this.toNeedLogin()) {
+                    return;
+                }
+                if (!roomId) {
+                    roomId = 0
+                }
+                if (!gameId) {
+                    gameId = 0
+                }
+                if (!comGameType) {
+                    comGameType = ''
+                }
 
-                if(this.gameType==5){
+                if (this.gameType == 5) {
                     this.$router.push({
                         name: 'GameList',
                         params: {
@@ -222,8 +231,7 @@
                             gameName: gameName,
                         }
                     })
-                }
-                else{
+                } else {
                     this.$router.push({
                         name: 'GameContainer',
                         params: {
@@ -256,6 +264,7 @@
         },
         created() {
             _this = this;
+            this.$store.commit('CHANGE_TAB', 'Home');
             this.showApp = localStorage.getItem('showApp') ? false : true;
             this.drawGame();
             this.allGame();
@@ -266,14 +275,22 @@
                     : document.body.scrollTop
                 if (scrollheight >= 44) {
                     document.querySelector('.header').style.position = 'fixed';
-                    _this.sysPicObj.appUrl && _this.showApp ? document.querySelector('.header').style.marginTop = '0' :
-                        document.querySelector('.header').style.marginTop = '-44px';
-                    document.querySelector('.get-app') ? document.querySelector('.get-app').style.display = 'none' : null
+                    if (_this.sysPicObj.appUrl && _this.showApp) {
+                        document.querySelector('.header').style.marginTop = '0'
+                        document.querySelector('.get-app') ? document.querySelector('.get-app').style.display = 'none' : null
+                    } else {
+                        document.querySelector('.header').style.marginTop = '0';
+                    }
+
                 } else {
-                    document.querySelector('.header').style.position = 'inherit';
-                    _this.sysPicObj.appUrl && _this.showApp ? document.querySelector('.header').style.marginTop = '6px' :
-                        document.querySelector('.header').style.marginTop = '-44px';
-                    document.querySelector('.get-app') ? document.querySelector('.get-app').style.display = 'flex' : null
+                    if (_this.sysPicObj.appUrl && _this.showApp) {
+                        document.querySelector('.header').style.position = 'inherit';
+                        document.querySelector('.header').style.marginTop = '0';
+                        document.querySelector('.get-app').style.display = 'flex'
+                    } else {
+                        document.querySelector('.header').style.position = 'fixed';
+                        document.querySelector('.header').style.marginTop = '0px'
+                    }
                 }
 
             }
@@ -281,7 +298,7 @@
         destroyed() {
             _this = undefined;
             window.onscroll = function () {
-                if(document.querySelector('.header')){
+                if (document.querySelector('.header')) {
                     document.querySelector('.header').style.position = 'fixed';
                     document.querySelector('.header').style.marginTop = '0';
                 }

@@ -5,7 +5,7 @@
         <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
       </div>
       <div class="header-middle">
-         在线客服
+         {{title ? title :'在线客服'}}
       </div>
       <div class="header-right">
       </div>
@@ -18,7 +18,8 @@
           </div>
         </div>
         <div :style="cGCStyles" class="game-container">
-          <iframe :src="url" frameborder="0" width="100%" height="100%"></iframe>
+          <iframe :src="url" frameborder="0" style="width: 100%;height: 100%;padding: 45px" v-if="title"></iframe>
+          <iframe :src="url" frameborder="0" style="width: 100%;height: 100%;" v-else></iframe>
         </div>
       </div>
     </div>
@@ -31,6 +32,7 @@ export default {
   data() {
     return {
       url: '',
+      title:'',
       width: 0,
       height: 0,
       comeSource: ''
@@ -55,7 +57,8 @@ export default {
     },
     mInit() {
       let params = this.$route.params
-      this.url = params.cUrl
+      this.url = params.cUrl;
+      this.title = params.title ? params.title : '';
       if (params.aType === 'cs') {
         if (!this.url) {
             //客服休息中...
@@ -132,5 +135,8 @@ export default {
 .game-container {
   border: 0;
   overflow-y: auto;
+}
+iframe img{
+  width: 100%;
 }
 </style>

@@ -110,8 +110,10 @@
                         <span v-text="item.shipStateStr"></span>
                     </div>
                 </div>
-                <div style="height: 30px; line-height:30px;text-align: right; padding-right: 20px">
-                    共{{item.buyNum}}件商品 &ensp;&ensp;消耗{{item.totalPrice}}积分
+                <div style="height: 35px; line-height:35px;text-align: right; padding-right: 20px;display: flex;justify-content: space-between">
+                    <span v-text="item.payTimeStr" style="padding-left: 10px"></span>
+                    <span> 共{{item.buyNum}}件商品 &ensp;&ensp;消耗{{item.totalPrice}}积分</span>
+
                 </div>
             </div>
             <div style="height: 90%; width: 100%;display: flex;justify-content: center;align-items: center"
@@ -331,6 +333,7 @@
         },
         created() {
             _this=this;
+            this.$store.commit('CHANGE_TAB', 'Score');
         }
     }
 </script>

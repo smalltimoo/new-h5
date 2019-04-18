@@ -67,9 +67,7 @@
             </ul>
         </div>
         <div v-if="this.data==''">
-            <cube-button :active="true" @click="mSaveAdd"
-                         style="margin-top: 20px;width: 80%; margin: 30px auto;background-color: #cd0005"
-            >
+            <cube-button @click="mSaveAdd" class="save-btn">
                 {{$t("member.receiving.receive8")}}
             </cube-button>
         </div>

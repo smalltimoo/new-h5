@@ -5,7 +5,7 @@ export default {
             let config = {
                 title: !!title ? title : localStorage.getItem('lang')=='zh' ? '提示消息' : 'Tips',
                 content: content,
-                width: !!width?width:300,
+                width: !!width?width:250,
                 closable: false,
                 scrollable: false,
                 onOk: () => {
@@ -42,6 +42,7 @@ export default {
             this.$Modal.confirm({
                 title: localStorage.getItem('lang')=='zh' ? '请确认' : 'Confirm',
                 content: content,
+                width: 250,
                 okText:  localStorage.getItem('lang')=='zh' ? '确定' : 'OK',
                 cancelText: localStorage.getItem('lang')=='zh' ? '取消' : 'Cancel',
                 onOk: () => {

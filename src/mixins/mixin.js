@@ -42,11 +42,10 @@ export default {
       if (this.$store.getters.getNeedLogin) {
         this.$store.dispatch(types.LOGINOUT_USER);
         this.$store.dispatch(types.COMMON_GONGGAO, this);
-        if (this.$route.name !== "Login" && this.$route.name !== "Home" && this.$route.name !== "Score" &&  this.tab !== "Discount" &&  this.tab !== "Score") {
+        if (this.$route.name !== "Login" && this.$route.name !== "Home" && this.$route.name !== "Score" &&  this.$route.name !== "Discount" &&  this.tab !== "Score") {
           this.mConfirm('请先登陆', () => {
             this.$router.push({name: 'Login'})
           })
-          // this.$store.commit('CHANGE_TAB', "Home");
         }
       }
       else{

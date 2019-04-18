@@ -13,6 +13,18 @@
   padding-top: 44px;
 }
 
+.main-body {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom:0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background: #efeff4;
+  z-index: 70;
+}
+
 .header {
   position: fixed;
   top: 0;
@@ -24,8 +36,9 @@
   background-color: #cd0005;
   padding: 0 10px;
   width: 100%;
-  z-index: 999;
+  z-index: 99;
 }
+
 .header-left{
   width: 20%;
   display:flex;
@@ -45,18 +58,14 @@
   font-weight: bold;
 }
 
-.flex{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
 .header-right {
   width: 20%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
   .message {
     height: 32px;
     width: 32px;
@@ -87,6 +96,7 @@
     }
   }
   .icon-kefu{
+    color:#4c4c4c;
     background: url("../assets/images/msgkefu@2x.png?__inline") 9% 50% no-repeat;
     background-size: 20px auto;
   }
@@ -95,6 +105,12 @@
     background: url("../assets/images/home/qq.png?__inline") 9% 50% no-repeat;
     background-size: 20px auto;
   }
+}
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .el-carousel__indicator{
@@ -110,6 +126,19 @@
 
 .container{
   margin-bottom: 46px;
+}
+
+.bottom{
+  position: fixed;
+  bottom:0;
+  left:0;
+  width: 100%;
+  height: 65px;
+  background-color: #efeff4;
+  z-index:61;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .loading-error {
@@ -144,10 +173,43 @@
   width: 80% !important;
 }
 
+.el-icon-loading{
+  font-size: 18px;
+}
 
+.tmux {
+  font-size: 12px;
+  color: #ccc;
+}
 
+.save-btn{
+  width: 80%;
+  background-color: #cd0005;
+  margin:  0 auto;
+  margin-top: 20px;
+}
 
+.cube-btn_active{
+  background-color: #cd0005!important;
+}
+.save-btn:active{
+  opacity: 0.7;
+  background-color: #cd0005!important;
+}
 
+.cube-picker{
+  z-index: 1001!important;
+}
+
+.top-title{
+  height: 45px;
+  margin: 0!important;
+  line-height: 44px;
+  background-color: #cd0005!important;
+  color: #fff!important;
+  font-size: 14px!important;
+  border-left: solid 1px #efeff4;
+}
 
 ::-webkit-input-placeholder { /* WebKit browsers */
   color:    #ccc;
@@ -162,7 +224,15 @@
   color:    #ccc;
 }
 
+
 @media (max-width: 576px){
+  .model-alert{
+    .ivu-modal {
+      width: 280px!important;
+      margin: 0 auto;
+      margin-top: 20%;
+    }
+  }
   .ivu-modal {
     width: 250px!important;
     margin: 0 auto;
@@ -206,3 +276,5 @@
 @import "module/discount";
 @import "module/score";
 @import "module/user";
+@import "module/assestOverview";
+@import "module/onlineDeposit";

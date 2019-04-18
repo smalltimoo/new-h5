@@ -3,7 +3,6 @@
         <div  class="codeContent" v-if="!isEnd">
             <div style='width: 247px; height: 247px; margin: 0 auto; padding-top: 10px;'>
                 <img v-if="isShowQcode" :src="cApi+'/payQRCoder.do?payUrl='+qrcodePath" style="width:247px; height:247px;" />
-                <!-- <img :src="qrcodePath"  style="width:247px; height:247px;" /> -->
             </div>
             <div style="font-weight:bold;color:red;text-align:center;padding-top:10px;">{{ $t('member.createQrCode.cqc1') }}</div><!--付款及时到账，二维码请勿重复使用 -->
             <div v-if="isTimer>0">

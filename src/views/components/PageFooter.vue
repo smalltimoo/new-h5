@@ -25,13 +25,10 @@
     </div>
 </template>
 <script>
-    import types from '@/store/mutation-types'
-    import message from '@/mixins/message'
     import {mapState} from 'vuex';
 
     export default {
         name: 'PageFooter',
-        mixins: [message],
         data() {
             return {
                 showDownApp: true
@@ -42,7 +39,7 @@
                 tab: state => state.common.tab,
             }),
             cNeedLogin() {
-                return this.$store.getters.getNeedLogin
+                return this.$store.getters.getNeedLogin;
             },
         },
         mounted() {
@@ -53,24 +50,7 @@
                 this.$store.commit('CHANGE_TAB', tab);
                 this.$router.push({name: tab})
             },
-            // mCheckLoginState() {
-            //     this.$store.dispatch(types.LOAD_LOGIN_USER);
-            //     if (this.$store.getters.getNeedLogin) {
-            //         this.$store.dispatch(types.LOGINOUT_USER);
-            //         this.$store.dispatch(types.COMMON_GONGGAO, this);
-            //         if (this.$route.name !== "Login" &&  this.tab !== "Discount" &&  this.tab !== "Score") {
-            //             this.$router.push({name: "Home"});
-            //             this.$store.commit('CHANGE_TAB', "Home");
-            //         }
-            //     }
-            //     else{
-            //         this.$router.push({name: this.tab})
-            //     }
-            // },
         },
-        created() {
-            // this.mVCode()
-            this.mCheckLoginState()
-        }
+        created() {}
     }
 </script>

@@ -1,0 +1,301 @@
+.onlineDeposit {
+
+  .container {
+    margin-bottom: 70px;
+  }
+
+  .top {
+    width: 100%;
+    position: fixed;
+    top: 44px;
+    height: 80px;
+    background-color: #cd0005;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 15px;
+    z-index: 60;
+  }
+
+  .user-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: left;
+    flex-direction: column;
+    margin-left: 15px;
+
+    & > div {
+      width: 280px;
+      height: 23px;
+    }
+  }
+
+  .title {
+    height: 40px;
+    line-height: 40px;
+    font-weight: bold;
+    color: #1a1a1a;
+  }
+
+  .tmux {
+    font-size: 12px;
+    color: #ccc;
+    padding-left: 8px;
+  }
+
+  .input-panel {
+    border-bottom: solid 1px #f3f3f3;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center
+  }
+
+  .recharge {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #fff;
+
+    & > div {
+      padding: 0 10px;
+    }
+  }
+
+  .input-number {
+    height: 40px;
+    line-height: 40px;
+    border: 0;
+    margin-bottom: 0;
+  }
+
+  .recommend {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 0 !important;
+
+    & > span {
+      padding: 0 10px;
+      height: 25px;
+      line-height: 25px;
+      border-radius: 4px;
+      border: solid 1px #cd0005;
+      color: #cd0005;
+      font-size: 12px;
+      margin-left: 10px;
+    }
+
+    .active {
+      background-color: #cd0005;
+      color: #fff;
+    }
+  }
+
+  .pay-way {
+    padding: 5px 0 15px 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 1px #f3f3f3;
+
+    .active {
+      border: solid 1px #cd0005;
+      background: url("../../assets/images/xuanzhong@2x.png") 100% 100% no-repeat;
+      background-size: 10px auto;
+    }
+
+    & > div {
+      border: solid 1px #aaa;
+      height: 35px;
+      padding: 0 6px;
+      min-width: 80px;
+      line-height: 35px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 10px;
+      border-radius: 3px;
+
+      & > img {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .pay-account {
+    background-color: #ffffff;
+    width: 100%;
+    padding: 0 !important;
+
+    .ivu-radio-group {
+      display: inherit !important;
+    }
+  }
+
+  .pay-info {
+    width: 100%;
+
+    .ivu-radio-default {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      height: 40px;
+      border-bottom: solid 1px #f3f3f3;
+      padding-left: 15px;
+      //border-bottom:solid 1px #f3f3f3;
+    }
+
+    .radio-id {
+      border: solid 1px #4c4c4c;
+      border-radius: 10px;
+      padding: 0 5px;
+      height: 18px;
+      line-height: 18px;
+      margin-left: 10px;
+      color: #4c4c4c;
+    }
+  }
+
+  .tips{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 20px;
+    padding: 0 10px;
+    line-height: 24px;
+
+    &>div{
+      width: 100%;
+      text-align: left;
+      font-size: 12px;
+    }
+    .title{
+      color: #1a1a1a;
+      font-size: 14px;
+    }
+  }
+}
+
+.underline-drawer {
+  .ivu-drawer-content {
+    margin-top: 44px;
+    background-color: #efeff4;
+  }
+
+  .ivu-drawer-body {
+    height: 95%;
+    padding: 20px 0;
+  }
+
+  .drawer-top {
+    width: 100%;
+    margin-top: -22px;
+    background-color: #cd0005;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 80px;
+    color: #fff;
+  }
+
+  .code-pay{
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px 0;
+    flex-direction: column;
+
+    & > div {
+      padding: 0 20px;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      &>div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+    }
+    .title {
+      padding-left: 10px;
+      color: #1a1a1a;
+      font-size: 16px;
+      padding-bottom: 6px;
+    }
+  }
+
+  .panel {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px 0;
+
+    & > div {
+      width: 100%;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      & > span {
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
+      }
+
+      & > span:last-child {
+        height: 30px;
+        line-height: 30px;
+        color: #2d8cf0;
+      }
+    }
+
+    .title {
+      padding-left: 10px;
+      color: #1a1a1a;
+      font-size: 16px;
+      padding-bottom: 6px;
+    }
+
+    .deposit {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      border-bottom: solid 1px #f3f3f3;
+
+      & > input {
+        height: 35px;
+        line-height: 35px;
+        width: 73%;
+      }
+    }
+
+    .detail{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: solid 1px #f3f3f3;
+
+      & > span:last-child {
+        color: #4c4c4c;
+      }
+    }
+
+  }
+}
