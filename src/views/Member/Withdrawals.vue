@@ -234,7 +234,7 @@
     };
 </script>
 
-<style>
+<style scoped>
 
     .Withdrawals .G-card-box {
         position: relative;

@@ -46,7 +46,7 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 .ivu-modal-header {
   font-size: 16px;
   text-align: center;

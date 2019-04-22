@@ -98,7 +98,7 @@
         }
     };
 </script>
-<style>
+<style scoped>
     .userSettings {
         width: 100%;
         font-size: 0;

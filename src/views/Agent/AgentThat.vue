@@ -56,7 +56,7 @@
         </div>
     </div>
 </template>
-<style>
+<style scoped>
     .userSettings {
         width: 100%;
         font-size: 0;

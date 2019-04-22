@@ -229,7 +229,7 @@
         }
     };
 </script>
-<style>
+<style scoped>
 
     .modifybankpass {
         width: 100%;

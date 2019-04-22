@@ -126,7 +126,7 @@
     };
 </script>
 
-<style>
+<style scoped>
 
     .gameLimit {
         font-size: 0;
