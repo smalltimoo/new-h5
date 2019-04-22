@@ -11,7 +11,7 @@
         </div>
         <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:6px' : 'margin-top:-44px'">
             <div class="header-left">
-                <Icon type="md-menu" class="icon-menu"/>
+                <!--<Icon type="md-menu" class="icon-menu"/>-->
             </div>
             <div class="header-middle">
                 <img :src="sysPicObj.mobilelongLogo" width="110px"/>
