@@ -2,6 +2,7 @@ import { dateFormat } from "../assets/lib/util";
 import types from "../store/mutation-types";
 import alert from "../mixins/alert";
 import message from "../mixins/message";
+import Clipboard from 'clipboard';
 export default {
   mixins: [alert, message],
   computed: {
@@ -31,6 +32,14 @@ export default {
   methods: {
     goBack(){
       this.$router.back();
+    },
+    //复制功能
+    copy() {
+      var clipboard = new Clipboard('.clipboard');
+      clipboard.on('success', ()=> {
+        this.$Message.success('内容已复制到剪贴板');
+      })
+      clipboard.on('error', function (e) {})
     },
     mLoading(visible, content) {
       this.$store.commit(types.UPDATE_LOADING_MODEL_VISIBLE, {

@@ -1,5 +1,5 @@
 <template>
-    <div class="main-body">
+    <div class="main-body" style="margin-top: 0">
         <div class="top">
             <img class="lucky-img" src="../../assets/images/draw/xingyun@2x.png">
             <div class="lucky-score">{{ $t('member.draw.d1') }} <span v-text="consumptionIntegral"></span> {{

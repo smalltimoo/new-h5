@@ -6,7 +6,6 @@ module.exports = {
     port: 799,
     open: true
   },
-
   assetsDir: "static",
   baseUrl: "",
 

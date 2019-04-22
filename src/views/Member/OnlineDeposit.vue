@@ -179,19 +179,19 @@
                 <div class="title">银行信息</div>
                 <div>
                     <span>银行名称：{{selectData.drawAccountTypeStr}}</span>
-                    <span>复制</span>
+                    <span class="clipboard" @click="copy" :data-clipboard-text="selectData.drawAccountTypeStr">复制</span>
                 </div>
                 <div>
                     <span>银行卡号：{{selectData.account}}</span>
-                    <span>复制</span>
+                    <span class="clipboard" @click="copy" :data-clipboard-text="selectData.account">复制</span>
                 </div>
                 <div>
                     <span>开户网点：{{selectData.bankAddress}}</span>
-                    <span>复制</span>
+                    <span class="clipboard" @click="copy" :data-clipboard-text="selectData.bankAddress">复制</span>
                 </div>
                 <div>
                     <span>开户人名：{{selectData.bankAccountName}}</span>
-                    <span>复制</span>
+                    <span class="clipboard" @click="copy" :data-clipboard-text="selectData.bankAccountName">复制</span>
                 </div>
             </div>
             <div class="panel" style="margin-top: 10px">
@@ -241,8 +241,7 @@
 </template>
 <script>
     import win from "@/mixins/window";
-
-    const moment = require('moment')
+    const moment = require('moment');
 
     export default {
         mixins: [win],
@@ -528,7 +527,7 @@
                         })
 
                     } else {
-                        this.mAlert(result.message, () => {}, "error");
+                        this.$Message.error(result.message, () => {}, "error");
                     }
                 });
             },
