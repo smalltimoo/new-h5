@@ -99,7 +99,6 @@
             mInit() {
                 this.mLoading(true)
                 this.mGetBanks().then(rbanks => {
-                    console.log('00000')
                     if (rbanks.code == 0) {
                         let list = rbanks.data.walletlist ? rbanks.data.walletlist : []
                         list.forEach(ele => {
@@ -110,9 +109,8 @@
                         this.mInitWalletPicker()
                         this.mLoading(false)
                     } else {
-                        this.mLoading(false)
-                        this.mAlert(rbanks.message, () => {
-                        }, 'error')
+                        this.mLoading(false);
+                        this.$Message.warning('获取总资产失败!'); //获取余额失败
                     }
                 })
             },

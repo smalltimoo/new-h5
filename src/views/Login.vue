@@ -453,9 +453,10 @@
     }
 
     .reg{
-        position: fixed;
-        bottom: 10px;
+        /*position: fixed;*/
+        /*bottom: 10px;*/
         height: 40px;
+        margin-top: 20px;
         line-height: 40px;
         width: 100%;
         left: 0;

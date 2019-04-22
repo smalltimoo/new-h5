@@ -243,8 +243,7 @@
                         this.mLoading(false);
                     })
                     .catch(err => {
-                        //获取余额失败
-                        this.mAlert(this.$t('member.assetsOverView.ao7'));
+                        this.$Message.warning('获取总资产失败!'); //获取余额失败
                     });
             },
             drawGame() {
