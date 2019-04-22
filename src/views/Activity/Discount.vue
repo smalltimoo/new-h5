@@ -36,9 +36,8 @@
                         <span class="tip">活动时间：{{item.startTimeStr}}</span>
                     </div>
                     <img :src="item.activityImg" style="width: 100%; border-radius: 5px;min-height: 50px">
-                    <div class="tip" v-text="item.giveTypeStr"
-                         style="text-align: left;border-bottom:solid 1px #f3f3f3;padding-bottom: 4px"></div>
-                    <div class="go">
+                    <!--<div class="tip" v-text="item.giveTypeStr" style="text-align: left;border-bottom:solid 1px #f3f3f3;padding-bottom: 4px"></div>-->
+                    <div class="go" style="border-top:solid 1px #f3f3f3">
                         <span>查看详情</span>
                         <Icon type="ios-arrow-forward" class="icon-menu"/>
                     </div>

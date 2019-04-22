@@ -187,7 +187,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .interchange {
         position: relative;
         width: 100%;
@@ -250,6 +250,8 @@
         line-height: 48px;
         padding-left: 0;
         background-color: inherit !important;
+        border:0;
+        text-align: left;
     }
 
     .interchange .ivu-select-single .ivu-select-selection {

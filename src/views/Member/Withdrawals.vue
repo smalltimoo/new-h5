@@ -26,7 +26,15 @@
                 </div>
                 <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
             </router-link>
-
+        </div>
+        <div class="bank-info" style="margin-top: 0;border-top: solid 1px #f3f3f3;">
+            <router-link :to="{name:'SafaPassword'}" v-if="setPwd" style="">
+                <div style="display: flex;align-items: center">
+                    <Icon type="md-add-circle" style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
+                    <span>设置资金密码</span>
+                </div>
+                <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
+            </router-link>
         </div>
         <div class="main-panel" style="margin-top: 10px;flex-direction: column;align-items: flex-start;position: relative">
             <span style="position: absolute;top: 47px;left: 10px;font-size: 18px;">￥</span>
@@ -74,7 +82,7 @@
                 banktypes: [],
                 amount: 0,
                 bindBank:false,
-                setpwd:false,
+                setPwd:false,
                 vmCard: {
                     account: ""
                 },
@@ -92,7 +100,6 @@
                     }
                 });
             }
-            this.mLoading(true);
             this.$http.get("/memberUser/getbindbank.json").then(result => {
                 if (result.code == 0) {
                     if (result.data == null) {
@@ -101,7 +108,6 @@
                     }
                 }
             });
-            this.mLoading(true);
             this.$http.all([this.mGetBanks(), this.mGetBindBank()]).then(
                 this.$http.spread((rbanks, rbindbank) => {
                     console.log(rbanks.data, rbindbank.data);
@@ -116,6 +122,13 @@
                     }
                 })
             );
+            this.$http.get("/memberUser/memberinfo.json").then(result => {
+                if (result.code == 0) {
+                    if (!result.data.coinPassword){
+                        this.setPwd=true;
+                    }
+                }
+            });
             this.mInit();
         },
         methods: {
@@ -330,7 +343,7 @@
     }
 
     .bank-info {
-        height: 50px;
+        /*height: 50px;*/
         background-color: #fff;
         margin-top: 44px;
         padding: 0px 10px;

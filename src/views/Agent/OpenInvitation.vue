@@ -172,6 +172,7 @@
 
     .ipt{
         height: 39px;
+        width: 60%;
     }
 </style>
 

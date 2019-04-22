@@ -10,6 +10,7 @@
             <div class="header-right"></div>
         </div>
         <div style="background-color: #fff;">
+            <div style="position: absolute;top: 44px;height: 150px;width: 100%;" v-if="this.data"></div>
             <ul class="receive-ul">
                 <li>
                     <span>{{$t("member.receiving.receive3")}}:</span>
@@ -158,6 +159,7 @@
         border: 0;
         height: 45px;
         width: 240px;
+        margin-bottom: 0;
     }
 </style>
 

@@ -130,7 +130,7 @@
     };
 </script>
 
-<style>
+<style scoped>
     .modifybankpass .el-form {
         margin-top: 5px;
         background: #ffffff;
@@ -142,21 +142,10 @@
         border: none;
     }
 
-    .modifybankpass .el-form-item__label {
-        font-weight: 900;
-        color: #fff;
-    }
-
-
     .modifybankpass .el-form-item {
         height: 56px;
         padding-top: 7px;
         margin-bottom: 0;
-    }
-
-    .modifybankpass .el-input__inner {
-        background-color: #545478;
-        color: #fff;
     }
 
     .modifybankpass .G-submit span {
@@ -178,15 +167,6 @@
         border: none;
     }
 
-    .modifyloginpass .el-form-item__label {
-        font-weight: 900;
-    }
-
-
-    .modifyloginpass .el-button--primary {
-        background-color: #ffb301;
-        border-color: #ffc501;
-    }
 
     .modifyloginpass .el-form-item {
         height: 56px;

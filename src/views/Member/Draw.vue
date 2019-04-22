@@ -304,6 +304,7 @@
     .banner .turnplate {
         display: block;
         width: 320px;
+        height: 320px;
         position: relative;
         background: url(../../assets/images/draw/zhuangpan@2x.png) no-repeat 50% 0;
         background-size: 320px auto;

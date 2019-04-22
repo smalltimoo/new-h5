@@ -82,7 +82,7 @@
                     </router-link>
                 </div>
             </div>
-            <div style="padding-top: 185px"></div>
+            <div class="pst-top"></div>
             <div class="router-panel">
                 <div class="title">我的钱包</div>
                 <div class="my-pay">

@@ -26,7 +26,15 @@
                 </div>
                 <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
             </router-link>
-
+        </div>
+        <div class="bank-info" style="margin-top: 10px">
+            <router-link :to="{name:'SafaPassword'}" v-if="setPwd" >
+                <div style="display: flex;align-items: center">
+                    <Icon type="md-add-circle" style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
+                    <span>设置资金密码</span>
+                </div>
+                <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
+            </router-link>
         </div>
         <div class="main-panel" style="margin-top: 10px;flex-direction: column;align-items: flex-start;position: relative">
             <span style="position: absolute;top: 47px;left: 10px;font-size: 18px;">￥</span>
@@ -75,6 +83,7 @@
                 banktypes: [],
                 amount: 0,
                 bindBank:false,
+                setPwd:false,
                 vmCard: {
                     account: "",
                     agentCashBalance: 0
@@ -93,6 +102,13 @@
         },
         mounted() {
             this.mInit();
+            this.$http.get("/memberUser/memberinfo.json").then(result => {
+                if (result.code == 0) {
+                    if (!result.data.coinPassword){
+                        this.setPwd=true;
+                    }
+                }
+            });
         },
         methods: {
             mInit() {
@@ -100,10 +116,7 @@
                 this.$http.all([this.mGetAgentCashBalance(), this.mGetBindBank()]).then(
                     this.$http.spread((resAgentCashBalance, rbindbank) => {
                         if (resAgentCashBalance.data == -1) {
-                            //请先设置资金密码
-                            this.mAlert(_this.$t('agent.withdrawals.withdrawals14'), () => {
-                                this.$router.push({name: "SafaPassword"});
-                            });
+
                         } else if (resAgentCashBalance.data == -2) {
                             this.bindBank=true;
                             this.$Message.warning(_this.$t('agent.withdrawals.withdrawals15')); //请先绑定银行卡
@@ -149,6 +162,8 @@
                             this.$Message.success(_this.$t('agent.withdrawals.withdrawals20'));  //提现成功
                             this.mInit();
                         } else if (result.data == 1) {
+                            this.setPwd=true;
+                            this.$Message.warning(_this.$t('agent.withdrawals.withdrawals14'));
                             this.mAlert(_this.$t('agent.withdrawals.withdrawals21'), () => {   //请先设置资金密码
                                 this.$router.push({name: "SafaPassword"});
                             });
@@ -277,7 +292,7 @@
     }
 
     .bank-info {
-        height: 50px;
+        /*height: 50px;*/
         background-color: #fff;
         margin-top: 44px;
         padding: 0px 10px;

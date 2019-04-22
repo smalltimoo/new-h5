@@ -25,11 +25,11 @@
             <div class="agent-info">
                 <router-link :to="{name:'MembermanAgement'}">
                     <div style="border: 0">
-                        <span v-text="sumAgent.agentNum ? sumAgent.agentNum/100 : 0"></span>
+                        <span v-text="sumAgent.agentNum ? sumAgent.agentNum : 0"></span>
                         <span>代理人数</span>
                     </div>
                     <div>
-                        <span v-text="sumAgent.totalNum/100"></span>
+                        <span v-text="sumAgent.totalNum"></span>
                         <span>会员人数</span>
                     </div>
                     <div>

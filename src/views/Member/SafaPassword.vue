@@ -239,6 +239,7 @@
 
     .modifybankpass .el-form-item__label {
         text-align: left;
+        color: #4c4c4c;
     }
 
     .modifybankpass .el-form {

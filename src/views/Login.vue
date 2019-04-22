@@ -16,11 +16,10 @@
                             </el-option>
                         </el-select>
                         <input type="number" ref="username" class="login-input phone" placeholder="请输入手机号"
-                               @click="$refs.phone1.close()" v-model="phone" requirede
+                               @click="$refs.phone1.close()" v-model="phone"
                                style="padding-left: 155px"
                         />
-                        <cube-tip
-                                ref="phone1"
+                        <cube-tip ref="phone1"
                                 class="tip"
                                 direction="top"
                         >

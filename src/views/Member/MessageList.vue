@@ -9,6 +9,7 @@
             </div>
             <div class="header-right"></div>
         </div>
+        <div  class="no-list" v-if="!dataList||dataList.length==0"></div>
         <div class="message">
             <div v-for="item in dataList" :key="item.id" class="msg-panel">
                 <span v-text="item.createTimeStr" style="font-size: 12px"></span>

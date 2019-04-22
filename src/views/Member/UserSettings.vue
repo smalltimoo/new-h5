@@ -81,13 +81,6 @@
                     }
                 })
             );
-            // this.mLoading(true);
-            // this.$http.get("/memberUser/membercoin.json").then(result => {
-            //   console.log(result.data);
-            //   if (result.data == -1) {
-            //     this.data = result.data;
-            //   }
-            // });
             this.mLoading(true);
             this.$http.get("/memberUser/memberinfo.json").then(result => {
                 if (result.code == 0) {

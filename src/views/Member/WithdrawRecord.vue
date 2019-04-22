@@ -217,6 +217,7 @@
 </script>
 
 <style scoped>
+
     .mui-bar .mui-title {
         margin-top: 10px;
         text-align: center;

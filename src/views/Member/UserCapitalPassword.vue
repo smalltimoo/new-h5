@@ -338,7 +338,7 @@
     };
 </script>
 
-<style>
+<style scoped>
 
     .userCapitalPwd {
         width: 100%;
@@ -386,7 +386,7 @@
     }
 
     .ivu-select-single .ivu-select-selection {
-        background-color: #545478;
+        /*background-color: #545478;*/
         border: none;
     }
 
