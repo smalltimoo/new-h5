@@ -206,7 +206,6 @@
 <script>
     import listMixin from "@/mixins/list";
     import window from "../../mixins/window";
-
     let _this;
     export default {
         name: "Score",
@@ -252,6 +251,11 @@
             this.mPullData();
             this.mProductType();
             this.mPullScoreDetail();
+
+            let type=this.$route.params.type;
+            if(type=='record'){
+                this.order=true;
+            }
         },
         methods: {
             mInit(){

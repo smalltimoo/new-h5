@@ -44,19 +44,14 @@
                     </div>
                 </div>
 
+                <div  class="no-list" v-if="(!dataList||dataList.length==0)&&!showSearch"></div>
                 <!-- 主页面内容容器 -->
-                <div class="mui-content mui-scroll-wrapper">
+                <div class="mui-content mui-scroll-wrapper" v-else>
                     <div class="mui-scroll">
                         <!-- 主界面具体展示内容 -->
-                        <div
-                                v-if="(!dataList||dataList.length==0)&&!showSearch"
-                                style="font-size:16px;margin-top: 200px"
-                                class="text-center"
-                        >
-                            {{ $t('member.capitalRecord.cr4') }} <!--暂无数据 -->
-                        </div>
                         <Scroll v-if="dataList&&dataList.length>0&&!showSearch" ref="ivuScrollContainer"
-                                :on-reach-bottom="mReachBottom" :height="ivuScrollContainerHeight">
+                                :on-reach-bottom="mReachBottom" :height="ivuScrollContainerHeight"
+                        >
                             <div v-for="(item,i) in dataList" :key="i">
                                 <div style="font-size: 12px">{{item.createTimeStr}}</div>
                                 <div class="rowbg el-row">
@@ -64,34 +59,41 @@
                                         <div class="el-col el-col-24">
                                             <div class="grid-content">
                                                 <span class="Save wait" v-if="item.depositState==0">{{item.depositStateStr}}</span>
-                                                <span class="Save success" v-else-if="item.depositState==1 || item.depositState==3">{{item.depositStateStr}}</span>
+                                                <span class="Save success"
+                                                      v-else-if="item.depositState==1 || item.depositState==3">{{item.depositStateStr}}</span>
                                                 <span class="Save failed" v-else>{{item.depositStateStr}}</span>
                                                 <span style="height: 30px;line-height: 30px">{{item.depositTypeStr}}</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="el-col el-col-8">
-                                        <div class="status" style="color: #c10005; font-size: 16px">{{item.depositAmount / 100}}
+                                    <div class="info">
+                                        <div>
+                                            <div class="status" style="color: #c10005; font-size: 16px">{{item.depositAmount / 100}}
+                                            </div>
+                                            <div class="Types">{{ $t('member.capitalRecord.cr5') }}</div><!--充值金额 -->
                                         </div>
-                                        <div class="Types">{{ $t('member.capitalRecord.cr5') }}</div><!--充值金额 -->
-                                    </div>
-                                    <div class="el-col el-col-8">
-                                        <div class="status">{{item.commissionAmount / 100}}</div>
-                                        <div class="Types">{{ $t('member.capitalRecord.cr6') }}</div><!--手续费 -->
-                                    </div>
-                                    <div class="el-col el-col-8">
-                                        <div class="status">{{item.benefitAmount / 100}}</div>
-                                        <div class="Types">{{ $t('member.capitalRecord.cr7') }}</div><!--赠送金额 -->
-                                    </div>
-                                    <div class="el-col el-col-8">
-                                        <div class="status" style="color: #c10005; font-size: 16px">{{item.realAmount / 100}}</div>
-                                        <div class="Types">{{ $t('member.capitalRecord.cr8') }}</div><!--实际金额 -->
-                                    </div>
-                                    <div class="el-col el-col-8">
-                                        <div class="status" style="font-weight: 400;font-size: 14px">
-                                            {{mBenefitState(item.benefitState)}}
+                                        <div>
+                                            <div class="status">{{item.commissionAmount / 100}}</div>
+                                            <div class="Types">{{ $t('member.capitalRecord.cr6') }}</div><!--手续费 -->
                                         </div>
-                                        <div class="Types">{{ $t('member.capitalRecord.cr9') }}</div><!--解锁状态 -->
+                                        <div>
+                                            <div class="status">{{item.benefitAmount / 100}}</div>
+                                            <div class="Types">{{ $t('member.capitalRecord.cr7') }}</div><!--赠送金额 -->
+                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <div >
+                                            <div class="status" style="color: #c10005; font-size: 16px">
+                                                {{item.realAmount / 100}}
+                                            </div>
+                                            <div class="Types">{{ $t('member.capitalRecord.cr8') }}</div><!--实际金额 -->
+                                        </div>
+                                        <div>
+                                            <div class="status" style="font-weight: 400;font-size: 14px">
+                                                {{mBenefitState(item.benefitState)}}
+                                            </div>
+                                            <div class="Types">{{ $t('member.capitalRecord.cr9') }}</div><!--解锁状态 -->
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -104,6 +106,7 @@
 </template>
 <script>
     import slist from "@/mixins/list";
+
     require('../../style/mui/index.less')
     export default {
         mixins: [slist],
@@ -179,11 +182,7 @@
             mReachBottom() {
                 return new Promise(resolve => {
                     this.mLoading(true);
-                    if (
-                        parseInt(
-                            this.initData.total / (this.searchVM.rows * this.searchVM.page)
-                        ) > 0
-                    ) {
+                    if (parseInt(this.initData.total / (this.searchVM.rows * this.searchVM.page)) > 0) {
                         ++this.searchVM.page;
                         this.searchVM.start = (this.searchVM.page - 1) * this.searchVM.rows;
                         this.searchVM.limit = this.searchVM.rows;
@@ -203,14 +202,10 @@
                     } else {
                         this.mLoading(false);
                         //没有更多记录了
-                        this.mAlert(this.$t("member.capitalRecord.cr17"));
+                        this.$Message.warning(this.$t("member.capitalRecord.cr17"));
                         resolve();
                     }
                 });
-            },
-            mOnResize() {
-                this.ivuScrollContainerHeight =
-                    window.innerHeight - this.$refs.TopHeader.offsetHeight;
             },
             mBenefitState(state) {
                 //0：无优惠金额，1：打码中，2：可结算，3：已结算，4：已过期
@@ -218,25 +213,25 @@
                 return (state <= 4 && bs[state]) || "-";
             },
             mShowSearch(operate) {
-                if (operate=='open') {
+                if (operate == 'open') {
                     mui(".mui-off-canvas-wrap")
                         .offCanvas()
                         .show();
 
-                    this.open=true;
+                    this.open = true;
                 } else {
                     mui(".mui-off-canvas-wrap")
                         .offCanvas()
                         .close();
-                    this.open=false;
+                    this.open = false;
                 }
 
-                $(".mui-content").click(()=>{
-                    if(this.open){
+                $(".mui-content").click(() => {
+                    if (this.open) {
                         mui(".mui-off-canvas-wrap")
                             .offCanvas()
                             .close();
-                        this.open=false;
+                        this.open = false;
                     }
                 })
             }
@@ -259,8 +254,8 @@
     }
 
     .rowbg {
-        margin: 5px 10px 10px 15px;
-        padding: 10px;
+        margin: 5px 10px 10px 10px;
+        padding: 10px 15px;
         border-bottom: 1px solid #f3f3f3;
         background-color: #ffffff;
         box-shadow: 0px 1px 5px 0px rgba(201, 201, 201, 0.8);
@@ -311,14 +306,24 @@
         justify-content: space-between;
     }
 
-    .wait{
+    .wait {
         background-color: #007bc9;
     }
-    .success{
-        background-color: #ff695a;
+
+    .success {
+        background-color: #cd0005;
     }
-    .failed{
+
+    .failed {
         background-color: #cccccc;
+    }
+
+    .info{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 5px;
     }
 </style>
 

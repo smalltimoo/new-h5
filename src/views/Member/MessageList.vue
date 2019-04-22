@@ -1,168 +1,117 @@
 <template>
-    <div class="publicpage">
-    <!-- 侧滑导航根容器 -->
-    <div class="mui-off-canvas-wrap mui-scalable">
-      <!-- 主页面容器 -->
-      <div class="mui-inner-wrap">
-        <!-- 主页面标题 -->
-        <header ref="TopHeader" class="mui-bar mui-bar-nav">
-          <router-link :to="{name:'UserMember'}">
-            <i class="mui-icon mui-icon-back mui-pull-left"></i>
-          </router-link>
-          <h1 class="mui-title">{{ $t('member.messageList.ml1') }}</h1><!-- 会员消息-->
-        </header>
-        <!-- 主页面内容容器 -->
-        <div class="mui-content mui-scroll-wrapper">
-          <div class="mui-scroll">
-            <!-- 主界面具体展示内容 -->
-            <div style="height:36px;color:#d3d3d3;font-size:16px;" class="text-center"  v-if="(!dataList||dataList.length==0)">{{ $t('member.messageList.ml2') }}</div><!--暂无数据 -->
-            <Scroll height="6 00" v-if="dataList&&dataList.length>0">
-              <div class="rowbg el-row" v-for="(item,i) in dataList" :key="i">
-                <div class="el-col el-col-24" style="padding-bottom: 1.1rem;">
-                  <div class="el-col el-col-6">
-                    <div class="grid-content bg-purple-dark">
-                      <span class="Save">{{item.msgTypeStr}}</span>
-                    </div>
-                  </div>
-                  <div class="el-col el-col-12">
-                    <div class="grid-content bg-purple-dark" style="text-align: center;">
-                      <span class="status">{{item.createTimeStr}}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="el-col el-col-8">
-                  <div class="Types">{{item.msgTitle}}</div>
-                  <div class="status"></div>
-                </div>
-                <div class="el-col el-col-8">
-                  <div class="Types">{{item.isRead? $t('member.messageList.ml3'):$t('member.messageList.ml4')}}</div><!-- 已读     未读 -->
-                  <div class="status"></div>
-                </div>
-                <div class="el-col el-col-8">
-                  <div class="Types">
-                      <router-link :to="{name:'MessageInfo', query:{id:item.id}}">
-                        <Button type="primary" size="small">{{ $t('member.messageList.ml5') }}</Button><!--查看信息 -->
-                      </router-link>
-                      </div>
-                  <div class="status"></div>
-                </div>
-              </div>
-            </Scroll>
-          </div>
+    <div class="main-body">
+        <div class="header">
+            <div class="header-left">
+                <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
+            </div>
+            <div class="header-middle">
+                系统通知
+            </div>
+            <div class="header-right"></div>
         </div>
-      </div>
+        <div class="message">
+            <div v-for="item in dataList" :key="item.id" class="msg-panel">
+                <span v-text="item.createTimeStr" style="font-size: 12px"></span>
+                <div class="msg-content">
+                    <span class="title">《{{item.msgTitle}}》</span>
+                    <div  class="info" v-text="item.msgInfo"></div>
+                    <!--// -->
+                    <div class="open" onclick="$(this).prev().toggleClass('ht');$(this).toggle();$(this).next().toggle()">
+                        <span>展开</span>
+                        <Icon type="ios-arrow-down" />
+                    </div>
+                    <div class="open" style="display: none" onclick="$(this).prev().prev().toggleClass('ht');$(this).toggle();$(this).prev().toggle()">
+                        <span>隐藏</span>
+                        <Icon type="ios-arrow-up" />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      dataList: {}
-    };
-  },
-  mounted() {
-    this.mInit();
-  },
-  methods: {
-    mInit() {
-      this.mLoading(true);
-      var params = Object.assign({}, this.searchVM);
-      this.$http.post("/memberUser/getmessages.json", params).then(result => {
-        if (result.code == 0) {
-          //   this.initData.total = result.data.total;
-          this.dataList = !!result.data.list ? result.data.list : [];
+    export default {
+        data() {
+            return {
+                dataList: {}
+            };
+        },
+        mounted() {
+            this.mInit();
+        },
+        methods: {
+            mInit() {
+                this.mLoading(true);
+                let params = Object.assign({}, this.searchVM);
+                this.$http.post("/memberUser/getmessages.json", params).then(result => {
+                    if (result.code == 0) {
+                        this.dataList = !!result.data.list ? result.data.list : [];
+                    }
+                });
+            }
         }
-      });
-    }
-    // mMessageInfo(rows) {
-    //   this.$router.push({
-    //     path: "./messageinfo",
-    //     query: { id: rows.id }
-    //   });
-    // }
-  }
-};
+    };
 </script>
 
-<style>
-.publicpage {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background: #33334e;
-  z-index: 10;
-}
-.mui-bar .mui-title {
-  text-align: center;
-}
-.TopHeader {
-  background-color: #545478;
-  border-bottom: 1px solid #3a3a3a;
-  color: #fff;
-}
-.filter {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 14px;
-  z-index: 15;
-  color: #fff;
-  font-weight: 800;
-  padding: 13px 10px;
-}
-.publicpage_view {
-  position: absolute;
-  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-}
+<style scoped>
+    .message{
+        width: 100%;
+        margin-top: 50px;
+    }
+    .msg-panel{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        flex-direction: column;
+        margin-top: 20px;
+    }
 
-h1 {
-  line-height: 1.8rem;
-  font-size: 16px;
-  text-align: left;
-}
+    .msg-content{
+        width: 95%;
+        height: auto;
+        margin-top: 5px;
+        padding: 8px;
+        background-color: #ffffff;
+        box-shadow: 0px 1px 5px 0px rgba(201, 201, 201, 0.8);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        font-size: 12px;
+        border-radius: 4px;
+    }
 
-.rowbg {
-  background: #545478;
-  padding: 1rem;
-  border-bottom: 1px solid #3a3a3a;
-  margin-bottom: 10px;
-}
+    .title{
+        font-weight: bold;
+        color: #000;
+        font-size: 14px;
+        padding-bottom: 8px;
+    }
 
-.Save {
-  display: block;
-  padding: 0.05rem;
-  text-align: center;
-  background: #ff695a;
-  border-radius: 5px;
-  font-size: 14px;
-  color: #fff;
-}
+    .info{
+        height: 22px;
+        line-height: 20px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        text-align: left;
+    }
 
-.status {
-  line-height: 22px;
-  font-size: 14px;
-  text-align: center;
-  color: #fff;
-}
+    .open{
+        color: #007bc9;
+        text-align: right;
+        width: 100%;
+        font-size: 12px;
+        padding-top: 5px;
+    }
 
-.data {
-  line-height: 22px;
-  font-size: 14px;
-  padding-left: 2.1rem;
-  text-align: center;
-  color: #fff;
-}
+    .ht{
+        height: auto;
+        white-space: inherit;
+        text-align: left;
+    }
 
-.Types {
-  line-height: 22px;
-  font-size: 14px;
-  text-align: center;
-  color: #333;
-  font-weight: 700;
-}
 </style>

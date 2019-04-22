@@ -1,116 +1,91 @@
 <template>
-    <div id="app">
-        <div class="publicpage">
-            <div class="gameLimit publicpage_view">
-                <div class="TopHeader">
-                    <div id="return" style="position: absolute;">
-                        <router-link :to="{name:'UserMember'}">
-                            <Icon type="ios-arrow-back"/>
-                        </router-link>
-                    </div>
-                    {{ $t('member.userLimit.ul1') }}
-                </div><!-- 账户信息-->
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content">
-                            {{ $t('member.userLimit.ul2') }}
-                        </div><!-- 个人基本信息-->
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content bg-purple-dark" style="height: 63px; line-height: 63px;">
-                            {{ $t('member.userLimit.ul3') }}
-                            <span class="info"><!--头像 -->
-         <i class="x-icon-game-logo avatar" :style="{background:'url('+ info.avatar+')'}"></i>
-         <span style="padding-left: 15px;" name=""></span>
-        </span>
-                        </div>
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content bg-purple-dark"><!--用户名 -->
-                            {{ $t('member.userLimit.ul4') }}
-                            <span class="info" name="">&nbsp; {{info.username}}<span style="padding-left: 15px;"
-                                                                                     name=""></span></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content bg-purple-dark"><!--用户ID -->
-                            {{ $t('member.userLimit.ul5') }}
-                            <span class="info" name="">&nbsp; {{info.id}}<span style="padding-left: 15px;"
-                                                                               name=""></span></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content bg-purple-dark">
-                            <div to="/modify" class="bg-purple-dark"><!--真实姓名 -->
-                                {{ $t('member.userLimit.ul6') }}
-                                <span class="info"> {{info.realName}} <span style="padding-left: 15px;"></span></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content bg-purple-dark"><!-- 手机号-->
-                            {{ $t('member.userLimit.ul7') }} <span class="info"> {{info.mobile}} <span style="padding-left: 15px;"></span></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content bg-purple-dark"><!--微信 -->
-                            {{ $t('member.userLimit.ul8') }} <span class="info"> {{info.weixin}} <span style="padding-left: 15px;"></span></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content bg-purple-dark"><!--QQ -->
-                            {{ $t('member.userLimit.ul9') }} <span class="info"> {{info.qq}} <span style="padding-left: 15px;"></span></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content"><!--账号信息 -->
-                            {{ $t('member.userLimit.ul10') }}
-                        </div>
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content bg-purple-dark"><!--注册时间 -->
-                            {{ $t('member.userLimit.ul11') }}
-                            <span class="info">{{info.createTimeStr}}<span style="padding-left: 15px;"></span></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="el-row">
-                    <div class="el-col el-col-24">
-                        <div class="grid-content bg-purple-dark"><!-- 最后登录时间-->
-                            {{ $t('member.userLimit.ul12') }}
-                            <span class="info">{{info.lastLoginStr}}<span style="padding-left: 15px;"></span></span>
-                        </div>
-                    </div>
-                </div>
-                <button type="button" class="el-button G-submit el-button--primary" @click="mLoginOut">
-                    <!---->
-                    <!----><span>{{ $t('member.userLimit.ul13') }}</span></button><!--退出登录 -->
+    <div class="main-body">
+        <div class="header">
+            <div class="header-left">
+                <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
+            </div>
+            <div class="header-middle">
+                {{ $t('member.userLimit.ul1') }}
+            </div>
+            <div class="header-right">
+                <Poptip trigger="click" placement="bottom-end">
+                    <i class="icon-menu message"></i>
+                    <ul slot="content">
+                        <li class="icon-kefu" @click="mOpenCService">
+                            在线客服
+                        </li>
+                        <li class="icon-qq">
+                            <a v-if="cQQ1" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'">
+                                {{cQQ1}}
+                            </a>
+                            <a v-if="cQQ2" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ2+'&version=1&src_type=web'">
+                                {{cQQ2}}
+                            </a>
+                        </li>
+                        <li class="icon-qq">
+                            <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{agentQQ}}</a>
+                        </li>
+                    </ul>
+                </Poptip>
             </div>
         </div>
+        <div class="limit" style="margin-top: 60px">
+            <div class="bg-purple-dark"><!--用户名 -->
+                <span>{{ $t('member.userLimit.ul4') }}</span>
+                <span class="info">{{info.username}}</span>
+            </div>
+            <div class="bg-purple-dark"><!--用户ID -->
+                <span>{{ $t('member.userLimit.ul5') }}</span>
+                <span class="info">&nbsp;{{info.id}}</span>
+            </div>
+            <div class="bg-purple-dark"><!--用户ID -->
+                <span>{{ $t('member.userLimit.ul6') }}</span>
+                <span class="info" >{{info.realName}}</span>
+            </div>
+            <div class="bg-purple-dark"><!--用户ID -->
+                <span>{{ $t('member.userLimit.ul7') }}</span>
+                <span class="info" v-if="info.mobile">{{info.mobile}}</span>
+                <span class="info" v-else>未设置</span>
+            </div>
+            <div class="bg-purple-dark"><!--用户ID -->
+                <span>{{ $t('member.userLimit.ul8') }}</span>
+                <span class="info" v-if="info.weixin">{{info.weixin}}</span>
+                <span class="info" v-else>未设置</span>
+            </div>
+            <div class="bg-purple-dark"><!--用户ID -->
+                <span>{{ $t('member.userLimit.ul9') }}</span>
+                <span class="info" v-if="info.qq">{{info.qq}}</span>
+                <span class="info" v-else>未设置</span>
+            </div>
+        </div>
+        <div style="height: 40px;width: 100%;line-height: 40px;text-align: left;padding-left: 15px;color: #000;">
+            {{ $t('member.userLimit.ul10') }}
+        </div>
+        <div class="limit">
+            <div class="bg-purple-dark"><!--注册时间 -->
+                <span>{{ $t('member.userLimit.ul11') }}</span>
+                <span class="info" >{{info.createTimeStr}}</span>
+            </div>
+            <div class="bg-purple-dark"><!-- 最后登录时间-->
+                <span>{{ $t('member.userLimit.ul12') }}</span>
+                <span class="info" >{{info.lastLoginStr}}</span>
+            </div>
+        </div>
+        <div class="title" style="margin-top: 20px;font-size: 13px"><!--  温馨提示 ： 如需修改信息，请联系-->
+            <span>温馨提醒: 如需修改信息，请联系</span>
+            <a href="javascript:void(0)"
+               @tap="mOpenCService"
+               style="color: rgb(184, 17, 9);"
+            >{{ $t('member.userBankCard.ubc11') }}</a><!-- 在线客服-->
+        </div>
     </div>
+
 </template>
 
 <script>
     import types from "@/store/mutation-types";
     import message from "@/mixins/message";
+    import {mapState} from 'vuex';
 
     export default {
         mixins: [message],
@@ -125,9 +100,13 @@
                     createTimeStr: "",
                     lastLoginStr: "",
                     id: 0,
-                    avatar: '',
                 }
             };
+        },
+        computed: {
+            ...mapState({
+                sysPicObj: state => state.common.sysPicObj,
+            }),
         },
         mounted() {
             this.mLoading(true);
@@ -143,61 +122,20 @@
                     this.info.id = result.data.id;
                 }
             });
-            let sysobj = this.$store.getters.getSysPicObj;
-            if(sysobj.mobileLogo != undefined){
-                this.info.avatar=sysobj.mobileLogo;
-            }
         },
-        methods: {
-            mLoginOut() {
-                //确定要退出账号吗
-                this.mConfirm(this.$t('member.userLimit.ul14'), () => {
-                    //请稍等...
-                    this.mLoading(true, this.$t('member.userLimit.ul15'));
-                    this.$http.post("/logout.json").then(result => {
-                        if (result.code === 0) {
-                            //退出成功
-                            this.mMessage(this.$t('member.userLimit.ul16'), "success", 0.5);
-                            this.$store.dispatch(types.LOGINOUT_USER);
-                            this.mLoading(false);
-                            this.$router.push({name: "Home"});
-                        }
-                    });
-                });
-            }
-        }
     };
 </script>
 
 <style>
-    .publicpage {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background: #33334e;
-        z-index: 10;
-    }
-    .avatar{
-        margin-right: 0;
-        border-radius: 30px;
-        background-position: 50% 50%!important;
-        background-repeat: no-repeat !important;
-        background-size: 100% auto !important;
-        /*background-color: white!important;*/
-    }
 
     .gameLimit {
         font-size: 0;
         width: 100%;
+        margin-top: 60px;
     }
 
-    .TopHeader {
-        background-color: #545478;
-        border-bottom: 1px solid #3a3a3a;
-        color: #fff;
+    .limit{
+        width: 100%;
     }
 
     .gameLimit .grid-content {
@@ -208,15 +146,19 @@
         font-size: 14px;
     }
 
-    .gameLimit .bg-purple-dark {
-        display: block;
+    .bg-purple-dark {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         position: relative;
-        background: #545478;
+        background: #ffffff;
         height: 44px;
         line-height: 44px;
-        color: #fff;
+        color: #4c4c4c;
         font-weight: 700;
-        border-bottom: 1px solid #33334e;
+        width: 100%;
+        padding: 0 15px;
+        border-bottom: 1px solid #f3f3f3;
     }
 
     .gameLimit .el-button--primary {
@@ -230,11 +172,5 @@
         top: 0;
         text-align: right;
         min-width: 90px;
-    }
-
-    .x-icon-game-logo {
-        width: 58px;
-        height: 58px;
-        background-position: -336px -388px;
     }
 </style>

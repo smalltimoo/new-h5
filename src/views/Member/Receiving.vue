@@ -132,11 +132,6 @@
     };
 </script>
 <style scoped>
-
-    .receive {
-
-    }
-
     .tip {
         margin-top: 50px;
         margin-left: 70px

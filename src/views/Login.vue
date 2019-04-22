@@ -5,7 +5,7 @@
 
             <Icon type="ios-arrow-back" @click="activeName='mobileLogin'" class="goBack" v-if="activeName=='register'"/>
             <el-tabs v-model="activeName" class="login-panel">
-                <el-tab-pane label="手机登录" name="mobileLogin" v-if="activeName!='register'">
+                <el-tab-pane label="手机登录" name="mobileLogin" v-if="activeName!='register' && apiKey">
                     <div style="position: relative">
                         <el-select v-model="areaCode" filterable placeholder="请选择" class="eye area">
                             <el-option v-for="(item,index) in phoneAreaCode"
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="login-check">
-                        <span class="link-b" @click="activeName='register'">用户注册</span>
+                        <span class="link-b" @click="activeName='register'">立即注册</span>
                     </div>
                     <input type="button" class="btn-login" value="登录" @click="mPhoneLogin"/>
 
@@ -82,12 +82,15 @@
                             {{ this.$t('login.alert3') }}
                         </cube-tip>
                     </div>
-
                     <div class="login-check">
                         <Checkbox v-model="savenp" style="float:left;">&nbsp;记住密码</Checkbox><!-- 记住密码-->
                         <span style="font-size: 12px">忘记密码?</span>
                     </div>
                     <input type="button" class="btn-login" value="登录" @click="mLogin"/>
+                    <div class="reg">
+                        还没有帐号？
+                        <span @click="activeName='register'" style="color:#0288d1">立即注册</span>
+                    </div>
                 </el-tab-pane>
                 <el-tab-pane label="注册" name="register" v-if="activeName=='register'">
                     <div>
@@ -168,8 +171,9 @@
     </div>
 </template>
 <script>
-    import types from '@/store/mutation-types'
-    import message from '@/mixins/message'
+    import types from '@/store/mutation-types';
+    import message from '@/mixins/message';
+    import {mapState} from 'vuex';
 
     let timer;
     export default {
@@ -199,9 +203,17 @@
             }
         },
         computed: {
+            ...mapState({
+                apiKey: state => state.common.systemSettings.apiKey,
+            }),
             cgetCodeUrl() {
                 return this.$store.getters.getBaseUrl + '/checkCode.json?t=' + this.random + '&token=' + this.$store.getters.getSessionToken
             },
+        },
+        mounted(){
+            if(this.apiKey==''){
+                this.activeName='login';
+            }
         },
         methods: {
             mInit() {
@@ -438,6 +450,16 @@
     .area {
         width: 120px;
         left: 30px;
+    }
+
+    .reg{
+        position: fixed;
+        bottom: 10px;
+        height: 40px;
+        line-height: 40px;
+        width: 100%;
+        left: 0;
+        color: #7f7f7f;
     }
 </style>
 

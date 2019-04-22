@@ -38,7 +38,7 @@
                 <div class="operate" v-if="cLoginUser.username">
                     <div><router-link :to="{name:'OnlineDeposit'}">充值</router-link></div>
                     <span v-text="cLoginUser.username" style="margin-top: 60px"></span>
-                    <div><router-link :to="{name:'OnlineDeposit'}">提现</router-link></div>
+                    <div><router-link :to="{name:'Withdrawals'}">提现</router-link></div>
                 </div>
                 <div class="user-name" v-if="cLoginUser.username">
                     <span class="level-ico level_img_vip0" v-if="memberLevel==0"></span>
@@ -86,31 +86,31 @@
             <div class="router-panel">
                 <div class="title">我的钱包</div>
                 <div class="my-pay">
-                    <router-link :to="{}">
+                    <router-link :to="{name:'IndoorTransfer'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/eduzhuanhuan.png" width="30px"/>
                         </div>
                         <span>额度转换</span>
                     </router-link>
-                    <router-link :to="{name:'CapitalRecord'}" class="">
+                    <router-link :to="{name:'CapitalRecord'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/recharge.png" width="28px"/>
                         </div>
                         <span>充值记录</span>
                     </router-link>
-                    <router-link :to="{}" class="">
+                    <router-link :to="{name:'RechargeRecord'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/liushui.png" width="29px"/>
                         </div>
                         <span>资金流水</span>
                     </router-link>
-                    <router-link :to="{}" class="">
+                    <router-link :to="{name:'TransferRecords'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/zhuanzhang.png" width="32px"/>
                         </div>
                         <span>转账记录</span>
                     </router-link>
-                    <router-link :to="{}" class="">
+                    <router-link :to="{name:'WithdrawRecord'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/tikuan.png" width="30px"/>
                         </div>
@@ -122,60 +122,60 @@
             <div class="router-panel manager">
                 <div class="title">管理中心</div>
                 <div class="my-pay">
-                    <router-link :to="{}">
+                    <router-link :to="{name :'BettingRecord'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/toubiao.png" width="30px"/>
                         </div>
                         <span>投注记录</span>
                     </router-link>
-                    <router-link :to="{}" class="">
+                    <router-link :to="{name:'Score',params: { type: 'record' }}">
                         <div>
                             <img src="../../assets/images/uesrCenter/duihuan@2x.png" width="28px"/>
                         </div>
                         <span>兑换记录</span>
                     </router-link>
-                    <router-link :to="{}" class="">
+                    <router-link :to="{name:'UserBankCard'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/yinhangka@2x.png" width="29px"/>
                         </div>
                         <span>银行卡</span>
                     </router-link>
-                    <router-link :to="{name:'Receiving'}" class="">
+                    <router-link :to="{name:'Receiving'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/shouhuodizhi.png" width="32px"/>
                         </div>
                         <span>收货地址</span>
                     </router-link>
-                    <router-link :to="{}" class="">
+                    <router-link :to="{name:'AgentMember'}" v-if="cLoginUser.agnetLevel>0">
                         <div>
                             <img src="../../assets/images/uesrCenter/daili.png" width="30px"/>
                         </div>
                         <span>代理中心</span>
                     </router-link>
-                    <router-link :to="{}" class="">
+                    <router-link :to="{name:'UserLimit'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/userinfo.png" width="30px"/>
                         </div>
                         <span>账户信息</span>
                     </router-link>
-                    <router-link :to="{}" class="">
+                    <router-link :to="{name:'MessageList'}">
                         <div>
                             <img src="../../assets/images/uesrCenter/huiyuanxiaoxi.png" width="30px"/>
                         </div>
                         <span>会员消息</span>
                     </router-link>
-                    <router-link :to="{}" class="">
+                    <router-link :to="{name:'UserSettings'}">
                         <div>
-                            <img src="../../assets/images/uesrCenter/tikuan.png" width="28px"/>
+                            <img src="../../assets/images/uesrCenter/anquan.png" width="28px"/>
                         </div>
                         <span>安全中心</span>
                     </router-link>
-                    <router-link :to="{}" class="">
-                        <div>
-                            <img src="../../assets/images/uesrCenter/anquan.png" width="30px"/>
-                        </div>
-                        <span>帮助中心</span>
-                    </router-link>
+                    <!--<router-link :to="{}" class="">-->
+                        <!--<div>-->
+                            <!--<img src="../../assets/images/uesrCenter/help.png" width="28px"/>-->
+                        <!--</div>-->
+                        <!--<span>帮助中心</span>-->
+                    <!--</router-link>-->
                     <a :href="sysPicObj.appUrl" target="_blank">
                         <div>
                             <img src="../../assets/images/uesrCenter/app-download.png" width="32px"/>
@@ -228,18 +228,6 @@
             ...mapState({
                 sysPicObj: state => state.common.sysPicObj,
             }),
-            cQQ1() {
-                let sysInfo = this.$store.getters.getSysInfo;
-                this.drawBanner = sysInfo.rouletteSlide;
-                this.agentQQ = sysInfo.agentQQ;
-                return sysInfo.customQQ ? sysInfo.customQQ : '';
-            },
-            cQQ2() {
-                if (process.env.VUE_APP_ISAPP == 'TRUE') {
-                    let qq = process.env.VUE_APP_QQ
-                    return qq ? qq : ''
-                }
-            },
         },
         methods: {
             mGetCoin() {

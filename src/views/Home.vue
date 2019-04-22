@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="container">
-            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px">
+            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px;min-height: 150px">
                 <cube-slide-item v-for="(item, index) in getBanner" :key="index">
                     <img :src="item" width="100%">
                 </cube-slide-item>
@@ -53,17 +53,16 @@
             <div class="notice">
                 <i class="icon laba"/>
                 <marquee behavior="scroll" direction="left" scrollamount="4" id="mar0">
-                    <span v-for="(item,index) in cGongGaos" :key="index" v-text="item.content"
-                          style="margin-right: 100px"></span>
+                    <span v-for="(item,index) in cGongGaos" :key="index" v-text="item.content" style="margin-right: 100px"></span>
                 </marquee>
             </div>
 
             <div class="shortcut">
-                <router-link :to="{name:''}" tag="li">
+                <router-link :to="{name:'OnlineDeposit'}" tag="li">
                     <i class="home-recharge"/>
                     <span>用户充值</span>
                 </router-link>
-                <router-link :to="{name:''}" tag="li">
+                <router-link :to="{name:'Withdrawals'}" tag="li">
                     <i class="home-deposit"/>
                     <span>用户提款</span>
                 </router-link>
@@ -71,7 +70,11 @@
                     <i class="home-custom"/>
                     <span>在线客服</span>
                 </li>
-                <router-link :to="{name:''}" tag="li">
+                <router-link :to="{name:'AgentMember'}" tag="li" v-if="cLoginUser.agnetLevel>0">
+                    <i class="home-agent"/>
+                    <span>代理中心</span>
+                </router-link>
+                <router-link :to="{name:'BettingRecord'}" tag="li" v-else>
                     <i class="home-bet"/>
                     <span>投注记录</span>
                 </router-link>
@@ -90,7 +93,6 @@
                 </div>
                 <div class="game-rooms">
                     <div v-for="(game, index) in selectedGames" :key="index"
-                         @click=""
                          @click="mEnterGame(game.gameId==601?301:game.gameId,game.typeId==50?0:((game.gameId==601||(game.gameId==301&&game.typeId==6))?'ws00':''),game.typeId==50?'50':'',game.gameName)"
                     >
                         <img :src="game.mobileImg" width="100%" height="105px" v-if="game.mobileImg"/>
@@ -129,7 +131,6 @@
 </template>
 <script>
     let _this;
-    import types from '@/store/mutation-types';
     import {mapState} from 'vuex';
     import message from '@/mixins/message'
 

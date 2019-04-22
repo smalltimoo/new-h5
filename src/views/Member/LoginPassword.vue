@@ -13,32 +13,27 @@
         <div class="modifyloginpass" style="margin-top: 60px">
             <form class="el-form el-form--label-right">
                 <div class="el-form-item">
-                    <label class="el-form-item__label" style="width: 80px;"> {{ $t('member.loginPassword.lp2')
-                        }}</label><!--原密码 -->
+                    <label class="el-form-item__label" style="width: 80px;">
+                        {{ $t('member.loginPassword.lp2')}}
+                    </label><!--原密码 -->
                     <div class="el-form-item__content" style="margin-left: 80px;">
                         <div class="el-input">
-                            <!---->
                             <input autocomplete="off" :placeholder="$t('member.loginPassword.lp2')" maxlength="12"
                                    minlength="6" rows="2" validateevent="true" class="el-input__inner edit_pwd"
                                    v-model="vm.oldPass" ref="oldPass"/>
-                            <!---->
+
                         </div>
-                        <!---->
                     </div>
                 </div>
                 <div class="line-w"></div>
                 <div class="el-form-item">
-                    <label class="el-form-item__label" style="width: 80px;">{{ $t('member.loginPassword.lp3')
-                        }}</label><!--新密码 -->
+                    <label class="el-form-item__label" style="width: 80px;">{{ $t('member.loginPassword.lp3')}}</label><!--新密码 -->
                     <div class="el-form-item__content" style="margin-left: 80px;">
                         <div class="el-input">
                             <!---->
                             <input autocomplete="off" :placeholder="$t('member.loginPassword.lp4')" maxlength="12"
                                    minlength="6" rows="2" validateevent="true" class="el-input__inner edit_pwd"
                                    v-model="vm.newPass" ref="newPass"/><!--密码必须6～12位英文或数字 -->
-                            <!---->
-                            <!---->
-                            <!---->
                         </div>
                         <!---->
                     </div>
@@ -52,10 +47,8 @@
                             <!---->
                             <input autocomplete="off" :placeholder="$t('member.loginPassword.lp6')" maxlength="12"
                                    minlength="6" rows="2" validateevent="true" class="el-input__inner edit_pwd"
-                                   v-model="vm.truePass" ref="truePass"/>
-                            <!--请再次填写新密码 -->
-                            <!---->
-                            <!---->
+                                   v-model="vm.truePass" ref="truePass"
+                            /><!--请再次填写新密码 -->
                         </div>
                         <!---->
                     </div>
@@ -88,27 +81,27 @@
             mSave() {
                 if (this.vm.oldPass == "") {
                     //请输入原登陆密码
-                    this.mAlert(this.$t('member.loginPassword.lp10'), null, "warning");
+                    this.$Message.warning(this.$t('member.loginPassword.lp10'), null, "warning");
                     return;
                 }
                 if (this.vm.newPass == "") {
                     //请输入新的登陆密码
-                    this.mAlert(this.$t('member.loginPassword.lp11'), null, "warning");
+                    this.$Message.warning(this.$t('member.loginPassword.lp11'), null, "warning");
                     return;
                 }
                 if (this.vm.truePass == "") {
                     //确认密码不能为空
-                    this.mAlert(this.$t('member.loginPassword.lp12'), null, "warning");
+                    this.$Message.warning(this.$t('member.loginPassword.lp12'), null, "warning");
                     return;
                 }
                 if (this.vm.truePass != this.vm.newPass) {
                     //两次输入的密码不一致
-                    this.mAlert(this.$t('member.loginPassword.lp13'), null, "warning");
+                    this.$Message.warning(this.$t('member.loginPassword.lp13'), null, "warning");
                     return;
                 }
                 if (this.vm.newPass.length < 6) {
                     //密码不可少于6位数，请重新输入！
-                    this.mAlert(this.$t('member.loginPassword.lp14'), null, "warning");
+                    this.$Message.warning(this.$t('member.loginPassword.lp14'), null, "warning");
                     return;
                 }
                 this.mLoading(true);
@@ -117,7 +110,7 @@
                     .then(result => {
                         this.mLoading(false);
                         if (result.code == 0) {
-                            this.mAlert(
+                            this.$Message.success(
                                 //修改成功！
                                 this.$t('member.loginPassword.lp15'),
                                 () => {
@@ -128,7 +121,7 @@
                                 "success"
                             );
                         } else {
-                            this.mAlert(result.message, () => {
+                            this.$Message.error(result.message, () => {
                             }, "error");
                         }
                     });
@@ -138,36 +131,6 @@
 </script>
 
 <style>
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: opacity 0.5s ease;
-    }
-
-    .fade-enter,
-    .fade-leave-active {
-        opacity: 0;
-    }
-
-    .publicpage_view {
-        position: absolute;
-        transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-    }
-
-    .slide-left-enter,
-    .slide-right-leave-active {
-        opacity: 0;
-        -webkit-transform: translate(30px);
-        transform: translate(30px);
-    }
-
-    .slide-left-leave-active,
-    .slide-right-enter {
-        opacity: 0;
-        -webkit-transform: translate(-30px);
-        transform: translate(-30px);
-    }
-
-
     .modifybankpass .el-form {
         margin-top: 5px;
         background: #ffffff;
@@ -246,9 +209,11 @@
         align-items: center;
         margin-left: 10px;
         font-size: 13px;
+        margin-top: 10px;
         text-align: left;
-        line-height: 46px;
+        line-height: 20px;
         color: #666;
+        white-space: nowrap;
     }
 
     .edit_pwd {

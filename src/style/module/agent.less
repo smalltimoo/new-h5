@@ -1,0 +1,122 @@
+.agent {
+  .top {
+    width: 100%;
+    position: fixed;
+    top: 44px;
+    height: 80px;
+    background-color: #cd0005;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0 15px;
+    z-index: 60;
+  }
+
+  .user-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: left;
+    flex-direction: column;
+    margin-left: 15px;
+
+    & > div {
+      width: 280px;
+      height: 23px;
+    }
+  }
+
+  .drawer {
+    width: 64px;
+    height: 24px;
+    background: url('../../assets/images/uesrCenter/chongzhi@2x.png') 50% 50% no-repeat;
+    background-size: 64px auto;
+    padding-left: 27px;
+    font-size: 12px;
+    color: #fff;
+    line-height: 24px;
+  }
+
+  .agent-info {
+    width: 100%;
+
+    & > a {
+      display: flex;
+      background-color: #fff;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      margin-top: 124px;
+      padding: 10px 0;
+      color: #4c4c4c;
+
+      & > div {
+        border-left: solid 1px #f3f3f3;
+        width: 25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        & > span {
+          height: 22px;
+          width: 100%;
+
+        }
+      }
+
+    }
+
+
+  }
+
+  .agent-icon {
+    display: flex;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #fff;
+
+    .share {
+      border-left: solid 2px #c10005;
+      text-align: left;
+      padding-left: 10px;
+    }
+
+
+    & > div {
+      width: 100%;
+    }
+
+    .icon-panel {
+      width: 33%;
+      margin-bottom: 15px;
+    }
+
+    .icons {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      padding-top: 15px;
+      flex-flow: row wrap;
+
+      & > a {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        color: #4c4c4c;
+
+        & > img {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+}

@@ -54,8 +54,8 @@
                 </div>
             </div>
             <div class="bottom">
-                <span>存款</span>
-                <span style="background-color: grey">提款</span>
+                <span><router-link :to="{name:'OnlineDeposit'}">存款</router-link></span>
+                <span style="background-color: grey"><router-link :to="{name:'Withdrawals'}">提款</router-link></span>
             </div>
         </div>
     </div>
