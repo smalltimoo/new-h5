@@ -79,7 +79,7 @@
                                             <div class="el-col el-col-24">
                                                 <div class="grid-content">
                                                     <span class="Save success">{{item.gameTypeStr}}</span>
-                                                    <span style="height: 30px;line-height: 30px">{{item.gameName}}</span>
+                                                    <span style="height: 30px;line-height: 30px">{{item.gameCompanyName}} {{item.gameName}}</span>
                                                 </div>
                                             </div>
                                         </div>

@@ -14,9 +14,10 @@
                                 <div class="mui-card">
                                     <ul class="mui-table-view" style="max-height:300px;overflow-y:auto;">
                                         <li class="mui-table-view-cell mui-radio mui-right"
-                                            v-for="(item,i) in initData.depositStates" :key="i">
-                                            <input name="radio" type="radio" :checked="item.checked" :value="item.id"
-                                                   v-model="searchVM.state">
+                                            v-for="(item,i) in initData.depositStates" :key="i"
+                                            v-if="item.id!=3  && item.id!=4"
+                                        >
+                                            <input name="radio" type="radio" :checked="item.checked" :value="item.id" v-model="searchVM.state">
                                             {{item.value}}
                                         </li>
                                     </ul>
@@ -73,27 +74,23 @@
                                             <div class="Types">{{ $t('member.capitalRecord.cr5') }}</div><!--充值金额 -->
                                         </div>
                                         <div>
-                                            <div class="status">{{item.commissionAmount / 100}}</div>
-                                            <div class="Types">{{ $t('member.capitalRecord.cr6') }}</div><!--手续费 -->
-                                        </div>
-                                        <div>
                                             <div class="status">{{item.benefitAmount / 100}}</div>
                                             <div class="Types">{{ $t('member.capitalRecord.cr7') }}</div><!--赠送金额 -->
                                         </div>
-                                    </div>
-                                    <div class="info">
                                         <div >
                                             <div class="status" style="color: #c10005; font-size: 16px">
                                                 {{item.realAmount / 100}}
                                             </div>
                                             <div class="Types">{{ $t('member.capitalRecord.cr8') }}</div><!--实际金额 -->
                                         </div>
-                                        <div>
-                                            <div class="status" style="font-weight: 400;font-size: 14px">
-                                                {{mBenefitState(item.benefitState)}}
-                                            </div>
-                                            <div class="Types">{{ $t('member.capitalRecord.cr9') }}</div><!--解锁状态 -->
-                                        </div>
+                                    </div>
+                                    <div class="info">
+                                        <!--<div>-->
+                                            <!--<div class="status" style="font-weight: 400;font-size: 14px">-->
+                                                <!--{{mBenefitState(item.benefitState)}}-->
+                                            <!--</div>-->
+                                            <!--<div class="Types">{{ $t('member.capitalRecord.cr9') }}</div>&lt;!&ndash;解锁状态 &ndash;&gt;-->
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>

@@ -9,7 +9,7 @@
             </div>
             <div class="header-right"></div>
         </div>
-        <div class="no-list" v-if="(!dataList||dataList.length==0)&&!showSearch"></div>
+        <div class="no-list" v-if="!dataList||dataList.length==0"></div>
         <div class="mui-content">
             <div class="rowbg el-row" v-for="(item,i) in dataList" :key="i">
                 <div class="el-col el-col-24">
@@ -113,10 +113,6 @@
         margin-top: 50px;
     }
 
-    .mui-scalable {
-        background-color: #efeff4 !important;
-    }
-
     .rowbg {
         margin: 5px 10px 10px 10px;
         padding: 10px 15px;
@@ -138,31 +134,9 @@
         margin-bottom: 10px;
         min-width: 76px;
     }
-
-    .status {
-        height: 28px;
-        line-height: 28px;
-        text-align: center;
-        font-weight: bold;
-        font-family: Consolas, "Courier New", Courier, FreeMono, monospace;
+    .bg-purple-dark{
+        text-align: left;
     }
-
-    .Types {
-        line-height: 22px;
-        text-align: center;
-        color: #333;
-        padding-bottom: 5px;
-    }
-
-    .ivu-divider-inner-text {
-        color: #4c4c4c;
-    }
-
-    .mui-off-canvas-left, .mui-off-canvas-right {
-        background-color: #fff;
-        color: #4c4c4c;
-    }
-
     .grid-content {
         width: 100%;
         display: flex;
@@ -175,16 +149,5 @@
         color: #fff;
     }
 
-    .wait {
-        background-color: #b58c2a;
-    }
-
-    .info {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 5px;
-    }
 </style>
 

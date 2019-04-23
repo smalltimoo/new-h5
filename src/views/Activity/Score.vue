@@ -39,11 +39,11 @@
                         <div class="product-img">
                             <img src="../../assets/images/score/scoretu1@2x.png" width="110px"/>
                         </div>
-                        <div class="product-name">积分大转盘</div>
-                        <div class="use">
-                            <span>￥2-8888</span>
-                            <span>10积分</span>
-                        </div>
+                        <div class="product-name" style="height: 54px;line-height: 54px">积分大转盘</div>
+                        <!--<div class="use">-->
+                            <!--<span></span>-->
+                            <!--<span></span>-->
+                        <!--</div>-->
                     </li>
                     <li v-for="item in productData" :key="item.id" @click="mOrder(item)">
                         <div class="product-img">
