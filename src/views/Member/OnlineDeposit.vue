@@ -28,7 +28,7 @@
             <div class="recharge" style="margin-top: 80px;">
                 <div>
                     <span class="title">充值金额</span>
-                    <span class="tmux">(急速到账)</span>
+                    <span class="tmux">(极速到账)</span>
                 </div>
                 <div class="input-panel">
                     <span style="font-size: 16px"><b>￥</b></span>
@@ -47,7 +47,7 @@
             <div class="recharge" style="margin-top: 10px;">
                 <div>
                     <span class="title">充值方式</span>
-                    <span class="tmux">(急速到账)</span>
+                    <span class="tmux">(极速到账)</span>
                 </div>
                 <div class="pay-way">
                     <div :class="{active: tab=='alpay'}"
@@ -62,7 +62,7 @@
                     </div>
                     <div :class="{active: tab=='bank'}" @click="mSelectRechargeType('bank',companyAccounts)">
                         <img src="../../assets/images/bank.png" width="23px"/>
-                        <span>银行卡</span>
+                        <span>线下充值</span>
                     </div>
                     <div :class="{active: tab=='scan'}" @click="mSelectRechargeType('scan',rechargeOther)">
                         <img src="../../assets/images/scan.png" width="22px"/>
@@ -163,7 +163,7 @@
                 <span>转账金额（元）</span>
                 <span style="font-size: 20px;margin-top: 8px">
                     <span style="font-size:18px">￥</span>
-                    <span>{{amount}}</span>
+                    <span>{{vmunderline.orderAmount}}</span>
                 </span>
             </div>
             <div class="code-pay" v-if="selectData.accountType==1 || selectData.accountType==2">
@@ -173,6 +173,7 @@
                     <div style="margin-top: 10px">长按保存上方二维码</div>
                     <div v-if="selectData.accountType==1">打开支付宝扫描二维码完成支付</div>
                     <div v-if="selectData.accountType==2">打开微信扫一扫完成支付</div>
+                    <div>请务必按照提示金额进行存款，否则您的存款将无法及时到账</div>
                 </div>
             </div>
             <div class="panel" v-else>
@@ -412,7 +413,14 @@
                     this.now = moment().format('YYYY-MM-DD HH:mm:ss');
                     this.vmunderline.companyAccountId=this.selectData.id;
                     this.vmunderline.minMoney = this.selectData.minMoney;
-                    this.vmunderline.orderAmount=this.amount;
+                    if (this.selectData.accountType==1 || this.selectData.accountType==2) {
+                        let minAmount= parseInt(Math.random()*(99-10+1)+10,10);
+                        this.vmunderline.orderAmount=parseFloat(this.amount)+parseFloat(minAmount);
+                    }
+                    else{
+                        this.vmunderline.orderAmount=this.amount;
+                    }
+
                     this.underlineDrawer = true;
                     return;
                 }
