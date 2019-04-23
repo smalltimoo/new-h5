@@ -30,6 +30,7 @@
                                     </button>
                                 </div>
                             </section>
+
                         </div>
                     </div>
                 </aside>
@@ -101,14 +102,12 @@
                                         </div>
                                         <div style="width: 30%;height:50px"></div>
                                         <div>
-                                            <div class="status" style="width:200px;">{{item.info}}</div>
+                                            <div class="status" style="width:230px;font-size: 12px">{{item.info}}</div>
                                             <div class="Types">
                                                 {{ $t('agent.transactionsdetailList.transactionsdetailList11')}}<!--备注 -->
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </Scroll>

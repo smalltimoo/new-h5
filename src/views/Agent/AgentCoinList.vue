@@ -103,7 +103,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="info" style="text-align: left;">
+                                    <div class="info" style="text-align: left;" v-if="item.info">
                                         <span>{{ $t('agent.agentCoinList.instructions')}}:{{item.info}}</span>
                                         <!--操作说明 -->
                                     </div>

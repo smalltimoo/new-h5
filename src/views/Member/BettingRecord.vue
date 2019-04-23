@@ -23,7 +23,7 @@
                                 </button><!-- 选择日期 ...-->
                                 <Divider class="top-title"  style="background-color: #4c4c4c;">{{ $t('member.bettingRecord.br3') }}</Divider><!-- 游戏厅-->
                                 <div class="mui-card">
-                                    <ul class="mui-table-view" style="max-height:410px;overflow-y:auto;">
+                                    <ul class="mui-table-view" style="max-height:380px;overflow-y:auto;">
                                         <li class="mui-table-view-cell mui-radio mui-right"
                                             v-for="(item,i) in initData.gamecompays" :key="i">
                                             <input name="radio" type="radio" :checked="item.checked" :value="item.id"

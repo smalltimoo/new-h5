@@ -3,13 +3,10 @@
         <div class="game-body">
             <div class="userSettings game_view">
                 <div class="TopHeader" ref="TopHeader">
-                    <div id="return" style="position: absolute;">
-                        <Icon type="md-close" @click="mClose"/>
-                    </div>
+                    <i class="el-icon-close" @click="mClose" style="font-size: 19px;color: #fff;font-weight: 600"></i>
                 </div>
                 <div :style="cGCStyles" style="width:100%;height:100%;-webkit-overflow-scrolling:touch;overflow:auto;">
-                    <iframe
-                            :src="gameUrl"
+                    <iframe :src="gameUrl"
                             frameborder="0"
                             width="100%"
                             height="100%"
@@ -136,7 +133,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     .userSettings {
         width: 100%;
         font-size: 0;
@@ -172,5 +169,17 @@
     .game-container {
         border: 0px;
         overflow: auto;
+    }
+
+    .TopHeader {
+        position: absolute;
+        top: 10px;
+        height: 32px;
+        width: 32px;
+        background-color: rgba(0, 0, 0, 0.4);
+        z-index: 999;
+        right: 10px;
+        border-radius: 25px;
+        padding-top: 7px;
     }
 </style>
