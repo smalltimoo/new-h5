@@ -9,7 +9,7 @@
             </div>
             <a class="download" :href="sysPicObj.appUrl" target="_blank">立即下载</a>
         </div>
-        <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:6px' : 'margin-top:-44px'">
+        <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:5px' : 'margin-top:-44px'">
             <div class="header-left">
                 <!--<Icon type="md-menu" class="icon-menu"/>-->
             </div>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="container">
-            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px;min-height: 150px">
+            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px;">
                 <cube-slide-item v-for="(item, index) in getBanner" :key="index">
                     <img :src="item" width="100%">
                 </cube-slide-item>
@@ -120,7 +120,7 @@
                                 <span>{{ item.activityTitle }}</span>
                                 <span>{{ item.endTimeStr }}</span>
                             </div>
-                            <img :src="item.activityImg" width="100%"/>
+                            <img :src="item.activityImg" width="100%" style="max-height: 85px;min-height: 80px"/>
                         </router-link>
                     </el-carousel-item>
                 </el-carousel>

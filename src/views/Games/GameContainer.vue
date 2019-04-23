@@ -180,6 +180,6 @@
         z-index: 999;
         right: 10px;
         border-radius: 25px;
-        padding-top: 7px;
+        padding-top: 6px;
     }
 </style>
