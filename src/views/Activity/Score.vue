@@ -37,7 +37,7 @@
                 <ul class="products">
                     <li @click="mJumpDraw" v-if="tab=='0' || tab=='-1'">
                         <div class="product-img">
-                            <img src="../../assets/images/score/scoretu1@2x.png" width="110px"/>
+                            <img src="../../assets/images/score/scoretu1@2x.png" width="105px"/>
                         </div>
                         <div class="product-name" style="height: 54px;line-height: 54px">积分大转盘</div>
                         <!--<div class="use">-->
