@@ -163,7 +163,10 @@
                 <span>转账金额（元）</span>
                 <span style="font-size: 20px;margin-top: 8px">
                     <span style="font-size:18px">￥</span>
-                    <span>{{vmunderline.orderAmount}}</span>
+                    <span>
+                        <span v-text="amount"></span>
+                        <span style="color: rgb(247, 246, 28)">.{{minAmount}}</span>
+                    </span>
                 </span>
             </div>
             <div class="code-pay" v-if="selectData.accountType==1 || selectData.accountType==2">
@@ -173,7 +176,7 @@
                     <div style="margin-top: 10px">长按保存上方二维码</div>
                     <div v-if="selectData.accountType==1">打开支付宝扫描二维码完成支付</div>
                     <div v-if="selectData.accountType==2">打开微信扫一扫完成支付</div>
-                    <div>请务必按照提示金额进行存款，否则您的存款将无法及时到账</div>
+                    <div style="color: #cd0005">转账金额 (须包含小数位)</div>
                 </div>
             </div>
             <div class="panel" v-else>
@@ -202,9 +205,10 @@
                     <input type="text"
                            v-if="selectData.accountType==1 || selectData.accountType==2"
                            v-model="payName"
-                           placeholder="请选择支付通道"  readonly
+                           placeholder="请选择支付通道" readonly
                     />
-                    <input type="text" v-model="underlineText" placeholder="请选择支付通道"  readonly v-else @click="showPicker"/>
+                    <input type="text" v-model="underlineText" placeholder="请选择支付通道" readonly v-else
+                           @click="showPicker"/>
                     <Icon type="ios-arrow-forward" class="icon-menu"/>
                 </div>
                 <div class="deposit" style="justify-content: flex-start;padding: 0 10px">
@@ -215,7 +219,8 @@
                            placeholder="转账人银行"
                            readonly
                     />
-                    <input type="text" v-model="underlineBank" placeholder="转账人银行"  readonly v-else @click="showBankPicker"/>
+                    <input type="text" v-model="underlineBank" placeholder="转账人银行" readonly v-else
+                           @click="showBankPicker"/>
                     <Icon type="ios-arrow-forward" class="icon-menu"/>
                 </div>
                 <div class="deposit" style="justify-content: flex-start;padding: 0 10px;border: 0">
@@ -242,6 +247,7 @@
 </template>
 <script>
     import win from "@/mixins/window";
+
     const moment = require('moment');
 
     export default {
@@ -262,12 +268,13 @@
                 selectData: {},
                 underlineDrawer: false,
                 now: "",
-                payName:'',
-                payBank:'',
-                underlineText:'',
-                underlineBank:'',
+                payName: '',
+                payBank: '',
+                underlineText: '',
+                underlineBank: '',
+                minAmount: '',
                 vmunderline: {
-                    minMoney:'',
+                    minMoney: '',
                     orderAmount: "",
                     underlineType: "",
                     underlineBankType: "",
@@ -282,18 +289,19 @@
                 if (this.selectData.accountType == 1) {
                     this.vmunderline.underlineType = '-104'
                     this.payName = this.underlineTypes.filter(item => item.id == '-104')[0].value;
-                    this.payBank=this.banktypes.filter(item=>item.id==this.selectData.drawAccountType)[0].bankName;
+                    this.payBank = this.banktypes.filter(item => item.id == this.selectData.drawAccountType)[0].bankName;
                     this.vmunderline.underlineBankType = this.selectData.drawAccountType;
                 }
                 if (this.selectData.accountType == 2) {
                     this.vmunderline.underlineType = '-105'
                     this.payName = this.underlineTypes.filter(item => item.id == '-105')[0].value;
-                    this.payBank=this.banktypes.filter(item=>item.id==this.selectData.drawAccountType)[0].bankName
+                    this.payBank = this.banktypes.filter(item => item.id == this.selectData.drawAccountType)[0].bankName
                     this.vmunderline.underlineBankType = this.selectData.drawAccountType;
                 }
             },
         },
-        mounted() {},
+        mounted() {
+        },
         methods: {
             mInit() {
                 //线上支付方式  isAjax=1显示二维码   2本页面打开链接    3新窗口打开链接
@@ -411,14 +419,13 @@
                 }
                 if (this.tab == 'bank') {
                     this.now = moment().format('YYYY-MM-DD HH:mm:ss');
-                    this.vmunderline.companyAccountId=this.selectData.id;
+                    this.vmunderline.companyAccountId = this.selectData.id;
                     this.vmunderline.minMoney = this.selectData.minMoney;
-                    if (this.selectData.accountType==1 || this.selectData.accountType==2) {
-                        let minAmount= parseInt(Math.random()*(99-10+1)+10,10);
-                        this.vmunderline.orderAmount=parseFloat(this.amount)+parseFloat(minAmount);
-                    }
-                    else{
-                        this.vmunderline.orderAmount=this.amount;
+                    if (this.selectData.accountType == 1 || this.selectData.accountType == 2) {
+                        this.minAmount = parseInt(Math.random() * (99 - 10 + 1) + 10, 10);
+                        this.vmunderline.orderAmount = parseFloat(this.amount) + parseFloat(this.minAmount) / 100;
+                    } else {
+                        this.vmunderline.orderAmount = this.amount;
                     }
 
                     this.underlineDrawer = true;
@@ -483,15 +490,15 @@
                             value: 'id',
                             text: 'value'
                         },
-                        onSelect: (selectedVal, selectedIndex, selectedText)=>{
-                            this.vmunderline.underlineType=selectedVal[0];
-                            this.underlineText=selectedText[0];
+                        onSelect: (selectedVal, selectedIndex, selectedText) => {
+                            this.vmunderline.underlineType = selectedVal[0];
+                            this.underlineText = selectedText[0];
                         },
                     })
                 }
                 this.aliasPicker.show()
             },
-            showBankPicker(){
+            showBankPicker() {
                 if (!this.bankPicker) {
                     this.bankPicker = this.$createPicker({
                         title: '请选择转账人银行',
@@ -500,15 +507,15 @@
                             value: 'id',
                             text: 'bankName'
                         },
-                        onSelect: (selectedVal, selectedIndex, selectedText)=>{
-                            this.vmunderline.underlineBankType=selectedVal[0];
-                            this.underlineBank=selectedText[0];
+                        onSelect: (selectedVal, selectedIndex, selectedText) => {
+                            this.vmunderline.underlineBankType = selectedVal[0];
+                            this.underlineBank = selectedText[0];
                         },
                     })
                 }
                 this.bankPicker.show()
             },
-            saveUnderline(){
+            saveUnderline() {
                 if (this.vmunderline.underlineType == "" || isNaN(this.vmunderline.underlineType)) {
                     this.$Message.warning(this.$t('member.financeDeposit.fd32'));   //请选择打款方式
                     return;
@@ -527,15 +534,16 @@
                     this.mLoading(false);
                     if (result.code == 0) {
                         this.$Message.success({
-                            content:'存款信息已提交,请等待工作人员审核！',
-                            duration:4,
-                            onClose:()=>{
-                                this.$router.push({name:'CapitalRecord'})
+                            content: '存款信息已提交,请等待工作人员审核！',
+                            duration: 4,
+                            onClose: () => {
+                                this.$router.push({name: 'CapitalRecord'})
                             }
                         })
 
                     } else {
-                        this.$Message.error(result.message, () => {}, "error");
+                        this.$Message.error(result.message, () => {
+                        }, "error");
                     }
                 });
             },
@@ -555,9 +563,8 @@
         created() {
             this.$store.commit('CHANGE_TAB', 'OnlineDeposit');
             if (this.cNeedLogin) {
-                this.$router.push({name:'Login'})
-            }
-            else{
+                this.$router.push({name: 'Login'})
+            } else {
                 this.mMemberAmount();
                 this.mInit();
                 this.mUnderlineTypes();
