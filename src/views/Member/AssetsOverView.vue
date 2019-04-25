@@ -41,7 +41,7 @@
                         </div>
                         <span style="color: #ccc;display: flex;align-items: center;"
                               @click="mGetError(item.gameCompanyId);"
-                              v-if="item.code=='-1'"
+                              v-if="item.coin=='-1'"
                         >
                             <i class="el-icon-loading" v-if="item.loading"></i>
                             <span v-if="!item.loading">获取异常</span>
@@ -92,7 +92,11 @@
                     .then(result => {
                         this.walletlist = result.data.walletlist;
                         this.totalCoins = this.walletlist.reduce((x, y) => {
-                            return parseFloat(x + y.coin || 0);
+                            let coin=y.coin;
+                            if(y.coin<0){
+                                coin=0
+                            }
+                            return parseFloat(x + coin || 0);
                         }, 0);
                         this.otherCoins = parseFloat((this.totalCoins - this.walletlist[0].coin) / 100).toFixed(2)
 
@@ -109,20 +113,34 @@
                         item.loading = true;
                     }
                 })
+
+                this.walletlist=[...[],...this.walletlist];
                 this.$http
                     .post("/managerGame/getMemberGameBlance.json", {gameCompanyId: gameCompanyId})
                     .then(result => {
-                        this.walletlist.map(item => {
-                            if (item.gameCompanyId == gameCompanyId) {
-                                item.coin = result.data.blance;
-                                item.loading = false
-                            }
-                        })
-                        this.walletlist = [...[], ...this.walletlist];
-                        this.totalCoins = this.walletlist.reduce((x, y) => {
-                            return parseFloat(x + y.coin || 0);
-                        }, 0);
-                        this.otherCoins = parseFloat((this.totalCoins - this.walletlist[0].coin) / 100).toFixed(2)
+                        if(result.data){
+                            this.walletlist.map(item => {
+                                if (item.gameCompanyId == gameCompanyId) {
+                                    item.coin = result.data.blance;
+                                    item.loading = false;
+                                }
+                            })
+                            this.walletlist = [...[], ...this.walletlist];
+                            this.totalCoins = this.walletlist.reduce((x, y) => {
+                                return parseFloat(x + y.coin || 0);
+                            }, 0);
+                            this.otherCoins = parseFloat((this.totalCoins - this.walletlist[0].coin) / 100).toFixed(2)
+                        }
+                        else{
+                            this.$Message.error('暂未获得该游戏厅数据!')
+                            this.walletlist.map(item => {
+                                if (item.gameCompanyId == gameCompanyId) {
+                                    item.loading = false;
+                                }
+                            })
+
+                            this.walletlist=[...[],...this.walletlist];
+                        }
                     })
             },
             transferAll() {

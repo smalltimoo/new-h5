@@ -2,7 +2,7 @@
     <div class="main-body">
         <div class="header">
             <div class="header-left">
-                <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
+                <Icon type="ios-arrow-back" class="icon-menu" @click="$router.push({ name: 'Home'})"/>
             </div>
             <div class="header-middle">
                 {{this.gameName}}

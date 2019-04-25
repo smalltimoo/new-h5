@@ -1,17 +1,16 @@
 <template>
-    <div v-resize="mOnResize">
+    <div>
         <div class="game-body">
             <div class="userSettings game_view">
                 <div class="TopHeader" ref="TopHeader">
                     <i class="el-icon-close" @click="mClose" style="font-size: 19px;color: #fff;font-weight: 600"></i>
                 </div>
-                <div :style="cGCStyles" style="width:100%;height:100%;-webkit-overflow-scrolling:touch;overflow:auto;">
+                <div style="width:100%;height:100%;-webkit-overflow-scrolling:touch;overflow:auto;">
                     <iframe :src="gameUrl"
                             frameborder="0"
                             width="100%"
                             height="100%"
                             class="game-container"
-                            :style="cIframeStyles"
                     ></iframe>
                 </div>
             </div>
@@ -27,19 +26,6 @@
                 width: 0,
                 height: 0,
                 comeSource: ''
-            }
-        },
-        computed: {
-            cGCStyles() {
-                return {
-                    width: this.width + 'px',
-                    height: this.height + 'px'
-                }
-            },
-            cIframeStyles() {
-                return {
-                    minHeight: this.height + 'px'
-                }
             }
         },
         mounted() {
@@ -136,6 +122,7 @@
 <style scoped>
     .userSettings {
         width: 100%;
+        height: 100%;
         font-size: 0;
     }
 

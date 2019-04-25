@@ -316,6 +316,7 @@
                             this.$Message.success(this.$t('store.order.order12'));
                             this.mInit();
                             this.mPullData();
+                            this.mPullScoreDetail();
                         } else {
                             this.$Message.error(result.message);
                         }

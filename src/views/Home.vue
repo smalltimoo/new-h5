@@ -93,7 +93,7 @@
                 </div>
                 <div class="game-rooms">
                     <div v-for="(game, index) in selectedGames" :key="index"
-                         @click="mEnterGame(game.gameId==601?301:game.gameId,game.typeId==50?0:((game.gameId==601||(game.gameId==301&&game.typeId==6))?'ws00':''),game.typeId==50?'50':'',game.gameName)"
+                         @click="mEnterGame(game.gameId==601?301:game.gameId,game.typeId==50?0:((game.gameId==601||(game.gameId==301&&game.typeId==6))?'ws00':''),game.typeId,game.gameName)"
                     >
                         <img :src="game.mobileImg" width="100%" height="105px" v-if="game.mobileImg"/>
                         <div class="img-error" style="height: 105px;" v-else></div>
@@ -224,7 +224,7 @@
                     comGameType = ''
                 }
 
-                if (this.gameType == 5) {
+                if (comGameType == 5) {
                     this.$router.push({
                         name: 'GameList',
                         params: {
