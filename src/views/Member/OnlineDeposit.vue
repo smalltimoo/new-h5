@@ -165,7 +165,7 @@
                     <span style="font-size:18px">￥</span>
                     <span>
                         <span v-text="amount"></span>
-                        <span style="color: rgb(247, 246, 28)">.{{minAmount}}</span>
+                        <span style="color: rgb(247, 246, 28)" v-if="minAmount">.{{minAmount}}</span>
                     </span>
                 </span>
             </div>
@@ -273,6 +273,7 @@
                 underlineText: '',
                 underlineBank: '',
                 minAmount: '',
+                nextLoading:false,
                 vmunderline: {
                     minMoney: '',
                     orderAmount: "",
@@ -516,6 +517,10 @@
                 this.bankPicker.show()
             },
             saveUnderline() {
+                if(this.nextLoading){
+                    this.$Message.warning('请稍候再试！');   //请稍候再试！
+                    return false;
+                }
                 if (this.vmunderline.underlineType == "" || isNaN(this.vmunderline.underlineType)) {
                     this.$Message.warning(this.$t('member.financeDeposit.fd32'));   //请选择打款方式
                     return;
@@ -529,6 +534,7 @@
                     return;
                 }
                 this.mLoading(true);
+                this.nextLoading=true;
                 let params = Object.assign({}, this.vmunderline);  //先检查是否给手续费
                 this.$http.post("/recharge/underlineorder.json", params).then(result => {
                     this.mLoading(false);
@@ -537,6 +543,7 @@
                             content: '存款信息已提交,请等待工作人员审核！',
                             duration: 4,
                             onClose: () => {
+                                this.nextLoading=false;
                                 this.$router.push({name: 'CapitalRecord'})
                             }
                         })
