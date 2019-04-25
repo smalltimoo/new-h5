@@ -92,7 +92,7 @@
             },
             mInit() {
                 this.$http
-                    .post("/activities.json", {param: {limit: 20, start: 0}})
+                    .post("/activities.json",  {limit: 20, start: 0})
                     .then(result => {
                         if (result.code == 0) {
                             let list = result.data.activityVoList
