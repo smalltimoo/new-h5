@@ -70,7 +70,7 @@
                         >
                             <div v-for="(item,i) in dataList" :key="i">
                                 <div style="font-size: 12px">{{item.createTimeStr}}</div>
-                                <div class="rowbg el-row" v-for="(item,i) in dataList" :key="i">
+                                <div class="rowbg el-row">
                                     <div class="el-col el-col-24">
                                         <div class="el-col el-col-24">
                                             <div class="el-col el-col-24">
@@ -167,11 +167,7 @@
             mReachBottom() {
                 return new Promise(resolve => {
                     this.mLoading(true);
-                    if (
-                        parseInt(
-                            this.initData.total / (this.searchVM.rows * this.searchVM.page)
-                        ) > 0
-                    ) {
+                    if (parseInt(this.initData.total / (this.searchVM.rows * this.searchVM.page)) > 0) {
                         ++this.searchVM.page;
                         this.searchVM.start = (this.searchVM.page - 1) * this.searchVM.rows;
                         this.searchVM.limit = this.searchVM.rows;
