@@ -86,8 +86,8 @@
                                 <img src="../../assets/images/alipay.png" width="20px"
                                      style="margin-left: 8px;margin-right: 8px"
                                 />
-                                <span> 支付宝 </span>&nbsp;
-                                <span> 范围：&nbsp; {{ it.minMoney}} - {{it.maxMoney}} 之间 </span>
+                                <span> 支付宝 </span>&nbsp;&nbsp;&nbsp;
+                                <span> 范围:{{ it.minMoney}} - {{it.maxMoney}} 之间 </span>
                                 <span class="radio-id">{{ it.apiid}}</span>
                             </Radio>
                         </div>

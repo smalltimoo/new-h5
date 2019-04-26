@@ -11,7 +11,12 @@
         </div>
         <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:5px' : 'margin-top:-44px'">
             <div class="header-left">
-                <!--<Icon type="md-menu" class="icon-menu"/>-->
+                <!--<Icon type="md-menu" class="icon-menu" @click="drawer = true"/>-->
+                <!--<Drawer placement="left" width="80" :closable="false" v-model="drawer" class="header-drawer">-->
+                    <!--<div class="left-top">-->
+
+                    <!--</div>-->
+                <!--</Drawer>-->
             </div>
             <div class="header-middle">
                 <img :src="sysPicObj.mobilelongLogo" width="110px"/>
@@ -53,7 +58,8 @@
             <div class="notice">
                 <i class="icon laba"/>
                 <marquee behavior="scroll" direction="left" scrollamount="4" id="mar0">
-                    <span v-for="(item,index) in cGongGaos" :key="index" v-text="item.content" style="margin-right: 100px"></span>
+                    <span v-for="(item,index) in cGongGaos" :key="index" v-text="item.content"
+                          style="margin-right: 100px"></span>
                 </marquee>
             </div>
 
@@ -152,6 +158,7 @@
         components: {},
         data() {
             return {
+                drawer: false,
                 showApp: true,
                 gameType: 0,
                 isDraw: false,

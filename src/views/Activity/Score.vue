@@ -3,7 +3,7 @@
         <div class="header">
             <div class="header-left"></div>
             <div class="header-middle">
-                优惠活动
+                积分商城
             </div>
             <div class="header-right"></div>
         </div>

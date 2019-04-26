@@ -2,7 +2,6 @@
     <div class="login">
         <div class="top"></div>
         <div class="container">
-
             <Icon type="ios-arrow-back" @click="activeName='mobileLogin'" class="goBack" v-if="activeName=='register'"/>
             <el-tabs v-model="activeName" class="login-panel">
                 <el-tab-pane label="手机登录" name="mobileLogin" v-if="activeName!='register' && apiKey">
@@ -17,7 +16,7 @@
                         </el-select>
                         <input type="number" ref="username" class="login-input phone" placeholder="请输入手机号"
                                @click="$refs.phone1.close()" v-model="phone"
-                               style="padding-left: 155px"
+                               style="padding-left: 165px"
                         />
                         <cube-tip ref="phone1"
                                 class="tip"
