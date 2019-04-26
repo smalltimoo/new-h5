@@ -218,6 +218,7 @@
                 if (result.code == 0) {
                     this.agnetLevel = result.data.agnetLevel;
                     this.memberLevel = result.data.memberLevel;
+                    this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
                 }
             });
             this.mMemberAmount();
