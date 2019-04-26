@@ -16,13 +16,13 @@
                         </el-select>
                         <input type="number" ref="username" class="login-input phone" placeholder="请输入手机号"
                                @click="$refs.phone1.close()" v-model="phone"
-                               style="padding-left: 165px"
+                               style="padding-left: 170px"
                         />
                         <cube-tip ref="phone1"
                                 class="tip"
                                 direction="top"
                         >
-                            请输入手机号码
+                            请正确输入手机号码
                         </cube-tip>
                     </div>
                     <div style="position: relative">
@@ -146,7 +146,7 @@
                                 class="tip"
                                 direction="top"
                         >
-                            {{ this.$t('reg.phonenoempty') }}
+                            请输入正确手机号码
                         </cube-tip>
                     </div>
 
