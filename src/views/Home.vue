@@ -21,8 +21,8 @@
                         <img src="../assets/images/home/defaultAvator.png" width="47px"
                              style="margin-top: 15px;"/>
                         <div class="user-operate" v-if="cNeedLogin">
-                            <span>登录</span>&emsp;&emsp;
-                            <span>注册</span>
+                            <span @click="$router.push({name:'Login'})">登录</span>&emsp;&emsp;
+                            <span @click="$router.push({name:'Login', params:{type:'register'}})">注册</span>
                         </div>
                         <div class="user-operate" v-else>
                             <div>

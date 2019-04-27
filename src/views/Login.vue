@@ -212,6 +212,9 @@
             },
         },
         mounted(){
+            if(this.$route.params.type=='register'){
+                this.activeName='register';
+            }
             if(this.apiKey==''){
                 this.activeName='login';
             }
