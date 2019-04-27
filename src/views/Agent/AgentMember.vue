@@ -5,7 +5,7 @@
                 <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
             </div>
             <div class="header-middle">
-                {{ $t('member.userLimit.ul1') }}
+                代理中心
             </div>
             <div class="header-right">
                 <router-link :to="{name:'AgentThat'}">代理说明</router-link>
