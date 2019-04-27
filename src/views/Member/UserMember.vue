@@ -239,6 +239,11 @@
                         this.walletlist = result.data.walletlist;
                         this.totalCoins = this.walletlist.reduce((x, y) => {
                             return parseFloat(x + y.coin || 0);
+                            let coin=y.coin;
+                            if(y.coin<0){
+                                coin=0
+                            }
+                            return parseFloat(x + coin || 0);
                         }, 0);
 
                         this.mLoading(false);
