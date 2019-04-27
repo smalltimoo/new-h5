@@ -26,7 +26,7 @@
                         </div>
                         <div class="user-operate" v-else>
                             <div>
-                                余额：{{ parseFloat(cLoginUser.integral/100).toFixed(2) }}
+                                余额：{{ parseFloat(cLoginUser.centerAmount/100).toFixed(2) }}
                                 <span style="font-size: 12px">元</span>
                             </div>&emsp;&emsp;
                             <div>
