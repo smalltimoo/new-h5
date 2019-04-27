@@ -20,7 +20,7 @@
                                 {{cQQ2}}
                             </a>
                         </li>
-                        <li class="icon-qq">
+                        <li class="icon-qq"v-if="agentQQ">
                             <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{agentQQ}}</a>
                         </li>
                     </ul>
@@ -75,9 +75,7 @@
                 </div>
                 <div>
                     <router-link :to="{name:'AssetsOverView'}">
-                        <span>
-                               总资产
-                        </span>
+                        <span>总资产</span>
                         <span>{{ parseFloat(totalCoins/100).toFixed(2) }} <span style="font-size: 12px">元</span></span>
                     </router-link>
                 </div>

@@ -22,7 +22,7 @@
                                 {{cQQ2}}
                             </a>
                         </li>
-                        <li class="icon-qq">
+                        <li class="icon-qq" v-if="agentQQ">
                             <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{agentQQ}}</a>
                         </li>
                     </ul>
