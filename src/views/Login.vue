@@ -1,5 +1,8 @@
 <template>
     <div class="login">
+        <div style="position: absolute;right: 10px; top:10px;"  @click="$router.push({name:'Home'})">
+            <img src="../assets/images/login/Home.png" width="25px"/>
+        </div>
         <div class="top"></div>
         <div class="container">
             <Icon type="ios-arrow-back" @click="activeName='mobileLogin'" class="goBack" v-if="activeName=='register'"/>

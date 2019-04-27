@@ -32,7 +32,8 @@ const TYPES = {
   // 系统图片
   SYS_PIC: 'SYS_PIC',
   WEBNAV: 'WEBNAV',
-  CHANGE_TAB:'CHANGE_TAB'
+  CHANGE_TAB:'CHANGE_TAB',
+  LEFT_DRAWER:'LEFT_DRAWER',
 };
 
 export default TYPES;

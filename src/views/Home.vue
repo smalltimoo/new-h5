@@ -9,14 +9,72 @@
             </div>
             <a class="download" :href="sysPicObj.appUrl" target="_blank">立即下载</a>
         </div>
-        <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:5px' : 'margin-top:-44px'">
+        <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:5px' : 'margin-top:-46px'">
             <div class="header-left">
-                <!--<Icon type="md-menu" class="icon-menu" @click="drawer = true"/>-->
-                <!--<Drawer placement="left" width="80" :closable="false" v-model="drawer" class="header-drawer">-->
-                    <!--<div class="left-top">-->
-
-                    <!--</div>-->
-                <!--</Drawer>-->
+                <Icon type="md-menu" class="icon-menu" @click="openDrawer"/>
+                <Drawer placement="left" width="80" :closable="false" v-model="leftDrawer" class="header-drawer">
+                    <div class="left-top">
+                        <span class="level">
+                            <img src="../assets/images/vip.png" width="11px"> &nbsp;
+                            {{cLoginUser.memberLevelName}}
+                        </span>
+                        <img src="../assets/images/home/defaultAvator.png" width="47px"
+                             style="margin-top: 15px;"/>
+                        <div class="user-operate" v-if="cNeedLogin">
+                            <span>登录</span>&emsp;&emsp;
+                            <span>注册</span>
+                        </div>
+                        <div class="user-operate" v-else>
+                            <div>
+                                余额：{{ parseFloat(cLoginUser.integral/100).toFixed(2) }}
+                                <span style="font-size: 12px">元</span>
+                            </div>&emsp;&emsp;
+                            <div>
+                                积分： {{ cLoginUser.integral ? parseFloat(cLoginUser.integral/100).toFixed(2) :'0.00' }}
+                                <span style="font-size: 12px">分</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="left-center">
+                        <router-link :to="{name:'AgentMember'}" v-if="cLoginUser.agnetLevel>0">
+                            <img src="../assets/images/home/left-agent.png" width="20px"/>
+                            代理
+                        </router-link>
+                        <router-link :to="{name:'OnlineDeposit'}">
+                            <img src="../assets/images/home/left-recharge.png" width="20px"/>
+                            充值
+                        </router-link>
+                        <router-link :to="{name:'IndoorTransfer'}">
+                            <img src="../assets/images/home/left-change.png" width="20px"/>
+                            额度转换
+                        </router-link>
+                        <router-link :to="{name:'Withdrawals'}">
+                            <img src="../assets/images/home/left-out.png" width="18px"/>
+                            提现
+                        </router-link>
+                        <router-link :to="{name:'Discount'}" style="margin-left: -2px">
+                            <img src="../assets/images/home/left-active.png" width="20px"/>
+                            活动
+                        </router-link>
+                    </div>
+                    <div class="myGame">
+                         常玩游戏
+                    </div>
+                    <div class="left-center">
+                        <li @click="quickEnterGame('101','','1')">
+                            <img src="../assets/images/home/play1.png" width="20px"/>
+                            DG 游戏厅
+                        </li>
+                        <li @click="quickEnterGame('506','','5','QG游戏厅')">
+                            <img src="../assets/images/home/play2.png" width="20px"/>
+                            QG 游戏厅
+                        </li>
+                        <li @click="quickEnterGame('102','','3')">
+                            <img src="../assets/images/home/play3.png" width="20px"/>
+                            BG 彩票厅
+                        </li>
+                    </div>
+                </Drawer>
             </div>
             <div class="header-middle">
                 <img :src="sysPicObj.mobilelongLogo" width="110px"/>
@@ -59,7 +117,8 @@
                 <i class="icon laba"/>
                 <marquee behavior="scroll" direction="left" scrollamount="4" id="mar0">
                     <span v-for="(item,index) in cGongGaos" :key="index" v-text="item.content"
-                          style="margin-right: 100px"></span>
+                          style="margin-right: 100px">
+                    </span>
                 </marquee>
             </div>
 
@@ -158,7 +217,7 @@
         components: {},
         data() {
             return {
-                drawer: false,
+                // drawer: false,
                 showApp: true,
                 gameType: 0,
                 isDraw: false,

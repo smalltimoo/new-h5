@@ -2,7 +2,7 @@
     <div class="onlineDeposit">
         <div class="header">
             <div class="header-left">
-                <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
+                <!--<Icon type="md-menu" class="icon-menu" @click="openDrawer"/>-->
             </div>
             <div class="header-middle">
                 充值
@@ -272,7 +272,7 @@
                 payBank: '',
                 underlineText: '',
                 underlineBank: '',
-                minAmount: '',
+                minAmount: 0,
                 nextLoading:false,
                 vmunderline: {
                     minMoney: '',

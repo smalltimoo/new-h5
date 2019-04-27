@@ -11,33 +11,37 @@
         </div>
         <div class="no-list" v-if="!dataList||dataList.length==0"></div>
         <div class="mui-content">
-            <div class="rowbg el-row" v-for="(item,i) in dataList" :key="i">
-                <div class="el-col el-col-24">
+            <div  v-for="(item,i) in dataList" :key="i">
+                <div style="font-size: 12px">{{item.createTimeStr}}</div>
+                <div class="rowbg el-row">
                     <div class="el-col el-col-24">
                         <div class="el-col el-col-24">
-                            <div class="grid-content">
-                                <span class="Save success">{{item.linkTypeStr}}</span>
-                                <span style="height: 30px;line-height: 30px">{{ $t('agent.linkManagement.linkManagement2')}}:{{item.regNum}}</span>
+                            <div class="el-col el-col-24">
+                                <div class="grid-content">
+                                    <span class="Save success">{{item.linkTypeStr}}</span>
+                                    <span style="height: 30px;line-height: 30px">{{ $t('agent.linkManagement.linkManagement2')}}:{{item.regNum}}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="el-col el-col-24">
                     <div class="el-col el-col-24">
-                        <div class=" bg-purple-dark data">
-                            地址：{{item.linkUrl}}
+                        <div class="el-col el-col-24">
+                            <div class=" bg-purple-dark data">
+                                地址：{{item.linkUrl}}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="el-col el-col-24" style="margin-top: 10px;text-align: right">
-                    <Button type="primary" v-if="item.linkType==2" @click="mShow(item)">{{
-                        $t('agent.linkManagement.linkManagement4')}}
-                    </Button><!--分红比例 -->
-                    <Button type="warning" style="margin-left:15px;" @click="mDelete(item)"> {{
-                        $t('agent.linkManagement.linkManagement5')}}
-                    </Button><!--一键删除 -->
-                </div>
+                    <div class="el-col el-col-24" style="margin-top: 10px;text-align: right">
+                        <Button type="info" class="clipboard" @click="copy" :data-clipboard-text="item.linkUrl">复制</Button> &nbsp;
+                        <Button type="primary" v-if="item.linkType==2" @click="mShow(item)">{{
+                            $t('agent.linkManagement.linkManagement4')}}
+                        </Button><!--分红比例 -->
+                        <Button type="warning" style="margin-left:15px;" @click="mDelete(item)"> {{
+                            $t('agent.linkManagement.linkManagement5')}}
+                        </Button><!--一键删除 -->
+                    </div>
 
+                </div>
             </div>
         </div>
     </div>
