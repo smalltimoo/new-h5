@@ -22,6 +22,9 @@ export default {
         cNeedLogin() {
             return this.$store.getters.getNeedLogin;
         },
+        sysInfo: function() {
+            return this.$store.getters.getSysInfo;
+        },
         cQQ1() {
             let sysInfo = this.$store.getters.getSysInfo;
             this.drawBanner = sysInfo.rouletteSlide;

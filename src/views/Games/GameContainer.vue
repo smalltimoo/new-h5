@@ -1,16 +1,16 @@
 <template>
-    <div>
+    <div class="game-container">
         <div class="game-body">
-            <div class="userSettings game_view">
+            <div class="game_view">
                 <div class="TopHeader" ref="TopHeader">
-                    <i class="el-icon-close" @click="mClose" style="font-size: 19px;color: #fff;font-weight: 600"></i>
+                    <i class="el-icon-close" @click="mClose" style="font-size: 18px;color: #fff;font-weight: 600"></i>
                 </div>
                 <div style="width:100%;height:100%;-webkit-overflow-scrolling:touch;overflow:auto;">
                     <iframe :src="gameUrl"
                             frameborder="0"
                             width="100%"
                             height="100%"
-                            class="game-container"
+                            class="game-iframe"
                     ></iframe>
                 </div>
             </div>
@@ -118,55 +118,3 @@
         }
     }
 </script>
-
-<style scoped>
-    .userSettings {
-        width: 100%;
-        height: 100%;
-        font-size: 0;
-    }
-
-    .userSettings .bg-purple-dark .texts,
-    .userSettings .bg-purple-dark a {
-        display: block;
-        padding: 18px 10px;
-        text-align: left;
-        font-size: 14px;
-        color: #fff;
-    }
-
-    .game_view {
-        position: absolute;
-        transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
-    }
-
-    .game-body {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        z-index: 100;
-        background: url("../../assets/images/game-loading.gif") 50% 50% no-repeat;
-        background-size: 350px auto;
-        background-color: #fff;
-    }
-
-    .game-container {
-        border: 0px;
-        overflow: auto;
-    }
-
-    .TopHeader {
-        position: absolute;
-        top: 10px;
-        height: 32px;
-        width: 32px;
-        background-color: rgba(0, 0, 0, 0.4);
-        z-index: 999;
-        right: 10px;
-        border-radius: 25px;
-        padding-top: 6px;
-    }
-</style>

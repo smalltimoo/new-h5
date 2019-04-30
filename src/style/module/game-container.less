@@ -1,0 +1,40 @@
+.game-container{
+  .game_view {
+    width: 100%;
+    height: 100%;
+    font-size: 0;
+  }
+
+  .game_view {
+    position: absolute;
+    transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  }
+
+  .game-body {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 100;
+    background: url("../../assets/images/game-loading.gif") 50% 50% no-repeat;
+    background-size: 350px auto;
+    background-color: #fff;
+  }
+
+  .game-iframe {
+    border: 0px;
+    overflow: auto;
+  }
+
+  .TopHeader {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 6px;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+    border-radius: 25px;
+  }
+}

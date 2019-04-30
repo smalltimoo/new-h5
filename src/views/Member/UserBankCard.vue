@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="el-row">
+                <div class="el-row" v-if="sysInfo.lineCountry==1">
                     <div class="el-col el-col-24">
                         <div class="grid-content bg-purple-dark">
                             {{ $t('member.userBankCard.ubc8') }}
@@ -82,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="el-row">
+                <div class="el-row" v-if="sysInfo.lineCountry==1">
                     <div class="el-col el-col-24">
                         <div class="grid-content bg-purple-dark">
                             {{ $t('member.userBankCard.ubc9') }}

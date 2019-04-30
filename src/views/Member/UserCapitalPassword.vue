@@ -48,9 +48,10 @@
                     </div>
                 </div>
                 <div class="line-w"></div>
-                <div class="el-form-item">
-                    <label class="el-form-item__label" style="width: 90px;">{{ $t('member.userCapitalPassword.ucp7')
-                        }}</label><!--省市县(区) -->
+                <div class="el-form-item" v-if="sysInfo.lineCountry==1">
+                    <label class="el-form-item__label" style="width: 90px;">
+                        {{ $t('member.userCapitalPassword.ucp7')}}
+                    </label><!--省市县(区) -->
                     <div class="el-form-item__content" style="margin-left: 90px;">
                         <div class="el-input">
                             <input
@@ -66,8 +67,9 @@
                 </div>
                 <div class="line-w"></div>
                 <div class="el-form-item">
-                    <label class="el-form-item__label" style="width: 90px;">{{ $t('member.userCapitalPassword.ucp9')
-                        }}</label><!--银行种类 -->
+                    <label class="el-form-item__label" style="width: 90px;">
+                        {{ $t('member.userCapitalPassword.ucp9')}}
+                    </label><!--银行种类 -->
                     <div class="el-form-item__content" style="margin-left: 90px;">
                         <div class="el-input">
                             <input
@@ -82,9 +84,10 @@
                     </div>
                 </div>
                 <div class="line-w"></div>
-                <div class="el-form-item">
-                    <label class="el-form-item__label" style="width: 90px;">{{ $t('member.userCapitalPassword.ucp11')
-                        }}</label><!-- 开户行名称-->
+                <div class="el-form-item"  v-if="sysInfo.lineCountry==1">
+                    <label class="el-form-item__label" style="width: 90px;">
+                        {{ $t('member.userCapitalPassword.ucp11')}}
+                    </label><!-- 开户行名称-->
                     <div class="el-form-item__content" style="margin-left: 90px;">
                         <div class="el-input">
                             <input
@@ -102,8 +105,9 @@
                 </div>
                 <div class="line-w"></div>
                 <div class="el-form-item">
-                    <label class="el-form-item__label" style="width: 90px;">{{ $t('member.userCapitalPassword.ucp13')
-                        }}</label><!--手机号 -->
+                    <label class="el-form-item__label" style="width: 90px;">
+                        {{ $t('member.userCapitalPassword.ucp13')}}
+                    </label><!--手机号 -->
                     <div class="el-form-item__content" style="margin-left: 90px;">
                         <div class="el-input">
                             <input
@@ -234,12 +238,15 @@
                 return this.$http.post("/provinces.json");
             },
             mSave() {
+                if(this.sysInfo.lineCountry=='2'){
+                    this.vm.drawAddress=0;
+                }
                 if (this.vm.drawAccountType <= 0) {
                     //请选择银行类型
                     this.mAlert(this.$t('member.userCapitalPassword.ucp18'), null, "warning");
                     return;
                 }
-                if (this.vm.bankProvinceid <= 0) {
+                if (this.vm.bankProvinceid < 0) {
                     //请选择所在省份
                     this.mAlert(this.$t('member.userCapitalPassword.ucp19'), null, "warning");
                     return;
@@ -254,7 +261,7 @@
                     this.mAlert(this.$t('member.userCapitalPassword.ucp21'), null, "warning");
                     return;
                 }
-                if (this.vm.drawAddress == "") {
+                if (this.vm.drawAddress.length<=0) {
                     //请填写开户行
                     this.mAlert(this.$t('member.userCapitalPassword.ucp22'), null, "warning");
                     return;
@@ -273,12 +280,6 @@
                     //请填写开户人手机号
                     this.mAlert(this.$t('member.userCapitalPassword.ucp25'), null, "warning");
                     return;
-                } else {
-                    if (!this.mVildPhoneNumber(this.vm.mobile)) {
-                        //输入的手机号格式不正确
-                        this.mAlert(this.$t('member.userCapitalPassword.ucp26'), null, "warning");
-                        return;
-                    }
                 }
                 this.mLoading(true);
                 this.$http.post("/memberUser/bindbank.json", this.vm).then(result => {
@@ -307,6 +308,12 @@
             },
             mInitBankPicker() {
                 this.bankPicker = new mui.PopPicker();
+                if(this.sysInfo.lineCountry=='1'){ //中国
+                    this.banktypes=this.banktypes.filter(item=>item.accountCountry=='CN')
+                }
+                else{ //泰国
+                    this.banktypes=this.banktypes.filter(item=>item.accountCountry=='TH')
+                }
                 this.bankPicker.setData(this.banktypes);
             },
             mShowpcaPicker() {
@@ -416,7 +423,7 @@
     .userCapitalPwd .A-text {
         display: flex;
         justify-content: flex-start;
-        align-items: center;
+        align-items: flex-start;
         margin-left: 10px;
         font-size: 13px;
         margin-top: 10px;

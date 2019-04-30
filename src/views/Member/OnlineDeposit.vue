@@ -547,7 +547,6 @@
                                 this.$router.push({name: 'CapitalRecord'})
                             }
                         })
-
                     } else {
                         this.$Message.error(result.message, () => {
                         }, "error");

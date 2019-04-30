@@ -65,10 +65,10 @@
                             <img src="../assets/images/home/play1.png" width="20px"/>
                             DG 游戏厅
                         </li>
-                        <li @click="quickEnterGame('506','','5','QG游戏厅')">
-                            <img src="../assets/images/home/play2.png" width="20px"/>
-                            QG 游戏厅
-                        </li>
+                        <!--<li @click="quickEnterGame('506','','5','QG游戏厅')">-->
+                            <!--<img src="../assets/images/home/play2.png" width="20px"/>-->
+                            <!--QG 游戏厅-->
+                        <!--</li>-->
                         <li @click="quickEnterGame('102','','3')">
                             <img src="../assets/images/home/play3.png" width="20px"/>
                             BG 彩票厅
@@ -94,8 +94,11 @@
                                 {{cQQ2}}
                             </a>
                         </li>
-                        <li class="icon-qq" v-if="agentQQ">
+                        <li class="icon-agent" v-if="agentQQ">
                             <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{agentQQ}}</a>
+                        </li>
+                        <li class="icon-line" v-if="sysInfo.lineCountry">
+                            <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{sysInfo.lineUrl}}</a>
                         </li>
                     </ul>
                 </Poptip>

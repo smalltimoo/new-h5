@@ -22,8 +22,11 @@
                                 {{cQQ2}}
                             </a>
                         </li>
-                        <li class="icon-qq" v-if="agentQQ">
+                        <li class="icon-agent" v-if="agentQQ">
                             <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{agentQQ}}</a>
+                        </li>
+                        <li class="icon-line" v-if="sysInfo.lineCountry">
+                            <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{sysInfo.lineUrl}}</a>
                         </li>
                     </ul>
                 </Poptip>
