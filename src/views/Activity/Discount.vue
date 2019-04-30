@@ -108,19 +108,21 @@
                     return;
                 }
                 this.$http
-                    .post("/activity/joinActivity.json", {
+                    .post("/activity/isJoin.json", {
                         activityId: this.activityInfo.id,
-                        memberId: this.cLoginUser.id
+                        memberId: this.cLoginUser.id,
+                        joinCycle:this.activityInfo.joinCycle,
+                        activityType:this.activityInfo.activityType
                     })
                     .then(result => {
                         if (result.code == 0) {
                             if (result.data) {
                                 this.activityInfo = {...this.activityInfo, ...{signed: true}};
                                 this.activityInfo.activityType == 10 ? this.$Message.success('签到成功！') : this.$Message.success('领取成功！');
-                            } else {
-                                this.$Message.error(result.message);
                             }
-
+                        }
+                        else {
+                            this.$Message.error(result.message);
                         }
                     })
             },
