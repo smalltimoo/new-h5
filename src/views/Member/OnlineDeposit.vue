@@ -5,10 +5,10 @@
                 <!--<Icon type="md-menu" class="icon-menu" @click="openDrawer"/>-->
             </div>
             <div class="header-middle">
-                充值
+                {{$t('member.onlineDeposit.od1')}}
             </div>
             <div class="header-right">
-                <router-link :to="{name:'CapitalRecord'}" style="color:#fff">存款记录</router-link>
+                <router-link :to="{name:'CapitalRecord'}" style="color:#fff">{{$t('member.onlineDeposit.od2')}}</router-link>
             </div>
         </div>
         <div class="container">
@@ -16,23 +16,23 @@
                 <img src="../../assets/images/uesrCenter/admin.png" width="50px"/>
                 <div class="user-info">
                     <div style="display: flex;justify-content: space-between">
-                        <span>账户：{{cLoginUser.username}}</span>
+                        <span>{{$t('member.onlineDeposit.od3')}}：{{cLoginUser.username}}</span>
                         <span style="color:#f0e2a1;display: flex;align-items: center;font-size: 12px">
                             <img src="../../assets/images/vip.png" width="11px"> &nbsp;
                             {{cLoginUser.memberLevelName}}
                         </span>
                     </div>
-                    <div>余额：{{parseFloat(balance/100).toFixed(2)}}元</div>
+                    <div>{{$t('member.onlineDeposit.od4')}}：{{parseFloat(balance/100).toFixed(2)}}元</div>
                 </div>
             </div>
             <div class="recharge" style="margin-top: 80px;">
                 <div>
-                    <span class="title">充值金额</span>
-                    <span class="tmux">(极速到账)</span>
+                    <span class="title">{{$t('member.onlineDeposit.od5')}}</span>
+                    <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
                 </div>
                 <div class="input-panel">
                     <span style="font-size: 16px"><b>￥</b></span>
-                    <input type="number" v-model="amount" class="input-number" placeholder="请输入存款金额"/>
+                    <input type="number" v-model="amount" class="input-number" :placeholder="$t('member.onlineDeposit.od7')"/>
                 </div>
                 <div class="recommend" v-if="moneys.length>0">
                     <span v-for="(item,index) in moneys"
@@ -46,27 +46,27 @@
             </div>
             <div class="recharge" style="margin-top: 10px;">
                 <div>
-                    <span class="title">充值方式</span>
-                    <span class="tmux">(极速到账)</span>
+                    <span class="title">{{$t('member.onlineDeposit.od8')}}</span>
+                    <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
                 </div>
                 <div class="pay-way">
                     <div :class="{active: tab=='alpay'}"
                          @click="mSelectRechargeType('alpay',rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('alpay'))[0].list)">
                         <img src="../../assets/images/alipay.png" width="24px"/>
-                        <span>支付宝</span>
+                        <span>{{$t('member.onlineDeposit.od9')}}</span>
                     </div>
                     <div :class="{active: tab=='wechat'}"
                          @click="mSelectRechargeType('wechat',rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('wx'))[0].list)">
                         <img src="../../assets/images/wechat.png" width="23px"/>
-                        <span>微信</span>
+                        <span>{{$t('member.onlineDeposit.od10')}}</span>
                     </div>
                     <div :class="{active: tab=='bank'}" @click="mSelectRechargeType('bank',companyAccounts)">
                         <img src="../../assets/images/bank.png" width="23px"/>
-                        <span>线下充值</span>
+                        <span>{{$t('member.onlineDeposit.od11')}}</span>
                     </div>
                     <div :class="{active: tab=='scan'}" @click="mSelectRechargeType('scan',rechargeOther)">
                         <img src="../../assets/images/scan.png" width="22px"/>
-                        <span>其他</span>
+                        <span>{{$t('member.onlineDeposit.od12')}}</span>
                     </div>
                 </div>
                 <div class="pay-account">
@@ -86,8 +86,8 @@
                                 <img src="../../assets/images/alipay.png" width="20px"
                                      style="margin-left: 8px;margin-right: 8px"
                                 />
-                                <span> 支付宝 </span>&nbsp;&nbsp;&nbsp;
-                                <span> 范围:{{ it.minMoney}} - {{it.maxMoney}} 之间 </span>
+                                <span> {{$t('member.onlineDeposit.od9')}} </span>&nbsp;&nbsp;&nbsp;
+                                <span> {{$t('member.onlineDeposit.od13')}}:{{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}} </span>
                                 <span class="radio-id">{{ it.apiid}}</span>
                             </Radio>
                         </div>
@@ -99,8 +99,8 @@
                             <Radio :label="it.id">
                                 <img src="../../assets/images/wechat.png" width="20px"
                                      style="margin-left: 8px;margin-right: 8px"/>
-                                <span> 微信 </span>
-                                <span> 范围:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} 之间 </span>
+                                <span> {{$t('member.onlineDeposit.od10')}} </span>
+                                <span> {{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}} </span>
                                 <span class="radio-id">{{ it.apiid}}</span>
                             </Radio>
                         </div>
@@ -132,21 +132,21 @@
                                 <img :src="it.logo" height="28px" style="margin-left: 3px;margin-right: 5px"/>
                                 <span style="color: #000">{{ it.drawAccountTypeStr }}</span>&ensp;
                                 <span style="color: #aaa">({{ it.bankAccountName }}) </span>&emsp;
-                                <span> 范围:&nbsp; {{ it.minMoney/100}} - {{it.maxMoney/100}} 之间 </span>
+                                <span> {{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney/100}} - {{it.maxMoney/100}} {{$t('member.onlineDeposit.od14')}} </span>
                             </Radio>
                         </div>
                     </RadioGroup>
                 </div>
             </div>
             <cube-button :active="true" @click="save" class="save-btn">
-                下一步
+                {{$t('member.onlineDeposit.od15')}}
             </cube-button>
 
             <div class="tips">
-                <div class="title">温馨提示</div>
-                <div>为确保您的款项及时到账，请您留意以下几点；</div>
-                <div>1. 支付遇到困难？ 联系 "<span style="color:#c10005" @click="mOpenCService">在线客服</span>" 获得帮助</div>
-                <div>2. 若您支付过程中遇到问题未完成支付， 请重新下单</div>
+                <div class="title">{{$t('member.onlineDeposit.od16')}}</div>
+                <div>{{$t('member.onlineDeposit.od17')}}</div>
+                <div>{{$t('member.onlineDeposit.od18')}}"<span style="color:#c10005" @click="mOpenCService">{{$t('member.onlineDeposit.od41')}}</span>" {{$t('member.onlineDeposit.od42')}}</div>
+                <div>{{$t('member.onlineDeposit.od43')}}</div>
             </div>
         </div>
         <Drawer :closable="false" v-model="underlineDrawer" width="100" class="underline-drawer">
@@ -155,12 +155,12 @@
                     <Icon type="ios-arrow-back" class="icon-menu" @click="underlineDrawer=false"/>
                 </div>
                 <div class="header-middle" style="font-size: 14px; font-weight: bold">
-                    {{selectData.drawAccountTypeStr ? selectData.drawAccountTypeStr : '线下充值'}}
+                    {{selectData.drawAccountTypeStr ? selectData.drawAccountTypeStr : this.$t('member.onlineDeposit.od11')}}
                 </div>
                 <div class="header-right"></div>
             </div>
             <div class="drawer-top">
-                <span>转账金额（元）</span>
+                <span>{{$t('member.onlineDeposit.od44')}}</span>
                 <span style="font-size: 20px;margin-top: 8px">
                     <span style="font-size:18px">￥</span>
                     <span>
@@ -170,77 +170,77 @@
                 </span>
             </div>
             <div class="code-pay" v-if="selectData.accountType==1 || selectData.accountType==2">
-                <div class="title">扫码支付</div>
+                <div class="title">{{$t('member.onlineDeposit.od45')}}</div>
                 <div>
                     <div><img :src="selectData.payAddress" width="125px"/></div>
-                    <div style="margin-top: 10px">长按保存上方二维码</div>
-                    <div v-if="selectData.accountType==1">打开支付宝扫描二维码完成支付</div>
-                    <div v-if="selectData.accountType==2">打开微信扫一扫完成支付</div>
-                    <div style="color: #cd0005">转账金额 (须包含小数位)</div>
+                    <div style="margin-top: 10px">{{$t('member.onlineDeposit.od46')}}</div>
+                    <div v-if="selectData.accountType==1">{{$t('member.onlineDeposit.od47')}}</div>
+                    <div v-if="selectData.accountType==2">{{$t('member.onlineDeposit.od48')}}</div>
+                    <div style="color: #cd0005">{{$t('member.onlineDeposit.od49')}}</div>
                 </div>
             </div>
             <div class="panel" v-else>
-                <div class="title">银行信息</div>
+                <div class="title">{{$t('member.onlineDeposit.od50')}}</div>
                 <div>
-                    <span>银行名称：{{selectData.drawAccountTypeStr}}</span>
+                    <span>{{$t('member.onlineDeposit.od51')}}：{{selectData.drawAccountTypeStr}}</span>
                     <span class="clipboard" @click="copy" :data-clipboard-text="selectData.drawAccountTypeStr">复制</span>
                 </div>
                 <div>
-                    <span>银行卡号：{{selectData.account}}</span>
+                    <span>{{$t('member.onlineDeposit.od52')}}：{{selectData.account}}</span>
                     <span class="clipboard" @click="copy" :data-clipboard-text="selectData.account">复制</span>
                 </div>
                 <div>
-                    <span>开户网点：{{selectData.bankAddress}}</span>
+                    <span>{{$t('member.onlineDeposit.od53')}}：{{selectData.bankAddress}}</span>
                     <span class="clipboard" @click="copy" :data-clipboard-text="selectData.bankAddress">复制</span>
                 </div>
                 <div>
-                    <span>开户人名：{{selectData.bankAccountName}}</span>
+                    <span>{{$t('member.onlineDeposit.od54')}}：{{selectData.bankAccountName}}</span>
                     <span class="clipboard" @click="copy" :data-clipboard-text="selectData.bankAccountName">复制</span>
                 </div>
             </div>
             <div class="panel" style="margin-top: 10px">
-                <div class="title">存款信息</div>
+                <div class="title">{{$t('member.onlineDeposit.od55')}}</div>
                 <div class="deposit" style="justify-content: flex-start;padding: 0 10px">
-                    <span style="margin-left: 10px;width: 75px;">存款方式</span>
+                    <span style="margin-left: 10px;width: 75px;">{{$t('member.onlineDeposit.od57')}}</span>
                     <input type="text"
                            v-if="selectData.accountType==1 || selectData.accountType==2"
                            v-model="payName"
-                           placeholder="请选择支付通道" readonly
+                           :placeholder="$t('member.onlineDeposit.od58')" readonly
                     />
-                    <input type="text" v-model="underlineText" placeholder="请选择支付通道" readonly v-else
+                    <input type="text" v-model="underlineText" :placeholder="$t('member.onlineDeposit.od58')" readonly v-else
                            @click="showPicker"/>
                     <Icon type="ios-arrow-forward" class="icon-menu"/>
                 </div>
                 <div class="deposit" style="justify-content: flex-start;padding: 0 10px">
-                    <span style="margin-left: 10px;width: 75px;">转账人银行</span>
+                    <span style="margin-left: 10px;width: 75px;">{{$t('member.onlineDeposit.od59')}}</span>
                     <input type="text"
                            v-if="selectData.accountType==1 || selectData.accountType==2"
                            v-model="payBank"
-                           placeholder="转账人银行"
+                           :placeholder="$t('member.onlineDeposit.od59')"
                            readonly
                     />
-                    <input type="text" v-model="underlineBank" placeholder="转账人银行" readonly v-else
+                    <input type="text" v-model="underlineBank" :placeholder="$t('member.onlineDeposit.od59')" readonly v-else
                            @click="showBankPicker"/>
                     <Icon type="ios-arrow-forward" class="icon-menu"/>
                 </div>
                 <div class="deposit" style="justify-content: flex-start;padding: 0 10px;border: 0">
-                    <span style="margin-left: 10px;width: 75px;">真实姓名</span>
-                    <input type="text" placeholder="请填写真实的姓名" v-model="vmunderline.underlineAccountName"/>
+                    <span style="margin-left: 10px;width: 75px;">{{$t('member.onlineDeposit.od60')}}</span>
+                    <input type="text" :placeholder="$t('member.onlineDeposit.od61')" v-model="vmunderline.underlineAccountName"/>
                 </div>
             </div>
             <div class="panel" style="margin-top: 10px">
-                <div class="title">订单详情</div>
+                <div class="title">{{$t('member.onlineDeposit.od62')}}</div>
                 <div class="detail">
-                    <span>下单时间</span>
+                    <span>{{$t('member.onlineDeposit.od63')}}</span>
                     <span>{{ now}}</span>
                 </div>
                 <div class="detail" style="border: 0">
-                    <span>收款账户</span>
+                    <span>{{$t('member.onlineDeposit.od64')}}</span>
                     <span>{{selectData.bankAccountName}} : {{selectData.account}}</span>
                 </div>
             </div>
             <cube-button :active="true" @click="saveUnderline" class="save-btn">
-                提交订单
+                {{$t('member.onlineDeposit.od65')}}
             </cube-button>
         </Drawer>
     </div>
@@ -485,7 +485,7 @@
             showPicker() {
                 if (!this.aliasPicker) {
                     this.aliasPicker = this.$createPicker({
-                        title: '请选择支付方式',
+                        title: this.$t('member.onlineDeposit.od66'),
                         data: [this.underlineTypes],
                         alias: {
                             value: 'id',
@@ -502,7 +502,7 @@
             showBankPicker() {
                 if (!this.bankPicker) {
                     this.bankPicker = this.$createPicker({
-                        title: '请选择转账人银行',
+                        title: this.$t('member.onlineDeposit.od67'),
                         data: [this.banktypes],
                         alias: {
                             value: 'id',
@@ -518,7 +518,7 @@
             },
             saveUnderline() {
                 if(this.nextLoading){
-                    this.$Message.warning('请稍候再试！');   //请稍候再试！
+                    this.$Message.warning(this.$t('member.onlineDeposit.od68'));   //请稍候再试！
                     return false;
                 }
                 if (this.vmunderline.underlineType == "" || isNaN(this.vmunderline.underlineType)) {
@@ -540,7 +540,7 @@
                     this.mLoading(false);
                     if (result.code == 0) {
                         this.$Message.success({
-                            content: '存款信息已提交,请等待工作人员审核！',
+                            content: this.$t('member.onlineDeposit.od69'),
                             duration: 4,
                             onClose: () => {
                                 this.nextLoading=false;
@@ -557,7 +557,7 @@
                 if (url) {
                     this.$router.push({
                         name: "CustomerService",
-                        params: {aType: "cz", title: '在线充值', cUrl: url}
+                        params: {aType: "cz", title: this.$t('member.onlineDeposit.od70'), cUrl: url}
                     });
                 } else {
                     //存款渠道暂不可用

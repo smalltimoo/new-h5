@@ -5,25 +5,25 @@
                 <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
             </div>
             <div class="header-middle">
-                资产明细
+                {{$t('member.assetsOverView.ao2')}}
             </div>
             <div class="header-right" @click="transferAll">
-                一键回收
+                {{$t('member.assetsOverView.ao1')}}
             </div>
         </div>
         <div class="container">
             <div class="top">
                 <div class="total-amount">
-                    <span>总资产</span>
+                    <span>{{$t('member.assetsOverView.ao3')}}</span>
                     <span>￥ {{ parseFloat(totalCoins/100).toFixed(2)  }}</span>
                 </div>
                 <div class="total-panel">
                     <div>
-                        <span>可用余额</span>
+                        <span>{{$t('member.assetsOverView.ao4')}}</span>
                         <span>￥{{walletlist[0].coin / 100}}</span>
                     </div>
                     <div>
-                        <span>游戏余额</span>
+                        <span>{{$t('member.assetsOverView.ao5')}}</span>
                         <span>￥{{otherCoins}}</span>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
                               v-if="item.coin=='-1'"
                         >
                             <i class="el-icon-loading" v-if="item.loading"></i>
-                            <span v-if="!item.loading">获取异常</span>
+                            <span v-if="!item.loading">{{$t('member.assetsOverView.ao6')}}</span>
                             <img v-if="!item.loading"
                                  src="../../assets/images/refresh.png"
                                  style="width:18px;margin-top: -2px;margin-left: 5px"/>
@@ -54,8 +54,8 @@
                 </div>
             </div>
             <div class="bottom">
-                <span><router-link :to="{name:'OnlineDeposit'}">存款</router-link></span>
-                <span style="background-color: grey"><router-link :to="{name:'Withdrawals'}">提款</router-link></span>
+                <span><router-link :to="{name:'OnlineDeposit'}">{{$t('member.assetsOverView.ao7')}}</router-link></span>
+                <span style="background-color: grey"><router-link :to="{name:'Withdrawals'}">{{$t('member.assetsOverView.ao8')}}</router-link></span>
             </div>
         </div>
     </div>
@@ -104,7 +104,7 @@
                     })
                     .catch(err => {
                         //获取余额失败
-                        this.mAlert(this.$t('member.assetsOverView.ao7'));
+                        this.$Message.error(this.$t('member.assetsOverView.ao9'));
                     });
             },
             mGetError(gameCompanyId) {
@@ -132,7 +132,7 @@
                             this.otherCoins = parseFloat((this.totalCoins - this.walletlist[0].coin) / 100).toFixed(2)
                         }
                         else{
-                            this.$Message.error('暂未获得该游戏厅数据!')
+                            this.$Message.error(this.$t('member.assetsOverView.ao10'))
                             this.walletlist.map(item => {
                                 if (item.gameCompanyId == gameCompanyId) {
                                     item.loading = false;
@@ -145,14 +145,14 @@
             },
             transferAll() {
                 this.$Message.loading({
-                    content: '请稍后...',
+                    content: this.$t('member.assetsOverView.ao11'),
                     duration: 0
                 });
                 let index=0;
                 if(this.walletlist.filter(item=>item.gameCompanyId!=0 && item.coin>0).length==0){
                     this.$Message.destroy();
                     this.$Message.warning({
-                        content: '暂无可回收场馆...',
+                        content: this.$t('member.assetsOverView.ao12'),
                         duration: 3
                     })
                     return;

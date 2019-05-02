@@ -3,14 +3,14 @@
         <div class="header">
             <div class="header-left"></div>
             <div class="header-middle">
-                优惠活动
+                {{$t('discount.activity')}}
             </div>
             <div class="header-right">
                 <Poptip trigger="click" placement="bottom-end">
                     <i class="icon-menu message"></i>
                     <ul slot="content">
                         <li class="icon-kefu" @click="mOpenCService">
-                            在线客服
+                            {{$t('customservice')}}
                         </li>
                         <li class="icon-qq">
                             <a v-if="cQQ1" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'">
@@ -42,7 +42,7 @@
                          style="width: 100%; border-radius: 5px;min-height: 90px;max-height: 95px">
                     <!--<div class="tip" v-text="item.giveTypeStr" style="text-align: left;border-bottom:solid 1px #f3f3f3;padding-bottom: 4px"></div>-->
                     <div class="go" style="border-top:solid 1px #f3f3f3">
-                        <span>查看详情</span>
+                        <span>{{$t('discount.look')}}</span>
                         <Icon type="ios-arrow-forward" class="icon-menu"/>
                     </div>
                 </div>
@@ -59,8 +59,8 @@
             </div>
             <div class="sign" @click="signed"
                  v-if="activityInfo.activityType==6 || activityInfo.activityType==7 || activityInfo.activityType==8 || activityInfo.activityType==9">
-                <span v-if="activityInfo.signed"><b>已领取</b></span>
-                <span v-else><b>领取</b></span>
+                <span v-if="activityInfo.signed"><b>已参加</b></span>
+                <span v-else><b>参加</b></span>
             </div>
             <div class="sign" @click="signed" v-if="activityInfo.activityType==10">
                 <span v-if="activityInfo.signed"><b>已签到</b></span>
@@ -92,9 +92,11 @@
                 this.drawer = true;
                 if ([6, 7, 8, 9, 10].includes(this.activityInfo.activityType)) {
                     this.$http
-                        .post("/activity/isCheckIn.json", {
+                        .post("/activity/isJoin.json", {
                             activityId: this.activityInfo.id,
-                            memberId: this.cLoginUser.id
+                            memberId: this.cLoginUser.id,
+                            joinCycle:this.activityInfo.joinCycle,
+                            activityType:this.activityInfo.activityType
                         })
                         .then(result => {
                             if (result.code == 0) {
@@ -108,7 +110,7 @@
                     return;
                 }
                 this.$http
-                    .post("/activity/isJoin.json", {
+                    .post("/activity/joinActivity.json", {
                         activityId: this.activityInfo.id,
                         memberId: this.cLoginUser.id,
                         joinCycle:this.activityInfo.joinCycle,
@@ -118,7 +120,7 @@
                         if (result.code == 0) {
                             if (result.data) {
                                 this.activityInfo = {...this.activityInfo, ...{signed: true}};
-                                this.activityInfo.activityType == 10 ? this.$Message.success('签到成功！') : this.$Message.success('领取成功！');
+                                this.activityInfo.activityType == 10 ? this.$Message.success('签到成功！') : this.$Message.success('参加成功！');
                             }
                         }
                         else {

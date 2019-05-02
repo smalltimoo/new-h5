@@ -5,10 +5,10 @@
                 <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
             </div>
             <div class="header-middle">
-                代理中心
+                {{$t('agentMember.am1')}}
             </div>
             <div class="header-right">
-                <router-link :to="{name:'AgentThat'}">代理说明</router-link>
+                <router-link :to="{name:'AgentThat'}">{{$t('agentMember.am2')}}</router-link>
             </div>
         </div>
         <div class="container">
@@ -16,76 +16,76 @@
                 <img src="../../assets/images/uesrCenter/admin.png" width="50px"/>
                 <div class="user-info">
                     <div style="display: flex;justify-content: space-between">
-                        <span>账户：{{cLoginUser.username}}({{cLoginUser.id}})</span>
-                        <router-link :to="{name:'AgentDrawing'}" class="drawer">提现</router-link>
+                        <span>{{$t('agentMember.am3')}}：{{cLoginUser.username}}({{cLoginUser.id}})</span>
+                        <router-link :to="{name:'AgentDrawing'}" class="drawer">{{$t('agentMember.am4')}}</router-link>
                     </div>
-                    <div>分红余额：{{parseFloat(sumAgent.agentBalance/100).toFixed(2)}} 元</div>
+                    <div>{{$t('agentMember.am5')}}：{{parseFloat(sumAgent.agentBalance/100).toFixed(2)}} {{$t('agentMember.am6')}}</div>
                 </div>
             </div>
             <div class="agent-info">
                 <router-link :to="{name:'MembermanAgement'}">
                     <div style="border: 0">
                         <span v-text="sumAgent.agentNum ? sumAgent.agentNum : 0"></span>
-                        <span>代理人数</span>
+                        <span>{{$t('agentMember.am7')}}</span>
                     </div>
                     <div>
                         <span v-text="sumAgent.totalNum"></span>
-                        <span>会员人数</span>
+                        <span>{{$t('agentMember.am8')}}</span>
                     </div>
                     <div>
                         <span v-text="sumAgent.totalTeamRakebackAmount/100"></span>
-                        <span>分红金额</span>
+                        <span>{{$t('agentMember.am9')}}</span>
                     </div>
                     <div>
                         <span v-text="parseFloat(sumAgent.totalTeamCashTotal/100).toFixed(2)"></span>
-                        <span>提现金额</span>
+                        <span>{{$t('agentMember.am10')}}</span>
                     </div>
                 </router-link>
             </div>
 
             <div class="agent-icon">
-                <div class="share">我要分享</div>
+                <div class="share">{{$t('agentMember.am11')}}</div>
                 <div class="icons">
                     <router-link :to="{name:'OpenInvitation'}" style="width: 50%">
                         <img src="../../assets/images/agent/agenttu1@2x.png" width="36px"/>
-                        <span>推广链接</span>
+                        <span>{{$t('agentMember.am12')}}</span>
                     </router-link>
                     <router-link :to="{name:'LinkManagement'}" style="width: 50%">
                         <img src="../../assets/images/agent/agenttu2@2x.png" width="36px"/>
-                        <span>链接管理</span>
+                        <span>{{$t('agentMember.am13')}}</span>
                     </router-link>
                 </div>
             </div>
             <div class="agent-icon">
-                <div class="share">其他服务</div>
+                <div class="share">{{$t('agentMember.am14')}}</div>
                 <div class="icons">
                     <router-link :to="{name:'AgentrEportforms'}" class="icon-panel">
                         <img src="../../assets/images/agent/agenttu4@2x.png" width="36px"/>
-                        <span>会员管理</span>
+                        <span>{{$t('agentMember.am15')}}</span>
                     </router-link>
                     <router-link :to="{name:'OpenAccounts'}" class="icon-panel">
                         <img src="../../assets/images/agent/agenttu5@2x.png" width="36px"/>
-                        <span>下级开户</span>
+                        <span>{{$t('agentMember.am16')}}</span>
                     </router-link>
                     <router-link :to="{name:'MembermanAgement'}" class="icon-panel">
                         <img src="../../assets/images/agent/agenttu6@2x.png" width="36px"/>
-                        <span>代理报表</span>
+                        <span>{{$t('agentMember.am17')}}</span>
                     </router-link>
                     <router-link :to="{name:'BettingdetailList'}" class="icon-panel">
                         <img src="../../assets/images/agent/agenttu7@2x.png" width="36px"/>
-                        <span>投注明细</span>
+                        <span>{{$t('agentMember.am18')}}</span>
                     </router-link>
                     <router-link :to="{name:'TransactionsdetailList'}" class="icon-panel">
                         <img src="../../assets/images/agent/agenttu8@2x.png" width="36px"/>
-                        <span>交易明细</span>
+                        <span>{{$t('agentMember.am19')}}</span>
                     </router-link>
                     <router-link :to="{name:'AgentCashList'}" class="icon-panel">
                         <img src="../../assets/images/agent/agenttu9@2x.png" width="36px"/>
-                        <span>提现记录</span>
+                        <span>{{$t('agentMember.am20')}}</span>
                     </router-link>
                     <router-link :to="{name:'AgentCoinList'}" class="icon-panel">
                         <img src="../../assets/images/agent/agenttu10@2x.png" width="36px"/>
-                        <span>钱包日志</span>
+                        <span>{{$t('agentMember.am21')}}</span>
                     </router-link>
                 </div>
             </div>

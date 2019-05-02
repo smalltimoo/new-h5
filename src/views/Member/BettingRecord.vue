@@ -55,10 +55,10 @@
                     </div>
                 </div>
                 <div class="dama">
-                    <div>
+                    <div style="text-align: left">
                         {{ $t('member.bettingRecord.br3') }}: {{ gameRoomName }}
                     </div>
-                    <div>
+                    <div style="text-align: right">
                         {{ $t('member.bettingRecord.br17') }} {{ totalDama }}
                     </div>
                 </div>

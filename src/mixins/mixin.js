@@ -39,6 +39,11 @@ export default {
         },
     },
     methods: {
+        changeLocal() {
+            localStorage.setItem("lang", this.$i18n.locale);
+            document.documentElement.lang = this.$i18n.locale;
+            // window.location.reload();
+        },
         quickEnterGame(roomId,gameId,comGameType,gameName){
             if (comGameType == 5) {
                 this.$router.push({
@@ -74,7 +79,7 @@ export default {
         copy() {
             var clipboard = new Clipboard('.clipboard');
             clipboard.on('success', () => {
-                this.$Message.success('内容已复制到剪贴板');
+                this.$Message.success(this.$t('mixin.alreadyCopy'));
             })
             clipboard.on('error', function (e) {
             })
@@ -87,7 +92,7 @@ export default {
         },
         toNeedLogin() {
             if (this.cNeedLogin) {
-                this.mConfirm('请先登陆', () => {
+                this.mConfirm(this.$t('mixin.pleaseLogin'), () => {
                     this.$router.push({name: 'Login'})
                 })
                 return false
@@ -101,7 +106,7 @@ export default {
                 this.$store.dispatch(types.LOGINOUT_USER);
                 this.$store.dispatch(types.COMMON_GONGGAO, this);
                 if (this.$route.name !== "Login" && this.$route.name !== "Home" && this.$route.name !== "Score" && this.$route.name !== "Discount" && this.tab !== "Score") {
-                    this.mConfirm('请先登陆', () => {
+                    this.mConfirm(this.$t('mixin.pleaseLogin'), () => {
                         this.$router.push({name: 'Login'})
                     })
                 }
@@ -132,7 +137,7 @@ export default {
                 });
             } else {
                 this.$store.dispatch(types.SYSTEM_SETTINGS, this);
-                this.mAlert("客服正赶来，请刷新后再试..");
+                this.mAlert(this.$t('mixin.refresh'));
             }
         },
         mmLogin(userName, password, vcode) {
@@ -148,7 +153,7 @@ export default {
                             this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
                             this.mLoading(false);
                             this.mMessage(
-                                "登陆成功！",
+                                this.$t('mixin.loginSuccess'),
                                 () => {
                                     this.$store.dispatch(types.COMMON_GONGGAO, this);
                                     this.$router.push({name: "Home"});

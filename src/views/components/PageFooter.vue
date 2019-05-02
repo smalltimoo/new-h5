@@ -3,23 +3,23 @@
         <ul>
             <li  :class="{active: tab=='Home'}" @click="changeTab('Home')">
                 <i class="icon icon-home"></i>
-                <div>首页大厅</div>
+                <div>{{$t('pageFooter.home')}}</div>
             </li>
             <li  :class="{active: tab=='Discount'}" @click="changeTab('Discount')">
                 <i class="icon icon-activity"></i>
-                <div>优惠活动</div>
+                <div>{{$t('pageFooter.discount')}}</div>
             </li>
             <li @click="changeTab('Score')">
                 <i class="icon icon-score"></i>
-                <div class="score">积分商城</div>
+                <div class="score">{{$t('pageFooter.score')}}</div>
             </li>
             <li :class="{active: tab=='OnlineDeposit'}" @click="changeTab('OnlineDeposit')">
                 <i class="icon icon-deposit"></i>
-                <div>快速存款</div>
+                <div>{{$t('pageFooter.onlineDeposit')}}</div>
             </li>
             <li :class="{active: tab=='UserMember'}" @click="changeTab('UserMember')">
                 <i class="icon icon-user"></i>
-                <div>个人中心</div>
+                <div>{{$t('pageFooter.memberCenter')}}</div>
             </li>
         </ul>
     </div>

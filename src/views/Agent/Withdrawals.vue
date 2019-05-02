@@ -13,7 +13,7 @@
             <router-link :to="{name:'UserBankCard'}" v-if="bindBank">
                 <div style="display: flex;align-items: center">
                     <Icon type="md-add-circle" style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
-                    <span>添加银行卡</span>
+                    <span>{{ $t('agentMember.addBank')}}</span>
                 </div>
                 <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
             </router-link>
@@ -31,7 +31,7 @@
             <router-link :to="{name:'SafaPassword'}" v-if="setPwd" >
                 <div style="display: flex;align-items: center">
                     <Icon type="md-add-circle" style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
-                    <span>设置资金密码</span>
+                    <span>{{ $t('agentMember.setPwd')}}</span>
                 </div>
                 <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
             </router-link>
@@ -41,7 +41,7 @@
             <p style="padding:10px"> {{ $t('member.withdrawals.wa7')}}</p>
             <input v-model="vm.dealcoin"
                    autocomplete="off"
-                   placeholder="请输入提款金额"
+                   :placeholder="$t('agentMember.enterAmount')"
                    size="mini"
                    maxlength="8"
                    type="text"
@@ -54,7 +54,7 @@
                 <span>
                     {{$t('member.withdrawals.wa6')}}: ￥{{cAgentCashBalance.toFixed(2)}}
                 </span>
-                <span style="color: #007bc9;" @click="vm.dealcoin=cAgentCashBalance.toFixed(2)">全部提现</span>
+                <span style="color: #007bc9;" @click="vm.dealcoin=cAgentCashBalance.toFixed(2)">{{ $t('agentMember.allWithdraw')}}</span>
             </div>
         </div>
         <div style="margin-top: 10px;background-color: #fff;display: flex;justify-content: flex-start;align-items: center">

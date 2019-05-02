@@ -5,7 +5,7 @@
                 <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
             </div>
             <div class="header-middle">
-                系统通知
+                {{$t('member.messageList.ml1')}}
             </div>
             <div class="header-right"></div>
         </div>
@@ -18,11 +18,11 @@
                     <div  class="info" v-text="item.msgInfo"></div>
                     <!--// -->
                     <div class="open" onclick="$(this).prev().toggleClass('ht');$(this).toggle();$(this).next().toggle()">
-                        <span>展开</span>
+                        <span>{{$t('member.messageList.ml2')}}</span>
                         <Icon type="ios-arrow-down" />
                     </div>
                     <div class="open" style="display: none" onclick="$(this).prev().prev().toggleClass('ht');$(this).toggle();$(this).prev().toggle()">
-                        <span>隐藏</span>
+                        <span>{{$t('member.messageList.ml3')}}</span>
                         <Icon type="ios-arrow-up" />
                     </div>
                 </div>

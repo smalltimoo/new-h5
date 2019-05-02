@@ -10,7 +10,7 @@ import mixin from "./mixins/mixin";
 import directive from "./assets/directives";
 import i18n from './lang' // Internationalization
 import {dateFormat} from "./assets/lib/util";
-import Cube from 'cube-ui'
+import Cube from 'cube-ui';
 
 
 import 'element-ui/lib/theme-chalk/index.css';

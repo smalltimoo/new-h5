@@ -4,10 +4,10 @@
             <i class="icon-close" style="margin-left: 12px" @click="closeApp"/>
             <div class="img-app">
                 <img :src="sysPicObj.mobileLogo" class="img-logo"/>
-                <span style="color:#fff;padding-top: 2px"><b>打开{{sysPicObj.name}}App</b></span>
-                <span><b>走到哪，玩到哪</b></span>
+                <span style="color:#fff;padding-top: 2px"><b>{{ $t('home.home1')}}{{sysPicObj.name}}App</b></span>
+                <span><b>{{ $t('home.home2')}}</b></span>
             </div>
-            <a class="download" :href="sysPicObj.appUrl" target="_blank">立即下载</a>
+            <a class="download" :href="sysPicObj.appUrl" target="_blank">{{ $t('home.home3')}}</a>
         </div>
         <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:5px' : 'margin-top:-46px'">
             <div class="header-left">
@@ -21,58 +21,75 @@
                         <img src="../assets/images/home/defaultAvator.png" width="47px"
                              style="margin-top: 15px;"/>
                         <div class="user-operate" v-if="cNeedLogin">
-                            <span @click="$router.push({name:'Login'})">登录</span>&emsp;&emsp;
-                            <span @click="$router.push({name:'Login', params:{type:'register'}})">注册</span>
+                            <span @click="$router.push({name:'Login'})">{{ $t('home.home9')}}</span>&emsp;&emsp;
+                            <span @click="$router.push({name:'Login', params:{type:'register'}})">{{ $t('home.home10')}}</span>
                         </div>
                         <div class="user-operate" v-else>
                             <div>
-                                余额：{{ parseFloat(cLoginUser.centerAmount/100).toFixed(2) }}
-                                <span style="font-size: 12px">元</span>
+                                {{ $t('home.home11')}} {{ parseFloat(cLoginUser.centerAmount/100).toFixed(2) }}
+                                <span style="font-size: 12px">{{ $t('yuan')}}</span>
                             </div>&emsp;&emsp;
                             <div>
-                                积分： {{ cLoginUser.integral ? parseFloat(cLoginUser.integral/100).toFixed(2) :'0.00' }}
-                                <span style="font-size: 12px">分</span>
+                                {{ $t('home.home12')}} {{ cLoginUser.integral ?
+                                parseFloat(cLoginUser.integral/100).toFixed(2) :'0.00' }}
+                                <span style="font-size: 12px">{{ $t('fen')}}</span>
                             </div>
                         </div>
                     </div>
                     <div class="left-center">
                         <router-link :to="{name:'AgentMember'}" v-if="cLoginUser.agnetLevel>0">
                             <img src="../assets/images/home/left-agent.png" width="20px"/>
-                            代理
+                            {{ $t('home.home13')}}
                         </router-link>
                         <router-link :to="{name:'OnlineDeposit'}">
                             <img src="../assets/images/home/left-recharge.png" width="20px"/>
-                            充值
+                            {{ $t('home.home14')}}
                         </router-link>
                         <router-link :to="{name:'IndoorTransfer'}">
                             <img src="../assets/images/home/left-change.png" width="20px"/>
-                            额度转换
+                            {{ $t('home.home15')}}
                         </router-link>
                         <router-link :to="{name:'Withdrawals'}">
                             <img src="../assets/images/home/left-out.png" width="18px"/>
-                            提现
+                            {{ $t('home.home16')}}
                         </router-link>
                         <router-link :to="{name:'Discount'}" style="margin-left: -2px">
                             <img src="../assets/images/home/left-active.png" width="20px"/>
-                            活动
+                            {{ $t('home.home17')}}
                         </router-link>
                     </div>
                     <div class="myGame">
-                         常玩游戏
+                        {{ $t('home.home18')}}
                     </div>
                     <div class="left-center">
                         <li @click="quickEnterGame('101','','1')">
                             <img src="../assets/images/home/play1.png" width="20px"/>
-                            DG 游戏厅
+                            {{ $t('home.home19')}}
                         </li>
-                        <!--<li @click="quickEnterGame('506','','5','QG游戏厅')">-->
-                            <!--<img src="../assets/images/home/play2.png" width="20px"/>-->
-                            <!--QG 游戏厅-->
-                        <!--</li>-->
                         <li @click="quickEnterGame('102','','3')">
                             <img src="../assets/images/home/play3.png" width="20px"/>
-                            BG 彩票厅
+                            {{ $t('home.home20')}}
                         </li>
+                        <!--<li @click="quickEnterGame('506','','5','QG游戏厅')">-->
+                        <!--<img src="../assets/images/home/play2.png" width="20px"/>-->
+                        <!--{{ $t('home.home21')}}-->
+                        <!--</li>-->
+                    </div>
+                    <div class="myGame">
+                        <span>设置</span>
+                    </div>
+                    <div class="local">
+                        <span>
+                            <img src="../assets/images/home/global.png" width="20px"/>语言
+                        </span>
+                        <el-select v-model="$i18n.locale" placeholder="请选择" @change="changeLocal" size="mini">
+                            <el-option
+                                    v-for="item in options"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
                     </div>
                 </Drawer>
             </div>
@@ -84,7 +101,7 @@
                     <i class="icon-menu message"></i>
                     <ul slot="content">
                         <li class="icon-kefu" @click="mOpenCService">
-                            在线客服
+                            {{$t('customservice')}}
                         </li>
                         <li class="icon-qq">
                             <a v-if="cQQ1" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'">
@@ -105,7 +122,7 @@
             </div>
         </div>
         <div class="container">
-            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px;">
+            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px;min-height: 155px">
                 <cube-slide-item v-for="(item, index) in getBanner" :key="index">
                     <img :src="item" width="100%">
                 </cube-slide-item>
@@ -128,36 +145,36 @@
             <div class="shortcut">
                 <router-link :to="{name:'OnlineDeposit'}" tag="li">
                     <i class="home-recharge"/>
-                    <span>用户充值</span>
+                    <span>{{ $t('home.home4')}}</span>
                 </router-link>
                 <router-link :to="{name:'Withdrawals'}" tag="li">
                     <i class="home-deposit"/>
-                    <span>用户提款</span>
+                    <span>{{ $t('home.home5')}}</span>
                 </router-link>
                 <li @click="mOpenCService">
                     <i class="home-custom"/>
-                    <span>在线客服</span>
+                    <span>{{ $t('home.home6')}}</span>
                 </li>
                 <router-link :to="{name:'AgentMember'}" tag="li" v-if="cLoginUser.agnetLevel>0">
                     <i class="home-agent"/>
-                    <span>代理中心</span>
+                    <span>{{ $t('home.home7')}}</span>
                 </router-link>
                 <router-link :to="{name:'BettingRecord'}" tag="li" v-else>
                     <i class="home-bet"/>
-                    <span>投注记录</span>
+                    <span>{{ $t('home.home8')}}</span>
                 </router-link>
             </div>
 
             <div class="game-center">
-                <div class="hot" :class="{active: gameType=='0'}" @click="gameType=0">热门游戏</div>
+                <div class="hot" :class="{active: gameType=='0'}" @click="gameType=0">{{ $t('home.home22')}}</div>
                 <div class="game-type">
-                    <div :class="{active: gameType=='1'}" @click="gameType=1">真人视讯</div>
-                    <div :class="{active: gameType=='2'}" @click="gameType=2">彩票游戏</div>
-                    <div :class="{active: gameType=='4'}" @click="gameType=4">体育竞技</div>
-                    <div :class="{active: gameType=='5'}" @click="gameType=5">电子游戏</div>
-                    <div :class="{active: gameType=='6'}" @click="gameType=6">棋牌游戏</div>
-                    <div :class="{active: gameType=='7'}" @click="gameType=7">电子竞技</div>
-                    <div :class="{active: gameType=='50'}" @click="gameType=50">捕鱼游戏</div>
+                    <div :class="{active: gameType=='1'}" @click="gameType=1">{{ $t('home.home23')}}</div>
+                    <div :class="{active: gameType=='2'}" @click="gameType=2">{{ $t('home.home24')}}</div>
+                    <div :class="{active: gameType=='4'}" @click="gameType=4">{{ $t('home.home25')}}</div>
+                    <div :class="{active: gameType=='5'}" @click="gameType=5">{{ $t('home.home26')}}</div>
+                    <div :class="{active: gameType=='6'}" @click="gameType=6">{{ $t('home.home27')}}</div>
+                    <div :class="{active: gameType=='7'}" @click="gameType=7">{{ $t('home.home28')}}</div>
+                    <div :class="{active: gameType=='50'}" @click="gameType=50">{{ $t('home.home29')}}</div>
                 </div>
                 <div class="game-rooms">
                     <div v-for="(game, index) in selectedGames" :key="index"
@@ -175,8 +192,8 @@
 
             <div class="activity">
                 <div class="title">
-                    <span>优惠活动</span>
-                    <span><router-link :to="{name:'Discount'}">更多>>></router-link></span>
+                    <span>{{ $t('home.home30')}}</span>
+                    <span><router-link :to="{name:'Discount'}">{{ $t('home.home31')}}</router-link></span>
                 </div>
             </div>
 
@@ -220,7 +237,15 @@
         components: {},
         data() {
             return {
-                // drawer: false,
+                options: [
+                    {
+                        value: 'zh',
+                        label: '简体中文'
+                    }, {
+                        value: 'th',
+                        label: 'ไทย'
+                    }
+                ],
                 showApp: true,
                 gameType: 0,
                 isDraw: false,

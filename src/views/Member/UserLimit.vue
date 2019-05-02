@@ -12,7 +12,7 @@
                     <i class="icon-menu message"></i>
                     <ul slot="content">
                         <li class="icon-kefu" @click="mOpenCService">
-                            在线客服
+                            {{$t('customservice')}}
                         </li>
                         <li class="icon-qq">
                             <a v-if="cQQ1" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'">

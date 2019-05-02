@@ -5,7 +5,7 @@
         <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
       </div>
       <div class="header-middle">
-         {{title ? title :'在线客服'}}
+         {{title ? title : $i18n.locale=='zh' ? '在线客服' : 'Customer Service'}}
       </div>
       <div class="header-right">
       </div>

@@ -149,7 +149,7 @@
     }
 
     .receive-ul > li > span {
-        width: 80px;
+        width: 120px;
         text-align: left;
     }
 

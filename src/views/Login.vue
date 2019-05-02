@@ -7,7 +7,7 @@
         <div class="container">
             <Icon type="ios-arrow-back" @click="activeName='mobileLogin'" class="goBack" v-if="activeName=='register'"/>
             <el-tabs v-model="activeName" class="login-panel">
-                <el-tab-pane label="手机登录" name="mobileLogin" v-if="activeName!='register' && apiKey">
+                <el-tab-pane :label="$t('login.mobileLogin')" name="mobileLogin" v-if="activeName!='register' && apiKey">
                     <div style="position: relative">
                         <el-select v-model="areaCode" filterable placeholder="请选择" class="eye area">
                             <el-option v-for="(item,index) in phoneAreaCode"
@@ -17,7 +17,7 @@
                             >
                             </el-option>
                         </el-select>
-                        <input type="number" ref="username" class="login-input phone" placeholder="请输入手机号"
+                        <input type="number" ref="username" class="login-input phone" :placeholder="$t('login.enterPhoneNumber')"
                                @click="$refs.phone1.close()" v-model="phone"
                                style="padding-left: 170px"
                         />
@@ -25,32 +25,32 @@
                                 class="tip"
                                 direction="top"
                         >
-                            请正确输入手机号码
+                            {{$t('login.enterTruePhoneNumber')}}
                         </cube-tip>
                     </div>
                     <div style="position: relative">
-                        <input type="text" ref="checkcode" class="login-input code" placeholder="请输入验证码"
+                        <input type="text" ref="checkcode" class="login-input code" :placeholder="$t('login.enterVerifyCode')"
                                @click="$refs.phone2.close()" v-model="verifyCode" autocomplete="off"
                         />
-                        <div class="bg-code" @click="getCode">获取验证码</div>
+                        <div class="bg-code" @click="getCode">{{$t('login.getVerifyCode')}}</div>
                         <cube-tip
                                 ref="phone2"
                                 class="tip"
                                 direction="top"
                         >
-                            请输入验证码
+                            {{$t('login.enterVerifyCode')}}
                         </cube-tip>
                     </div>
 
                     <div class="login-check">
-                        <span class="link-b" @click="activeName='register'">立即注册</span>
+                        <span class="link-b" @click="activeName='register'">{{$t('login.register')}}</span>
                     </div>
-                    <input type="button" class="btn-login" value="登录" @click="mPhoneLogin"/>
+                    <input type="button" class="btn-login" :value="$t('login.login')" @click="mPhoneLogin"/>
 
                 </el-tab-pane>
-                <el-tab-pane label="账号登录" name="login" v-if="activeName!='register'">
+                <el-tab-pane :label="$t('login.userLogin')" name="login" v-if="activeName!='register'">
                     <div>
-                        <input type="text" ref="username" class="login-input user" placeholder="请输入用户名"
+                        <input type="text" ref="username" class="login-input user" :placeholder="$t('login.enterUserName')"
                                @click="$refs.tip1.close()" v-model="username"/>
                         <cube-tip
                                 ref="tip1"
@@ -61,7 +61,7 @@
                         </cube-tip>
                     </div>
                     <div>
-                        <input type="password" ref="password" class="login-input pwd" placeholder="6-20位登录密码"
+                        <input type="password" ref="password" class="login-input pwd" :placeholder="$t('login.mustPwd620')"
                                @click="$refs.tip2.close()" v-model="password"/>
                         <cube-tip
                                 ref="tip2"
@@ -72,7 +72,7 @@
                         </cube-tip>
                     </div>
                     <div style="position: relative">
-                        <input type="text" ref="checkcode" class="login-input code" placeholder="请输入验证码"
+                        <input type="text" ref="checkcode" class="login-input code" :placeholder="$t('login.alert7')"
                                @click="$refs.tip3.close()" v-model="checkcode"/>
                         <span class="eye"><img :src="cgetCodeUrl" @click="mVCode()"></span>
                         <cube-tip
@@ -84,18 +84,18 @@
                         </cube-tip>
                     </div>
                     <div class="login-check">
-                        <Checkbox v-model="savenp" style="float:left;">&nbsp;记住密码</Checkbox><!-- 记住密码-->
-                        <span style="font-size: 12px">忘记密码?</span>
+                        <Checkbox v-model="savenp" style="float:left;">&nbsp;{{$t('login.rememberAccount')}}</Checkbox><!-- 记住密码-->
+                        <span style="font-size: 12px">{{$t('login.losePwd')}}?</span>
                     </div>
-                    <input type="button" class="btn-login" value="登录" @click="mLogin"/>
+                    <input type="button" class="btn-login" :value="$t('login.login')" @click="mLogin"/>
                     <div class="reg">
-                        还没有帐号？
-                        <span @click="activeName='register'" style="color:#0288d1">立即注册</span>
+                        {{$t('login.noAccount')}}？
+                        <span @click="activeName='register'" style="color:#0288d1">{{$t('login.register')}}</span>
                     </div>
                 </el-tab-pane>
-                <el-tab-pane label="注册" name="register" v-if="activeName=='register'">
+                <el-tab-pane :label="$t('login.reg')" name="register" v-if="activeName=='register'">
                     <div>
-                        <input type="text" class="login-input user" placeholder="请输入用户名"
+                        <input type="text" class="login-input user" :placeholder="$t('login.enterUserName')"
                                @click="$refs.reg1.close();$refs.reg2.close();" v-model="vm.username"/>
                         <cube-tip
                                 ref="reg1"
@@ -113,7 +113,7 @@
                         </cube-tip>
                     </div>
                     <div>
-                        <input type="password" class="login-input pwd" placeholder="6-20位登录密码"
+                        <input type="password" class="login-input pwd" :placeholder="$t('login.mustPwd620')"
                                @click="$refs.reg3.close();$refs.reg4.close()" v-model="vm.password"/>
                         <cube-tip
                                 ref="reg3"
@@ -131,7 +131,7 @@
                         </cube-tip>
                     </div>
                     <div>
-                        <input type="password" class="login-input pwd" placeholder="再次确认密码"
+                        <input type="password" class="login-input pwd" :placeholder="$t('login.confirmPwd')"
                                @click="$refs.reg5.close()" v-model="vm.truePassword"/>
                         <cube-tip
                                 ref="reg5"
@@ -142,19 +142,19 @@
                         </cube-tip>
                     </div>
                     <div>
-                        <input type="number" class="login-input phone" placeholder="请输入您的手机号码"
+                        <input type="number" class="login-input phone"  :placeholder="$t('login.enterPhoneNumber')"
                                @click="$refs.reg6.close()" v-model="vm.mobile"/>
                         <cube-tip
                                 ref="reg6"
                                 class="tip"
                                 direction="top"
                         >
-                            请输入正确手机号码
+                            {{ this.$t('reg.enterTruePhoneNumber') }}
                         </cube-tip>
                     </div>
 
                     <div style="position: relative">
-                        <input type="text" class="login-input code" placeholder="请输入验证码" @click="$refs.reg7.close()"
+                        <input type="text" class="login-input code" :placeholder="$t('login.enterVerifyCode')" @click="$refs.reg7.close()"
                                v-model="vm.checkcode"/>
                         <span class="eye"><img :src="cgetCodeUrl" @click="mVCode()"></span>
                         <cube-tip
@@ -165,7 +165,7 @@
                             {{ this.$t('reg.mustcode') }}
                         </cube-tip>
                     </div>
-                    <input type="button" class="btn-login" value="立即注册" @click="mSave"/>
+                    <input type="button" class="btn-login" :value="$t('login.register')" @click="mSave"/>
                 </el-tab-pane>
             </el-tabs>
         </div>
@@ -362,10 +362,10 @@
                         this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
                         this.mLoading(false);
                         this.mMessage(
-                            "登陆成功！",
+                            this.$t('login.alert11'),
                             () => {
                                 if(result.data.isNewMember==1){
-                                    this.mConfirm('您的初始密码是123456, 是否前去修改?', () => {
+                                    this.mConfirm(this.$t('login.alert12'), () => {
                                         this.$router.push({name: 'LoginPassword'})
                                     })
                                 }
@@ -393,11 +393,11 @@
                     timer = setInterval(() => {
                         if (time >= 1) {
                             time--;
-                            $('.bg-code').text(time + ' 秒')
+                            $('.bg-code').text(time +  this.$t('login.alert9'))
                         } else {
                             this.getCodes = true;
                             clearInterval(timer);
-                            $('.bg-code').text('获取验证码');
+                            $('.bg-code').text(this.$t('login.alert8'));
                             console.log(1)
                         }
                     }, 1000)
@@ -407,7 +407,7 @@
                         areaCode: this.areaCode
                     }).then(result => {
                         if (result.code == 0) {
-                            this.$Message.success('验证码已发送');
+                            this.$Message.success(this.$t('login.alert10'));
                             console.log(result);
                         } else {
                             this.$Message.error(result.message);

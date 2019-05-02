@@ -16,12 +16,12 @@
                         <i class="icon el-icon-check" v-if="$i18n.locale=='zh'"></i>
                     </div>
                 </div>
-                <div class="el-row" style="margin-top: 5px;">
-                    <div class="grid-content bg-purple-dark" @click="changeLocal('en')">
-                        <span>English</span>
-                        <i class="icon el-icon-check" v-if="$i18n.locale=='en'"></i>
-                    </div>
-                </div>
+                <!--<div class="el-row" style="margin-top: 5px;">-->
+                    <!--<div class="grid-content bg-purple-dark" @click="changeLocal('en')">-->
+                        <!--<span>English</span>-->
+                        <!--<i class="icon el-icon-check" v-if="$i18n.locale=='en'"></i>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="el-row" style="margin-top: 5px;">
                     <div class="grid-content bg-purple-dark" @click="changeLocal('th')">
                         <span>ไทย</span>

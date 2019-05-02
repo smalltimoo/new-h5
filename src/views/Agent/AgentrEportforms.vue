@@ -280,7 +280,7 @@
     }
 
     .status {
-        height: 28px;
+        min-height: 28px;
         line-height: 28px;
         text-align: center;
         font-weight: bold;
