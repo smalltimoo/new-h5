@@ -35,16 +35,16 @@
             </div>
             <div class="panel" v-if="vm.memberType==2"><!--分红比例： -->
                 <span>{{ $t('agent.openAccounts.openAccounts10')}} </span>
-                <input v-model="vm.profitRebate" :placeholder="'分红比例不能大于'+dataList.profitRebate+'%'" class="ipt"/>
+                <input v-model="vm.profitRebate" type="number" :placeholder="'分红比例不能大于'+dataList.profitRebate+'%'" class="ipt"/>
             </div>
             <div class="panel" v-if="vm.memberType==2"><!--分红比例： -->
                 <span>{{ $t('agent.openAccounts.openAccounts11')}} </span>
-                <input v-model="vm.rakebackRebate" :placeholder="'返水扣除不能小于'+dataList.rakebackRebate+'%'"
+                <input v-model="vm.rakebackRebate" type="number"  :placeholder="'返水扣除不能小于'+dataList.rakebackRebate+'%'"
                        class="ipt"/>
             </div>
             <div class="panel" v-if="vm.memberType==2"><!--优惠扣除： -->
                 <span>{{ $t('agent.openAccounts.openAccounts12')}}</span>
-                <input v-model="vm.benefitAmountRebate" :placeholder="'优惠金额扣除不能小于'+dataList.benefitAmountRebate+'%'" class="ipt"/>
+                <input v-model="vm.benefitAmountRebate" type="number"  :placeholder="'优惠金额扣除不能小于'+dataList.benefitAmountRebate+'%'" class="ipt"/>
             </div>
             <cube-button :active="true" @click="mSave" class="save-btn">
                 {{ $t('agent.openInvitation.openInvitation9')}} <!--立即设置 -->

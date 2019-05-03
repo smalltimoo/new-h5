@@ -16,6 +16,7 @@
                                        class="mui-input-clear"
                                        :placeholder="$t('agent.beetingdetaiList.inputType')"
                                        v-model="searchVM.username"
+                                       style="height: 40px;"
                                 >
                                 <Divider class="top-title">{{ $t('agent.beetingdetaiList.gameTing')}}</Divider>
                                 <!--游戏厅 -->

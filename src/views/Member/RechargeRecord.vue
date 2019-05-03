@@ -119,7 +119,7 @@
                 dataList: [],
                 searchVM: {
                     actionType: -1,
-                    orderBy: 'id desc',
+                    orderBy: 'createTime',
                     rows: 20
                 },
                 ivuScrollContainerHeight: 620
