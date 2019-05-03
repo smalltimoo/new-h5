@@ -59,7 +59,7 @@
                         {{ $t('member.bettingRecord.br3') }}: {{ gameRoomName }}
                     </div>
                     <div style="text-align: right">
-                        {{ $t('member.bettingRecord.br17') }} {{ totalDama }}
+                        {{ $t('member.bettingRecord.br17') }} {{ totalDama.toFixed(2) }}
                     </div>
                 </div>
 
