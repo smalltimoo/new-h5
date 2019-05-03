@@ -21,8 +21,8 @@
                     <span v-text="vm.integral/100" style="margin-left: 15px"></span>
                 </div>
                 <div class="score-button">
-                    <span @click="record=true">{{$t('score.scoreDetail')}}</span>
-                    <span @click="order=true">{{$t('score.scoreExchange')}}</span>
+                    <span @click="mIntegralLog">{{$t('score.scoreDetail')}}</span>
+                    <span @click="mPullScoreDetail">{{$t('score.scoreExchange')}}</span>
                 </div>
             </div>
             <div class="score-nav">
@@ -39,10 +39,11 @@
                         <div class="product-img">
                             <img src="../../assets/images/score/scoretu1@2x.png" width="105px"/>
                         </div>
-                        <div class="product-name" style="height: 54px;line-height: 54px">{{$t('score.luckyDrawer')}}</div>
+                        <div class="product-name" style="height: 54px;line-height: 54px">{{$t('score.luckyDrawer')}}
+                        </div>
                         <!--<div class="use">-->
-                            <!--<span></span>-->
-                            <!--<span></span>-->
+                        <!--<span></span>-->
+                        <!--<span></span>-->
                         <!--</div>-->
                     </li>
                     <li v-for="item in productData" :key="item.id" @click="mOrder(item)">
@@ -67,22 +68,21 @@
                 <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.scoreDetail')}}</div>
                 <div class="header-right"></div>
             </div>
-            <div class="record-title" v-if="dataList.length>0">
+            <div class="record-title" v-if="integralLog.length>0">
                 <span><b>{{$t('score.degits')}}</b></span>
                 <span><b>{{$t('score.detail')}}</b></span>
                 <span><b>{{$t('score.recordTime')}}</b></span>
             </div>
-            <div class="record-title" v-for="(item, index) in dataList" :key="index" v-if="dataList.length>0">
-                <span v-text="item.totalPrice"></span>
+            <div class="record-title" v-for="(item, index) in integralLog" :key="index" v-if="integralLog.length>0">
+                <span v-text="item.integral/100"></span>
                 <span>
-                    <Tooltip :content="item.orderContent" placement="top" max-width="200px">
-                        {{ item.orderContent}}
+                    <Tooltip :content="item.remark" placement="top" max-width="200px" v-if="item.remark">
+                        {{ item.remark}}
                     </Tooltip>
                 </span>
-                <span v-text="item.payTimeStr"></span>
+                <span v-text="item.operateTimeStr"></span>
             </div>
-            <div style="height: 90%; width: 100%;display: flex;justify-content: center;align-items: center"
-                 v-if="dataList.length==0">
+            <div style="height: 90%; width: 100%;display: flex;justify-content: center;align-items: center" v-if="integralLog.length==0">
                 <img src="../../assets/images/score/nolist.png" width="50%"/>
             </div>
         </Drawer>
@@ -92,7 +92,8 @@
                 <div class="header-left">
                     <Icon type="ios-arrow-back" class="icon-menu" @click="order=false"/>
                 </div>
-                <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.exchangeRecord')}}</div>
+                <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.exchangeRecord')}}
+                </div>
                 <div class="header-right"></div>
             </div>
 
@@ -116,7 +117,8 @@
 
                 </div>
             </div>
-            <div style="height: 90%; width: 100%;display: flex;justify-content: center;align-items: center" v-if="dataList.length==0">
+            <div style="height: 90%; width: 100%;display: flex;justify-content: center;align-items: center"
+                 v-if="dataList.length==0">
                 <img src="../../assets/images/score/nolist.png" width="50%"/>
             </div>
         </Drawer>
@@ -162,8 +164,8 @@
                     <span>{{$t('score.guanfang')}}</span>
                 </div>
                 <!--<div class="note peisong">-->
-                    <!--<span>留言备注:</span>-->
-                    <!--<input type="text" v-model="content" class="text"/>-->
+                <!--<span>留言备注:</span>-->
+                <!--<input type="text" v-model="content" class="text"/>-->
                 <!--</div>-->
                 <div style="padding: 10px; font-size: 16px"><b>{{$t('score.dingdan')}}</b></div>
                 <div class="flex content">
@@ -205,6 +207,7 @@
 <script>
     import listMixin from "@/mixins/list";
     import window from "../../mixins/window";
+
     let _this;
     export default {
         name: "Score",
@@ -233,6 +236,7 @@
                 dataList: [],
                 rows: {},
                 number: 1,
+                integralLog: {}
             };
         },
         computed: {
@@ -249,21 +253,32 @@
             this.mInit();
             this.mPullData();
             this.mProductType();
-            this.mPullScoreDetail();
+            // this.mPullScoreDetail();
 
-            let type=this.$route.params.type;
-            if(type=='record'){
-                this.order=true;
+            let type = this.$route.params.type;
+            if (type == 'record') {
+                this.order = true;
             }
         },
         methods: {
-            mInit(){
+            mInit() {
                 this.mLoading(true);
                 this.$http.get("/memberUser/memberinfo.json").then(result => {
                     if (result.code == 0) {
                         this.vm.integral = result.data.integral;
                     }
                 });
+            },
+            mIntegralLog() {
+                this.record = true;
+                this.mLoading(true);
+                let params = {sysId: this.cLoginUser.sysId, memberId: this.cLoginUser.id};
+                this.$http.post("/memberCoin/queryIntegralLogs.json", params)
+                    .then(result => {
+                        if (result.code == 0) {
+                            this.integralLog = result.rows;
+                        }
+                    });
             },
             mProductType() {
                 this.$http.post("/imp/productTypes.json").then(result => {
@@ -274,7 +289,7 @@
             },
             mPullData() {
                 this.mLoading(true);
-                var params = Object.assign({}, this.searchVM);
+                let params = Object.assign({}, this.searchVM);
                 this.$http.post("/imp/products.json", params).then(result => {
                     if (result.code == 0) {
                         this.products = !!result.data ? result.data : [];
@@ -282,6 +297,7 @@
                 });
             },
             mPullScoreDetail() {
+                this.order = true;
                 this.mLoading(true);
                 var params = Object.assign({}, this.searchVM);
                 this.$http.post("/imo/myOrders.json", params).then(result => {
@@ -303,10 +319,10 @@
                 }
                 this.hasMemberAddress();
                 this.buy = true;
-                this.number=1;
+                this.number = 1;
                 this.rows = item;
             },
-            confirmOrder(){
+            confirmOrder() {
                 this.$http.post("/imo/exchange.json", {id: this.rows.id, buyNum: this.number})
                     .then(result => {
                         this.mLoading(false);
@@ -320,7 +336,7 @@
                             this.$Message.error(result.message);
                         }
 
-                        this.buy=false;
+                        this.buy = false;
                     });
             },
             hasMemberAddress() {
@@ -336,7 +352,7 @@
             },
         },
         created() {
-            _this=this;
+            _this = this;
             this.$store.commit('CHANGE_TAB', 'Score');
         }
     }

@@ -83,11 +83,11 @@
                             <img src="../assets/images/home/global.png" width="20px"/>语言
                         </span>
                         <el-select v-model="$i18n.locale" placeholder="请选择" @change="changeLocal" size="mini">
-                            <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
+                            <el-option v-for="item in options"
+                                       :key="item.value"
+                                       :label="item.label"
+                                       :value="item.value"
+                            >
                             </el-option>
                         </el-select>
                     </div>
