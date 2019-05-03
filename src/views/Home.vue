@@ -9,7 +9,7 @@
             </div>
             <a class="download" :href="sysPicObj.appUrl" target="_blank">{{ $t('home.home3')}}</a>
         </div>
-        <div class="header" :style="sysPicObj.appUrl && showApp ? 'margin-top:5px' : 'margin-top:-46px'">
+        <div class="header" :class="sysPicObj.appUrl && showApp ? 'hasApp' : 'noApp'">
             <div class="header-left">
                 <Icon type="md-menu" class="icon-menu" @click="openDrawer"/>
                 <Drawer placement="left" width="80" :closable="false" v-model="leftDrawer" class="header-drawer">
@@ -380,7 +380,7 @@
                 } else {
                     if (_this.sysPicObj.appUrl && _this.showApp) {
                         document.querySelector('.header').style.position = 'inherit';
-                        document.querySelector('.header').style.marginTop = '6px';
+                        document.querySelector('.header').style.marginTop = '5px';
                         document.querySelector('.get-app').style.display = 'flex'
                     } else {
                         document.querySelector('.header').style.position = 'fixed';
