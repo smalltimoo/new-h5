@@ -122,7 +122,7 @@
             </div>
         </div>
         <div class="container">
-            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px;min-height: 155px">
+            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px;min-height: 140px">
                 <cube-slide-item v-for="(item, index) in getBanner" :key="index">
                     <img :src="item" width="100%">
                 </cube-slide-item>
