@@ -79,7 +79,7 @@
                         <span>{{$i18n.locale=='zh' ? '设置' : 'Setting'}}</span>
                     </div>
                     <div class="local">
-                        <span>
+                        <span style="width: 50%;">
                             <img src="../assets/images/home/global.png" width="20px"/>
                             {{$i18n.locale=='zh' ? '语言' : 'Language'}}
                         </span>

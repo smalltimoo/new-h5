@@ -37,14 +37,14 @@
                         <div style="display: flex;align-items: center">
                             <img :src="item.logoUrl" width="36px" v-if="item.logoUrl"/>
                             <img :src="sysPicObj.mobileLogo" width="36px" v-else/>
-                            <span v-text="item.gameCompanyName" style="padding-left: 15px"></span>
+                            <span v-text="item.gameCompanyName" style="padding-left: 15px;text-align: left; line-height: 20px;"></span>
                         </div>
                         <span style="color: #ccc;display: flex;align-items: center;"
                               @click="mGetError(item.gameCompanyId);"
                               v-if="item.coin=='-1'"
                         >
-                            <i class="el-icon-loading" v-if="item.loading" style="line-height: 20px"></i>
-                            <span v-if="!item.loading">{{$t('member.assetsOverView.ao6')}}</span>
+                            <i class="el-icon-loading" v-if="item.loading"></i>
+                            <span v-if="!item.loading" style="line-height: 20px">{{$t('member.assetsOverView.ao6')}}</span>
                             <img v-if="!item.loading"
                                  src="../../assets/images/refresh.png"
                                  style="width:18px;margin-top: -2px;margin-left: 5px"/>
