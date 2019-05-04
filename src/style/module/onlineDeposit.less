@@ -53,6 +53,13 @@
     align-items: center
   }
 
+  .it{
+      overflow-x: scroll;
+  }
+
+  .it::-webkit-scrollbar {
+    display: none;
+  }
   .recharge {
     display: flex;
     flex-direction: column;
@@ -96,11 +103,15 @@
   }
 
   .pay-way {
+    white-space: nowrap;
     padding: 5px 0 15px 0 !important;
+    flex-flow: row nowrap;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     border-bottom: solid 1px #f3f3f3;
+    overflow-x: scroll;
+    width: auto;
 
     .active {
       border: solid 1px #cd0005;
@@ -111,8 +122,8 @@
     & > div {
       border: solid 1px #aaa;
       height: 35px;
-      padding: 0 6px;
-      min-width: 80px;
+      padding: 0 5px;
+      min-width: 75px;
       line-height: 35px;
       display: flex;
       justify-content: center;
@@ -131,23 +142,30 @@
     background-color: #ffffff;
     width: 100%;
     padding: 0 !important;
+    overflow: hidden;
 
     .ivu-radio-group {
       display: inherit !important;
     }
   }
 
+  .pay-info::-webkit-scrollbar {
+    display: none;
+  }
   .pay-info {
     width: 100%;
+    overflow-x: scroll;
+
 
     .ivu-radio-default {
       display: flex;
       justify-content: flex-start;
       align-items: center;
       width: 100%;
-      height: 40px;
+      min-height: 40px;
+      font-size: 12px;
       border-bottom: solid 1px #f3f3f3;
-      padding-left: 15px;
+      padding-left: 10px;
       //border-bottom:solid 1px #f3f3f3;
     }
 

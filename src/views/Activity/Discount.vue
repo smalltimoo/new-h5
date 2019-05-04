@@ -66,7 +66,7 @@
                 <span v-if="activityInfo.signed"><b>已签到</b></span>
                 <span v-else><b>签到</b></span>
             </div>
-            <img :src="activityInfo.infoMobileImgUrl" width="100%" style="margin-top: 44px"/>
+            <img :src="activityInfo.infoMobileImgUrl" width="100%" class="activity-image"/>
         </Drawer>
     </div>
 </template>

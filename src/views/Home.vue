@@ -25,7 +25,7 @@
                             <span @click="$router.push({name:'Login', params:{type:'register'}})">{{ $t('home.home10')}}</span>
                         </div>
                         <div class="user-operate" v-else>
-                            <div>
+                            <div style="text-align: right">
                                 {{ $t('home.home11')}} {{ parseFloat(cLoginUser.centerAmount/100).toFixed(2) }}
                                 <span style="font-size: 12px">{{ $t('yuan')}}</span>
                             </div>&emsp;&emsp;
@@ -76,11 +76,12 @@
                         <!--</li>-->
                     </div>
                     <div class="myGame">
-                        <span>设置</span>
+                        <span>{{$i18n.locale=='zh' ? '设置' : 'Setting'}}</span>
                     </div>
                     <div class="local">
                         <span>
-                            <img src="../assets/images/home/global.png" width="20px"/>语言
+                            <img src="../assets/images/home/global.png" width="20px"/>
+                            {{$i18n.locale=='zh' ? '语言' : 'Language'}}
                         </span>
                         <el-select v-model="$i18n.locale" placeholder="请选择" @change="changeLocal" size="mini">
                             <el-option v-for="item in options"

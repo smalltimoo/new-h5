@@ -64,7 +64,7 @@
                         </span>
                         <span>
                              {{ cLoginUser.integral ? parseFloat(cLoginUser.integral/100).toFixed(2) :'0.00' }}
-                            <span style="font-size: 12px">分</span>
+                            <span style="font-size: 12px">{{$t('fen')}}</span>
                          </span>
                     </router-link>
                 </div>
@@ -73,13 +73,13 @@
                         <span>
                             {{this.$t('member.userMember.um5')}}
                         </span>
-                        <span>{{ parseFloat(amount/100).toFixed(2) }} <span style="font-size: 12px">元</span></span>
+                        <span>{{ parseFloat(amount/100).toFixed(2) }} <span style="font-size: 12px">{{$t('yuan')}}</span></span>
                     </router-link>
                 </div>
                 <div>
                     <router-link :to="{name:'AssetsOverView'}">
                         <span>{{this.$t('member.userMember.um6')}}</span>
-                        <span>{{ parseFloat(totalCoins/100).toFixed(2) }} <span style="font-size: 12px">元</span></span>
+                        <span>{{ parseFloat(totalCoins/100).toFixed(2) }} <span style="font-size: 12px">{{$t('yuan')}}</span></span>
                     </router-link>
                 </div>
             </div>

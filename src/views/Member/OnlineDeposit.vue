@@ -22,7 +22,7 @@
                             {{cLoginUser.memberLevelName}}
                         </span>
                     </div>
-                    <div>{{$t('member.onlineDeposit.od4')}}：{{parseFloat(balance/100).toFixed(2)}}元</div>
+                    <div>{{$t('member.onlineDeposit.od4')}}：{{parseFloat(balance/100).toFixed(2)}}{{$t('yuan')}}</div>
                 </div>
             </div>
             <div class="recharge" style="margin-top: 80px;">
@@ -44,7 +44,7 @@
                     </span>
                 </div>
             </div>
-            <div class="recharge" style="margin-top: 10px;">
+            <div class="recharge it" style="margin-top: 10px;">
                 <div>
                     <span class="title">{{$t('member.onlineDeposit.od8')}}</span>
                     <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
@@ -132,7 +132,7 @@
                                 <img :src="it.logo" height="28px" style="margin-left: 3px;margin-right: 5px"/>
                                 <span style="color: #000">{{ it.drawAccountTypeStr }}</span>&ensp;
                                 <span style="color: #aaa">({{ it.bankAccountName }}) </span>&emsp;
-                                <span> {{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney/100}} - {{it.maxMoney/100}} {{$t('member.onlineDeposit.od14')}} </span>
+                                <span style="padding-right: 10px"> {{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney/100}} - {{it.maxMoney/100}} {{$t('member.onlineDeposit.od14')}} </span>
                             </Radio>
                         </div>
                     </RadioGroup>
@@ -145,7 +145,10 @@
             <div class="tips">
                 <div class="title">{{$t('member.onlineDeposit.od16')}}</div>
                 <div>{{$t('member.onlineDeposit.od17')}}</div>
-                <div>{{$t('member.onlineDeposit.od18')}}"<span style="color:#c10005" @click="mOpenCService">{{$t('member.onlineDeposit.od41')}}</span>" {{$t('member.onlineDeposit.od42')}}</div>
+                <div>{{$t('member.onlineDeposit.od18')}}"
+                    <span style="color:#c10005" @click="mOpenCService">{{$t('member.onlineDeposit.od41')}}</span>"
+                    {{$t('member.onlineDeposit.od42')}}
+                </div>
                 <div>{{$t('member.onlineDeposit.od43')}}</div>
             </div>
         </div>

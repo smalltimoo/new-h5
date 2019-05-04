@@ -43,7 +43,7 @@
                               @click="mGetError(item.gameCompanyId);"
                               v-if="item.coin=='-1'"
                         >
-                            <i class="el-icon-loading" v-if="item.loading"></i>
+                            <i class="el-icon-loading" v-if="item.loading" style="line-height: 20px"></i>
                             <span v-if="!item.loading">{{$t('member.assetsOverView.ao6')}}</span>
                             <img v-if="!item.loading"
                                  src="../../assets/images/refresh.png"
