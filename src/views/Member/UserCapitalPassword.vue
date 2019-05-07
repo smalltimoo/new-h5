@@ -229,7 +229,7 @@
                     );
             },
             mGetBanks() {
-                return this.$http.get("/banktypes.json");
+                return this.$http.post("/banktypes.json",{lineCountry:this.sysInfo.lineCountry});
             },
             mGetBindBank() {
                 return this.$http.get("/memberUser/getbindbank.json");
