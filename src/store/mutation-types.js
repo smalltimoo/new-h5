@@ -34,6 +34,7 @@ const TYPES = {
   WEBNAV: 'WEBNAV',
   CHANGE_TAB:'CHANGE_TAB',
   LEFT_DRAWER:'LEFT_DRAWER',
+  THEME:'THEME',
 };
 
 export default TYPES;

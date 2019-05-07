@@ -92,6 +92,13 @@
                             </el-option>
                         </el-select>
                     </div>
+                    <div class="local">
+                         <span style="width: 50%;">
+                            <img src="../assets/images/home/moon.png" width="20px"/>
+                            {{$i18n.locale=='zh' ? '黑夜模式' : 'Dark Theme'}}
+                        </span>
+                        <cube-switch v-model="theme" size="small"/>
+                    </div>
                 </Drawer>
             </div>
             <div class="header-middle">
@@ -268,6 +275,14 @@
             }
         },
         computed: {
+            theme: {
+                get() {
+                    return this.$store.state.min
+                },
+                set(value) {
+                    this.$store.commit(types.THEME, value);
+                }
+            },
             ...mapState({
                 sysPicObj: state => state.common.sysPicObj,
             }),
@@ -368,16 +383,21 @@
             },
             alertDownloadApp() {
                 if (!this.cNeedLogin) {
-                    this.$http.post('/memberUser/isPopups.json',{isPopups: true}).then(result => {
+                    this.$http.post('/memberUser/isPopups.json', {isPopups: true}).then(result => {
                         if (result.code == 0) {
-                            this.alert = result.data.list[0];
-                            this.$alert(this.alert.msgInfo, this.alert.msgTitle, {
-                                dangerouslyUseHTMLString: true,
-                            });
+                            if(result.data.list.length>0){
+                                this.alert = result.data.list[0];
+                                this.$alert(this.alert.msgInfo, this.alert.msgTitle, {
+                                    dangerouslyUseHTMLString: true,
+                                });
+                            }
                         }
                     })
                 }
             }
+        },
+        mounted() {
+            this.darkTheme = localStorage.getItem('darkTheme') ? localStorage.getItem('darkTheme') : false;
         },
         created() {
             _this = this;

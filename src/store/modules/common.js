@@ -4,6 +4,7 @@ import axios from 'axios'
 
 export default {
     state: {
+        darkTheme:false,
         tab: localStorage.getItem('tab') ? localStorage.getItem('tab') : 'Home',
         gongGaos: [],
         sessionToken: "",
@@ -39,6 +40,9 @@ export default {
         }
     },
     mutations: {
+        [types.THEME](state, payload) {
+            state.darkTheme = payload;
+        },
         [types.COMMON_GONGGAO](state, payload) {
             state.gongGaos = payload;
         },
