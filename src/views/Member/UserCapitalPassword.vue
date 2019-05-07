@@ -308,12 +308,6 @@
             },
             mInitBankPicker() {
                 this.bankPicker = new mui.PopPicker();
-                if(this.sysInfo.lineCountry=='1'){ //中国
-                    this.banktypes=this.banktypes.filter(item=>item.accountCountry=='CN')
-                }
-                else{ //泰国
-                    this.banktypes=this.banktypes.filter(item=>item.accountCountry=='TH')
-                }
                 this.bankPicker.setData(this.banktypes);
             },
             mShowpcaPicker() {
