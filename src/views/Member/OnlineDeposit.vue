@@ -337,7 +337,7 @@
                     })
                     .catch(error => {
                         //请求出错
-                        this.mAlert(this.$t('member.onlineDeposit.od13'));
+                        // this.mAlert(this.$t('member.onlineDeposit.od13'));
                     });
             },
             //可用余额
@@ -375,7 +375,7 @@
             },
             //银行大分类信息
             mBanktypes() {
-                this.$http.get("/banktypes.json", {lineCountry:this.sysInfo.lineCountry}).then(res => {
+                this.$http.post("/banktypes.json", {lineCountry:this.sysInfo.lineCountry}).then(res => {
                     if (res.code == 0) {
                         this.banktypes = res.data.list;
                     } else {

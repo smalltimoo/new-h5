@@ -54,6 +54,7 @@
     </div>
 </template>
 <script>
+    import win from "@/mixins/mixin";
     export default {
         data() {
             return {
@@ -64,18 +65,18 @@
                 coinPassword: ""
             };
         },
+        computed: {
+            sysInfo: function() {
+                return this.$store.getters.getSysInfo;
+            },
+        },
+        mixins: [win],
         mounted() {
             this.mLoading(true);
-            this.$http.all([this.mGetBanks(), this.mGetBindBank()]).then(
-                this.$http.spread((rbanks, rbindbank) => {
-                    console.log(rbanks.data, rbindbank.data);
+            this.$http.all([ this.mGetBindBank()]).then(
+                this.$http.spread((rbindbank) => {
+                    console.log(rbindbank.data);
                     this.mLoading(false);
-                    if (rbanks.code == 0) {
-                        this.banktypes = rbanks.data.list;
-                    } else {
-                        this.mAlert(rbanks.message, () => {
-                        }, "error");
-                    }
                     if (rbindbank.code == 0) {
                         this.vm = Object.assign(this.vm, rbindbank.data);
                     }
@@ -90,7 +91,7 @@
         },
         methods: {
             mGetBanks() {
-                return this.$http.post("/banktypes.json",{lineCountry:this.sysInfo.lineCountry});
+                // return this.$http.post("/banktypes.json",{lineCountry:this.sysInfo.lineCountry});
             },
             mGetBindBank() {
                 return this.$http.get("/memberUser/getbindbank.json");
