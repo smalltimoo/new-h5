@@ -368,14 +368,12 @@
             },
             alertDownloadApp() {
                 if (!this.cNeedLogin) {
-                    this.$http.post('/memberUser/isPopups.json').then(result => {
+                    this.$http.post('/memberUser/isPopups.json',{isPopups: true}).then(result => {
                         if (result.code == 0) {
                             this.alert = result.data.list[0];
                             this.$alert(this.alert.msgInfo, this.alert.msgTitle, {
                                 dangerouslyUseHTMLString: true,
                             });
-                        } else {
-                            this.$Message.error(result.message)
                         }
                     })
                 }

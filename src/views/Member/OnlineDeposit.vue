@@ -8,7 +8,8 @@
                 {{$t('member.onlineDeposit.od1')}}
             </div>
             <div class="header-right">
-                <router-link :to="{name:'CapitalRecord'}" style="color:#fff">{{$t('member.onlineDeposit.od2')}}</router-link>
+                <router-link :to="{name:'CapitalRecord'}" style="color:#fff">{{$t('member.onlineDeposit.od2')}}
+                </router-link>
             </div>
         </div>
         <div class="container">
@@ -32,7 +33,8 @@
                 </div>
                 <div class="input-panel">
                     <span style="font-size: 16px"><b>￥</b></span>
-                    <input type="number" v-model="amount" class="input-number" :placeholder="$t('member.onlineDeposit.od7')"/>
+                    <input type="number" v-model="amount" class="input-number"
+                           :placeholder="$t('member.onlineDeposit.od7')"/>
                 </div>
                 <div class="recommend" v-if="moneys.length>0">
                     <span v-for="(item,index) in moneys"
@@ -162,7 +164,8 @@
                     <Icon type="ios-arrow-back" class="icon-menu" @click="underlineDrawer=false"/>
                 </div>
                 <div class="header-middle" style="font-size: 14px; font-weight: bold">
-                    {{selectData.drawAccountTypeStr ? selectData.drawAccountTypeStr : this.$t('member.onlineDeposit.od11')}}
+                    {{selectData.drawAccountTypeStr ? selectData.drawAccountTypeStr :
+                    this.$t('member.onlineDeposit.od11')}}
                 </div>
                 <div class="header-right"></div>
             </div>
@@ -214,7 +217,8 @@
                            v-model="payName"
                            :placeholder="$t('member.onlineDeposit.od58')" readonly
                     />
-                    <input type="text" v-model="underlineText" :placeholder="$t('member.onlineDeposit.od58')" readonly v-else
+                    <input type="text" v-model="underlineText" :placeholder="$t('member.onlineDeposit.od58')" readonly
+                           v-else
                            @click="showPicker"/>
                     <Icon type="ios-arrow-forward" class="icon-menu"/>
                 </div>
@@ -226,13 +230,15 @@
                            :placeholder="$t('member.onlineDeposit.od59')"
                            readonly
                     />
-                    <input type="text" v-model="underlineBank" :placeholder="$t('member.onlineDeposit.od59')" readonly v-else
+                    <input type="text" v-model="underlineBank" :placeholder="$t('member.onlineDeposit.od59')" readonly
+                           v-else
                            @click="showBankPicker"/>
                     <Icon type="ios-arrow-forward" class="icon-menu"/>
                 </div>
                 <div class="deposit" style="justify-content: flex-start;padding: 0 10px;border: 0">
                     <span style="margin-left: 10px;width: 75px;">{{$t('member.onlineDeposit.od60')}}</span>
-                    <input type="text" :placeholder="$t('member.onlineDeposit.od61')" v-model="vmunderline.underlineAccountName"/>
+                    <input type="text" :placeholder="$t('member.onlineDeposit.od61')"
+                           v-model="vmunderline.underlineAccountName"/>
                 </div>
             </div>
             <div class="panel" style="margin-top: 10px">
@@ -280,7 +286,7 @@
                 underlineText: '',
                 underlineBank: '',
                 minAmount: 0,
-                nextLoading:false,
+                nextLoading: false,
                 vmunderline: {
                     minMoney: '',
                     orderAmount: "",
@@ -369,7 +375,7 @@
             },
             //银行大分类信息
             mBanktypes() {
-                this.$http.get("/banktypes.json").then(res => {
+                this.$http.get("/banktypes.json", {lineCountry:this.sysInfo.lineCountry}).then(res => {
                     if (res.code == 0) {
                         this.banktypes = res.data.list;
                     } else {
@@ -422,7 +428,6 @@
                             this.$t('member.onlineDeposit.od20') + this.selectData.minMoney / 100 + "~" + this.selectData.maxMoney / 100 + this.$t('member.onlineDeposit.od21')
                         );
                     }
-
                     return;
                 }
                 if (this.tab == 'bank') {
@@ -524,7 +529,7 @@
                 this.bankPicker.show()
             },
             saveUnderline() {
-                if(this.nextLoading){
+                if (this.nextLoading) {
                     this.$Message.warning(this.$t('member.onlineDeposit.od68'));   //请稍候再试！
                     return false;
                 }
@@ -541,7 +546,7 @@
                     return;
                 }
                 this.mLoading(true);
-                this.nextLoading=true;
+                this.nextLoading = true;
                 let params = Object.assign({}, this.vmunderline);  //先检查是否给手续费
                 this.$http.post("/recharge/underlineorder.json", params).then(result => {
                     this.mLoading(false);
@@ -550,12 +555,13 @@
                             content: this.$t('member.onlineDeposit.od69'),
                             duration: 4,
                             onClose: () => {
-                                this.nextLoading=false;
+                                this.nextLoading = false;
                                 this.$router.push({name: 'CapitalRecord'})
                             }
                         })
                     } else {
-                        this.$Message.error(result.message, () => {}, "error");
+                        this.$Message.error(result.message, () => {
+                        }, "error");
                     }
                 });
             },
