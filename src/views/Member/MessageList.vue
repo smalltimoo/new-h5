@@ -15,7 +15,7 @@
                 <span v-text="item.createTimeStr" style="font-size: 12px"></span>
                 <div class="msg-content">
                     <span class="title">《{{item.msgTitle}}》</span>
-                    <div  class="info" v-text="item.msgInfo"></div>
+                    <div  class="info" v-html="item.msgInfo"></div>
                     <!--// -->
                     <div class="open" onclick="$(this).prev().toggleClass('ht');$(this).toggle();$(this).next().toggle()">
                         <span>{{$t('member.messageList.ml2')}}</span>

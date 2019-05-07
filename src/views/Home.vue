@@ -255,6 +255,7 @@
                 activities: [],
                 drawBanner: '',
                 companyCustomGames: [],
+                alert: {}
             }
         },
         computed: {
@@ -296,7 +297,6 @@
                 }
             },
         },
-
         methods: {
             drawGame() {
                 this.$http.get('/integralDrawC/queryRouletteSettingSwitch.json').then(result => {
@@ -356,6 +356,21 @@
             closeApp() {
                 this.showApp = false;
                 localStorage.setItem('showApp', 'false')
+            },
+            alertDownloadApp() {
+                if (!this.cNeedLogin) {
+                    this.$http.post('/memberUser/isPopups.json', {sysId: 0}).then(result => {
+                        if (result.code == 0) {
+                            this.alert = result.data.list[0];
+                            this.$alert(this.alert.msgInfo, this.alert.msgTitle, {
+                                dangerouslyUseHTMLString: true,
+                            });
+                        }
+                        else{
+                            this.$Message.error(result.message)
+                        }
+                    })
+                }
             }
         },
         created() {
@@ -365,6 +380,7 @@
             this.drawGame();
             this.allGame();
             this.activity();
+            this.alertDownloadApp();
 
             window.onscroll = function () {
                 let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
@@ -403,5 +419,8 @@
     }
 </script>
 <style>
+    .el-message-box{
+       width: 85%;
+    }
 </style>
 
