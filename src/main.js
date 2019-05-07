@@ -16,8 +16,9 @@ import Cube from 'cube-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'iview/dist/styles/iview.css';
 import "animate.css";
-import './style/base.less';
-import 'amfe-flexible'
+import 'amfe-flexible';
+
+import './style/app.less';
 
 
 directive(Vue);

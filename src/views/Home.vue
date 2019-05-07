@@ -235,6 +235,7 @@
     let _this;
     import {mapState} from 'vuex';
     import message from '@/mixins/message'
+    import types from "../store/mutation-types";
 
     function StartGameForIframe(gameId) {
         _this.mEnterGame(gameId)
@@ -277,7 +278,7 @@
         computed: {
             theme: {
                 get() {
-                    return this.$store.state.min
+                    return this.$store.state.common.darkTheme
                 },
                 set(value) {
                     this.$store.commit(types.THEME, value);
@@ -395,9 +396,6 @@
                     })
                 }
             }
-        },
-        mounted() {
-            this.darkTheme = localStorage.getItem('darkTheme') ? localStorage.getItem('darkTheme') : false;
         },
         created() {
             _this = this;

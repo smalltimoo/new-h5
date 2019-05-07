@@ -1,0 +1,96 @@
+@bodyColor: #efeff4;
+@headColor: #271618;
+@mainColor: #2d190b;
+
+
+.theme {
+  background-color: @bodyColor;
+  margin: 0;
+  padding: 0;
+
+  .footer .active {
+    color: #2d190b;
+    font-weight: bold;
+  }
+
+  .footer .active .icon-home{
+    background: url('../assets/images/theme/home.png') 50% 50% no-repeat;
+    background-size: 19px auto;
+  }
+
+  .footer .active .icon-activity {
+    background: url('../assets/images/theme/activity.png') 50% 50% no-repeat;
+    background-size: 19px auto;
+  }
+
+  .footer .active .icon-deposit {
+    background: url('../assets/images/theme/deposit.png') 50% 50% no-repeat;
+    background-size: 21px auto;
+  }
+
+  .footer .icon-score {
+    background: url('../assets/images/theme/score.png') 50% 50% no-repeat;
+    background-size: 35px auto;
+  }
+
+  .footer .active .icon-user {
+    background: url('../assets/images/theme/user.png') 50% 50% no-repeat;
+    background-size: 19px auto;
+  }
+
+  .header {
+    background-color: @headColor;
+  }
+
+  .header-drawer {
+    .left-top {
+      background: -webkit-gradient(linear, right top, left top, from(@headColor), to(@mainColor));
+      background: -webkit-linear-gradient(right, @headColor, @mainColor);
+    }
+  }
+
+  .score .top{
+    background-color: @headColor;
+  }
+
+  .onlineDeposit .top{
+    background-color: @headColor;
+  }
+
+  .cube-btn_active{
+    background-color: @mainColor!important;
+  }
+  .user-member .top{
+    background: url('../assets/images/theme/gerenzhongxin@2x.png') 50% 0% no-repeat;
+    background-size: 375px auto;
+  }
+
+  .user-member .user-name{
+    box-shadow: inset 0 0 0.24rem 0 @mainColor;
+  }
+
+  .agent .top{
+    background-color:@headColor;
+  }
+
+  .dama{
+    background-color:@headColor!important;
+  }
+
+  .login .top{
+    background: url('../assets/images/theme/dengluyemian@2x.png') 50% 50% no-repeat;
+    background-color: #ffffff;
+    background-size: cover;
+  }
+  .login .btn-login{
+    width: 310px;
+    height: 50px;
+    background:inherit;
+    background-color:@headColor;
+    border-radius: 25px;
+  }
+
+  .login .el-tabs__active-bar{
+    background-color:@headColor;
+  }
+}

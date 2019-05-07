@@ -39,12 +39,28 @@
             loginState: function() {
                 return this.$store.state.app.loginState;
             },
+            darkTheme: function() {
+                return this.$store.getters.getTheme;
+            },
             cLoadingDialog: function() {
                 return this.$store.getters.getLoadingModel;
             },
             cWinDialog: function() {
                 this.winVisible = this.$store.getters.getWinModel.visible;
                 return this.$store.getters.getWinModel;
+            }
+        },
+        watch: {
+            darkTheme: {
+                handler(newName, oldName) {
+                    if(newName){
+                        document.body.classList.add('theme')
+                    }
+                    else{
+                        document.body.classList.remove('theme')
+                    }
+                },
+                immediate: true
             }
         },
         methods: {

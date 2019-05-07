@@ -1,3 +1,32 @@
+.body{
+  background-color: #efeff4;
+  margin: 0;
+  padding: 0;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+html {
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+}
+ul, ul > li {
+  margin: 0;
+  padding: 0;
+}
+
+input, img, a {
+  cursor: pointer;
+}
+
+input {
+  outline: none;
+  padding-left: 10px;
+  margin-bottom: 0;
+}
 
 #app {
   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
@@ -39,12 +68,12 @@
   z-index: 99;
 }
 
-.hasApp{
-  margin-top:5px;
+.hasApp {
+  margin-top: 5px;
 }
 
-.noApp{
-  margin-top:-46px
+.noApp {
+  margin-top: -46px
 }
 
 .header-left {
@@ -111,22 +140,24 @@
     }
   }
 
-  .local{
+  .local {
     & > span {
       & > img {
         margin-right: 10px;
       }
+
       display: flex;
       align-items: center;
       justify-content: flex-start;
     }
 
 
-    .el-input__inner{
-      border:0;
+    .el-input__inner {
+      border: 0;
       text-align: right;
       padding-right: 35px;
     }
+
     height: 40px;
     line-height: 40px;
     display: flex;
@@ -136,6 +167,7 @@
     color: #666;
     padding: 0 5px 0 20px;
   }
+
   .left-center {
     display: flex;
     flex-flow: column wrap;
@@ -245,11 +277,13 @@
     background: url("../assets/images/home/qq.png?__inline") 9% 50% no-repeat;
     background-size: 20px auto;
   }
+
   .icon-agent {
     background: url("../assets/images/home/daili.png?__inline") 9% 50% no-repeat;
     background-size: 20px auto;
   }
-  .icon-line{
+
+  .icon-line {
     background: url("../assets/images/home/line.png?__inline") 9% 50% no-repeat;
     background-size: 20px auto;
   }
@@ -403,8 +437,8 @@
 }
 
 
-.el-form-item__label{
-  white-space:nowrap;
+.el-form-item__label {
+  white-space: nowrap;
 }
 
 .interchange .ivu-select-selection {
@@ -471,7 +505,6 @@
   }
 }
 
-
 @import "module/page-footer";
 @import "module/home";
 @import "module/login";
@@ -482,3 +515,5 @@
 @import "module/onlineDeposit";
 @import "module/agent";
 @import "module/game-container";
+
+@import "theme";
