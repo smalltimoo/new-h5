@@ -212,6 +212,7 @@
             },
         },
         mounted(){
+            this.areaCode=this.$i18n.locale=='th' ? '+66' : '+86';
             if(this.$route.params.type=='register'){
                 this.activeName='register';
             }

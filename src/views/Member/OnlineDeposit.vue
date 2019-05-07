@@ -51,11 +51,13 @@
                 </div>
                 <div class="pay-way">
                     <div :class="{active: tab=='alpay'}"
+                         v-if="rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('alpay')).length>0"
                          @click="mSelectRechargeType('alpay',rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('alpay'))[0].list)">
                         <img src="../../assets/images/alipay.png" width="24px"/>
                         <span>{{$t('member.onlineDeposit.od9')}}</span>
                     </div>
                     <div :class="{active: tab=='wechat'}"
+                         v-if="rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('wx')).length>0"
                          @click="mSelectRechargeType('wechat',rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('wx'))[0].list)">
                         <img src="../../assets/images/wechat.png" width="23px"/>
                         <span>{{$t('member.onlineDeposit.od10')}}</span>
@@ -64,7 +66,9 @@
                         <img src="../../assets/images/bank.png" width="23px"/>
                         <span>{{$t('member.onlineDeposit.od11')}}</span>
                     </div>
-                    <div :class="{active: tab=='scan'}" @click="mSelectRechargeType('scan',rechargeOther)">
+                    <div :class="{active: tab=='scan'}" @click="mSelectRechargeType('scan',rechargeOther)"
+                         v-if="rechargeOther.length>0"
+                    >
                         <img src="../../assets/images/scan.png" width="22px"/>
                         <span>{{$t('member.onlineDeposit.od12')}}</span>
                     </div>
@@ -551,8 +555,7 @@
                             }
                         })
                     } else {
-                        this.$Message.error(result.message, () => {
-                        }, "error");
+                        this.$Message.error(result.message, () => {}, "error");
                     }
                 });
             },

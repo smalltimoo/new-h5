@@ -173,9 +173,18 @@
                     <div :class="{active: gameType=='2'}" @click="gameType=2">{{ $t('home.home24')}}</div>
                     <div :class="{active: gameType=='4'}" @click="gameType=4">{{ $t('home.home25')}}</div>
                     <div :class="{active: gameType=='5'}" @click="gameType=5">{{ $t('home.home26')}}</div>
-                    <div :class="{active: gameType=='6'}" @click="gameType=6">{{ $t('home.home27')}}</div>
-                    <div :class="{active: gameType=='7'}" @click="gameType=7">{{ $t('home.home28')}}</div>
-                    <div :class="{active: gameType=='50'}" @click="gameType=50">{{ $t('home.home29')}}</div>
+                    <div :class="{active: gameType=='6'}" @click="gameType=6"
+                         v-if="Object.values(companyCustomGames).filter(item=>item.typeId==6).length>0"
+                    >{{ $t('home.home27')}}
+                    </div>
+                    <div :class="{active: gameType=='7'}" @click="gameType=7"
+                         v-if="Object.values(companyCustomGames).filter(item=>item.typeId==7).length>0"
+                    >{{ $t('home.home28')}}
+                    </div>
+                    <div :class="{active: gameType=='50'}" @click="gameType=50"
+                         v-if="Object.values(companyCustomGames).filter(item=>item.typeId==50).length>0"
+                    >{{ $t('home.home29')}}
+                    </div>
                 </div>
                 <div class="game-rooms">
                     <div v-for="(game, index) in selectedGames" :key="index"
@@ -359,14 +368,13 @@
             },
             alertDownloadApp() {
                 if (!this.cNeedLogin) {
-                    this.$http.post('/memberUser/isPopups.json', {sysId: 0}).then(result => {
+                    this.$http.post('/memberUser/isPopups.json').then(result => {
                         if (result.code == 0) {
                             this.alert = result.data.list[0];
                             this.$alert(this.alert.msgInfo, this.alert.msgTitle, {
                                 dangerouslyUseHTMLString: true,
                             });
-                        }
-                        else{
+                        } else {
                             this.$Message.error(result.message)
                         }
                     })
@@ -419,8 +427,8 @@
     }
 </script>
 <style>
-    .el-message-box{
-       width: 85%;
+    .el-message-box {
+        width: 85%;
     }
 </style>
 
