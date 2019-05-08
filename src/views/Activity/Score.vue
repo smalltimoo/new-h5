@@ -68,7 +68,7 @@
                 <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.scoreDetail')}}</div>
                 <div class="header-right"></div>
             </div>
-            <div class="record-title" v-if="integralLog.length>0">
+            <div class="record-title" v-if="integralLog && integralLog.length>0">
                 <span><b>{{$t('score.degits')}}</b></span>
                 <span><b>{{$t('score.detail')}}</b></span>
                 <span><b>{{$t('score.recordTime')}}</b></span>
@@ -82,9 +82,7 @@
                 </span>
                 <span v-text="item.operateTimeStr"></span>
             </div>
-            <div style="height: 90%; width: 100%;display: flex;justify-content: center;align-items: center" v-if="integralLog.length==0">
-                <img src="../../assets/images/score/nolist.png" width="50%"/>
-            </div>
+            <div  class="no-list" v-if="(!integralLog||integralLog.length==0)" style="top: 0;left: 0;"></div>
         </Drawer>
 
         <Drawer :closable="false" v-model="order" width="100" class="order-drawer">
@@ -114,13 +112,9 @@
                 <div style="height: 35px; line-height:35px;text-align: right; padding-right: 20px;display: flex;justify-content: space-between">
                     <span v-text="item.payTimeStr" style="padding-left: 10px"></span>
                     <span> {{$t('score.all')}}{{item.buyNum}}{{$t('score.products')}} &ensp;&ensp;{{$t('score.expend')}}{{item.totalPrice}}{{$t('score.degits')}}</span>
-
                 </div>
             </div>
-            <div style="height: 90%; width: 100%;display: flex;justify-content: center;align-items: center"
-                 v-if="dataList.length==0">
-                <img src="../../assets/images/score/nolist.png" width="50%"/>
-            </div>
+            <div  class="no-list" v-if="(!dataList||dataList.length==0)" style="top: 0;left: 0;"></div>
         </Drawer>
 
         <Drawer :closable="false" v-model="buy" width="100" class="buy-drawer">
