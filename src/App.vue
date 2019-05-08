@@ -2,12 +2,12 @@
     <div id="app">
         <router-view></router-view>
         <Modal v-model="winVisible"
-                @on-visible-change="mWinVisibleChange"
-                :width="cWinDialog.width"
-                class-name="vertical-center-modal"
-                :closable="true"
-                :mask-closable="false"
-                class="model-alert"
+               @on-visible-change="mWinVisibleChange"
+               :width="cWinDialog.width"
+               class-name="vertical-center-modal"
+               :closable="true"
+               :mask-closable="false"
+               class="model-alert"
         >
             <div slot="header" v-text="cWinDialog.title"></div>
             <component
@@ -25,6 +25,7 @@
 <script>
     import types from '@/store/mutation-types';
     import win from "@/mixins/window";
+
     export default {
         name: 'App',
         data: () => ({
@@ -33,19 +34,19 @@
         mixins: [win],
         components: {},
         computed: {
-            GameTransferState: function() {
+            GameTransferState: function () {
                 return this.$store.state.app.GameTransferState;
             },
-            loginState: function() {
+            loginState: function () {
                 return this.$store.state.app.loginState;
             },
-            darkTheme: function() {
+            darkTheme: function () {
                 return this.$store.getters.getTheme;
             },
-            cLoadingDialog: function() {
+            cLoadingDialog: function () {
                 return this.$store.getters.getLoadingModel;
             },
-            cWinDialog: function() {
+            cWinDialog: function () {
                 this.winVisible = this.$store.getters.getWinModel.visible;
                 return this.$store.getters.getWinModel;
             }
@@ -53,10 +54,9 @@
         watch: {
             darkTheme: {
                 handler(newName, oldName) {
-                    if(newName){
+                    if (newName) {
                         document.body.classList.add('theme')
-                    }
-                    else{
+                    } else {
                         document.body.classList.remove('theme')
                     }
                 },
@@ -70,21 +70,19 @@
                 }
             },
             alertDownloadApp() {
-                if (!this.cNeedLogin) {
-                    this.$http.post('/memberUser/isPopups.json', {isPopups: true}).then(result => {
-                        if (result.code == 0) {
-                            if (result.data.list && result.data.list.length > 0) {
-                                this.alert = result.data.list[0];
-                                this.$alert(this.alert.msgInfo, this.alert.msgTitle, {
-                                    dangerouslyUseHTMLString: true,
-                                });
-                            }
+                this.$http.post('/memberUser/isPopups.json', {isPopups: true}).then(result => {
+                    if (result.code == 0) {
+                        if (result.data.list && result.data.list.length > 0) {
+                            this.alert = result.data.list[0];
+                            this.$alert(this.alert.msgInfo, this.alert.msgTitle, {
+                                dangerouslyUseHTMLString: true,
+                            });
                         }
-                    })
-                }
+                    }
+                })
             }
         },
-        mounted(){
+        mounted() {
             this.alertDownloadApp();
         },
         created() {

@@ -38,6 +38,7 @@
                 </div>
                 <div class="recommend" v-if="moneys.length>0">
                     <span v-for="(item,index) in moneys"
+                          v-if="index<=5"
                           :key="index"
                           :class="{active: activeAmount==item}"
                           @click="amount=item;activeAmount=amount"
