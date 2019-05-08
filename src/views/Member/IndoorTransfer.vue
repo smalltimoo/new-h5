@@ -84,7 +84,8 @@
                 },
                 walletPicker: {},
                 sltwallet: {},
-                coin: {}
+                coin: {},
+                loading:false
             }
         },
         computed: {
@@ -118,6 +119,9 @@
                 return this.$http.post('/managerGame/getWalletCoins.json')
             },
             mSave() {
+                if (this.loading) {
+                    return;
+                }
                 if (this.transferType == '') {
                     //请选择操作方式
                     this.$Message.warning(this.$t('member.indoorTransfer.it9'))
@@ -145,11 +149,13 @@
                     this.vm.walletIn = 0
                     this.vm.walletOut = this.wallet
                 }
-                this.mLoading(true)
+                this.mLoading(true);
+                this.loading = true;
                 this.$http
                     .post('/managerGame/wallettransfer.json', this.vm)
                     .then(result => {
-                        this.mLoading(false)
+                        this.mLoading(false);
+                        this.loading = false;
                         if (result.code == 0) {
                             this.mRefreshAccountInfo()
                             this.$Message.success(this.$t('member.indoorTransfer.it12'))  //操作成功
@@ -165,6 +171,7 @@
                                 this.$Message.warning(this.$t('member.indoorTransfer.it16')) //游戏厅未返回，请联系客服
                             }
                         } else {
+                            this.loading = false;
                             this.$Message.warning(result.message)
                         }
                     })
