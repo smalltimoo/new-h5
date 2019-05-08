@@ -16,13 +16,13 @@
                         </div>
                         <div class="window-panel" style=" margin-top: 8px;width: 95%;height: 160px; padding: 10px;border-radius: 7px;">
                             <span style="font-size: 14px">
-                                {{$t('games.gameContainer.gameContainer6')}}：
+                                {{$t('games.gameContainer.gameContainer5')}}：
                                 <input type="text" v-model="vm.dealCoin" placeholder="请输入金额" class="input"
                                        style="height: 27px;line-height: 27px; border-radius: 4px; width: 120px;"/>
                                 {{$t('yuan')}}
                             </span>
                             <span style="color: #960000;font-size: 12px;margin: 10px 0">
-                                {{$t('games.gameContainer.gameContainer7')}}: {{this.cLoginUser.centerAmount/100}}{{$t('yuan')}}
+                                {{$t('games.gameContainer.gameContainer6')}}: {{this.cLoginUser.centerAmount/100}}{{$t('yuan')}}
                             </span>
                             <span class="moneys">
                             <div @click="vm.dealCoin=10"
@@ -183,7 +183,6 @@
                 this.$http
                     .post('/managerGame/wallettransfer.json', this.vm)
                     .then(result => {
-                        this.loading = false;
                         this.mLoading(false)
                         if (result.code == 0) {
                             this.$Message.success(this.$t('member.indoorTransfer.it12'))  //操作成功
@@ -198,8 +197,10 @@
                             } else if (result.data == 4) {
                                 this.$Message.warning(this.$t('member.indoorTransfer.it16')) //游戏厅未返回，请联系客服
                             }
+                            this.loading = false;
                         } else {
                             this.$Message.warning(result.message)
+                            this.loading = false;
                         }
                     })
                     .catch(error => {
