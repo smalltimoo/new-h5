@@ -382,20 +382,6 @@
                 this.showApp = false;
                 localStorage.setItem('showApp', 'false')
             },
-            alertDownloadApp() {
-                if (!this.cNeedLogin) {
-                    this.$http.post('/memberUser/isPopups.json', {isPopups: true}).then(result => {
-                        if (result.code == 0) {
-                            if(result.data.list.length>0){
-                                this.alert = result.data.list[0];
-                                this.$alert(this.alert.msgInfo, this.alert.msgTitle, {
-                                    dangerouslyUseHTMLString: true,
-                                });
-                            }
-                        }
-                    })
-                }
-            }
         },
         created() {
             _this = this;
@@ -404,7 +390,6 @@
             this.drawGame();
             this.allGame();
             this.activity();
-            this.alertDownloadApp();
 
             window.onscroll = function () {
                 let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
