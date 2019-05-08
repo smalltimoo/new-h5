@@ -32,9 +32,11 @@
                 }
             }
         },
+        mounted(){
+            this.alertDownloadApp();
+        },
         created() {
             this.mCheckLoginState();
-            this.alertDownloadApp();
             this.$store.dispatch(types.COMMON_GONGGAO, this);
             // this.showFooter = ['Home', 'Discount', 'Score', 'OnlineDeposit', 'UserMember'].includes(this.$route.name);
         }
