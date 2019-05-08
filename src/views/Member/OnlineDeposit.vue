@@ -211,7 +211,7 @@
             <div class="panel" style="margin-top: 10px">
                 <div class="title">{{$t('member.onlineDeposit.od55')}}</div>
                 <div class="deposit" style="justify-content: flex-start;padding: 0 10px">
-                    <span style="margin-left: 10px;width: 75px;">{{$t('member.onlineDeposit.od57')}}</span>
+                    <span style="margin-left: 10px;white-space: nowrap;min-width: 80px">{{$t('member.onlineDeposit.od57')}}</span>
                     <input type="text"
                            v-if="selectData.accountType==1 || selectData.accountType==2"
                            v-model="payName"
@@ -223,7 +223,7 @@
                     <Icon type="ios-arrow-forward" class="icon-menu"/>
                 </div>
                 <div class="deposit" style="justify-content: flex-start;padding: 0 10px">
-                    <span style="margin-left: 10px;width: 75px;">{{$t('member.onlineDeposit.od59')}}</span>
+                    <span style="margin-left: 10px;white-space: nowrap;min-width: 80px">{{$t('member.onlineDeposit.od59')}}</span>
                     <input type="text"
                            v-if="selectData.accountType==1 || selectData.accountType==2"
                            v-model="payBank"
@@ -236,7 +236,7 @@
                     <Icon type="ios-arrow-forward" class="icon-menu"/>
                 </div>
                 <div class="deposit" style="justify-content: flex-start;padding: 0 10px;border: 0">
-                    <span style="margin-left: 10px;width: 75px;">{{$t('member.onlineDeposit.od60')}}</span>
+                    <span style="margin-left: 10px;white-space: nowrap;min-width: 80px">{{$t('member.onlineDeposit.od60')}}</span>
                     <input type="text" :placeholder="$t('member.onlineDeposit.od61')"
                            v-model="vmunderline.underlineAccountName"/>
                 </div>

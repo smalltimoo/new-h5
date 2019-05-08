@@ -16,25 +16,6 @@
             PageFooter,
         },
         data: () => ({}),
-        methods:{
-            alertDownloadApp() {
-                if (!this.cNeedLogin) {
-                    this.$http.post('/memberUser/isPopups.json', {isPopups: true}).then(result => {
-                        if (result.code == 0) {
-                            if(result.data.list && result.data.list.length>0){
-                                this.alert = result.data.list[0];
-                                this.$alert(this.alert.msgInfo, this.alert.msgTitle, {
-                                    dangerouslyUseHTMLString: true,
-                                });
-                            }
-                        }
-                    })
-                }
-            }
-        },
-        mounted(){
-            this.alertDownloadApp();
-        },
         created() {
             this.mCheckLoginState();
             this.$store.dispatch(types.COMMON_GONGGAO, this);
