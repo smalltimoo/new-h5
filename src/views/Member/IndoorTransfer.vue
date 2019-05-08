@@ -171,7 +171,6 @@
                                 this.$Message.warning(this.$t('member.indoorTransfer.it16')) //游戏厅未返回，请联系客服
                             }
                         } else {
-                            this.loading = false;
                             this.$Message.warning(result.message)
                         }
                     })
