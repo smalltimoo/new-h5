@@ -427,9 +427,4 @@
         }
     }
 </script>
-<style>
-    .el-message-box {
-        width: 85%;
-    }
-</style>
 
