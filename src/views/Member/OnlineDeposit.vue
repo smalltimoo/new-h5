@@ -426,7 +426,7 @@
                         );
                     } else {
                         this.$Message.warning(  //充值金额必须在xxx元内
-                            this.$t('member.onlineDeposit.od20') + this.selectData.minMoney / 100 + "~" + this.selectData.maxMoney / 100 + this.$t('member.onlineDeposit.od21')
+                            this.$t('member.onlineDeposit.od20') + this.selectData.minMoney  + "~" + this.selectData.maxMoney  + this.$t('member.onlineDeposit.od21')
                         );
                     }
                     return;
