@@ -12,20 +12,19 @@ import i18n from './lang' // Internationalization
 import {dateFormat} from "./assets/lib/util";
 import Cube from 'cube-ui';
 
-
-import 'element-ui/lib/theme-chalk/index.css';
 import 'iview/dist/styles/iview.css';
+import 'element-ui/lib/theme-chalk/index.css';
 import "animate.css";
 import 'amfe-flexible';
-
 import './style/app.less';
-
 
 directive(Vue);
 Vue.use(ElementUI);
 Vue.use(iView);
 Vue.mixin(mixin);
 Vue.use(Cube);
+
+
 
 //ajax携带cookie数据，保证session可用
 axios.defaults.withCredentials = true;
