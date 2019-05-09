@@ -462,10 +462,11 @@
                             this.mLoading(false);
                             if (result.code == "0") {
                                 let openUrl = decodeURIComponent(result.data.qrcoDepath);
-                                this.$router.push({
-                                    name: "CustomerService",
-                                    params: {aType: "cz", title:'在线支付', cUrl: openUrl,}
-                                });
+                                window.location.href = openUrl;
+                                // this.$router.push({
+                                //     name: "CustomerService",
+                                //     params: {aType: "cz", title:'在线支付', cUrl: openUrl,}
+                                // });
                             } else {
                                 //请求付款地址失败1
                                 this.$Message.error(this.$t('member.onlineDeposit.od27'));
