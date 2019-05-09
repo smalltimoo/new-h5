@@ -91,7 +91,7 @@
                         >
                             <Radio :label="it.id">
                                 <img src="../../assets/images/alipay.png" width="20px" style="margin-left: 8px;margin-right: 8px"/>
-                                <span> {{$t('member.onlineDeposit.od9')}} <span v-if="it.typeid==5">APP</span></span>&nbsp;&nbsp;&nbsp;
+                                <span> {{$t('member.onlineDeposit.od9')}}<span v-if="it.typeid==5">APP</span></span>&nbsp;&nbsp;&nbsp;
                                 <span> {{$t('member.onlineDeposit.od13')}}:{{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}} </span>
                                 <span class="radio-id">{{ it.apiid}}</span>
                             </Radio>
@@ -103,7 +103,7 @@
                         >
                             <Radio :label="it.id">
                                 <img src="../../assets/images/wechat.png" width="20px" style="margin-left: 8px;margin-right: 8px"/>
-                                <span> {{$t('member.onlineDeposit.od10')}} <span v-if="it.typeid==4">app</span></span>&nbsp;&nbsp;&nbsp;
+                                <span> {{$t('member.onlineDeposit.od10')}}<span v-if="it.typeid==4">app</span></span>&nbsp;&nbsp;&nbsp;
                                 <span> {{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}} </span>
                                 <span class="radio-id">{{ it.apiid}}</span>
                             </Radio>
