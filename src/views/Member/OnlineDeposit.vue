@@ -483,7 +483,7 @@
                             this.mLoading(false);
                             if (result.code == "0") {
                                 let openUrl = decodeURIComponent(result.data.qrcoDepath);
-                                window.open(openUrl);
+                                window.location.href = openUrl;
                             } else {
                                 this.$Message.error(this.$t('member.onlineDeposit.od29')); //请求付款地址失败1
                             }
