@@ -1,5 +1,5 @@
 <template>
-  <div v-resize="mOnResize">
+  <div v-resize="mOnResize" class="iframe-body">
     <div class="header">
       <div class="header-left">
         <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
@@ -18,8 +18,8 @@
           </div>
         </div>
         <div :style="cGCStyles" class="game-container">
-          <iframe :src="url" frameborder="0" style="width: 100%;height: 100%;padding: 45px" v-if="title"></iframe>
-          <iframe :src="url" frameborder="0" style="width: 100%;height: 100%;" v-else></iframe>
+          <iframe :src="url" frameborder="0" style="width: 100%;height: 100%;" v-if="type==0"></iframe>
+          <iframe :src="url" frameborder="0" style="width: 100%;height: 100%;padding: 45px" v-else></iframe>
         </div>
       </div>
     </div>
@@ -33,6 +33,7 @@ export default {
     return {
       url: '',
       title:'',
+      type:0,
       width: 0,
       height: 0,
       comeSource: ''
@@ -59,6 +60,7 @@ export default {
       let params = this.$route.params
       this.url = params.cUrl;
       this.title = params.title ? params.title : '';
+      this.type = params.type ? params.type : 0;
       if (params.aType === 'cs') {
         if (!this.url) {
             //客服休息中...
@@ -106,6 +108,15 @@ export default {
 </script>
 
 <style>
+  .iframe-body{
+    position: fixed;
+    z-index: 95;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
 .userSettings {
   width: 100%;
   font-size: 0;

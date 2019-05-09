@@ -38,7 +38,7 @@
                 </div>
                 <div class="recommend" v-if="moneys.length>0">
                     <span v-for="(item,index) in moneys"
-                          v-if="index<=5"
+                          v-if="index<5"
                           :key="index"
                           :class="{active: activeAmount==item}"
                           @click="amount=item;activeAmount=amount"
@@ -464,7 +464,7 @@
                                 let openUrl = decodeURIComponent(result.data.qrcoDepath);
                                 this.$router.push({
                                     name: "CustomerService",
-                                    params: {aType: "cz", cUrl: openUrl}
+                                    params: {aType: "cz", title:'在线支付', cUrl: openUrl,}
                                 });
                             } else {
                                 //请求付款地址失败1
@@ -570,7 +570,7 @@
                 if (url) {
                     this.$router.push({
                         name: "CustomerService",
-                        params: {aType: "cz", title: this.$t('member.onlineDeposit.od70'), cUrl: url}
+                        params: {aType: "cz", title: this.$t('member.onlineDeposit.od70'), cUrl: url,type:2}
                     });
                 } else {
                     //存款渠道暂不可用
