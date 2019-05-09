@@ -376,13 +376,19 @@
             },
             //银行大分类信息
             mBanktypes() {
-                this.$http.post("/banktypes.json", {lineCountry:this.sysInfo.lineCountry}).then(res => {
+                this.$http.post("/getsys.json").then(res => {
                     if (res.code == 0) {
-                        this.banktypes = res.data.list;
-                    } else {
-                        this.$Message.error(res.message);
+                        this.lineCountry=res.data.lineCountry;
+                        this.$http.post("/banktypes.json", {lineCountry:this.sysInfo.lineCountry}).then(res => {
+                            if (res.code == 0) {
+                                this.banktypes = res.data.list;
+                            } else {
+                                this.$Message.error(res.message);
+                            }
+                        })
                     }
                 })
+
             },
             // 存款方式 选择
             mSelectRechargeType(tab, dataAccount) {
