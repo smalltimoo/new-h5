@@ -355,8 +355,7 @@
                         .then(result => {
                             if (result.code == 0) {
                                 let gameUrl = result.data.dgUrl.mobileUrl;
-                                window.open(gameUrl);
-                                // window.location.href = gameUrl;
+                                window.location.href = gameUrl;
                             } else {
                                 this.$Message.error(result.message)
                             }
