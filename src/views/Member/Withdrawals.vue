@@ -12,7 +12,8 @@
         <div class="bank-info">
             <router-link :to="{name:'UserBankCard'}" v-if="bindBank">
                 <div style="display: flex;align-items: center">
-                    <Icon type="md-add-circle" style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
+                    <Icon type="md-add-circle"
+                          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
                     <span>{{ $t('agentMember.addBank')}}</span>
                 </div>
                 <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
@@ -30,13 +31,15 @@
         <div class="bank-info" style="margin-top: 0;border-top: solid 1px #f3f3f3;">
             <router-link :to="{name:'SafaPassword'}" v-if="setPwd" style="">
                 <div style="display: flex;align-items: center">
-                    <Icon type="md-add-circle" style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
+                    <Icon type="md-add-circle"
+                          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
                     <span>{{ $t('agentMember.setPwd')}}</span>
                 </div>
                 <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
             </router-link>
         </div>
-        <div class="main-panel" style="margin-top: 10px;flex-direction: column;align-items: flex-start;position: relative">
+        <div class="main-panel"
+             style="margin-top: 10px;flex-direction: column;align-items: flex-start;position: relative">
             <span style="position: absolute;top: 47px;left: 10px;font-size: 18px;">￥</span>
             <p style="padding:10px"> {{ $t('member.withdrawals.wa7')}}</p>
             <input v-model="vm.dealcoin"
@@ -76,16 +79,19 @@
 </template>
 
 <script>
+    import types from "../../store/mutation-types";
+
     export default {
         data() {
             return {
                 banktypes: [],
                 amount: 0,
-                bindBank:false,
-                setPwd:false,
+                bindBank: false,
+                setPwd: false,
                 vmCard: {
                     account: ""
                 },
+                lineCountry:1,
                 vm: {
                     dealcoin: "",
                     coinpwd: ""
@@ -108,20 +114,6 @@
                     }
                 }
             });
-            this.$http.all([this.mGetBanks(), this.mGetBindBank()]).then(
-                this.$http.spread((rbanks, rbindbank) => {
-                    console.log(rbanks.data, rbindbank.data);
-                    this.mLoading(false);
-                    if (rbanks.code == 0) {
-                        this.banktypes = rbanks.data.list;
-                    } else {
-                        this.$Message.warning(rbanks.message, "error");
-                    }
-                    if (rbindbank.code == 0) {
-                        this.vmCard = Object.assign(this.vmCard, rbindbank.data);
-                    }
-                })
-            );
             this.$http.get("/memberUser/memberinfo.json").then(result => {
                 if (result.code == 0) {
                     if (!result.data.coinPassword){
@@ -129,9 +121,31 @@
                     }
                 }
             });
+            this.$http.post("/getsys.json").then(res => {
+                if (res.code == 0) {
+                    this.lineCountry=res.data.lineCountry;
+                    this.mBanks();
+                }
+            })
+
             this.mInit();
         },
         methods: {
+            mBanks(){
+                this.$http.all([this.mGetBanks(), this.mGetBindBank()]).then(
+                    this.$http.spread((rbanks, rbindbank) => {
+                        this.mLoading(false);
+                        if (rbanks.code == 0) {
+                            this.banktypes = rbanks.data.list;
+                        } else {
+                            this.$Message.warning(rbanks.message, "error");
+                        }
+                        if (rbindbank.code == 0) {
+                            this.vmCard = Object.assign(this.vmCard, rbindbank.data);
+                        }
+                    })
+                );
+            },
             mInit() {
                 this.mLoading(true);
                 this.$http.get("/memberUser/membercoin.json").then(result => {
@@ -154,15 +168,17 @@
                         } else if (result.data == 2) {
                             this.$Message.warning(this.$t('member.withdrawals.wa18')); //请先绑定银行卡
                         } else {
-                            this.$Message.error(result.message, () => {});
+                            this.$Message.error(result.message, () => {
+                            });
                         }
                     } else {
-                        this.$Message.error(result.message, () => {});
+                        this.$Message.error(result.message, () => {
+                        });
                     }
                 });
             },
             mSave() {
-                if(this.bindBank){
+                if (this.bindBank) {
                     this.$Message.warning(this.$t('member.withdrawals.wa18')); //绑定银行卡
                     return;
                 }
@@ -219,13 +235,13 @@
                             } else {
                                 this.mCash();
                             }
-                        }else{
+                        } else {
                             this.$Message.warning(result.message)
                         }
                     });
             },
             mGetBanks() {
-                return this.$http.get("/banktypes.json");
+                return this.$http.post("/banktypes.json",{lineCountry:this.sysInfo.lineCountry});
             },
             mGetBindBank() {
                 return this.$http.get("/memberUser/getbindbank.json");
