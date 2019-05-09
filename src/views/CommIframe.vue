@@ -57,7 +57,7 @@ export default {
       this.$router.back();
     },
     mInit() {
-      let params = this.$route.params
+      let params = this.$route.params;
       this.url = params.cUrl;
       this.title = params.title ? params.title : '';
       this.type = params.type ? params.type : 0;
