@@ -4,7 +4,7 @@ import axios from 'axios'
 
 export default {
     state: {
-        darkTheme: localStorage.getItem('darkTheme') ? JSON.parse(localStorage.getItem('darkTheme')) : false,
+        darkTheme: localStorage.getItem('darkTheme') ? JSON.parse(localStorage.getItem('darkTheme')) : false, //false ：红色 true：深色
         tab: localStorage.getItem('tab') ? localStorage.getItem('tab') : 'Home',
         gongGaos: [],
         sessionToken: "",
