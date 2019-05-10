@@ -114,7 +114,7 @@
                     .then(result => {
                         if (result.code == 0) {
                             if (result.data) {
-                                item == 10 ? this.$Message.success(this.$t('discount.dis8')) : this.$Message.success(this.$t('discount.dis9'))
+                                item == 10 ? this.$Message.success(this.$t('discount.dis9')) : this.$Message.success(this.$t('discount.dis8'))
                                 this.mInit();
                             }
                         } else {

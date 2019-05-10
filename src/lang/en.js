@@ -75,6 +75,15 @@ export default {
     discount: {
         activity: '优惠活动en',
         look: '查看详情en',
+        dis1: '全部活动en',
+        dis2: '未参与活动en',
+        dis3: '已参与活动en',
+        dis4: '立即参与en',
+        dis5: '已参与en',
+        dis6: '立即签到en',
+        dis7: '已签到en',
+        dis8: '参加成功!en',
+        dis9: '签到成功!en',
     },
     score: {
         score: '积分商城en',
