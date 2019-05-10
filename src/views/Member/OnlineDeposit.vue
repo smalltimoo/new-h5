@@ -293,7 +293,7 @@
                     underlineAccountName: "",
                     companyAccountId: "",
                     remark: ""
-                }
+                },
             };
         },
         watch: {
@@ -375,8 +375,8 @@
             mBanktypes() {
                 this.$http.post("/getsys.json").then(res => {
                     if (res.code == 0) {
-                        this.lineCountry=res.data.lineCountry;
-                        this.$http.post("/banktypes.json", {lineCountry:this.sysInfo.lineCountry}).then(res => {
+                        let lineCountry=res.data.lineCountry;
+                        this.$http.post("/banktypes.json", {lineCountry:lineCountry}).then(res => {
                             if (res.code == 0) {
                                 this.banktypes = res.data.list;
                             } else {
