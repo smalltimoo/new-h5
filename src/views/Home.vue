@@ -134,7 +134,7 @@
                 <cube-slide-item v-for="(item, index) in getBanner" :key="index">
                     <img :src="item" width="100%">
                 </cube-slide-item>
-                <cube-slide-item v-if="isDraw">
+                <cube-slide-item>
                     <router-link :to="{name:'Draw'}">
                         <img :src="drawBanner" width="100%" height="100%"/>
                     </router-link>
