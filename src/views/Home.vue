@@ -134,7 +134,7 @@
                 <cube-slide-item v-for="(item, index) in getBanner" :key="index">
                     <img :src="item" width="100%">
                 </cube-slide-item>
-                <cube-slide-item>
+                <cube-slide-item v-if="isDraw">
                     <router-link :to="{name:'Draw'}">
                         <img :src="drawBanner" width="100%" height="100%"/>
                     </router-link>
@@ -215,11 +215,11 @@
             </div>
 
             <div class="activity-panel">
-                <el-carousel :interval="4000" type="card" height="140px" indicator-position="none">
+                <el-carousel :interval="4000" type="card" height="140px" indicator-position="none" :autoplay="false">
                     <el-carousel-item v-for="(item,index) in activities" :key="index" class="active-img">
                         <router-link :to="{name:'Discount',query:{id:item.id}}">
                             <div class="active-title">
-                                <span>{{ item.activityTitle }}</span>
+                                <span style="width: 110px;text-align: left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis">{{ item.activityTitle }}</span>
                                 <span>{{ item.endTimeStr }}</span>
                             </div>
                             <img :src="item.activityImg" width="100%" style="max-height: 85px;min-height: 80px"/>

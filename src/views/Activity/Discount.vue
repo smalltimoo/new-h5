@@ -31,17 +31,29 @@
             </div>
         </div>
         <div class="container">
-            <div v-for="(item, index) in activities" :key="index" style="margin-top: 0px">
+            <div class="activity-type">
+                <span :class="{active: isJoin=='-1'}" @click="changeTab('-1')">{{$t('discount.dis1')}}</span>
+                <span :class="{active: isJoin=='0'}" @click="changeTab('0')">{{$t('discount.dis2')}}</span>
+                <span :class="{active: isJoin=='1'}" @click="changeTab('1')">{{$t('discount.dis3')}}</span>
+            </div>
+            <div  class="no-list" v-if="(!avtByIsJoin||avtByIsJoin.length==0)" style="top: 100px;;bottom:50px"></div>
+            <div v-for="(item, index) in avtByIsJoin" :key="index" style="margin-top: 10px">
                 <!--<span v-text="item.quotaStartTimeStr" style="font-size: 12px;"></span>-->
-                <div class="dis-panel" @click="showDrawer(item)">
+                <div class="dis-panel">
                     <div class="dis-title">
                         <!--<span v-text="item.activityTitle"></span>-->
                         <!--<span class="tip">活动时间：{{item.startTimeStr}}</span>-->
                     </div>
-                    <img :src="item.activityImg"
+                    <img :src="item.activityImg" @click="showDrawer(item)"
                          style="width: 100%; border-radius: 5px;min-height: 90px;max-height: 95px">
-                    <!--<div class="tip" v-text="item.giveTypeStr" style="text-align: left;border-bottom:solid 1px #f3f3f3;padding-bottom: 4px"></div>-->
-                    <div class="go" style="border-top:solid 1px #f3f3f3">
+                    <div class="tip">
+                        <span v-text="item.activityTitle" style="width: 110px;text-align: left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis"></span>
+                        <span class="join" v-if="[6, 7, 8, 9].includes(item.activityType) && item.isJoin=='0'" @click="signed(item)">{{$t('discount.dis4')}}</span>
+                        <span class="joined" v-if="[6, 7, 8, 9].includes(item.activityType) && item.isJoin=='1'">{{$t('discount.dis5')}}</span>
+                        <span class="join" v-if="item.activityType==10 && item.isJoin=='0'" @click="signed(item)">{{$t('discount.dis6')}}</span>
+                        <span class="joined" v-if="item.activityType==10 && item.isJoin=='1'">{{$t('discount.dis7')}}</span>
+                    </div>
+                    <div class="go" style="border-top:solid 1px #f3f3f3" @click="showDrawer(item)">
                         <span>{{$t('discount.look')}}</span>
                         <Icon type="ios-arrow-forward" class="icon-menu"/>
                     </div>
@@ -57,15 +69,6 @@
                      style="font-size: 14px; font-weight: bold"></div>
                 <div class="header-right"></div>
             </div>
-            <div class="sign" @click="signed"
-                 v-if="activityInfo.activityType==6 || activityInfo.activityType==7 || activityInfo.activityType==8 || activityInfo.activityType==9">
-                <span v-if="activityInfo.signed"><b>已参加</b></span>
-                <span v-else><b>参加</b></span>
-            </div>
-            <div class="sign" @click="signed" v-if="activityInfo.activityType==10">
-                <span v-if="activityInfo.signed"><b>已签到</b></span>
-                <span v-else><b>签到</b></span>
-            </div>
             <img :src="activityInfo.infoMobileImgUrl" width="100%" class="activity-image"/>
         </Drawer>
     </div>
@@ -74,7 +77,9 @@
     export default {
         data() {
             return {
+                isJoin: -1,
                 activities: [],
+                avtByIsJoin: [],
                 drawer: false,
                 activityInfo: {
                     activityTitle: '',
@@ -87,43 +92,33 @@
             };
         },
         methods: {
+            changeTab(isJoin) {
+                this.isJoin = isJoin ? isJoin : this.isJoin;
+                if (this.isJoin == -1) {
+                    this.avtByIsJoin = this.activities;
+                } else {
+                    this.avtByIsJoin = this.activities.filter(item => item.isJoin == this.isJoin);
+                }
+            },
             showDrawer(item) {
                 this.activityInfo = item;
                 this.drawer = true;
-                if ([6, 7, 8, 9, 10].includes(this.activityInfo.activityType)) {
-                    this.$http
-                        .post("/activity/isJoin.json", {
-                            activityId: this.activityInfo.id,
-                            memberId: this.cLoginUser.id,
-                            joinCycle:this.activityInfo.joinCycle,
-                            activityType:this.activityInfo.activityType
-                        })
-                        .then(result => {
-                            if (result.code == 0) {
-                                this.activityInfo = {...this.activityInfo, ...{signed: result.data}};
-                            }
-                        })
-                }
             },
-            signed() {
-                if (this.activityInfo.signed) {
-                    return;
-                }
+            signed(item) {
                 this.$http
                     .post("/activity/joinActivity.json", {
-                        activityId: this.activityInfo.id,
+                        activityId: item.id,
                         memberId: this.cLoginUser.id,
-                        joinCycle:this.activityInfo.joinCycle,
-                        activityType:this.activityInfo.activityType
+                        joinCycle: item.joinCycle,
+                        activityType: item.activityType
                     })
                     .then(result => {
                         if (result.code == 0) {
                             if (result.data) {
-                                this.activityInfo = {...this.activityInfo, ...{signed: true}};
-                                this.activityInfo.activityType == 10 ? this.$Message.success('签到成功！') : this.$Message.success('参加成功！');
+                                item == 10 ? this.$Message.success(this.$t('discount.dis9')) : this.$Message.success(this.$t('discount.dis8'))
+                                this.mInit();
                             }
-                        }
-                        else {
+                        } else {
                             this.$Message.error(result.message);
                         }
                     })
@@ -140,6 +135,7 @@
                                 element.selected = false;
                             });
                             this.activities = list;
+                            this.changeTab();
                         }
                     })
                     .then(() => {

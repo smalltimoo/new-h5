@@ -241,7 +241,7 @@
                     });
             },
             mGetBanks() {
-                return this.$http.post("/banktypes.json",{lineCountry:this.sysInfo.lineCountry});
+                return this.$http.post("/banktypes.json",{lineCountry:this.lineCountry});
             },
             mGetBindBank() {
                 return this.$http.get("/memberUser/getbindbank.json");

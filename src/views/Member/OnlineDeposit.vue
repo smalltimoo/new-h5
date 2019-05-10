@@ -90,10 +90,8 @@
                              @click="mUpdateMoneys(it)"
                         >
                             <Radio :label="it.id">
-                                <img src="../../assets/images/alipay.png" width="20px"
-                                     style="margin-left: 8px;margin-right: 8px"
-                                />
-                                <span> {{$t('member.onlineDeposit.od9')}} </span>&nbsp;&nbsp;&nbsp;
+                                <img src="../../assets/images/alipay.png" width="20px" style="margin-left: 8px;margin-right: 8px"/>
+                                <span> {{$t('member.onlineDeposit.od9')}}<span v-if="it.typeid==5">APP</span></span>&nbsp;&nbsp;&nbsp;
                                 <span> {{$t('member.onlineDeposit.od13')}}:{{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}} </span>
                                 <span class="radio-id">{{ it.apiid}}</span>
                             </Radio>
@@ -104,9 +102,8 @@
                              @click="mUpdateMoneys(it)"
                         >
                             <Radio :label="it.id">
-                                <img src="../../assets/images/wechat.png" width="20px"
-                                     style="margin-left: 8px;margin-right: 8px"/>
-                                <span> {{$t('member.onlineDeposit.od10')}} </span>
+                                <img src="../../assets/images/wechat.png" width="20px" style="margin-left: 8px;margin-right: 8px"/>
+                                <span> {{$t('member.onlineDeposit.od10')}}<span v-if="it.typeid==4">app</span></span>&nbsp;&nbsp;&nbsp;
                                 <span> {{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}} </span>
                                 <span class="radio-id">{{ it.apiid}}</span>
                             </Radio>
@@ -296,7 +293,7 @@
                     underlineAccountName: "",
                     companyAccountId: "",
                     remark: ""
-                }
+                },
             };
         },
         watch: {
@@ -378,8 +375,8 @@
             mBanktypes() {
                 this.$http.post("/getsys.json").then(res => {
                     if (res.code == 0) {
-                        this.lineCountry=res.data.lineCountry;
-                        this.$http.post("/banktypes.json", {lineCountry:this.sysInfo.lineCountry}).then(res => {
+                        let lineCountry=res.data.lineCountry;
+                        this.$http.post("/banktypes.json", {lineCountry:lineCountry}).then(res => {
                             if (res.code == 0) {
                                 this.banktypes = res.data.list;
                             } else {

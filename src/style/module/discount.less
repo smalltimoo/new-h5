@@ -3,26 +3,51 @@
 
   .dis-panel {
     //margin-top: 5px;
-    padding:3px 8px;
+    padding: 3px 8px;
     background-color: #ffffff;
     box-shadow: 0px 1px 5px 0px rgba(201, 201, 201, 0.8);
     //opacity: 0.9;
   }
 
-  .tip{
+  .tip {
     font-size: 12px;
     color: #4c4c4c;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 4px;
+
+    .join {
+      height: 24px;
+      line-height: 24px;
+      border: solid 1px #cd0005;
+      border-radius: 3px;
+      padding: 0 6px;
+      font-size: 12px;
+      color: #cd0005;
+    }
+
+    .joined{
+      height: 24px;
+      line-height: 24px;
+      border: solid 1px #ccc;
+      border-radius: 3px;
+      padding: 0 5px;
+      font-size: 12px;
+      color: #ccc;
+    }
   }
+
   .dis-title {
     display: flex;
     justify-content: space-between;
     padding-bottom: 5px;
-    &>span:first-child{
+
+    & > span:first-child {
       color: #1a1a1a;
     }
   }
 
-  .go{
+  .go {
     display: flex;
     color: #cd0005;
     justify-content: space-between;
@@ -31,11 +56,35 @@
     font-size: 12px;
   }
 
-}
-.discount-drawer .ivu-drawer-no-header .ivu-drawer-body{
-  padding: 0!important;
+  .activity-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    margin: 8px 0 15px 0;
+
+    & > span {
+      background-color: #ddd;
+      width: 30%;
+      height: 30px;
+      line-height: 30px;
+      border-radius: 5px;
+      color: #000;
+      font-size: 13px;
+    }
+
+    .active {
+      background-color: #cd0005;
+      color: #fff;
+    }
+  }
+
 }
 
-.activity-image{
+.discount-drawer .ivu-drawer-no-header .ivu-drawer-body {
+  padding: 0 !important;
+}
+
+.activity-image {
   margin-top: 44px
 }
