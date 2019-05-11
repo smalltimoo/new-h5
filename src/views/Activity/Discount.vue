@@ -81,6 +81,7 @@
                 activities: [],
                 avtByIsJoin: [],
                 drawer: false,
+                loading:false,
                 activityInfo: {
                     activityTitle: '',
                     activityInfo: '',
@@ -105,6 +106,8 @@
                 this.drawer = true;
             },
             signed(item) {
+                if(this.loading){return;}
+                this.loading=true;
                 this.$http
                     .post("/activity/joinActivity.json", {
                         activityId: item.id,
@@ -113,6 +116,7 @@
                         activityType: item.activityType
                     })
                     .then(result => {
+                        this.loading=false;
                         if (result.code == 0) {
                             if (result.data) {
                                 item == 10 ? this.$Message.success(this.$t('discount.dis9')) : this.$Message.success(this.$t('discount.dis8'))
@@ -121,6 +125,9 @@
                         } else {
                             this.$Message.error(result.message);
                         }
+                    })
+                    .catch(error=>{
+                        this.loading=false;
                     })
             },
             mInit() {
