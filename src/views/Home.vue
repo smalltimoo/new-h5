@@ -130,15 +130,11 @@
             </div>
         </div>
         <div class="container">
-            <cube-slide ref="slide" :data="getBanner" style="margin-bottom: -4px;min-height: 140px">
-                <cube-slide-item v-for="(item, index) in getBanner" :key="index">
-                    <img :src="item" width="100%">
+            <cube-slide ref="slide" :data="[]" style="margin-bottom: -4px;min-height: 140px">
+                <cube-slide-item v-for="(item, index) in getBanner" :key="index" >
+                    <img :src="item.imgUrl" width="100%" height="100%" v-if="item.isDraw" @click="$router.push({name:'Draw'})">
+                    <img :src="item.imgUrl" width="100%" height="100%" v-else/>
                 </cube-slide-item>
-                <!--<cube-slide-item>-->
-                    <!--<router-link :to="{name:'Draw'}">-->
-                        <!--<img :src="drawBanner" width="100%" height="100%"/>-->
-                    <!--</router-link>-->
-                <!--</cube-slide-item>-->
             </cube-slide>
 
             <div class="notice">
@@ -215,7 +211,7 @@
             </div>
 
             <div class="activity-panel">
-                <el-carousel :interval="4000" type="card" height="140px" indicator-position="none" :autoplay="false">
+                <el-carousel :interval="4000" type="card" height="140px">
                     <el-carousel-item v-for="(item,index) in activities" :key="index" class="active-img">
                         <router-link :to="{name:'Discount',query:{id:item.id}}">
                             <div class="active-title">
@@ -305,7 +301,10 @@
                 var mobileBanner = this.$store.getters.getSysPicObj.mobileBanner
                 var banner = [];
                 if (mobileBanner != undefined && mobileBanner != '') {
-                    banner = mobileBanner.split(",");
+                   let bs = mobileBanner.split(",");
+                   bs.map(item=>{
+                       banner.push({imgUrl:item})
+                   })
                 }
                 return banner;
             },
@@ -327,6 +326,12 @@
                 this.$http.get('/integralDrawC/queryRouletteSettingSwitch.json').then(result => {
                     if (result.data) {
                         this.isDraw = result.data;
+                        if(this.isDraw){
+                            this.getBanner.push({
+                                imgUrl:this.drawBanner,
+                                isDraw:this.isDraw
+                            })
+                        }
                     }
                 })
             },
