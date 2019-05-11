@@ -58,7 +58,7 @@ export default {
     },
     mInit() {
       let params = this.$route.params;
-      this.url = params.cUrl;
+      this.url = params.cUrl+'&enterurl='+this.cLoginUser.username;
       this.title = params.title ? params.title : '';
       this.type = params.type ? params.type : 0;
       if (params.aType === 'cs') {
