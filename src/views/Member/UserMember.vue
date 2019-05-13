@@ -39,9 +39,13 @@
                     </router-link>
                 </div>
                 <div class="operate" v-if="cLoginUser.username">
-                    <div><router-link :to="{name:'OnlineDeposit'}">{{this.$t('member.userMember.um2')}}</router-link></div>
+                    <div>
+                        <router-link :to="{name:'OnlineDeposit'}">{{this.$t('member.userMember.um2')}}</router-link>
+                    </div>
                     <span v-text="cLoginUser.username" style="margin-top: 60px"></span>
-                    <div><router-link :to="{name:'Withdrawals'}">{{this.$t('member.userMember.um3')}}</router-link></div>
+                    <div>
+                        <router-link :to="{name:'Withdrawals'}">{{this.$t('member.userMember.um3')}}</router-link>
+                    </div>
                 </div>
                 <div class="user-name" v-if="cLoginUser.username">
                     <span class="level-ico level_img_vip0" v-if="memberLevel==0"></span>
@@ -59,13 +63,14 @@
             <div class="deposit">
                 <div>
                     <router-link :to="{name:'Score'}">
-                         <span>
+                        <span>
                            {{this.$t('member.userMember.um4')}}
                         </span>
-                        <span>
+                        <span v-if="cLoginUser.integral">
                              {{ cLoginUser.integral ? parseFloat(cLoginUser.integral/100).toFixed(2) :'0.00' }}
                             <span style="font-size: 12px">{{$t('fen')}}</span>
-                         </span>
+                        </span>
+                        <i class="el-icon-loading" v-else></i>
                     </router-link>
                 </div>
                 <div>
@@ -73,13 +78,21 @@
                         <span>
                             {{this.$t('member.userMember.um5')}}
                         </span>
-                        <span>{{ parseFloat(amount/100).toFixed(2) }} <span style="font-size: 12px">{{$t('yuan')}}</span></span>
+                        <span v-if="amount">
+                            {{ parseFloat(amount/100).toFixed(2) }}
+                            <span style="font-size: 12px">{{$t('yuan')}}</span>
+                        </span>
+                        <i class="el-icon-loading" v-else></i>
                     </router-link>
                 </div>
                 <div>
                     <router-link :to="{name:'AssetsOverView'}">
                         <span>{{this.$t('member.userMember.um6')}}</span>
-                        <span>{{ parseFloat(totalCoins/100).toFixed(2) }} <span style="font-size: 12px">{{$t('yuan')}}</span></span>
+                        <span  v-if="totalCoins">
+                            {{ parseFloat(totalCoins/100).toFixed(2) }}
+                            <span style="font-size: 12px">{{$t('yuan')}}</span>
+                        </span>
+                        <i class="el-icon-loading" v-else></i>
                     </router-link>
                 </div>
             </div>
@@ -172,10 +185,10 @@
                         <span>{{this.$t('member.userMember.um21')}}</span>
                     </router-link>
                     <!--<router-link :to="{}" class="">-->
-                        <!--<div>-->
-                            <!--<img src="../../assets/images/uesrCenter/help.png" width="28px"/>-->
-                        <!--</div>-->
-                        <!--<span>帮助中心</span>-->
+                    <!--<div>-->
+                    <!--<img src="../../assets/images/uesrCenter/help.png" width="28px"/>-->
+                    <!--</div>-->
+                    <!--<span>帮助中心</span>-->
                     <!--</router-link>-->
                     <a :href="sysPicObj.appUrl" target="_blank">
                         <div>
@@ -202,18 +215,20 @@
     export default {
         data() {
             return {
-                amount: 0,
+                amount: '',
                 agnetLevel: "",
                 isDraw: false,
                 memberLevel: 0,
                 walletlist: [
                     {coin: 0}
                 ],
-                totalCoins: 0
+                totalCoins: ''
             };
         },
         mounted() {
-            if(!this.toNeedLogin()){return;}
+            if (!this.toNeedLogin()) {
+                return;
+            }
             this.mLoading(true);
             this.$http.get("/memberUser/memberinfo.json").then(result => {
                 if (result.code == 0) {
@@ -239,10 +254,9 @@
                     .then(result => {
                         this.walletlist = result.data.walletlist;
                         this.totalCoins = this.walletlist.reduce((x, y) => {
-                            return parseFloat(x + y.coin || 0);
-                            let coin=y.coin;
-                            if(y.coin<0){
-                                coin=0
+                            let coin = y.coin;
+                            if (y.coin < 0) {
+                                coin = 0
                             }
                             return parseFloat(x + coin || 0);
                         }, 0);
@@ -261,7 +275,9 @@
                 })
             },
             mMemberAmount() {
-                if (!this.toNeedLogin()) {return;}
+                if (!this.toNeedLogin()) {
+                    return;
+                }
                 this.$http.post("/memberUser/memberamount.json").then(result => {
                     if (result.code == 0) {
                         this.amount = result.data;
@@ -281,14 +297,14 @@
                             sessionStorage.removeItem(types.SESSION_TOKEN);
                             this.$store.commit(types.SESSION_TOKEN);
                             this.mLoading(false);
-                            this.$router.push({name:'Home'});
+                            this.$router.push({name: 'Home'});
                         }
                     });
                 })
             },
         },
         created() {
-            this.$store.commit('CHANGE_TAB','UserMember')
+            this.$store.commit('CHANGE_TAB', 'UserMember')
         }
     };
 </script>
