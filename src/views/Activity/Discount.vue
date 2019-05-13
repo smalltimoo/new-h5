@@ -36,7 +36,7 @@
                 <span :class="{active: isJoin=='0'}" @click="changeTab('0')">{{$t('discount.dis2')}}</span>
                 <span :class="{active: isJoin=='1'}" @click="changeTab('1')">{{$t('discount.dis3')}}</span>
             </div>
-            <div  class="no-list" v-if="(!avtByIsJoin||avtByIsJoin.length==0)" style="top: 100px;;bottom:50px;width: 95%;"></div>
+            <div  class="no-list" v-if="(!avtByIsJoin||avtByIsJoin.length==0)" style="top: 100px;bottom:100px;left: 0;"></div>
             <div v-for="(item, index) in avtByIsJoin" :key="index" style="margin-top: 10px">
                 <!--<span v-text="item.quotaStartTimeStr" style="font-size: 12px;"></span>-->
                 <div class="dis-panel">
