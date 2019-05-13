@@ -95,9 +95,14 @@
                     <div class="local">
                          <span style="width: 50%;">
                             <img src="../assets/images/home/moon.png" width="20px"/>
-                            {{$i18n.locale=='zh' ? '黑夜模式' : 'Dark Theme'}}
+                            {{$i18n.locale=='zh' ? '主题' : 'Theme'}}
                         </span>
-                        <cube-switch v-model="theme" size="small"/>
+                        <!--<cube-switch v-model="theme" size="small"/>-->
+                        <div class="color-theme">
+                           <span :class="{active: theme=='0'}" @click="changeTheme('0')"></span>
+                           <span :class="{active: theme=='1'}" @click="changeTheme('1')"></span>
+                           <span :class="{active: theme=='2'}" @click="changeTheme('2')"></span>
+                        </div>
                     </div>
                 </Drawer>
             </div>
@@ -281,6 +286,7 @@
                 }
             },
             ...mapState({
+                theme:state => state.common.theme,
                 sysPicObj: state => state.common.sysPicObj,
             }),
             selectedGames() {
@@ -322,6 +328,9 @@
             },
         },
         methods: {
+            changeTheme(theme){
+                this.$store.commit(types.THEME, theme);
+            },
             drawGame() {
                 this.$http.get('/integralDrawC/queryRouletteSettingSwitch.json').then(result => {
                     if (result.data) {

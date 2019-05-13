@@ -1,0 +1,299 @@
+.pink {
+  @bodyColor: #ffffff;
+  @headColor: #F5F5F5;
+  @mainColor: #e6007f;
+
+  background-color: @bodyColor;
+  margin: 0;
+  padding: 0;
+
+  .header-middle{
+    color: #1a1a1a;
+  }
+
+  .header-right{
+    color: #1a1a1a!important;
+  }
+
+  .header-right>a{
+    color: #1a1a1a!important;
+  }
+
+  .footer .active {
+    color: @mainColor;
+    font-weight: bold;
+  }
+
+  .footer .icon-user {
+    background: url('../assets/images/theme/file-gary-min.png?__inline') 50% 50% no-repeat;
+    background-size: 19px auto;
+  }
+
+  .footer .icon-home {
+    background: url('../assets/images/theme/home-gary-min.png?__inline') 50% 50% no-repeat;
+    background-size: 19px auto;
+  }
+
+  .footer .icon-activity {
+    background: url('../assets/images/theme/Tips-gary-min.png?__inline') 50% 50% no-repeat;
+    background-size: 19px auto;
+  }
+
+  .footer .icon-deposit {
+    background: url('../assets/images/theme/money-gary-min.png?__inline') 50% 50% no-repeat;
+    background-size: 21px auto;
+  }
+
+  .footer .active .icon-home{
+    background: url('../assets/images/theme/home-red-min.png') 50% 50% no-repeat;
+    background-size: 19px auto;
+  }
+
+  .footer .active .icon-activity {
+    background: url('../assets/images/theme/Tips-red-min.png') 50% 50% no-repeat;
+    background-size: 19px auto;
+  }
+
+  .footer .active .icon-deposit {
+    background: url('../assets/images/theme/money-red-min.png') 50% 50% no-repeat;
+    background-size: 21px auto;
+  }
+
+  .footer .icon-score {
+    background: url('../assets/images/theme/score-pink.png') 50% 50% no-repeat;
+    background-size: 35px auto;
+    background-color: #fff;
+  }
+
+  .footer .active .icon-user {
+    background: url('../assets/images/theme/file-red-min.png') 50% 50% no-repeat;
+    background-size: 19px auto;
+  }
+
+  .header {
+    background-color: @headColor;
+  }
+
+  .header-left .icon-menu {
+    color: #b3b3b3;
+  }
+
+  .header-right .message{
+      background: url("../assets/images/theme/message-Icon.png?__inline") 70% 80% no-repeat;
+      background-size: 20px auto;
+  }
+
+  .header-drawer {
+    .left-top {
+      background: -webkit-gradient(linear, right top, left top, from(#c762bb), to(@mainColor));
+      background: -webkit-linear-gradient(right, #c762bb, @mainColor);
+    }
+  }
+
+  .home .notice{
+    color: #cd0005;
+    border-bottom: solid 1px #f3f3f3;
+  }
+
+  .home .game-center .game-text > span:last-child{
+    color: #e6007f;
+  }
+
+  .home .laba{
+    background: url("../assets/images/theme/notice.png?__inline") 50% 50% no-repeat;
+    background-size: 20px auto;
+  }
+
+  .home .shortcut{
+    border-bottom: solid 1px #f3f3f3;
+    padding-bottom: 10px;
+  }
+
+  .home .shortcut > li > i {
+    width: 60px;
+    height: 60px;
+  }
+
+  .home .shortcut .home-recharge {
+    background: url("../assets/images/theme/recharge.png?__inline") 50% 50% no-repeat;
+    background-size: 60px auto;
+  }
+
+  .home .shortcut .home-deposit {
+    background: url("../assets/images/theme/deposit.png?__inline") 50% 50% no-repeat;
+    background-size: 60px auto;
+  }
+
+  .home .shortcut .home-custom {
+    background: url("../assets/images/theme/custom.png?__inline") 50% 50% no-repeat;
+    background-size: 60px auto;
+  }
+
+  .home .shortcut .home-bet {
+    background: url("../assets/images/theme/bet.png?__inline") 50% 50% no-repeat;
+    background-size: 60px auto;
+  }
+
+  .home .shortcut .home-agent {
+    background: url("../assets/images/theme/agent-pink@2x.png?__inline") 50% 50% no-repeat;
+    background-size: 60px auto;
+  }
+
+  .home .game-center .game-type > div:first-child {
+    background: url("../assets/images/theme/shixun.png?__inline") 50% 25% no-repeat;
+    background-size: 35px auto;
+  }
+
+  .home .game-center .game-type > div:nth-child(2) {
+    background: url("../assets/images/theme/caipiao.png?__inline") 50% 25% no-repeat;
+    background-size: 35px auto;
+  }
+
+  .home .game-center .game-type > div:nth-child(3) {
+    background: url("../assets/images/theme/tiyu.png?__inline") 50% 25% no-repeat;
+    background-size: 35px auto;
+  }
+
+  .home .game-center .game-type > div:nth-child(4) {
+    background: url("../assets/images/theme/dianziyouxi.png?__inline") 50% 25% no-repeat;
+    background-size: 35px auto;
+  }
+
+  .home .game-center .game-type > div:nth-child(5) {
+    background: url("../assets/images/theme/qipai.png?__inline") 50% 25% no-repeat;
+    background-size: 35px auto;
+  }
+
+  .home .game-center .hot {
+    background: url("../assets/images/theme/hot.png?__inline") 50% 25% no-repeat;
+    background-size: 50px auto;
+    background-color: #fff;
+  }
+
+  .home .game-center .hot {
+    background: url("../assets/images/theme/hot.png?__inline") 50% 25% no-repeat;
+    background-size: 50px auto !important;
+    min-width: 50px!important;
+    background-color: #fff;
+  }
+
+  .score .top{
+    background-color: @mainColor;
+  }
+
+  .onlineDeposit .top{
+    background-color: @mainColor;
+  }
+
+  .cube-btn_active{
+    background-color: @mainColor!important;
+  }
+
+  //.user-member .top{
+  //  background: url('../assets/images/theme/gerenzhongxin@2x.png') 50% 0% no-repeat;
+  //  background-size: 375px auto;
+  //  background-color:#fff;
+  //}
+
+  .user-member .user-name{
+    box-shadow: inset 0 0 0.24rem 0 @mainColor;
+  }
+
+  .agent .top{
+    background-color:@mainColor;
+  }
+
+  .dama{
+    background-color:@mainColor!important;
+  }
+
+  .login .top{
+    background: url('../assets/images/theme/login-bg.jpg') 50% 50% no-repeat;
+    background-color: #ffffff;
+    background-size: cover;
+  }
+
+  .login .btn-login{
+    width: 310px;
+    height: 50px;
+    background:inherit;
+    background-color:@mainColor;
+    border-radius: 25px;
+  }
+
+  .login .el-tabs__active-bar{
+    background-color:@mainColor;
+  }
+
+  .score .login-color{
+    background-color:inherit;
+  }
+
+  .score .score-nav .active{
+    color: @mainColor;
+    border-bottom: solid 2px @mainColor;
+  }
+
+  .cube-switch .cube-switch-input:checked + .cube-switch-ui {
+    border-color: @mainColor;
+    background-color: @mainColor;
+  }
+
+  .underline-drawer .drawer-top{
+    background-color: @mainColor;
+  }
+
+  .assetsOverview .top {
+    background: url('../assets/images/theme/disezic_pink@2x.png') 50% 0% no-repeat;
+    background-size: 375px auto;
+  }
+
+  .assetsOverview .bottom > span{
+    background-color: @mainColor;
+  }
+
+  .discount .activity-type .active{
+    background-color: @mainColor;
+  }
+
+  .onlineDeposit .recommend .active{
+    background-color: @mainColor;
+    color: #fff;
+  }
+
+  .onlineDeposit .recommend > span{
+    border:solid 1px @mainColor;
+    color: @mainColor;
+  }
+
+  .assetsOverview .wallet{
+    margin-top: 20px;
+  }
+
+  .discount .go{
+    color: @mainColor;
+  }
+
+  .discount .tip .join{
+    color: @mainColor;
+    border:solid 1px @mainColor;
+  }
+
+  .onlineDeposit .pay-way .active{
+    border:solid 1px @mainColor;
+  }
+
+  .home .game-center .game-rooms > div{
+    box-shadow:inherit;
+  }
+
+  .home .game-center .game-rooms > div>img{
+    border-radius: 6px;
+  }
+
+  .user-member .top{
+    background: url('../assets/images/theme/user-center-pink.png') 50% 0% no-repeat;
+    background-size: 375px auto;
+    background-color: #fff;
+  }
+}

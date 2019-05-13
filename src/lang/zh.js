@@ -1,4 +1,4 @@
-/* memberMobileVueB */
+/* memberMobileVueD */
 export default {
     yuan: '元',
     fen: '分',

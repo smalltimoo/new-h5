@@ -40,7 +40,7 @@
             loginState: function () {
                 return this.$store.state.app.loginState;
             },
-            darkTheme: function () {
+            theme: function () {
                 return this.$store.getters.getTheme;
             },
             cLoadingDialog: function () {
@@ -52,12 +52,19 @@
             }
         },
         watch: {
-            darkTheme: {
+            theme: {
                 handler(newName, oldName) {
-                    if (newName) {
-                        document.body.classList.add('theme')
-                    } else {
-                        document.body.classList.remove('theme')
+                    if (newName==1) {
+                        document.body.classList.remove('pink')
+                        document.body.classList.add('dark')
+                    }
+                    else if(newName==2){
+                        document.body.classList.remove('dark')
+                        document.body.classList.add('pink')
+                    }
+                    else {
+                        document.body.classList.remove('dark')
+                        document.body.classList.remove('pink')
                     }
                 },
                 immediate: true
