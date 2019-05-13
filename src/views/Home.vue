@@ -183,16 +183,13 @@
                     <div :class="{active: gameType=='5'}" @click="gameType=5">{{ $t('home.home26')}}</div>
                     <div :class="{active: gameType=='6'}" @click="gameType=6"
                          v-if="Object.values(companyCustomGames).filter(item=>item.typeId==6).length>0"
-                    >{{ $t('home.home27')}}
-                    </div>
+                    >{{ $t('home.home27')}}</div>
                     <div :class="{active: gameType=='7'}" @click="gameType=7"
                          v-if="Object.values(companyCustomGames).filter(item=>item.typeId==7).length>0"
-                    >{{ $t('home.home28')}}
-                    </div>
+                    >{{ $t('home.home28')}}</div>
                     <div :class="{active: gameType=='50'}" @click="gameType=50"
                          v-if="Object.values(companyCustomGames).filter(item=>item.typeId==50).length>0"
-                    >{{ $t('home.home29')}}
-                    </div>
+                    >{{ $t('home.home29')}}</div>
                 </div>
                 <div class="game-rooms">
                     <div v-for="(game, index) in selectedGames" :key="index"
