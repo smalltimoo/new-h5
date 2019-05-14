@@ -3,8 +3,7 @@
         <div class="game-body">
             <div class="game-center">
 
-                <div class="move" id="move" ref="TopHeader" @click="panel=!panel"
-                     style="width: 40px; height: 40px;background-size: 40px auto;"></div>
+                <div class="move" id="move" ref="TopHeader" @click="panel=!panel" style="width: 40px; height: 40px;background-size: 40px auto;"></div>
 
                 <div v-if="panel"
                      style="position: absolute;height: 100%;width: 100%; display: flex;justify-content: center;align-items: center">
@@ -102,6 +101,10 @@
             this.getMemberInfo();
             this.$nextTick(this.mGCStyles);
             move();
+            setTimeout(()=>{
+                document.querySelector('.game-body').style.background='inherit';
+            },15000)
+
         },
         methods: {
             getMemberInfo() {

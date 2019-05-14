@@ -91,6 +91,7 @@
                 vmCard: {
                     account: ""
                 },
+                loading:false,
                 lineCountry:1,
                 vm: {
                     dealcoin: "",
@@ -178,6 +179,9 @@
                 });
             },
             mSave() {
+                if(this.loading){
+                    return
+                }
                 if (this.bindBank) {
                     this.$Message.warning(this.$t('member.withdrawals.wa18')); //绑定银行卡
                     return;
@@ -203,11 +207,13 @@
                     return;
                 }
                 this.mLoading(true);
+                this.loading=true;
                 //先检查是否给手续费
                 this.$http
                     .post("/memberUser/checkmembercash.json", this.vm)
                     .then(result => {
                         this.mLoading(false);
+                        this.loading=false;
                         if (result.code == 0) {
                             let isCharge = false;
                             if (result.data.bool && result.data.washCodeState != 0 && (result.data.countGame > result.data.gameAmount || (result.data.countGame == 0 && result.data.gameAmount == 0))) {
@@ -238,7 +244,10 @@
                         } else {
                             this.$Message.warning(result.message)
                         }
-                    });
+                    })
+                    .catch(error=>{
+                        this.loading=false;
+                    })
             },
             mGetBanks() {
                 return this.$http.post("/banktypes.json",{lineCountry:this.lineCountry});
