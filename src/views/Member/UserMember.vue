@@ -66,7 +66,7 @@
                         <span>
                            {{this.$t('member.userMember.um4')}}
                         </span>
-                        <span v-if="cLoginUser.integral">
+                        <span v-if="cLoginUser.integral || cLoginUser.integral==0">
                              {{ cLoginUser.integral ? parseFloat(cLoginUser.integral/100).toFixed(2) :'0.00' }}
                             <span style="font-size: 12px">{{$t('fen')}}</span>
                         </span>
@@ -78,7 +78,7 @@
                         <span>
                             {{this.$t('member.userMember.um5')}}
                         </span>
-                        <span v-if="amount">
+                        <span v-if="amount || cLoginUser.integral==0">
                             {{ parseFloat(amount/100).toFixed(2) }}
                             <span style="font-size: 12px">{{$t('yuan')}}</span>
                         </span>
@@ -88,7 +88,7 @@
                 <div>
                     <router-link :to="{name:'AssetsOverView'}">
                         <span>{{this.$t('member.userMember.um6')}}</span>
-                        <span  v-if="totalCoins">
+                        <span  v-if="totalCoins || cLoginUser.integral==0">
                             {{ parseFloat(totalCoins/100).toFixed(2) }}
                             <span style="font-size: 12px">{{$t('yuan')}}</span>
                         </span>
