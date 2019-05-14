@@ -1,6 +1,6 @@
 <template>
     <div class="user-member">
-        <div class="header">
+        <div class="header" style="z-index: 101;">
             <div class="header-left"></div>
             <div class="header-middle">
                 个人中心

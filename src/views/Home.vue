@@ -213,7 +213,7 @@
             </div>
 
             <div class="activity-panel">
-                <el-carousel :interval="4000" type="card" height="140px">
+                <el-carousel :interval="4000" type="card" height="140px" indicator-position="none">
                     <el-carousel-item v-for="(item,index) in activities" :key="index" class="active-img">
                         <router-link :to="{name:'Discount',query:{id:item.id}}">
                             <div class="active-title">
@@ -274,14 +274,6 @@
             }
         },
         computed: {
-            theme: {
-                get() {
-                    return this.$store.state.common.darkTheme
-                },
-                set(value) {
-                    this.$store.commit(types.THEME, value);
-                }
-            },
             ...mapState({
                 theme:state => state.common.theme,
                 sysPicObj: state => state.common.sysPicObj,

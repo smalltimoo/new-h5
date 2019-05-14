@@ -19,7 +19,7 @@
                     <div style="display: flex;justify-content: space-between">
                         <span>{{$t('member.onlineDeposit.od3')}}：{{cLoginUser.username}}</span>
                         <span style="color:#f0e2a1;display: flex;align-items: center;font-size: 12px">
-                            <img src="../../assets/images/vip.png" width="11px"> &nbsp;
+                            <img src="../../assets/images/vip1.png" width="15px"> &nbsp;
                             {{cLoginUser.memberLevelName}}
                         </span>
                     </div>
