@@ -12,7 +12,8 @@
         <div class="bank-info">
             <router-link :to="{name:'UserBankCard'}" v-if="bindBank">
                 <div style="display: flex;align-items: center">
-                    <Icon type="md-add-circle" style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
+                    <Icon type="md-add-circle"
+                          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
                     <span>{{ $t('agentMember.addBank')}}</span>
                 </div>
                 <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
@@ -28,15 +29,17 @@
             </router-link>
         </div>
         <div class="bank-info" style="margin-top: 10px">
-            <router-link :to="{name:'SafaPassword'}" v-if="setPwd" >
+            <router-link :to="{name:'SafaPassword'}" v-if="setPwd">
                 <div style="display: flex;align-items: center">
-                    <Icon type="md-add-circle" style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
+                    <Icon type="md-add-circle"
+                          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
                     <span>{{ $t('agentMember.setPwd')}}</span>
                 </div>
                 <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
             </router-link>
         </div>
-        <div class="main-panel" style="margin-top: 10px;flex-direction: column;align-items: flex-start;position: relative">
+        <div class="main-panel"
+             style="margin-top: 10px;flex-direction: column;align-items: flex-start;position: relative">
             <span style="position: absolute;top: 47px;left: 10px;font-size: 18px;">￥</span>
             <p style="padding:10px"> {{ $t('member.withdrawals.wa7')}}</p>
             <input v-model="vm.dealcoin"
@@ -82,8 +85,9 @@
             return {
                 banktypes: [],
                 amount: 0,
-                bindBank:false,
-                setPwd:false,
+                bindBank: false,
+                setPwd: false,
+                loading: false,
                 vmCard: {
                     account: "",
                     agentCashBalance: 0
@@ -104,8 +108,8 @@
             this.mInit();
             this.$http.get("/memberUser/memberinfo.json").then(result => {
                 if (result.code == 0) {
-                    if (!result.data.coinPassword){
-                        this.setPwd=true;
+                    if (!result.data.coinPassword) {
+                        this.setPwd = true;
                     }
                 }
             });
@@ -118,7 +122,7 @@
                         if (resAgentCashBalance.data == -1) {
 
                         } else if (resAgentCashBalance.data == -2) {
-                            this.bindBank=true;
+                            this.bindBank = true;
                             this.$Message.warning(_this.$t('agent.withdrawals.withdrawals15')); //请先绑定银行卡
                         } else {
                             this.vmCard.agentCashBalance = resAgentCashBalance.data;
@@ -137,6 +141,9 @@
                 return this.$http.get("/memberUser/getbindbank.json");
             },
             mSave() {
+                if (this.loading) {
+                    return;
+                }
                 if (this.vm.dealcoin == "") {
                     this.$Message.warning(_this.$t('agent.withdrawals.withdrawals16'));  //取现金额不能为空
                     return;
@@ -154,27 +161,33 @@
                     return;
                 }
                 this.mLoading(true);
+                this.loading = true;
                 let params = Object.assign({}, this.vm);
-                this.$http.post("/agentUser/agentcash.json", params).then(result => {
-                    this.mLoading(false);
-                    if (result.code == 0) {
-                        if (result.data == 0) {
-                            this.$Message.success(_this.$t('agent.withdrawals.withdrawals20'));  //提现成功
-                            this.mInit();
-                        } else if (result.data == 1) {
-                            this.setPwd=true;
-                            this.$Message.warning(_this.$t('agent.withdrawals.withdrawals14'));
-                            this.mAlert(_this.$t('agent.withdrawals.withdrawals21'), () => {   //请先设置资金密码
-                                this.$router.push({name: "SafaPassword"});
-                            });
-                        } else if (result.data == 2) {
-                            this.bindBank=true;
-                            this.$Message.warning(_this.$t('agent.withdrawals.withdrawals22')); //请先绑定银行卡
+                this.$http.post("/agentUser/agentcash.json", params)
+                    .then(result => {
+                        this.mLoading(false);
+                        this.loading = false;
+                        if (result.code == 0) {
+                            if (result.data == 0) {
+                                this.$Message.success(_this.$t('agent.withdrawals.withdrawals20'));  //提现成功
+                                this.mInit();
+                            } else if (result.data == 1) {
+                                this.setPwd = true;
+                                this.$Message.warning(_this.$t('agent.withdrawals.withdrawals14'));
+                                this.mAlert(_this.$t('agent.withdrawals.withdrawals21'), () => {   //请先设置资金密码
+                                    this.$router.push({name: "SafaPassword"});
+                                });
+                            } else if (result.data == 2) {
+                                this.bindBank = true;
+                                this.$Message.warning(_this.$t('agent.withdrawals.withdrawals22')); //请先绑定银行卡
+                            }
+                        } else {
+                            this.$Message.error(result.message);
                         }
-                    } else {
-                        this.$Message.error(result.message);
-                    }
-                });
+                    })
+                    .catch(error=>{
+                        this.loading = false;
+                    })
             }
         },
         created() {

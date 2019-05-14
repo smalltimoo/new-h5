@@ -15,16 +15,19 @@
             <div class="top">
                 <div class="total-amount">
                     <span>{{$t('member.assetsOverView.ao3')}}</span>
-                    <span>￥ {{ parseFloat(totalCoins/100).toFixed(2)  }}</span>
+                    <span v-if="totalCoins">￥ {{ parseFloat(totalCoins/100).toFixed(2)  }}</span>
+                    <i class="el-icon-loading" v-else></i>
                 </div>
                 <div class="total-panel">
                     <div>
                         <span>{{$t('member.assetsOverView.ao4')}}</span>
-                        <span>￥{{walletlist[0].coin / 100}}</span>
+                        <span v-if="walletlist[0].coin">￥{{walletlist[0].coin / 100}}</span>
+                        <i class="el-icon-loading" v-else></i>
                     </div>
                     <div>
                         <span>{{$t('member.assetsOverView.ao5')}}</span>
-                        <span>￥{{otherCoins}}</span>
+                        <span v-if="otherCoins">￥{{otherCoins}}</span>
+                        <i class="el-icon-loading" v-else></i>
                     </div>
                 </div>
             </div>
@@ -43,7 +46,7 @@
                               @click="mGetError(item.gameCompanyId);"
                               v-if="item.coin=='-1'"
                         >
-                            <i class="el-icon-loading" v-if="item.loading"></i>
+                            <i class="el-icon-loading" v-if="item.loading" style="margin-right: 20px"></i>
                             <span v-if="!item.loading" style="line-height: 20px">{{$t('member.assetsOverView.ao6')}}</span>
                             <img v-if="!item.loading"
                                  src="../../assets/images/refresh.png"
@@ -69,11 +72,11 @@
             return {
                 walletlist: [
                     {
-                        coin: 0
+                        coin: ''
                     }
                 ],
-                totalCoins: 0,
-                otherCoins: 0
+                totalCoins: '',
+                otherCoins: ''
             };
         },
         mounted() {
@@ -127,7 +130,11 @@
                             })
                             this.walletlist = [...[], ...this.walletlist];
                             this.totalCoins = this.walletlist.reduce((x, y) => {
-                                return parseFloat(x + y.coin || 0);
+                                let coin=y.coin;
+                                if(y.coin<0){
+                                    coin=0
+                                }
+                                return parseFloat(x + coin || 0);
                             }, 0);
                             this.otherCoins = parseFloat((this.totalCoins - this.walletlist[0].coin) / 100).toFixed(2)
                         }
