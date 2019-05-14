@@ -214,6 +214,7 @@
                     .then(result => {
                         this.mLoading(false);
                         this.loading=false;
+                        this.vm.dealcoin=0;
                         if (result.code == 0) {
                             let isCharge = false;
                             if (result.data.bool && result.data.washCodeState != 0 && (result.data.countGame > result.data.gameAmount || (result.data.countGame == 0 && result.data.gameAmount == 0))) {
@@ -242,6 +243,7 @@
                                 this.mCash();
                             }
                         } else {
+                            this.vm.dealcoin=0;
                             this.$Message.warning(result.message)
                         }
                     })
