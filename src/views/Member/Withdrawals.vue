@@ -162,6 +162,7 @@
                 this.$http.post("/memberUser/membercash.json", this.vm).then(result => {
                     this.mLoading(false);
                     if (result.code == 0) {
+                        this.vm.dealcoin=0;
                         if (result.data == 0) {
                             this.$Message.success(this.$t('member.withdrawals.wa16')); //操作成功
                         } else if (result.data == 1) {
@@ -175,6 +176,7 @@
                     } else {
                         this.$Message.error(result.message, () => {
                         });
+                        this.vm.dealcoin=0;
                     }
                 });
             },
@@ -214,7 +216,6 @@
                     .then(result => {
                         this.mLoading(false);
                         this.loading=false;
-                        this.vm.dealcoin=0;
                         if (result.code == 0) {
                             let isCharge = false;
                             if (result.data.bool && result.data.washCodeState != 0 && (result.data.countGame > result.data.gameAmount || (result.data.countGame == 0 && result.data.gameAmount == 0))) {

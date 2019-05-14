@@ -167,8 +167,8 @@
                     .then(result => {
                         this.mLoading(false);
                         this.loading = false;
-                        this.vm.dealcoin=0;
                         if (result.code == 0) {
+                            this.vm.dealcoin=0;
                             if (result.data == 0) {
                                 this.$Message.success(_this.$t('agent.withdrawals.withdrawals20'));  //提现成功
                                 this.mInit();
