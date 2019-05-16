@@ -51,6 +51,24 @@
                 this.$router.push({name: tab})
             },
         },
-        created() {}
+        created() {
+            if(this.cNeedLogin == true){
+                this.$http.post('/getLoginUser.json').then(result => {
+                    if (result.code == 0) {
+                        this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
+                        this.mLoading(false)
+                        this.mMessage(
+                            '登陆成功！',
+                            () => {
+                                this.$store.dispatch(types.COMMON_GONGGAO, this)
+                                this.$router.push({name: "Home"});
+                            },
+                            'success',
+                            0.5
+                        )
+                    }
+                })
+            }
+        }
     }
 </script>
