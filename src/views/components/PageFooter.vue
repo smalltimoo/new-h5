@@ -50,6 +50,17 @@
                 this.$store.commit('CHANGE_TAB', tab);
                 this.$router.push({name: tab})
             },
+            mbaiduCount(){
+                if(this.$store.getters.getSysPicObj!=undefined){
+                    var baiduCountCode=this.$store.getters.getSysPicObj.baiduCountCode;
+                    if(baiduCountCode != undefined && baiduCountCode.length > 0){
+                        var hm = document.createElement("script");
+                        hm.src = baiduCountCode;
+                        var s = document.getElementsByTagName("script")[0];
+                        s.parentNode.insertBefore(hm, s);
+                    }
+                }
+            },
         },
         created() {
             if(this.cNeedLogin == true){
@@ -69,6 +80,7 @@
                     }
                 })
             }
+            this.mbaiduCount();
         }
     }
 </script>
