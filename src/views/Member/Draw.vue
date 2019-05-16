@@ -1,6 +1,6 @@
 <template>
     <div class="main-body" style="margin-top: 0">
-        <div class="top">
+        <div class="top bg-lunpan">
             <img class="lucky-img" src="../../assets/images/draw/xingyun@2x.png">
             <div class="lucky-score">{{ $t('member.draw.d1') }} <span v-text="consumptionIntegral"></span> {{
                 $t('member.draw.d2') }}
@@ -29,15 +29,15 @@
         <!--<button onclick="showMask();">111</button>-->
         <div class="awards">
             <div class="btns">
-                <p class="btn" :class="{btn_active : btn_active}" @click="changeBtn('winner')">{{ $t('member.draw.d6')
-                    }}</p><!-- 获奖名单-->
-                <p class="btn" :class="{btn_active : !btn_active}" @click="changeBtn('owner')">{{ $t('member.draw.d7')
-                    }}</p><!--我的奖品 -->
+                <p class="btn" :class="{btn_active : btn_active}" @click="changeBtn('winner')">
+                    {{ $t('member.draw.d6')}}</p><!-- 获奖名单-->
+                <p class="btn" :class="{btn_active : !btn_active}" @click="changeBtn('owner')">
+                    {{ $t('member.draw.d7')}}</p><!--我的奖品 -->
             </div>
             <div class="awards_info" v-show="btn_active">
                 <ul class="awards-ul" id="winnerList">
                     <li class='awards-li' v-for="(item,i) in winnerList" :key="i" v-if="item.isWin">
-                        <span v-text="item.winningUser"></span>
+                        <span>{{item.winningUser.substring(0,3) +'***'+item.winningUser.substring(item.winningUser.length-3,item.winningUser.length)}}</span>
                         <span v-text="item.prizeName"></span>
                     </li>
                 </ul>
