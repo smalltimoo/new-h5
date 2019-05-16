@@ -65,7 +65,7 @@
         created() {
             if(this.cNeedLogin == true){
                 this.$http.post('/getLoginUser.json').then(result => {
-                    if (result.code == 0) {
+                    if (result.code == 0 && result.data != null) {
                         this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
                         this.mLoading(false)
                         this.mMessage(
