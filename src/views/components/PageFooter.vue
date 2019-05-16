@@ -50,7 +50,37 @@
                 this.$store.commit('CHANGE_TAB', tab);
                 this.$router.push({name: tab})
             },
+            mbaiduCount(){
+                if(this.$store.getters.getSysPicObj!=undefined){
+                    var baiduCountCode=this.$store.getters.getSysPicObj.baiduCountCode;
+                    if(baiduCountCode != undefined && baiduCountCode.length > 0){
+                        var hm = document.createElement("script");
+                        hm.src = baiduCountCode;
+                        var s = document.getElementsByTagName("script")[0];
+                        s.parentNode.insertBefore(hm, s);
+                    }
+                }
+            },
         },
-        created() {}
+        created() {
+            if(this.cNeedLogin == true){
+                this.$http.post('/getLoginUser.json').then(result => {
+                    if (result.code == 0) {
+                        this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
+                        this.mLoading(false)
+                        this.mMessage(
+                            '登陆成功！',
+                            () => {
+                                this.$store.dispatch(types.COMMON_GONGGAO, this)
+                                this.$router.push({name: "Home"});
+                            },
+                            'success',
+                            0.5
+                        )
+                    }
+                })
+            }
+            this.mbaiduCount();
+        }
     }
 </script>

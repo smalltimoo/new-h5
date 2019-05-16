@@ -24,7 +24,29 @@ Vue.use(iView);
 Vue.mixin(mixin);
 Vue.use(Cube);
 
-
+function geturlQueryParam(paramName) {
+  var url = ''+window.location;
+  var paramValue = "";
+  if (url.indexOf("?") >= 0) {
+    var paramstr =url.split("?")[1];
+    if(paramstr != undefined && paramstr.length>0){
+      var params = paramstr.split("&");
+      params.forEach((function(item, index, array){
+        if(item != undefined && item.length > 0){
+          if(item.split("=")[0] == paramName){
+            paramValue = item.split("=")[1];
+          }
+        }
+      }))
+    }
+  }
+  return paramValue;
+}
+var sessiontoken = geturlQueryParam("sessiontoken");
+if(sessiontoken != undefined && sessiontoken.length > 0){
+  sessionStorage.setItem(types.SESSION_TOKEN, sessiontoken);
+  store.commit(types.SESSION_TOKEN);
+}
 
 //ajax携带cookie数据，保证session可用
 axios.defaults.withCredentials = true;
