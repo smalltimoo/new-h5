@@ -71,6 +71,9 @@ export default {
         alert10: '验证码已发送',
         alert11: '登陆成功!',
         alert12: '您的初始密码是123456, 是否前去修改?',
+        must412: '4-12位用户名长度',
+        must612: '4-12位密码长度',
+        mustSame: '两次密码不一致',
     },
     discount: {
         activity: '优惠活动',

@@ -69,7 +69,7 @@
                         this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
                         this.mLoading(false)
                         this.mMessage(
-                            '登陆成功！',
+                            this.$t('mixin.loginSuccess'),
                             () => {
                                 this.$store.dispatch(types.COMMON_GONGGAO, this)
                                 this.$router.push({name: "Home"});

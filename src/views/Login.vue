@@ -102,14 +102,14 @@
                                 class="tip"
                                 direction="top"
                         >
-                            {{ this.$t('reg.mustAccount') }}
+                            {{ this.$t('login.enterUserName') }}
                         </cube-tip>
                         <cube-tip
                                 ref="reg2"
                                 class="tip"
                                 direction="top"
                         >
-                            {{ this.$t('reg.must412') }}
+                            {{ this.$t('login.must412') }}
                         </cube-tip>
                     </div>
                     <div>
@@ -120,14 +120,14 @@
                                 class="tip"
                                 direction="top"
                         >
-                            {{ this.$t('reg.mustpwd') }}
+                            {{ this.$t('login.mustPwd620') }}
                         </cube-tip>
                         <cube-tip
                                 ref="reg4"
                                 class="tip"
                                 direction="top"
                         >
-                            {{ this.$t('reg.must612') }}
+                            {{ this.$t('login.must612') }}
                         </cube-tip>
                     </div>
                     <div>
@@ -138,7 +138,7 @@
                                 class="tip"
                                 direction="top"
                         >
-                            {{ this.$t('reg.mustSame') }}
+                            {{ this.$t('login.mustSame') }}
                         </cube-tip>
                     </div>
                     <div>
@@ -149,7 +149,7 @@
                                 class="tip"
                                 direction="top"
                         >
-                            {{ this.$t('reg.enterTruePhoneNumber') }}
+                            {{ this.$t('login.enterTruePhoneNumber') }}
                         </cube-tip>
                     </div>
 
@@ -162,7 +162,7 @@
                                 class="tip"
                                 direction="top"
                         >
-                            {{ this.$t('reg.mustcode') }}
+                            {{ this.$t('login.enterVerifyCode') }}
                         </cube-tip>
                     </div>
                     <input type="button" class="btn-login" :value="$t('login.register')" @click="mSave"/>
