@@ -376,7 +376,8 @@
                 this.$http.post("/getsys.json").then(res => {
                     if (res.code == 0) {
                         let lineCountry=res.data.lineCountry;
-                        this.$http.post("/banktypes.json", {lineCountry:lineCountry}).then(res => {
+                        let sysInfo = this.$store.getters.getSysInfo;
+                        return this.$http.post("/banktypes.json", {lineCountry: sysInfo.lineCountry ? sysInfo.lineCountry : this.$i18n.local == 'th' ? '2' : '1'}).then(res => {
                             if (res.code == 0) {
                                 this.banktypes = res.data.list;
                             } else {
