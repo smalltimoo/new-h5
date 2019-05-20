@@ -222,8 +222,15 @@
                                 isCharge = true;
                             }
                             if (isCharge) {
+                                var wa23 = this.$t('member.withdrawals.wa23')
+                                if(result.data.gameflag == 1){//总打码不足
+                                    wa23 = this.$t('member.withdrawals.wa23')
+                                }else if(result.data.gameflag == 2){//最后一笔不足
+                                    wa23 = this.$t('member.withdrawals.wa29')
+                                }
+
                                 let strConfirm =
-                                    this.$t('member.withdrawals.wa23') +  //当前打码量不足
+                                    wa23 +  //当前打码量不足
                                     result.data.countGame / 100 +
                                     this.$t('member.withdrawals.wa24') +  //，将收取
                                     result.data.washCodeCharge +

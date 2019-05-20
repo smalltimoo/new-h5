@@ -572,6 +572,7 @@ export default {
             wa26: '获得帮助en',
             wa27: '当前没有打码量，将收取en',
             wa28: '%的手续费，你确定要取现吗？en',
+            wa29: '最后一笔打码量不足en',
         },
         userSetting: {
             us1: '安全设置en',
