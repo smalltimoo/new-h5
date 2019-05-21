@@ -48,17 +48,17 @@
             <div class="bg-purple-dark"><!--用户ID -->
                 <span>{{ $t('member.userLimit.ul7') }}</span>
                 <span class="info" v-if="info.mobile">{{info.mobile}}</span>
-                <span class="info" v-else>未设置</span>
+                <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
             </div>
             <div class="bg-purple-dark"><!--用户ID -->
                 <span>{{ $t('member.userLimit.ul8') }}</span>
                 <span class="info" v-if="info.weixin">{{info.weixin}}</span>
-                <span class="info" v-else>未设置</span>
+                <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
             </div>
             <div class="bg-purple-dark"><!--用户ID -->
                 <span>{{ $t('member.userLimit.ul9') }}</span>
                 <span class="info" v-if="info.qq">{{info.qq}}</span>
-                <span class="info" v-else>未设置</span>
+                <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
             </div>
         </div>
         <div style="height: 40px;width: 100%;line-height: 40px;text-align: left;padding-left: 15px;color: #000;">
@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class="title" style="margin-top: 20px;font-size: 13px"><!--  温馨提示 ： 如需修改信息，请联系-->
-            <span>温馨提醒: 如需修改信息，请联系</span>
+            <span>{{ $t('member.userLimit.ul18') }}</span>
             <a href="javascript:void(0)"
                @tap="mOpenCService"
                style="color: rgb(184, 17, 9);"

@@ -405,6 +405,7 @@
             },
 
             save() {
+                // this.$store.dispatch('setIntervals', 30);
                 let amount = parseFloat(this.amount);
                 let over = amount >= this.selectData.minMoney && amount <= this.selectData.maxMoney;
                 if (this.tab == 'bank') {

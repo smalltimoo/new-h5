@@ -1,7 +1,8 @@
 <template>
     <div class="main-body" style="margin-top: 0">
         <div class="top bg-lunpan">
-            <img class="lucky-img" src="../../assets/images/draw/xingyun@2x.png">
+            <!-- <img class="lucky-img" src="../../assets/images/draw/guize@2x.png"> -->
+            <div class="lucky-img"> {{ $t('member.draw.d9') }}</div>
             <div class="lucky-score">{{ $t('member.draw.d1') }} <span v-text="consumptionIntegral"></span> {{
                 $t('member.draw.d2') }}
             </div><!--每次抽奖消耗 --> <!-- 积分-->
@@ -21,7 +22,7 @@
                 </div>
                 <img class="pointer"
                      @click="draw()"
-                     src="../../assets/images/draw/dianwo@3x.png" alt="award rotation start"
+                     :src="imgurl1" alt="award rotation start"
                      width="76px"
                 />
             </div>
@@ -50,7 +51,7 @@
                     </li>
                 </ul>
             </div>
-            <img src="../../assets/images/draw/guize@2x.png" width="50%" style="margin-top: 30px">
+            <img :src="imgurl2" width="50%" style="margin-top: 30px">
         </div>
         <div class="rules">
             <p>{{rules.activityConditions}}</p>
@@ -64,7 +65,10 @@
     var _this;
     require("../../assets/lib/jQueryRotate.2.2");
     require("../../assets/lib/scroll");
-
+    import imgurl1 from '../../assets/images/draw/dianwo@3x.png'
+    import imgurl_en1 from '../../assets/images/draw/dianwo@3x_en.png'
+    import imgurl2 from '../../assets/images/draw/guize@2x.png'
+    import imgurl_en2 from '../../assets/images/draw/guize@2x_en.png'
     export default {
         name: "draw",
         data() {
@@ -79,6 +83,9 @@
                 btn_active: true,
                 drawOldTime: 0,
                 drawNewTime: "",
+
+                imgurl1:(document.documentElement.lang == 'zh')?imgurl1:imgurl_en1,
+                imgurl2:(document.documentElement.lang == 'zh')?imgurl2:imgurl_en2
             }
         },
         filters: {
@@ -194,6 +201,8 @@
         created() {
             _this = this;
             this.mInit();
+            // this.changelang('imgurl','imgurl1',imgurl1,'png');
+            // this.changelang('imgurl','imgurl2',imgurl2,'png');
 
         },
         beforeDestroy: function () {
@@ -263,9 +272,16 @@
     }
 
     .lucky-img {
+        display: inline-block;
         height: 54px;
+        line-height: 54px;
         width: 270px;
+        color: #ffffff;
+        font-size: 48px;
+        text-align: center;
         margin-bottom: 20px;
+        -webkit-text-stroke: 1px #fff;
+        /* -webkit-text-fill-color: transparent; */
     }
 
     .lucky-score {

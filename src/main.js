@@ -238,3 +238,14 @@ Vue.component("remote-script", {
     }
   }
 });
+
+Vue.prototype.changelang = function (...a){
+  switch(a[0]){
+    case 'imgurl': 
+      let index = a[2] .lastIndexOf(".");  
+      let temparr = [a[2] .substring(0,index), a[2] .substring(index + 1, a[2] .length)]
+      // let temparr = a[2].split('.')
+      this[a[1]] = temparr[0]+(document.documentElement.lang == 'zh'?'':'_en')+'.'+(document.documentElement.lang == 'zh'?temparr[1]:a[3]||temparr[1]);
+      break;
+  }
+}

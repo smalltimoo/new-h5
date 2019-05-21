@@ -4,6 +4,7 @@ import app from './modules/app'
 import accountinfo from './modules/accountinfo'
 import regcode from './modules/regcode'
 import common from './modules/common'
+import pay from './modules/pay'
 
 
 Vue.use(Vuex)
@@ -13,7 +14,8 @@ export default new Vuex.Store({
     app,
     accountinfo,
     regcode,
-    common
+    common,
+    pay
   },
   strict: debug,
   plugins: []

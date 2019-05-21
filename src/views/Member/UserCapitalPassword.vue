@@ -371,6 +371,7 @@
         color: #b3b3b3;
         text-align: left;
         padding-left: 15px;
+        overflow: hidden;
     }
 
     .userCapitalPwd .Text {

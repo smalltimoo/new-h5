@@ -49,6 +49,7 @@
             changeLocal(local){
                 this.$i18n.locale=local;
                 localStorage.setItem("lang",this.$i18n.locale)
+                document.documentElement.lang = this.$i18n.locale;
             }
         },
         created(){
