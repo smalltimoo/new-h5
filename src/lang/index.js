@@ -43,7 +43,7 @@ const i18n = new VueI18n({
   locale: localStorage.getItem("lang") || lang,
   messages // set locale messages
 })
-
+document.documentElement.lang = i18n.locale;
 ElementLocale.i18n((key, value) => i18n.t(key, value))
 iView.i18n((key, value) => i18n.t(key, value))
 export default i18n

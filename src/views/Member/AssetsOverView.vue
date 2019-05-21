@@ -15,18 +15,18 @@
             <div class="top">
                 <div class="total-amount">
                     <span>{{$t('member.assetsOverView.ao3')}}</span>
-                    <span v-if="totalCoins">￥ {{ parseFloat(totalCoins/100).toFixed(2)  }}</span>
+                    <span v-if="totalCoins">{{$t('symbol.t1')}} {{ parseFloat(totalCoins/100).toFixed(2)  }}</span>
                     <i class="el-icon-loading" v-else></i>
                 </div>
                 <div class="total-panel">
                     <div>
                         <span>{{$t('member.assetsOverView.ao4')}}</span>
-                        <span v-if="walletlist[0].coin">￥{{walletlist[0].coin / 100}}</span>
+                        <span v-if="walletlist[0].coin">{{$t('symbol.t1')}}{{walletlist[0].coin / 100}}</span>
                         <i class="el-icon-loading" v-else></i>
                     </div>
                     <div>
                         <span>{{$t('member.assetsOverView.ao5')}}</span>
-                        <span v-if="otherCoins">￥{{otherCoins}}</span>
+                        <span v-if="otherCoins">{{$t('symbol.t1')}}{{otherCoins}}</span>
                         <i class="el-icon-loading" v-else></i>
                     </div>
                 </div>
@@ -52,7 +52,7 @@
                                  src="../../assets/images/refresh.png"
                                  style="width:18px;margin-top: -2px;margin-left: 5px"/>
                          </span>
-                        <span v-else>￥{{parseFloat(item.coin / 100).toFixed(2)}}</span>
+                        <span v-else>{{$t('symbol.t1')}}{{parseFloat(item.coin / 100).toFixed(2)}}</span>
                     </div>
                 </div>
             </div>

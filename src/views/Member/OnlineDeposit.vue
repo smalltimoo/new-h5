@@ -32,7 +32,7 @@
                     <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
                 </div>
                 <div class="input-panel">
-                    <span style="font-size: 16px"><b>￥</b></span>
+                    <span style="font-size: 16px"><b>{{$t('symbol.t1')}}</b></span>
                     <input type="number" v-model="amount" class="input-number"
                            :placeholder="$t('member.onlineDeposit.od7')"/>
                 </div>
@@ -43,7 +43,7 @@
                           :class="{active: activeAmount==item}"
                           @click="amount=item;activeAmount=amount"
                     >
-                        ￥{{ item }}
+                        {{$t('symbol.t1')}}{{ item }}
                     </span>
                 </div>
             </div>
@@ -170,7 +170,7 @@
             <div class="drawer-top">
                 <span>{{$t('member.onlineDeposit.od44')}}</span>
                 <span style="font-size: 20px;margin-top: 8px">
-                    <span style="font-size:18px">￥</span>
+                    <span style="font-size:18px">{{$t('symbol.t1')}}</span>
                     <span>
                         <span v-text="amount"></span>
                         <span style="color: rgb(247, 246, 28)" v-if="minAmount">.{{minAmount}}</span>
@@ -250,7 +250,7 @@
                     <span>{{selectData.bankAccountName}} : {{selectData.account}}</span>
                 </div>
             </div>
-            <cube-button :active="true" @click="saveUnderline" class="save-btn">
+            <cube-button :active="true" @click="saveUnderline" class="save-btn" :disabled="isdisable">
                 {{$t('member.onlineDeposit.od65')}}
             </cube-button>
         </Drawer>
@@ -258,6 +258,7 @@
 </template>
 <script>
     import win from "@/mixins/window";
+import { setInterval, clearInterval, setTimeout } from 'timers';
 
     const moment = require('moment');
 
@@ -294,6 +295,7 @@
                     companyAccountId: "",
                     remark: ""
                 },
+                isdisable:false
             };
         },
         watch: {
@@ -328,7 +330,7 @@
                             this.rechargeTypes = result.data.apis;
                             this.rechargeOther = result.data.others;
 
-                            this.mSelectRechargeType('alpay', this.rechargeTypes.filter(item => item.rechargeTypeIcon.includes('alpay'))[0].list)
+                           this.mSelectRechargeType('alpay', this.rechargeTypes.filter(item => item.rechargeTypeIcon.includes('alpay'))[0].list)
                         } else {
                             this.$Message.error(result.message);
                         }
@@ -420,6 +422,10 @@
                     orderAmount: this.amount,
                     s: Math.random()
                 };
+                if(document.documentElement.payInterval){
+                    this.$Message.error('两次充值时间需间隔30s');
+                    return;
+                }
                 if (isNaN(amount)) {
                     this.$Message.warning(this.$t('member.onlineDeposit.od19')); //您输入的充值金额不正确
                     return;
@@ -536,6 +542,11 @@
                 this.bankPicker.show()
             },
             saveUnderline() {
+                this.isdisable = true;
+                let that = this;
+                setTimeout(()=>{
+                    that.isdisable = false;
+                },1000)
                 if (this.nextLoading) {
                     this.$Message.warning(this.$t('member.onlineDeposit.od68'));   //请稍候再试！
                     return false;
@@ -566,11 +577,18 @@
                                 this.$router.push({name: 'CapitalRecord'})
                             }
                         })
+                        //两次充值时间间隔>30s
+                        document.documentElement.payInterval = 30
+                        let timeer = setInterval(()=>{
+                            document.documentElement.payInterval -- ;
+                            document.documentElement.payInterval == 0 && clearInterval(timeer)
+                        },1000)
                     } else {
                         this.$Message.error(result.message, () => {
                         }, "error");
                     }
                 });
+                
             },
             mOtherCZ(url) {
                 if (url) {

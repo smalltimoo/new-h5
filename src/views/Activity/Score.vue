@@ -52,7 +52,7 @@
                         </div>
                         <div class="product-name" v-text="item.title"></div>
                         <div class="use">
-                            <span>￥{{item.originalPrice}}</span>
+                            <span>{{$t('symbol.t1')}}{{item.originalPrice}}</span>
                             <span>{{item.currentPrice}} {{$t('score.degits')}}</span>
                         </div>
                     </li>
@@ -146,7 +146,7 @@
                         </div>
                         <div class="flex">
                             <span>{{rows.typeName}}</span>
-                            <span>￥{{rows.originalPrice}}</span>
+                            <span>{{$t('symbol.t1')}}{{rows.originalPrice}}</span>
                         </div>
                         <div class="flex">
                             <span class="ready">{{$t('score.kucun')}}: {{rows.stockquantity }}</span>

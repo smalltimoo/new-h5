@@ -40,7 +40,7 @@
         </div>
         <div class="main-panel"
              style="margin-top: 10px;flex-direction: column;align-items: flex-start;position: relative">
-            <span style="position: absolute;top: 47px;left: 10px;font-size: 18px;">￥</span>
+            <span style="position: absolute;top: 47px;left: 10px;font-size: 18px;">{{$t('symbol.t1')}}</span>
             <p style="padding:10px"> {{ $t('member.withdrawals.wa7')}}</p>
             <input v-model="vm.dealcoin"
                    autocomplete="off"
@@ -55,7 +55,7 @@
             >
             <div style="height: 40px;display: flex;justify-content: space-between;align-items: center;padding: 0 10px;font-size: 12px;width: 100%;">
                 <span>
-                    {{$t('member.withdrawals.wa6')}}: ￥{{parseFloat(amount / 100).toFixed(2)}}
+                    {{$t('member.withdrawals.wa6')}}: {{$t('symbol.t1')}}{{parseFloat(amount / 100).toFixed(2)}}
                 </span>
                 <span style="color: #007bc9;" @click="vm.dealcoin=amount / 100"></span>
             </div>

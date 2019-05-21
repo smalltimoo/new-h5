@@ -9,6 +9,9 @@ export default {
         refresh: '客服正赶来，请刷新后再试..',
         loginSuccess: '登陆成功！',
     },
+    symbol: {
+        t1: '￥'
+    },
     home: {
         home1: '打开',
         home2: '走到哪，玩到哪',

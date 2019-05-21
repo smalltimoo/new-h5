@@ -14,7 +14,7 @@
                         <li class="icon-kefu" @click="mOpenCService">
                             {{$t('customservice')}}
                         </li>
-                        <li class="icon-qq">
+                        <li class="icon-qq" :style="{display:cQQ1||cQQ2?'block':'none'}">
                             <a v-if="cQQ1" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'">
                                 {{cQQ1}}
                             </a>

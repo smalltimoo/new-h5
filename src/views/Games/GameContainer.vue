@@ -28,31 +28,31 @@
                                  style="height: 73px;width: 60px; background-size: 58px 66px;font-size: 12px;">
                                 <span>{{$t('games.gameContainer.gameContainer7')}}</span>
                                 <img src="../../assets/images/game/chongzhi1.png" width="30px">
-                                <span>￥10</span>
+                                <span>{{$t('symbol.t1')}}10</span>
                             </div>
                             <div @click="vm.dealCoin=100"
                                  style="height: 73px;width: 60px; background-size: 58px 66px;font-size: 12px;">
                                 <span>{{$t('games.gameContainer.gameContainer7')}}</span>
                                 <img src="../../assets/images/game/chongzhi2.png" width="30px">
-                                <span>￥100</span>
+                                <span>{{$t('symbol.t1')}}100</span>
                             </div>
                             <div @click="vm.dealCoin=200"
                                  style="height: 73px;width: 60px; background-size: 58px 66px;font-size: 12px;">
                                 <span>{{$t('games.gameContainer.gameContainer7')}}</span>
                                 <img src="../../assets/images/game/chongzhi3.png" width="30px">
-                                <span>￥200</span>
+                                <span>{{$t('symbol.t1')}}200</span>
                             </div>
                             <div @click="vm.dealCoin=500"
                                  style="height: 73px;width: 60px; background-size: 58px 66px;font-size: 12px;">
                                 <span>{{$t('games.gameContainer.gameContainer7')}}</span>
                                 <img src="../../assets/images/game/chongzhi4.png" width="30px">
-                                <span>￥500</span>
+                                <span>{{$t('symbol.t1')}}500</span>
                             </div>
                             <div @click="vm.dealCoin=1000"
                                  style="height: 73px;width: 60px; background-size: 58px 66px;font-size: 12px;">
                                 <span>{{$t('games.gameContainer.gameContainer7')}}</span>
                                 <img src="../../assets/images/game/chongzhi5.png" width="30px">
-                                <span>￥1000</span>
+                                <span>{{$t('symbol.t1')}}1000</span>
                             </div>
                         </span>
                         </div>
