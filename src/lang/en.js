@@ -601,6 +601,8 @@ export default {
             ul14: '确定要退出账号吗en',
             ul15: '请稍等...en',
             ul16: '退出成功！en',
+            ul17: '未设置 en',
+            ul18: '温馨提醒: 如需修改信息，请联系 en',
         },
         userCapitalPassword: {
             ucp1: '新增银行卡en',
