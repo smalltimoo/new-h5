@@ -211,6 +211,11 @@
                             }
                             if (rbanks.code == 0) {
                                 let list = rbanks.data.list ? rbanks.data.list : [];
+                                const ids = [2,3,21] //支付宝 微信 财付通
+                                ids.forEach((ele)=>{
+                                    list.splice(list.findIndex(item => item.id === ele), 1)
+                                })
+                                
                                 list.forEach(ele => {
                                     ele.value = ele.id;
                                     ele.text = ele.bankName;
