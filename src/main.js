@@ -12,18 +12,28 @@ import i18n from './lang' // Internationalization
 import {dateFormat} from "./assets/lib/util";
 import Cube from 'cube-ui';
 
+// import swiper from "swiper";
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+require('islider.js');
+
+   
+
 import 'iview/dist/styles/iview.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import "animate.css";
 import 'amfe-flexible';
 import './style/app.less';
+// import './src/style/mui/css/swiper.min.css'
+import 'swiper/dist/css/swiper.css'
 
 directive(Vue);
 Vue.use(ElementUI);
 Vue.use(iView);
 Vue.mixin(mixin);
 Vue.use(Cube);
-
+// Vue.use(swiper);
+Vue.use(VueAwesomeSwiper)
 function geturlQueryParam(paramName) {
   var url = ''+window.location;
   var paramValue = "";

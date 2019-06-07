@@ -40,7 +40,7 @@ export default {
     },
     methods: {
         changeLocal() {
-            localStorage.setItem("lang", this.$i18n.locale);
+            // localStorage.setItem("lang", this.$i18n.locale);
             document.documentElement.lang = this.$i18n.locale;
             // window.location.reload();
         },

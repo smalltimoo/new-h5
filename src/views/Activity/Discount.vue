@@ -1,40 +1,12 @@
 <template>
     <div class="discount">
-        <div class="header">
-            <div class="header-left"></div>
-            <div class="header-middle">
-                {{$t('discount.activity')}}
-            </div>
-            <div class="header-right">
-                <Poptip trigger="click" placement="bottom-end">
-                    <i class="icon-menu message"></i>
-                    <ul slot="content">
-                        <li class="icon-kefu" @click="mOpenCService">
-                            {{$t('customservice')}}
-                        </li>
-                        <li class="icon-qq" :style="{display:cQQ1||cQQ2?'block':'none'}">
-                            <a v-if="cQQ1" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'">
-                                {{cQQ1}}
-                            </a>
-                            <a v-if="cQQ2" :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ2+'&version=1&src_type=web'">
-                                {{cQQ2}}
-                            </a>
-                        </li>
-                        <li class="icon-agent" v-if="agentQQ">
-                            <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{agentQQ}}</a>
-                        </li>
-                        <li class="icon-line" v-if="sysInfo.lineUrl">
-                            <a :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'">{{sysInfo.lineUrl}}</a>
-                        </li>
-                    </ul>
-                </Poptip>
-            </div>
-        </div>
+        <header-component :logo="logo" :showIcon="false" :showLogo="true"></header-component>
         <div class="container">
             <div class="activity-type">
                 <span :class="{active: isJoin=='-1'}" @click="changeTab('-1')">{{$t('discount.dis1')}}</span>
                 <span :class="{active: isJoin=='0'}" @click="changeTab('0')">{{$t('discount.dis2')}}</span>
                 <span :class="{active: isJoin=='1'}" @click="changeTab('1')">{{$t('discount.dis3')}}</span>
+                <span :class="{active: isJoin=='2'}" @click="changeTab('2')">{{$t('discount.dis10')}}</span>
             </div>
             <div  class="no-list" v-if="(!avtByIsJoin||avtByIsJoin.length==0)" style="top: 100px;bottom:100px;left: 0;"></div>
             <div v-for="(item, index) in avtByIsJoin" :key="index" style="margin-top: 10px">
@@ -47,15 +19,23 @@
                     <img :src="item.activityImg" @click="showDrawer(item)"
                          style="width: 100%; border-radius: 5px;min-height: 90px;max-height: 95px">
                     <div class="tip">
-                        <span v-text="item.activityTitle" style="width: 110px;text-align: left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis"></span>
-                        <span class="join" v-if="[6, 7, 8, 9].includes(item.activityType) && item.isJoin=='0'" @click="signed(item)">{{$t('discount.dis4')}}</span>
-                        <span class="joined" v-if="[6, 7, 8, 9].includes(item.activityType) && item.isJoin=='1'">{{$t('discount.dis5')}}</span>
-                        <span class="join" v-if="item.activityType==10 && item.isJoin=='0'" @click="signed(item)">{{$t('discount.dis6')}}</span>
-                        <span class="joined" v-if="item.activityType==10 && item.isJoin=='1'">{{$t('discount.dis7')}}</span>
+                        <div class="tip_left">
+                            <span v-text="item.activityTitle" class="_tip tip_title"></span>
+                             <span v-text="item.activityTitle" class="_tip tip_text" ></span>
+                             <span v-text="item.activityTitle" class="_tip time" ></span>
+                        </div>
+                        <div class="tip_right">
+                            <span class="join" v-if="[6, 7, 8, 9].includes(item.activityType) && item.isJoin=='0'" @click="signed(item)">{{$t('discount.dis4')}}</span>
+                            <span class="joined" v-if="[6, 7, 8, 9].includes(item.activityType) && item.isJoin=='1'">{{$t('discount.dis5')}}</span>
+                            <span class="join" v-if="item.activityType==10 && item.isJoin=='0'" @click="signed(item)">{{$t('discount.dis6')}}</span>
+                            <span class="joined" v-if="item.activityType==10 && item.isJoin=='1'">{{$t('discount.dis7')}}</span>
+                        </div>
+                        
+                        
                     </div>
-                    <div class="go" style="border-top:solid 1px #f3f3f3" @click="showDrawer(item)">
-                        <span>{{$t('discount.look')}}</span>
-                        <Icon type="ios-arrow-forward" class="icon-menu"/>
+                    <div class="go"  @click="showDrawer(item)" style="height:14px;">
+                        <!-- <span>{{$t('discount.look')}}</span> -->
+                        <!-- <Icon type="ios-arrow-forward" class="icon-menu"/> -->
                     </div>
                 </div>
             </div>
@@ -74,9 +54,15 @@
     </div>
 </template>
 <script>
+import headerComponent from '@/common/Header.vue'
     export default {
+        name:'Discount',
+        components:{
+            headerComponent
+        },
         data() {
             return {
+                logo:'活动',
                 isJoin: -1,
                 activities: [],
                 avtByIsJoin: [],
@@ -94,7 +80,7 @@
         },
         methods: {
             changeTab(isJoin) {
-                this.isJoin = isJoin ? isJoin : this.isJoin;
+                this.isJoin =  isJoin || this.isJoin;
                 if (this.isJoin == -1) {
                     this.avtByIsJoin = this.activities;
                 } else {
@@ -152,6 +138,7 @@
                                 this.showDrawer(this.activities.filter(item => this.id == item.id)[0])
                             }
                         })
+                        
                     })
             }
         },

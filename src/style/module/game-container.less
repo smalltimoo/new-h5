@@ -1,3 +1,166 @@
+
+  .game-center {
+    width: 100%;
+    padding-top: 10px;
+    background-color: #fff;
+    font-size: 16px;
+    color: #606266;
+    padding-bottom: 10px;
+
+    .game-type::-webkit-scrollbar {
+      display: none;
+    }
+
+    .hot {
+      position: absolute;
+      width: 70px;
+      height: 40px;
+      // background: url("../../assets/images/home/group01.png?__inline") 50% 25% no-repeat;
+      background-size: 35px auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      background-color: #fff;
+      z-index: 95;
+    }
+
+    .active {
+      // min-width: 44px!important;
+      // background-size: 42px auto !important;
+      color: #cd0005;
+      font-size: 24px;
+      color: #303313;
+    }
+
+    .game-type {
+      height: 40px;
+      overflow: hidden;
+      overflow-x: scroll;
+      white-space: nowrap;
+      display: flex;
+      position: relative;
+      padding-left: 80px;
+
+      & > div {
+        float: left;
+        min-width: 40px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+        margin-right: 20px;
+      }
+
+
+    //   & > div:first-child {
+    //     //margin-left: 5px;
+    //     background: url("../../assets/images/home/group02.png?__inline") 50% 25% no-repeat;
+    //     background-size: 35px auto;
+    //   }
+
+    //   & > div:nth-child(2) {
+    //     background: url("../../assets/images/home/group04.png?__inline") 50% 25% no-repeat;
+    //     background-size: 35px auto;
+    //   }
+
+    //   & > div:nth-child(3) {
+    //     background: url("../../assets/images/home/group05.png?__inline") 50% 25% no-repeat;
+    //     background-size: 35px auto;
+    //   }
+
+    //   & > div:nth-child(4) {
+    //     background: url("../../assets/images/home/group07.png?__inline") 50% 25% no-repeat;
+    //     background-size: 35px auto;
+    //   }
+
+    //   & > div:nth-child(5) {
+    //     background: url("../../assets/images/home/group03.png?__inline") 50% 25% no-repeat;
+    //     background-size: 35px auto;
+    //   }
+
+    //   & > div:nth-child(6) {
+    //     background: url("../../assets/images/home/group08.png?__inline") 50% 25% no-repeat;
+    //     background-size: 35px auto;
+    //   }
+
+    //   & > div:nth-child(7) {
+    //     background: url("../../assets/images/home/group06.png?__inline") 50% 25% no-repeat;
+    //     background-size: 35px auto;
+    //   }
+    }
+
+    .game-rooms {
+      padding: 0 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-flow: row wrap;
+
+      & > div {
+        width: 351px;
+        height: 163px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        border-radius: 6px;
+        // box-shadow: inset 0px 0px 1px 0px rgba(80, 80, 80, 0.59), inset 0px 0px 1px 0px rgba(80, 80, 80, 0.59);
+        overflow: hidden;
+        margin-top: 10px;
+      }
+      img {
+        width: 100%;
+        height: 117px;
+      }
+    }
+
+    .game-text {
+      display: flex;
+      width: 100%;
+      height: 45px;
+      line-height: 25px;
+      justify-content: space-between;
+      padding: 0 5px;
+
+      &  span {
+        display: block;
+        text-align: left;
+      }
+      
+      .game_text_left {
+
+        & > span:first-child {
+        color: #303030;
+        font-size: 18px;
+      }
+
+      & > span:last-child {
+        color: #606266;
+        font-size: 14px;
+      }
+    }
+     .game_text_right {
+      width: 100px;
+      position: relative;
+        span {
+          border: solid 0.026667rem #3d7eff;
+          border-radius: 0.08rem;
+          padding: 0 0.213333rem;
+          font-size: 0.32rem;
+          font-family: PingFangSC-Light;
+          color: #3d7eff;
+          height: 0.666667rem;
+          line-height: 0.666667rem;
+          border-radius: 0.106667rem;
+          border: solid 0.053333rem #3d7eff;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+        }
+      }
+    }
+  }
 .game-container{
   .game-center {
     width: 100%;

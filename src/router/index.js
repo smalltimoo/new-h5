@@ -17,7 +17,7 @@ export default new Router({
         { path: "home", name: "Home", component: () => import("../views/Home.vue") },
         { path: "score", name: "Score", component: () => import("../views/Activity/Score.vue") },
         { path: "onlinedeposit", name: "OnlineDeposit", component: () => import("../views/Member/OnlineDeposit.vue") },
-        { path: "membercentre", name: "UserMember", component: () => import("../views/Member/UserMember.vue") },
+        { path: "membercentre", name: "UserMember", component: () => import("../views/Member/UserMember.vue") }, //个人中心
         { path: "discount", name: "Discount", component: () => import("../views/Activity/Discount.vue") },
         { path: "assetsoverview", name: "AssetsOverView", component: () => import("../views/Member/AssetsOverView.vue") },
         { path: "usersetting", name: "UserSettings", component: () => import("../views/Member/UserSettings.vue") },
@@ -56,6 +56,11 @@ export default new Router({
         { path: "messagelist", name: "MessageList", component: () => import("../views/Member/MessageList.vue") },
         { path: "draw", name: "Draw", component: () => import("../views/Member/Draw.vue") },
         // { path: "/local", name: "local", component: () => import("../views/Member/local.vue") },
+
+        { path: "games", name: "Games", component: () => import("../views/Games/Games.vue") },
+        { path: "systemset", name: "systemset", component: () => import("../views/System/Systemset.vue") },
+        { path: "helpcenter", name: "helpcenter", component: () => import("../views/System/Helpcenter.vue") },
+        { path: "*", name: "404", component: () => import("../common/Newpage.vue") },
       ]
     }
   ]
