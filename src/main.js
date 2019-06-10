@@ -11,6 +11,10 @@ import directive from "./assets/directives";
 import i18n from './lang' // Internationalization
 import {dateFormat} from "./assets/lib/util";
 import Cube from 'cube-ui';
+import Vant from 'vant';
+
+/**全局处理异常 */
+import ErrorPlugin from  './errorPlugin'
 
 // import swiper from "swiper";
 import VueAwesomeSwiper from 'vue-awesome-swiper'
@@ -24,6 +28,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import "animate.css";
 import 'amfe-flexible';
 import './style/app.less';
+
+import 'vant/lib/index.css';
 // import './src/style/mui/css/swiper.min.css'
 import 'swiper/dist/css/swiper.css'
 
@@ -32,6 +38,9 @@ Vue.use(ElementUI);
 Vue.use(iView);
 Vue.mixin(mixin);
 Vue.use(Cube);
+Vue.use(Vant);
+
+Vue.use(ErrorPlugin);
 // Vue.use(swiper);
 Vue.use(VueAwesomeSwiper)
 function geturlQueryParam(paramName) {
@@ -61,7 +70,7 @@ if(sessiontoken != undefined && sessiontoken.length > 0){
 //ajax携带cookie数据，保证session可用
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = process.env.VUE_APP_BASE_API;
-
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 // 在main.js设置全局的请求次数，请求的间隙
 axios.defaults.retry = 2
 axios.defaults.retryDelay = 1000
@@ -107,8 +116,7 @@ axios.interceptors.request.use(
 );
 
 // 添加响应拦截器
-axios.interceptors.response.use(
-    function (response) {
+axios.interceptors.response.use(response=> {
       let data = response.data;
       if (data.code == -100) {
         vue.mLoading(false);

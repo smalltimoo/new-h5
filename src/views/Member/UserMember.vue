@@ -103,6 +103,12 @@
             </div>
             <span>{{this.$t('member.userMember.um10')}}</span>
           </router-link>
+           <router-link :to="{name:'AgentMember'}">
+            <div>
+              <img src="../../assets/images/mycenter/wo7@2x.png" width="43px">
+            </div>
+            <span>{{this.$t('member.userMember.um18')}}</span>
+          </router-link>
           <router-link :to="{name:'TransferRecords'}">
             <div>
               <img src="../../assets/images/mycenter/wode8@2x.png" width="43px">
@@ -163,7 +169,8 @@ export default {
       {
           name:'安全中心',
           newInfo:false,
-          text:'专业解答'
+          text:'专业解答',
+          routeName:"safecenter"
       },
       {
           name:'我的消息',

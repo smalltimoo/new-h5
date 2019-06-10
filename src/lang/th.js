@@ -149,6 +149,9 @@ export default {
         am19: '交易明细',
         am20: '提现记录',
         am21: '钱包日志',
+
+        am22: '面对面扫码',
+        am23: '下级报表',
     },
     pageFooter: {
         home: '首页',

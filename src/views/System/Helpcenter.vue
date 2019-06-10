@@ -11,7 +11,7 @@
           <a
             href="#"
             v-for="(item,index) in routerPanelList"
-            @tap="helpcenterDrawer = true;return;"
+            @click.prevent="helpcenterDrawer = true;"
             :key="index"
           >
             <div>
@@ -31,7 +31,7 @@
         </div>
       </div>
     </div>
-    <Drawer :closable="false" v-model="helpcenterDrawer" class="underline-drawer notback">
+    <Drawer :closable="false" v-model="helpcenterDrawer" class="underline-drawer notback" width="100">
       <headerComponent
         :showIcon="true"
         :showLogo="true"
@@ -221,6 +221,7 @@ export default {
       height: 42px;
       // line-height: 42px;
       width: 351px;
+      // width:100%;
       display: flex;
       margin: 0 auto;
       font-size: 14px;

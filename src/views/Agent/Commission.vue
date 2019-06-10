@@ -46,12 +46,20 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="less" scoped>
 .ivu-modal-header {
   font-size: 16px;
   text-align: center;
   font-weight: bold;
   background-color: #adadc3;
+}
+/deep/ .model-alert .ivu-modal-content {
+   background-image: url('../../assets/images/agent/tangchuang@2x.png')
+}
+.userbasic_body {
+  /* width: 300px;
+  height: 300px; */
+  /* background-image: url('../../assets/images/agent/tangchuang@2x.png') */
 }
 </style>
 

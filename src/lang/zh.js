@@ -149,6 +149,10 @@ export default {
         am19: '交易明细',
         am20: '提现记录',
         am21: '钱包日志',
+
+        am22: '面对面扫码',
+        am23: '下级报表',
+        am24: '管理中心',
     },
     pageFooter: {
         home: '首页',
@@ -237,6 +241,8 @@ export default {
             memberUser: '会员',
             proxy: '代理',
             search: '查询',
+            cancel:'取消',
+            ok:'确定',
             memberManagement: '会员管理',
             filter: '筛选',
             noData: '暂无数据',
@@ -360,19 +366,25 @@ export default {
             openAccounts19: '操作成功'
         },
         openInvitation: {
+            openInvitation0: '选择用户类型',
             openInvitation1: '推广链接',
             openInvitation2: '用户类型',
             openInvitation3: '会员',
             openInvitation4: '代理',
             openInvitation5: '开户信息',
-            openInvitation6: '分红比例：',
-            openInvitation7: '返水扣除：',
-            openInvitation8: '优惠扣除：',
+            openInvitation6: '分红',
+            openInvitation7: '返水',
+            openInvitation8: '优惠',
             openInvitation9: '确定',
             openInvitation10: '加载分红比例失败',
             openInvitation11: '请选择开户类型',
             openInvitation12: '下级分红比例不能高于',
-            openInvitation13: '操作成功'
+            openInvitation13: '操作成功',
+
+            openInvitation14: '请选择用户类型',
+            openInvitation15: '请输入分红比例(分红比例不能大于40%)',
+            openInvitation16: '请输入返水比例(返水比例不能大于0%)',
+            openInvitation17: '请输入优惠(分红比例不能大于40%)',
         },
         transactionsdetailList: {
             transactionsdetailList1: '用户名',
@@ -567,7 +579,6 @@ export default {
             s7:'关于我们',
             s8:'退出登录',
 
-            placeh0:'请输入问题关键字',
             h0:'帮助中心',
             h1:'代理说明',
             h2:'登录注册',

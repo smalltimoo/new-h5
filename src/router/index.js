@@ -26,7 +26,7 @@ export default new Router({
         { path: "userBankCard", name: "UserBankCard", component: () => import("../views/Member/UserBankCard.vue") },
         { path: "usercapitalpwd", name: "UserCapitalPassword", component: () => import("../views/Member/UserCapitalPassword.vue") },
         { path: "user_limit", name: "UserLimit", component: () => import("../views/Member/UserLimit.vue") },
-        { path: "receiving", name: "Receiving", component: () => import("../views/Member/Receiving.vue") },
+        { path: "receiving", name: "Receiving", component: () => import("../views/Member/Receiving.vue") },   
         { path: "withdrawals", name: "Withdrawals", component: () => import("../views/Member/Withdrawals.vue") },
         { path: "indoortransfer", name: "IndoorTransfer", component: () => import("../views/Member/IndoorTransfer.vue") },
         { path: "rechargeRecord", name: "RechargeRecord", component: () => import("../views/Member/RechargeRecord.vue") },
@@ -34,7 +34,7 @@ export default new Router({
         { path: "capitalRecord", name: "CapitalRecord", component: () => import("../views/Member/CapitalRecord.vue") },
         { path: "transferRecords", name: "TransferRecords", component: () => import("../views/Member/TransferRecords.vue") },
         { path: "withdrawRecord", name: "WithdrawRecord", component: () => import("../views/Member/WithdrawRecord.vue") },
-        { path: "Agent_Member", name: "AgentMember", component: () => import("../views/Agent/AgentMember.vue") },
+        { path: "Agent_Member", name: "AgentMember", component: () => import("../views/Agent/AgentMember.vue") }, //代理中心
         { path: "Agent_that", name: "AgentThat", component: () => import("../views/Agent/AgentThat.vue") },
         { path: "agentreportforms", name: "AgentrEportforms", component: () => import("../views/Agent/AgentrEportforms.vue") },
         { path: "openaccounts", name: "OpenAccounts", component: () => import("../views/Agent/OpenAccounts.vue") },
@@ -60,6 +60,7 @@ export default new Router({
         { path: "games", name: "Games", component: () => import("../views/Games/Games.vue") },
         { path: "systemset", name: "systemset", component: () => import("../views/System/Systemset.vue") },
         { path: "helpcenter", name: "helpcenter", component: () => import("../views/System/Helpcenter.vue") },
+        { path: "safecenter", name: "safecenter", component: () => import("../views/System/Safecenter.vue") },
         { path: "*", name: "404", component: () => import("../common/Newpage.vue") },
       ]
     }

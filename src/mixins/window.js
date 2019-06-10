@@ -11,7 +11,7 @@ export default {
                 visible: true,
                 title: title,
                 view: content,
-                width: !!width?width:280,
+                width: !!width?width:300,
                 paramData: params,
                 callback: (backparams) => {
                     if (typeof callback == 'function') {
