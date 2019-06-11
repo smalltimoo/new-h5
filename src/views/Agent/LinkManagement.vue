@@ -315,8 +315,12 @@ export default {
                 });
             },
             mJiaoyi(rows) {
+                // this.$router.push({
+                //     path: "./transactionsdetaillist",
+                //     query: {username: rows.username}
+                // });
                 this.$router.push({
-                    path: "./transactionsdetaillist",
+                    path: "./mjiaoyi",
                     query: {username: rows.username}
                 });
             },

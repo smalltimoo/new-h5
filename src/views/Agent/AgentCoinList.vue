@@ -1,64 +1,10 @@
 <template>
-    <div class="main-body">
+    <div class="main"  style="height:620px;">
         <!-- 侧滑导航根容器 -->
         <div class="mui-off-canvas-wrap mui-scalable">
             <!-- 主页面容器 -->
             <div class="mui-inner-wrap">
-                <!-- 菜单容器 -->
-                <aside class="mui-off-canvas-right">
-                    <div class="mui-scroll-wrapper">
-                        <div class="mui-scroll">
-                            <!-- 菜单具体展示内容 -->
-                            <section class="el-container is-vertical">
-                                <Divider class="top-title">{{ $t('agent.agentCoinList.queryWalletOperationTime')}}
-                                </Divider><!--查询钱包操作时间 -->
-                                <button ref="tapDateS"
-                                        class="btn mui-btn mui-btn-link"
-                                        style="color:#4c4c4c"
-                                        @tap="mTapDateS"
-                                >
-                                    {{ $t('agent.agentCoinList.start')}}
-                                </button><!--选择开始时间 ... -->
-                                <button ref="tapDateE"
-                                        class="btn mui-btn mui-btn-link"
-                                        style="color:#4c4c4c"
-                                        @tap="mTapDateE"
-                                >
-                                    {{ $t('agent.agentCoinList.endTime')}}
-                                </button><!--选择结束时间 ... -->
-                                <Divider class="top-title">{{ $t('agent.agentCoinList.operationType')}}</Divider>
-                                <!--操作类型 -->
-                                <button ref="tapActionType"
-                                        class="btn mui-btn mui-btn-link"
-                                        style="color:#4c4c4c"
-                                        @tap="mTapActionType"
-                                >
-                                    {{ $t('agent.agentCoinList.type')}}
-                                </button><!--不限类型 -->
-                                <div class="el-row text-center" style="margin-top: 10px">
-                                    <button type="button"
-                                            class="el-button G-submit el-button--primary"
-                                            @click="mSearch(1);mShowSearch('close')"
-                                    >
-                                        <span>{{ $t('agent.agentCoinList.search')}}</span><!--查询 -->
-                                    </button>
-                                </div>
-                            </section>
-                        </div>
-                    </div>
-                </aside>
-                <!-- 主页面标题 -->
-                <div class="header">
-                    <div class="header-left">
-                        <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
-                    </div>
-                    <div class="header-middle">
-                        {{ $t('agent.agentCoinList.dividedWalletLog')}}
-                    </div>
-                    <div class="header-right" @tap="mShowSearch('open')">
-                        {{ $t('agent.agentCoinList.filter')}}
-                    </div>
-                </div>
+                
                 <!-- 主页面内容容器 -->
                 <div class="no-list" v-if="(!dataList||dataList.length==0)&&!showSearch"></div>
                 <div class="mui-content mui-scroll-wrapper">
@@ -124,6 +70,7 @@
     var _this;
     export default {
         mixins: [slist],
+        props: ["username","manageTypesearch"],
         data() {
             return {
                 showSearch: false,

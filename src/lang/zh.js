@@ -153,6 +153,7 @@ export default {
         am22: '面对面扫码',
         am23: '下级报表',
         am24: '管理中心',
+        am25:"钱包记录"
     },
     pageFooter: {
         home: '首页',

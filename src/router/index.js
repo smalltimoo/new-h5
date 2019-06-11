@@ -61,6 +61,7 @@ export default new Router({
         { path: "systemset", name: "systemset", component: () => import("../views/System/Systemset.vue") },
         { path: "helpcenter", name: "helpcenter", component: () => import("../views/System/Helpcenter.vue") },
         { path: "safecenter", name: "safecenter", component: () => import("../views/System/Safecenter.vue") },
+        { path: "mjiaoyi", name: "mjiaoyi", component: () => import("../views/Agent/MjiaoyiComponent.vue") },
         { path: "*", name: "404", component: () => import("../common/Newpage.vue") },
       ]
     }
