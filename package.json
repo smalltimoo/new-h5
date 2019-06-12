@@ -1,11 +1,11 @@
 {
-  "name": "memberMobileVueD",
+  "name": "testapp",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "dev": "vue-cli-service serve"
+    "dev": "vue-cli-service serve --open"
   },
   "dependencies": {
     "amfe-flexible": "^2.2.1",

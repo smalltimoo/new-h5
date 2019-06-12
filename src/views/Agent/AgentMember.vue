@@ -73,34 +73,45 @@
       <div class="agent-icon">
         <div class="share">{{$t('agentMember.am14')}}</div>
         <div class="icons">
-          <router-link :to="{name:'AgentrEportforms'}" class="icon-panel">
+          <!-- 会员管理 -->
+          <router-link
+            :to="{name:'LinkManagement',query:{name:'AgentrEportforms'}}"
+            class="icon-panel"
+          >
             <img src="../../assets/images/agent/daili6@2x.png" width="36px">
             <span>{{$t('agentMember.am15')}}</span>
           </router-link>
+          <!-- 下级开户 -->
           <router-link :to="{name:'OpenAccounts'}" class="icon-panel">
             <img src="../../assets/images/agent/daili7@2x.png" width="36px">
             <span>{{$t('agentMember.am16')}}</span>
           </router-link>
-          <router-link :to="{name:'MembermanAgement'}" class="icon-panel">
+          <!-- 代理报表 -->
+          <router-link :to="{name:'mjiaoyi',query:{name:'MembermanAgement'}}" class="icon-panel">
             <img src="../../assets/images/agent/daili8@2x.png" width="36px">
             <span>{{$t('agentMember.am17')}}</span>
           </router-link>
-           <router-link :to="{name:'MembermanAgement'}" class="icon-panel">
+          <!-- 下级报表 -->
+          <router-link :to="{name:'MembermanAgement'}" class="icon-panel">
             <img src="../../assets/images/agent/daili9@2x.png" width="36px">
             <span>{{$t('agentMember.am23')}}</span>
           </router-link>
+          <!-- 投注明细 -->
           <router-link :to="{name:'BettingdetailList'}" class="icon-panel">
             <img src="../../assets/images/agent/daili10@2x.png" width="36px">
             <span>{{$t('agentMember.am18')}}</span>
           </router-link>
+          <!-- 交易明细 -->
           <router-link :to="{name:'TransactionsdetailList'}" class="icon-panel">
             <img src="../../assets/images/agent/daili11@2x.png" width="36px">
             <span>{{$t('agentMember.am19')}}</span>
           </router-link>
+          <!-- 提现记录 -->
           <router-link :to="{name:'AgentCashList'}" class="icon-panel">
             <img src="../../assets/images/agent/daili12@2x.png" width="36px">
             <span>{{$t('agentMember.am20')}}</span>
           </router-link>
+          <!-- 钱包日志 -->
           <router-link :to="{name:'AgentCoinList'}" class="icon-panel">
             <img src="../../assets/images/agent/daili13@2x.png" width="36px">
             <span>{{$t('agentMember.am21')}}</span>
@@ -128,8 +139,8 @@ export default {
       }
     };
   },
-  components:{
-      headerComponent
+  components: {
+    headerComponent
   },
   mounted() {
     this.$http

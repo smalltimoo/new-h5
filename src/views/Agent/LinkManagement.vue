@@ -377,7 +377,12 @@ export default {
   },
   created() {
     _this = this;
-    // this.mReachBottom();
+    let from_name = this.$route.query.name
+    switch(from_name){
+          case 'AgentrEportforms':
+                  this.manageType = '2'
+              break;
+      }
   }
 };
 </script>

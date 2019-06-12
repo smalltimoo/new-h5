@@ -1,6 +1,6 @@
 <template>
   <div class="user-member">
-    <header-component :logo="logo" :showIcon="true" :showLogo="false"></header-component>
+    <header-component :logo="logo" :showIcon="false" :showLogo="true"></header-component>
     <div class="container">
       <div class="usercard">
         <div class="userbase">
@@ -20,7 +20,6 @@
         <div class="usercount deposit">
           <div class="count_item">
             <router-link :to="{name:'Score'}">
-            
               <span v-if="cLoginUser.integral || cLoginUser.integral==0">
                 {{ cLoginUser.integral ? parseFloat(cLoginUser.integral/100).toFixed(2) :'0.00' }}
                 <span
@@ -28,13 +27,12 @@
                 >{{$t('fen')}}</span>
               </span>
               <i class="el-icon-loading" v-else></i>
-                <span>{{this.$t('member.userMember.um4')}}</span>
+              <span>{{this.$t('member.userMember.um4')}}</span>
             </router-link>
           </div>
-           <el-divider direction="vertical"></el-divider>
+          <el-divider direction="vertical"></el-divider>
           <div class="count_item">
             <router-link :to="{name:'AssetsOverView'}">
-              
               <span v-if="amount || cLoginUser.integral==0">
                 {{ parseFloat(amount/100).toFixed(2) }}
                 <span style="font-size: 12px">{{$t('yuan')}}</span>
@@ -43,17 +41,16 @@
               <span>{{this.$t('member.userMember.um5')}}</span>
             </router-link>
           </div>
-           <el-divider direction="vertical"></el-divider>
+          <el-divider direction="vertical"></el-divider>
           <div class="count_item">
             <router-link :to="{name:'AssetsOverView'}">
-              
               <span v-if="totalCoins || cLoginUser.integral==0">
                 {{ parseFloat(totalCoins/100).toFixed(2) }}
                 <span
                   style="font-size: 12px"
                 >{{$t('yuan')}}</span>
               </span>
-              
+
               <i class="el-icon-loading" v-else></i>
               <span>{{this.$t('member.userMember.um6')}}</span>
             </router-link>
@@ -62,53 +59,57 @@
         <div class="userpay">
           <div>
             <router-link :to="{name:'Score'}">
-              <img src="@/assets/images/mycenter/wode2@2x.png" />
+              <img src="@/assets/images/mycenter/wode2@2x.png">
               <span>充值</span>
             </router-link>
           </div>
           <div>
             <router-link :to="{name:'Score'}">
-              <img src="@/assets/images/mycenter/wode3@2x.png" />
+              <img src="@/assets/images/mycenter/wode3@2x.png">
               <span>转账</span>
             </router-link>
           </div>
           <div>
             <router-link :to="{name:'Score'}">
-              <img src="@/assets/images/mycenter/wode4@2x.png" />
+              <img src="@/assets/images/mycenter/wode4@2x.png">
               <span>提现</span>
             </router-link>
           </div>
-         
         </div>
       </div>
-     
+
       <div class="router-panel">
         <!-- <div class="title">{{this.$t('member.userMember.um7')}}</div> -->
         <div class="my-pay">
+          <!-- 交易记录 -->
           <router-link :to="{name:'IndoorTransfer'}">
             <div>
               <img src="../../assets/images/mycenter/wode10@2x.png" width="43px">
             </div>
             <span>{{this.$t('member.userMember.um8')}}</span>
           </router-link>
+          <!-- 投注记录 -->
           <router-link :to="{name:'CapitalRecord'}">
             <div>
               <img src="../../assets/images/mycenter/wode9@2x.png" width="43px">
             </div>
             <span>{{this.$t('member.userMember.um9')}}</span>
           </router-link>
-          <router-link :to="{name:'RechargeRecord'}">
+          <!-- 会员中心 -->
+          <router-link :to="{name:'membercentre'}">
             <div>
               <img src="../../assets/images/mycenter/wode11@2x.png" width="43px">
             </div>
             <span>{{this.$t('member.userMember.um10')}}</span>
           </router-link>
-           <router-link :to="{name:'AgentMember'}">
+          <!-- 代理中心 -->
+          <router-link :to="{name:'AgentMember'}">
             <div>
               <img src="../../assets/images/mycenter/wo7@2x.png" width="43px">
             </div>
             <span>{{this.$t('member.userMember.um18')}}</span>
           </router-link>
+          <!-- 积分中心 -->
           <router-link :to="{name:'TransferRecords'}">
             <div>
               <img src="../../assets/images/mycenter/wode8@2x.png" width="43px">
@@ -120,26 +121,24 @@
               <img src="./../assets/images/mycenter/wo10@2x.png" width="30px">
             </div>
             <span>{{this.$t('member.userMember.um12')}}</span>
-          </router-link> -->
+          </router-link>-->
         </div>
       </div>
       <div class="pst-top"></div>
-      <div class="router-panel manager" >
-       <router-link v-for="(item, index) in routePanel" :to="{name:item.routeName}"  :key="index" >
-            <div class="wrap">
-              <div class="name_left">
-                  <span class="icon_new"  :class="{'icon_new_white':!item.newInfo}" ></span>
-                  <span class="text_name" >{{item.name}}</span>
-              </div>
-              <div class="link_right">
-                  <span class="link_text">{{item.text}}</span>
-                  <span class="sanjiao"></span>
-              </div>
+      <div class="router-panel manager">
+        <router-link v-for="(item, index) in routePanel" :to="{name:item.routeName}" :key="index">
+          <div class="wrap">
+            <div class="name_left">
+              <span class="icon_new" :class="{'icon_new_white':!item.newInfo}"></span>
+              <span class="text_name">{{item.name}}</span>
             </div>
-            <!-- <span>{{this.$t('member.userMember.um11')}}</span> -->
-          </router-link>
-         
-        
+            <div class="link_right">
+              <span class="link_text">{{item.text}}</span>
+              <span class="sanjiao"></span>
+            </div>
+          </div>
+          <!-- <span>{{this.$t('member.userMember.um11')}}</span> -->
+        </router-link>
       </div>
       <div style="height: 20px;"></div>
     </div>
@@ -160,47 +159,53 @@ export default {
       memberLevel: 0,
       walletlist: [{ coin: 0 }],
       totalCoins: "",
-      routePanel:[{
-          name:'帮助中心',
-          newInfo:true,
-          text:'专业解答',
-          routeName:'helpcenter'
-      },
-      {
-          name:'安全中心',
-          newInfo:false,
-          text:'专业解答',
-          routeName:"safecenter"
-      },
-      {
-          name:'我的消息',
-          newInfo:true,
-          text:'专业解答'
-      },
-      {
-          name:'线路选择',
-          newInfo:true,
-          text:'专业解答'
-      },
-      {
-          name:'系统设置',
-          newInfo:true,
-          text:'专业解答',
-          routeName:'systemset'
-      }],
-      countInfo:[{
-          name:'账户总额',
-          value:'20.00',
-          pa:'分'
-      },{
-          name:'分红金额',
-          value:'20.00',
-          pa:'元'
-      },{
-          name:'提现金额',
-          value:'200.00',
-          pa:'元'
-      }]
+      routePanel: [
+        {
+          name: "帮助中心",
+          newInfo: true,
+          text: "专业解答",
+          routeName: "helpcenter"
+        },
+        {
+          name: "安全中心",
+          newInfo: false,
+          text: "专业解答",
+          routeName: "safecenter"
+        },
+        {
+          name: "我的消息",
+          newInfo: true,
+          text: "专业解答"
+        },
+        {
+          name: "线路选择",
+          newInfo: true,
+          text: "专业解答"
+        },
+        {
+          name: "系统设置",
+          newInfo: true,
+          text: "专业解答",
+          routeName: "systemset"
+        }
+      ],
+      countInfo: [
+        {
+          name: "账户总额",
+          value: "20.00",
+          pa: "分"
+        },
+        {
+          name: "分红金额",
+          value: "20.00",
+          pa: "元"
+        },
+        {
+          name: "提现金额",
+          value: "200.00",
+          pa: "元"
+        }
+      ]
     };
   },
   components: {
@@ -292,15 +297,15 @@ export default {
 </script>
 
 <style scoped>
-  .user-member >>> .el-divider--vertical {
-    display: inline-block;
-    width: .5px;
-    height: 15px;
-    /* margin: 0 0.213333rem; */
-    vertical-align: middle;
-    position: relative;
-    color: #fff;
-    /* margin-top: -19px; */
+.user-member >>> .el-divider--vertical {
+  display: inline-block;
+  width: 0.5px;
+  height: 15px;
+  /* margin: 0 0.213333rem; */
+  vertical-align: middle;
+  position: relative;
+  color: #fff;
+  /* margin-top: -19px; */
 }
 </style>
 

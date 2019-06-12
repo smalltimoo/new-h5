@@ -159,7 +159,7 @@ export default {
         home: '首页',
         discount: '活动',
         score: '商城',
-        onlineDeposit: '存款',
+        onlineDeposit: '钱包',
         memberCenter: '我的',
     },
     games: {

@@ -1,16 +1,58 @@
 <template>
     <div class="main-body option">
-        <div class="header">
-            <div class="header-left">
-                <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
-            </div>
-            <div class="header-middle">
-                {{ $t('agent.openAccounts.openAccounts1')}}
-            </div>
-            <div class="header-right"></div>
-        </div>
+        <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
         <div style="margin-top: 44px">
-            <div class="mui-input-group">
+      <div class="title">{{$t('agent.openInvitation.openInvitation0')}}</div>
+      <div class="mui-input-group panel">
+        <div style="text-align: left">{{ $t('agent.openInvitation.openInvitation2')}}</div>
+        <el-select
+          v-model="vm.memberType"
+          :placeholder=" $t('agent.openInvitation.openInvitation14')"
+          class="ipt"
+        >
+          <el-option
+            v-for="item in memberTypes"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
+      </div>
+      <!-- <div class="title" v-if="vm.memberType==2">{{ $t('agent.openInvitation.openInvitation5')}}</div>
+      <div class="panel" v-if="vm.memberType==2">
+        <span>{{ $t('agent.openInvitation.openInvitation6')}}</span>
+        <input
+          v-model="vm.profitRebate"
+          type="number"
+          :placeholder="'分红比例不能大于'+dataList.profitRebate+'%'"
+          class="ipt"
+        >
+      </div>
+      <div class="panel" v-if="vm.memberType==2">
+        <span>{{ $t('agent.openInvitation.openInvitation7')}}</span>
+        <input
+          v-model="vm.rakebackRebate"
+          type="number"
+          :placeholder="'返水扣除不能小于'+dataList.rakebackRebate+'%'"
+          class="ipt"
+        >
+      </div>
+      <div class="panel" v-if="vm.memberType==2">
+        <span>{{ $t('agent.openInvitation.openInvitation8')}}</span>
+        <input
+          v-model="vm.benefitAmountRebate"
+          type="number"
+          :placeholder="'优惠金额扣除不能小于'+dataList.benefitAmountRebate+'%'"
+          class="ipt"
+        >
+      </div>
+      <cube-button :active="true" @click="mSave" class="save-btn">
+        {{ $t('agent.openInvitation.openInvitation9')}}
+      </cube-button> -->
+    <!-- </div> -->
+        
+        <!-- <div style="margin-top: 44px"> -->
+            <!-- <div class="mui-input-group">
                 <div style="width: 30%;text-align: left">{{ $t('agent.openAccounts.openAccounts2')}}</div>
                 <div style="width: 40%">
                     <el-radio v-model="vm.memberType" :label="1">{{ $t('agent.openAccounts.openAccounts3')}}</el-radio>
@@ -18,7 +60,7 @@
                 <div style="width: 40%">
                     <el-radio v-model="vm.memberType" :label="2">{{ $t('agent.openAccounts.openAccounts4')}}</el-radio>
                 </div>
-            </div>
+            </div> -->
             <div class="title">{{ $t('agent.openAccounts.openAccounts5')}}</div>
             <div class="panel">
                 <span>{{ $t('agent.openAccounts.openAccounts6')}}</span>
@@ -28,7 +70,7 @@
                 <span>{{ $t('agent.openAccounts.openAccounts8')}}</span>
                 <input v-model="vm.password" :placeholder="$t('agent.openAccounts.openAccounts9')" class="ipt"/>
             </div>
-            <div class="panel" v-if="vm.linkType==2">
+            <div class="panel" v-if="vm.memberType==2">
                 <span>{{ $t('agent.openInvitation.openInvitation8')}}</span>
                 <input v-model="vm.benefitAmountRebate" :placeholder="'优惠金额扣除不能小于'+dataList.benefitAmountRebate+'%'"
                        class="ipt"/>
@@ -57,16 +99,16 @@
         <!--<Divider>{{ $t('agent.openInvitation.openInvitation2')}}</Divider>&lt;!&ndash;用户类型 &ndash;&gt;-->
         <!--<div class="mui-input-group" style="width:50%; margin-left:24%;">-->
         <!--<div class="mui-input-row mui-radio mui-left" style="margin-bottom: 10px">-->
-        <!--<el-radio v-model="vm.linkType" :label="1">{{$t('agent.openInvitation.openInvitation3')}}</el-radio>-->
+        <!--<el-radio v-model="vm.memberType" :label="1">{{$t('agent.openInvitation.openInvitation3')}}</el-radio>-->
         <!--</div>-->
         <!--<div class="mui-input-row mui-radio mui-left">-->
-        <!--<el-radio v-model="vm.linkType" :label="2">{{$t('agent.openInvitation.openInvitation4')}}</el-radio>-->
+        <!--<el-radio v-model="vm.memberType" :label="2">{{$t('agent.openInvitation.openInvitation4')}}</el-radio>-->
         <!--</div>-->
         <!--</div>-->
         <!--</div>-->
         <!--<div class="data-time animated slideInUp">-->
         <!--<div>{{ $t('agent.openInvitation.openInvitation5')}}</div>&lt;!&ndash;开户信息 &ndash;&gt;-->
-        <!--<div v-if="vm.linkType==2">&lt;!&ndash; 分红比例：&ndash;&gt;-->
+        <!--<div v-if="vm.memberType==2">&lt;!&ndash; 分红比例：&ndash;&gt;-->
         <!--<div span="24" style="border-bottom: solid 1px #f3f3f3;">-->
         <!--{{ $t('agent.openInvitation.openInvitation6')}}-->
         <!--<input v-model="vm.profitRebate" :placeholder="'分红比例不能大于'+dataList.profitRebate+'%'" class="ipt"/>-->
@@ -86,11 +128,17 @@
     </div>
 </template>
 <script>
+
+import headerComponent from "@/common/Header.vue";
     var _this;
     export default {
+        components:{
+            headerComponent
+        },
         data() {
             return {
-                memberTypes: [{id: 1, value: "会员"}, {id: 2, value: "代理"}],
+                logo: this.$t('agentMember.am16'),
+                memberTypes: [{value: 1, label: "会员"}, {value: 2, label: "代理"}],
                 dataList: {profitRebate: '', rakebackRebate: '', benefitAmountRebate: ''},
                 vm: {
                     memberType: "",
@@ -194,5 +242,45 @@
     .ipt {
         height: 39px;
     }
+
+    .mui-input-group {
+  /* padding: 20px; */
+  width: 100%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: left;
+  padding-left: 10px;
+  font-size: 16px;
+  color: #303313;
+}
+
+.panel {
+  width: 351px;
+  margin: 0 auto;
+  height: 55px;
+  line-height: 55px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: solid 1px #f3f3f3;
+  background-color: #fff;
+  padding: 0 10px;
+}
+
+.ipt {
+  height: 54px;
+  width: 60%;
+}
+.main-body >>> .el-input__inner {
+  border: none;
+}
 </style>
 

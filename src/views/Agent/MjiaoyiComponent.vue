@@ -210,6 +210,13 @@ export default {
   created() {
     _this = this;
     // this.mReachBottom();
+    let from_name = this.$route.query.name
+    switch(from_name){
+        //代理报表
+          case 'MembermanAgement':
+                  this.manageType = '2'
+              break;
+      }
   }
 };
 </script>
