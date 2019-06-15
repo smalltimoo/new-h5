@@ -10,8 +10,11 @@ import mixin from "./mixins/mixin";
 import directive from "./assets/directives";
 import i18n from './lang' // Internationalization
 import {dateFormat} from "./assets/lib/util";
+import api from'./api/api'
 import Cube from 'cube-ui';
 import Vant from 'vant';
+import veRIng from 'v-charts/lib/ring.common'
+    Vue.component(veRIng.name, veRIng)
 
 /**全局处理异常 */
 import ErrorPlugin from  './errorPlugin'
@@ -43,6 +46,8 @@ Vue.use(Vant);
 Vue.use(ErrorPlugin);
 // Vue.use(swiper);
 Vue.use(VueAwesomeSwiper)
+
+Vue.prototype.$api = api;
 function geturlQueryParam(paramName) {
   var url = ''+window.location;
   var paramValue = "";

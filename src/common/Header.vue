@@ -70,27 +70,28 @@ export default {
 <style lang="less" scoped>
     .header {
         width: 100%;
-        height: 44px;
+        // height: 32px;
+        // margin:16px auto;
         background-color: white;
         .yue {
             width: 91px;
             height: 21px;
             background-color: #f3f3f3;
-            border-radius: 5px;
-            font-family: PingFangSC-Regular;
+            border-radius: 8px;
+            font-family: PingFang SC;
             font-size: 11px;
+            text-align: center;
             line-height: 21px;
             color: #303133;
         }
         .logo {
-            // width: 197px;
-            // height: 24px;
-            font-family: PingFangSC-Medium;
             font-size: 24px;
             color: #303133;
-            // text-align: center;
             padding-left: 11px;
             line-height: 24px;
+
+	font-family: PingFang SC;
+	letter-spacing: 1px;
         }
         }
 </style>

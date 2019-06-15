@@ -578,7 +578,7 @@ export default {
 /*ul wrapper*/
 .slider-wrap {
   width: 100%;
-  height: 183px;
+  height: 184px;
   #iSlider-wrapper,
   #iSlider-wrapper2 {
     height: 184px;
@@ -587,7 +587,7 @@ export default {
     position: absolute;
   }
 
-  ul {
+ /deep/ ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -597,9 +597,8 @@ export default {
       position: absolute;
       margin: 0;
       padding: 0;
-      height: 100%;
-      //  height: 182px;
-      width: 325px;
+      height: 164px;
+      width: 294px;
       overflow: hidden;
       display: -webkit-box;
       -webkit-box-pack: center;

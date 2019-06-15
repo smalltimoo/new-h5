@@ -9,25 +9,29 @@
       <div class="router-panel">
         <!-- <div class="title">{{this.$t('member.userMember.um7')}}</div> -->
         <div class="my-pay">
-          <router-link :to="{name:'IndoorTransfer'}">
+          <!-- 签到 -->
+          <router-link :to="{name:'checkin'}">
             <div>
               <img src="../../assets/images/pointmall/jifen4@2x.png" width="30px">
             </div>
             <span>{{this.$t('score.score1')}}</span>
           </router-link>
-          <router-link :to="{name:'CapitalRecord'}">
+          <!-- 积分中心 -->
+          <router-link :to="{name:'pointcenter'}">
             <div>
               <img src="../../assets/images/pointmall/jifen3@2x.png" width="28px">
             </div>
             <span>{{this.$t('score.score2')}}</span>
           </router-link>
-          <router-link :to="{name:'RechargeRecord'}">
+          <!-- 积分明细 -->
+          <router-link :to="{name:'pointdetails'}">
             <div>
               <img src="../../assets/images/pointmall/jifen2@2x.png" width="29px">
             </div>
             <span>{{this.$t('score.score3')}}</span>
           </router-link>
-          <router-link :to="{name:'TransferRecords'}">
+          <!-- 积分订单 -->
+          <router-link :to="{name:'pointorder'}">
             <div>
               <img src="../../assets/images/pointmall/jifen1@2x.png" width="32px">
             </div>
@@ -73,6 +77,142 @@
       </div>
       <div style="height: 20px;"></div>
     </div>
+
+    <Drawer :closable="false" v-model="record" width="100" class="score-drawer">
+            <div class="header">
+                <div class="header-left">
+                    <Icon type="ios-arrow-back" class="icon-menu" @click="record=false"/>
+                </div>
+                <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.scoreDetail')}}</div>
+                <div class="header-right"></div>
+            </div>
+            <div class="record-title" v-if="integralLog && integralLog.length>0">
+                <span><b>{{$t('score.degits')}}</b></span>
+                <span><b>{{$t('score.detail')}}</b></span>
+                <span><b>{{$t('score.recordTime')}}</b></span>
+            </div>
+            <div class="record-title" v-for="(item, index) in integralLog" :key="index" v-if="integralLog.length>0">
+                <span v-text="item.integral/100"></span>
+                <span>
+                    <Tooltip :content="item.remark" placement="top" max-width="200px" v-if="item.remark">
+                        {{ item.remark}}
+                    </Tooltip>
+                </span>
+                <span v-text="item.operateTimeStr"></span>
+            </div>
+            <div  class="no-list" v-if="(!integralLog||integralLog.length==0)" style="top: 0;left: 0;"></div>
+        </Drawer>
+
+        <Drawer :closable="false" v-model="order" width="100" class="order-drawer">
+            <div class="header">
+                <div class="header-left">
+                    <Icon type="ios-arrow-back" class="icon-menu" @click="order=false"/>
+                </div>
+                <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.exchangeRecord')}}
+                </div>
+                <div class="header-right"></div>
+            </div>
+
+            <div class="record-title" v-for="(item, index) in dataList" :key="index" v-if="dataList.length>0">
+                <div class="order-title">
+                    <span v-text="item.orderTitle"></span>
+                    <span v-text="item.stateStr"></span>
+                </div>
+                <div class="order-content">
+                    <img :src="item.orderImg" class="order-img">
+                    <div class="order-panel">
+                        <span>{{$t('score.orderNumber')}} {{item.orderCode}}</span>
+                        <span v-text="item.orderContent"
+                              style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;width: 230px"></span>
+                        <span v-text="item.shipStateStr"></span>
+                    </div>
+                </div>
+                <div style="height: 35px; line-height:35px;text-align: right; padding-right: 20px;display: flex;justify-content: space-between">
+                    <span v-text="item.payTimeStr" style="padding-left: 10px"></span>
+                    <span> {{$t('score.all')}}{{item.buyNum}}{{$t('score.products')}} &ensp;&ensp;{{$t('score.expend')}}{{item.totalPrice}}{{$t('score.degits')}}</span>
+                </div>
+            </div>
+            <div  class="no-list" v-if="(!dataList||dataList.length==0)" style="top: 0;left: 0;"></div>
+        </Drawer>
+
+        <Drawer :closable="false" v-model="buy" width="100" class="buy-drawer">
+            <div class="header">
+                <div class="header-left">
+                    <Icon type="ios-arrow-back" class="icon-menu" @click="buy=false"/>
+                </div>
+                <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.confirmOrder')}}</div>
+                <div class="header-right"></div>
+            </div>
+            <div class="buy">
+                <router-link :to="{name:'Receiving'}">
+                    <div class="receive-address" v-if="hasAddress">
+                        <div class="address">{{$t('score.receiveAddress')}}:&ensp; {{hasAddress}}</div>
+                        <Icon type="ios-arrow-forward" class="icon-menu" style="font-size: 16px;color: #4c4c4c;"/>
+                    </div>
+                    <div class="add-address" v-else>
+                        <i class="el-icon-circle-plus-outline" style="font-size: 20px"></i>&nbsp;
+                        {{$t('score.addAddress')}}
+                    </div>
+                </router-link>
+
+                <div class="order-content">
+                    <img :src="rows.img" class="order-img"/>
+                    <div class="order-panel">
+                        <div class="flex">
+                            <span>{{rows.title}}</span>
+                            <span>{{rows.currentPrice}}{{$t('score.degits')}}</span>
+                        </div>
+                        <div class="flex">
+                            <span>{{rows.typeName}}</span>
+                            <span>{{$t('symbol.t1')}}{{rows.originalPrice}}</span>
+                        </div>
+                        <div class="flex">
+                            <span class="ready">{{$t('score.kucun')}}: {{rows.stockquantity }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex peisong">
+                    <span>{{$t('score.peisong')}}</span>
+                    <span>{{$t('score.guanfang')}}</span>
+                </div>
+                <!--<div class="note peisong">-->
+                <!--<span>留言备注:</span>-->
+                <!--<input type="text" v-model="content" class="text"/>-->
+                <!--</div>-->
+                <div style="padding: 10px; font-size: 16px"><b>{{$t('score.dingdan')}}</b></div>
+                <div class="flex content">
+                    <span>{{$t('score.goumai')}}:</span>
+                    <span class="calculate">
+                        <div @click="number>0 ? number-- : null">-</div>
+                        <div>{{ number}}</div>
+                        <div @click="number<1000 ? number++ : null">+</div>
+                    </span>
+                </div>
+                <div class="flex content">
+                    <span>{{$t('score.yue')}}:</span>
+                    <span>{{vm.integral/100}} {{$t('score.degits')}}</span>
+                </div>
+                <div class="flex content">
+                    <span>{{$t('score.shangpinzonge')}}:</span>
+                    <span>{{number * rows.currentPrice}} {{$t('score.degits')}}</span>
+                </div>
+                <!--<div class="flex content">-->
+                <!--<span>运费:</span>-->
+                <!--<span>+50 积分</span>-->
+                <!--</div>-->
+                <div class="flex total">
+                    <span>{{$t('score.yingfuheji')}}:</span>
+                    <span>{{number * rows.currentPrice}} {{$t('score.degits')}}</span>
+                </div>
+            </div>
+            <div class="pay">
+                <span>{{$t('score.yingfujifen')}}:</span>
+                <span style="color:#ff0000">
+                    {{number * rows.currentPrice }} {{$t('score.degits')}}
+                </span>
+                <span class="comfirm" @click="confirmOrder">{{$t('score.querendingdan')}}</span>
+            </div>
+        </Drawer>
   </div>
 </template>
 

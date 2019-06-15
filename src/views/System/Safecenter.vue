@@ -11,8 +11,8 @@
             <span class="text_name">{{item.name}}</span>
           </div>
           <div class="link_right">
-            <span class="link_text">{{item.type}}</span>
-            <span class="sanjiao" @click="routetodraw(item.routeName)"></span>
+            <span class="link_text" v-text="item.type?'已设置':'未设置'"></span>
+            <span class="sanjiao"  @click="routetodraw(item.routeName,item.type)"></span>
           </div>
         </div>
         <!-- <span>{{this.$t('member.userMember.um11')}}</span> -->
@@ -26,8 +26,8 @@
             <span class="text_name">{{item.name}}</span>
           </div>
           <div class="link_right">
-            <span class="link_text">{{item.type}}</span>
-            <span class="sanjiao" @click="routetodraw(item.routeName)"></span>
+            <span class="link_text"  v-text="item.type?'已设置':'未设置'"></span>
+            <span class="sanjiao" @click="routetodraw(item.routeName,item.type)"></span>
           </div>
         </div>
         <!-- <span>{{this.$t('member.userMember.um11')}}</span> -->
@@ -41,11 +41,19 @@
         <div class="editpassword">
           <div>
             <span>{{ $t('member.safePassword.sp2') }}</span>
-            <el-input :placeholder="$t('member.safePassword.sp3')" v-model="passwordVm.password" show-password></el-input>
+            <el-input
+              :placeholder="$t('member.safePassword.sp3')"
+              v-model="passwordVm.password"
+              show-password
+            ></el-input>
           </div>
           <div>
             <span>{{ $t('member.safePassword.sp4') }}</span>
-            <el-input :placeholder="$t('member.safePassword.sp5')" v-model="passwordVm.truePassword" show-password></el-input>
+            <el-input
+              :placeholder="$t('member.safePassword.sp5')"
+              v-model="passwordVm.truePassword"
+              show-password
+            ></el-input>
           </div>
           <cube-button :active="true" @click="mNewPswSave" class="save-btn">
             <span>{{ $t('member.withdrawals.wa11') }}</span>
@@ -136,7 +144,7 @@
         <div class="line title">{{popuptitle4}}</div>
         <div class="editpassword setshipaddr">
           <div>
-            <span> {{ $t('member.userBankCard.ubc4') }}</span>
+            <span>{{ $t('member.userBankCard.ubc4') }}</span>
             <span v-text="mycard.drawAccountName"></span>
           </div>
           <div>
@@ -247,7 +255,7 @@
       </section>
     </van-popup>
     <!-- 账户信息 -->
-    <van-popup v-model="show7" position="right" style="width:100%;height:100%">
+    <van-popup :value="show == 7" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle7" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="container">
@@ -275,7 +283,7 @@
             <div>
               <span>qq</span>
               <span v-text="userdatainfo.qq" v-if="userdatainfo.qq"></span>
-                <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
+              <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
             </div>
             <div>
               <span>微信</span>
@@ -306,6 +314,7 @@
 import headerComponent from "@/common/Header.vue";
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
+import { userInfo } from 'os';
 export default {
   name: "safecenter",
   components: {
@@ -320,6 +329,7 @@ export default {
   data() {
     return {
       logo: this.$t("member.userMember.um21"),
+      show:'',
       show1: false,
       show2: false,
       show3: false,
@@ -327,6 +337,7 @@ export default {
       show5: false,
       show6: false,
       show7: false,
+      hasCoinPassword:false,
       popuptitle: "设定提款密码",
       popuptitle2: "收货地址信息",
       popuptitle3: "新增收获地址",
@@ -336,92 +347,94 @@ export default {
       popuptitle7: "新增收获地址",
       getgoods: "",
       passwordVm: {
-                    password: "",
-                    truePassword: ""
-                },
-                editpassword: {
-                    oldPass: "",
-                    newPass: "",
-                    truePass: ""
-                },
-                mycard: {
-                    account: "", //银行卡号
-                    bankTypeName: "", //开户行
-                    drawAccountName: "", //开户人姓名
-                    drawAddress: "", // 开户地址
-                    mobile: "" //开户人手机号码
-                },
+        password: "",
+        truePassword: ""
+      },
+      editpassword: {
+        oldPass: "",
+        newPass: "",
+        truePass: ""
+      },
+      mycard: {
+        account: "", //银行卡号
+        bankTypeName: "", //开户行
+        drawAccountName: "", //开户人姓名
+        drawAddress: "", // 开户地址
+        mobile: "" //开户人手机号码
+      },
       shiplist: [],
       shipaddr: {},
+      addr:'',
       passSet: [
         {
           name: "登录密码",
           type: "已设置",
-          routeName: "helpcenter"
+          routeName: "loginpass"
         },
         {
           name: "提款密码",
           type: "",
           routeName: "withdrawpassword"
-        },
-        {
-          name: "我的消息",
-          type: "专业解答"
         }
       ],
       userInfo: [
         {
           name: "银行卡",
-          type: "已绑定",
-          routeName: "helpcenter"
+          type: "",
+          routeName: "bank"
         },
         {
           name: "收货地址",
-          type: "未绑定",
+          type: "",
           routeName: "shipaddr"
         },
         {
           name: "我的账户",
-          type: "待完善",
+          type: "",
           routeName: "UserLimit"
         }
       ],
       userdatainfo: {
-                    username: "",
-                    realName: "",
-                    mobile: "",
-                    qq: "",
-                    weixin: "",
-                    createTimeStr: "",
-                    lastLoginStr: "",
-                    id: 0,
-                }
+        username: "",
+        realName: "",
+        mobile: "",
+        qq: "",
+        weixin: "",
+        createTimeStr: "",
+        lastLoginStr: "",
+        id: 0
+      }
     };
   },
   methods: {
     routetodraw(...a) {
-      let name = a[0];
-      if (name == "withdrawpassword") {
-        this.show1 = true;
-      }
-      if (name == "shipaddr") {
-        this.show2 = true;
-      }
-      if (name == "shipaddradd") {
-        this.show3 = true;
-      }
-      if (name == "shipaddradd") {
-        this.show4 = true;
-      }
-      if (name == "shipaddradd") {
-        this.show5 = true;
-      }
-      if (name == "editwithdrawpassword") {
-        this.show6 = true;
-      }
-      if (name == "UserLimit") {
-        this.show7 = true;
-      }
+       let map = {
+        islist0: {
+          add: () => (this.show = 1),
+          edit: () => (this.show = 0)
+        },
+        islist1: {
+          add: () => (this.show = 2),
+          edit: () => (this.show = 0)
+        },
+        islist2: {
+          add: () => (this.show = 2),
+          edit: () => (this.show = 0)
+        },
+        islist3: {
+          add: () => (this.show = 2),
+          edit: () => (this.show = 0)
+        },
+        islist4: {
+          add: () => (this.show = 7),
+          edit: () => (this.show = 7)
+        }
+      };
+      console.info(a)
+      let firstKey = `islist${["loginpass","withdrawpassword","bank","shipaddr","UserLimit"].indexOf(a[0])}`
+      console.info(firstKey)
+      let lastKey = a[1] ? "edit" : "add";
+      return map[firstKey][lastKey]();
     },
     handleChange(value) {
       console.log(value);
@@ -429,6 +442,7 @@ export default {
     notgoback(data) {
       this.show1 = data;
     },
+    mSave() {},
     mLoginOut() {
       //确定要退出账号吗
       this.mConfirm(this.$t("member.userMember.um25"), () => {
@@ -452,126 +466,138 @@ export default {
       });
     },
     mNewPswSave() {
-                if (this.passwordVm.password == "") {
-                    //请输入资金密码！
-                    this.mAlert(this.$t('member.safePassword.sp15'));
-                    return;
-                }
-                if (this.passwordVm.truePassword == "") {
-                    //请再次输入资金密码！
-                    this.mAlert(this.$t('member.safePassword.sp16'));
-                    return;
-                }
-                if (this.passwordVm.truePassword != this.passwordVm.password) {
-                    //两次输入的密码不一致！
-                    this.mAlert(this.$t('member.safePassword.sp17'));
-                    return;
-                }
-                if (this.passwordVm.password.length != 6) {
-                    //请输入正确的6位数字资金密码！
-                    this.mAlert(this.$t('member.safePassword.sp18'));
-                    return;
-                }
-                this.mLoading(true);
-                this.$http
-                    .post("/memberUser/setcoinpass.json", {newPass: this.passwordVm.password})
-                    .then(result => {
-                        this.mLoading(false);
-                        console.log(result);
-                        if (result.code == 0) {
-                            //操作成功
-                            this.mAlert(this.$t('member.safePassword.sp19'), () => {
-                            });
-                            this.mInit();
-                        }
-                    });
-            },
-            mSaveeditpassword() {
-                if (this.editpassword.oldPass == "") {
-                    //请输入原资金密码
-                    this.mAlert(this.$t('member.safePassword.sp20'), null, "warning");
-                    return;
-                }
-                if (this.editpassword.newPass == "") {
-                    //请输入新的资金密码
-                    this.mAlert(this.$t('member.safePassword.sp21'), null, "warning");
-                    return;
-                }
-                if (this.editpassword.truePass != this.editpassword.newPass) {
-                    //两次输入的密码不一致
-                    this.mAlert(this.$t('member.safePassword.sp22'), null, "warning");
-                    return;
-                }
-                if (this.editpassword.newPass.length != 6) {
-                    //请输入正确的6位数资金密码
-                    this.mAlert(this.$t('member.safePassword.sp23'));
-                    return;
-                }
-                this.mLoading(true);
-                this.$http
-                    .post("/memberUser/updatecoinpass.json", this.editpassword)
-                    .then(result => {
-                        this.mLoading(false);
-                        if (result.code == 0) {
-                            this.mAlert(
-                                //修改成功
-                                this.$t('member.safePassword.sp24'),
-                                () => {
-                                    this.editpassword = {};
-                                },
-                                "success"
-                            );
-                        } else {
-                            this.mAlert(result.message, () => {
-                            }, "error");
-                        }
-                    });
-            },
-            mGetMembercoin() {
-                return this.$http.get("/memberUser/membercoin.json");
-            },
-            mGetBindBank() {
-                return this.$http.get("/memberUser/getbindbank.json");
-            }
-            
+      if (this.passwordVm.password == "") {
+        //请输入资金密码！
+        this.mAlert(this.$t("member.safePassword.sp15"));
+        return;
+      }
+      if (this.passwordVm.truePassword == "") {
+        //请再次输入资金密码！
+        this.mAlert(this.$t("member.safePassword.sp16"));
+        return;
+      }
+      if (this.passwordVm.truePassword != this.passwordVm.password) {
+        //两次输入的密码不一致！
+        this.mAlert(this.$t("member.safePassword.sp17"));
+        return;
+      }
+      if (this.passwordVm.password.length != 6) {
+        //请输入正确的6位数字资金密码！
+        this.mAlert(this.$t("member.safePassword.sp18"));
+        return;
+      }
+      this.mLoading(true);
+      this.$http
+        .post("/memberUser/setcoinpass.json", {
+          newPass: this.passwordVm.password
+        })
+        .then(result => {
+          this.mLoading(false);
+          console.log(result);
+          if (result.code == 0) {
+            //操作成功
+            this.mAlert(this.$t("member.safePassword.sp19"), () => {});
+            this.mInit();
+          }
+        });
+    },
+    mSaveeditpassword() {
+      if (this.editpassword.oldPass == "") {
+        //请输入原资金密码
+        this.mAlert(this.$t("member.safePassword.sp20"), null, "warning");
+        return;
+      }
+      if (this.editpassword.newPass == "") {
+        //请输入新的资金密码
+        this.mAlert(this.$t("member.safePassword.sp21"), null, "warning");
+        return;
+      }
+      if (this.editpassword.truePass != this.editpassword.newPass) {
+        //两次输入的密码不一致
+        this.mAlert(this.$t("member.safePassword.sp22"), null, "warning");
+        return;
+      }
+      if (this.editpassword.newPass.length != 6) {
+        //请输入正确的6位数资金密码
+        this.mAlert(this.$t("member.safePassword.sp23"));
+        return;
+      }
+      this.mLoading(true);
+      this.$http
+        .post("/memberUser/updatecoinpass.json", this.editpassword)
+        .then(result => {
+          this.mLoading(false);
+          if (result.code == 0) {
+            this.mAlert(
+              //修改成功
+              this.$t("member.safePassword.sp24"),
+              () => {
+                this.editpassword = {};
+              },
+              "success"
+            );
+          } else {
+            this.mAlert(result.message, () => {}, "error");
+          }
+        });
+    },
+    mGetMembercoin() {
+      return this.$http.get("/memberUser/membercoin.json");
+    },
+    mGetBindBank() {
+      return this.$http.get("/memberUser/getbindbank.json");
+    }
   },
   created() {
     // this.mInit();
   },
-  mounted (){
-      /*账户信息数据 */
-      this.$http.get("/memberUser/memberinfo.json").then(result => {
-                if (result.code == 0) {
-                    this.userdatainfo.username = result.data.username;
-                    this.userdatainfo.realName = result.data.realName;
-                    this.userdatainfo.mobile = result.data.mobile;
-                    this.userdatainfo.qq = result.data.qq;
-                    this.userdatainfo.weixin = result.data.weixin;
-                    this.userdatainfo.createTimeStr = result.data.createTimeStr;
-                    this.userdatainfo.lastLoginStr = result.data.lastLoginStr;
-                    this.userdatainfo.id = result.data.id;
-                }
-            });
-        // 我的银行卡数据
-        this.$http.all([this.mGetMembercoin(), this.mGetBindBank()]).then(
-                    this.$http.spread((resCoin, rbindbank) => {
-                        if (resCoin.data == -1) {
-                            this.data = resCoin.data;
-                            //请先设置资金密码
-                            this.mAlert(this.$t('member.userBankCard.ubc12'), () => {
-                                this.$router.push({name: "SafaPassword"});
-                            });
-                        }
-                        if (rbindbank.code == 0) {
-                            this.mycard = Object.assign(this.mycard, rbindbank.data);
-                        }
-                        this.mLoading(false);
-                    })
-                );
+  mounted() {
+    /*账户信息数据 */
+    this.$http.get("/memberUser/memberinfo.json").then(result => {
+      if (result.code == 0) {
+        this.userdatainfo.username = result.data.username;
+        this.userdatainfo.realName = result.data.realName;
+        this.userdatainfo.mobile = result.data.mobile;
+        this.userdatainfo.qq = result.data.qq;
+        this.userdatainfo.weixin = result.data.weixin;
+        this.userdatainfo.createTimeStr = result.data.createTimeStr;
+        this.userdatainfo.lastLoginStr = result.data.lastLoginStr;
+        this.userdatainfo.id = result.data.id;
+        //提款密码
+        this.passSet[1].type =  result.data.coinPassword?true:false;
+        this.userInfo[2].type =  result.data.weixin&&result.data.qq&&result.data.realName?true:false;
+      }
+    });
+    // 我的银行卡数据
+    this.$http.all([this.mGetMembercoin(), this.mGetBindBank()]).then(
+      this.$http.spread((resCoin, rbindbank) => {
+        if (resCoin.data == -1) {
+          this.data = resCoin.data;
+          //请先设置资金密码
+          this.mAlert(this.$t("member.userBankCard.ubc12"), () => {
+            this.$router.push({ name: "SafaPassword" });
+          });
+        }
+        if (rbindbank.code == 0) {
+          this.mycard = Object.assign(this.mycard, rbindbank.data);
+          this.userInfo[0].type = rbindbank.data?true:false;
+        }
+        this.mLoading(false);
+      })
+    );
+    //收货地址
+    this.$http.get("/memberUser/getMemberAddress.json").then(result => {
+          if (result.code == 0) {
+              this.vm = !!result.data ? result.data : {};
+              // this.addr = result.data;
+              this.userInfo[1].type = result.data?true:false;
+          }
+      });
   }
 };
 </script>
 <style lang="less" scoped>
+
 .safecenter {
   width: 351px;
   margin: 0 auto;
@@ -579,7 +605,10 @@ export default {
     text-align: left;
     color: #303133;
     font-size: 16px;
-    margin-top: 50px;
+    height: 60px;
+    line-height: 60px;
+    
+    // margin-top: 50px;
   }
   // .container {
 
@@ -591,6 +620,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-content: center;
+    padding-left: 10px;
     border-bottom: 1px solid #f3f3f3;
 
     .name_left {

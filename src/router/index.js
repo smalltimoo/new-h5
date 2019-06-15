@@ -251,6 +251,29 @@ export default new Router({
           name: "404",
           component: () => import("../common/Newpage.vue")
         },
+
+
+
+        {
+          path: "checkin",
+          name: "checkin",
+          component: () => import("../views/Other/Checkin.vue")
+        },
+        {
+          path: "pointcenter",
+          name: "pointcenter",
+          component: () => import("../views/Other/Pointcenter.vue")
+        },
+        {
+          path: "pointdetails",
+          name: "pointdetails",
+          component: () => import("../views/Other/Pointdetails.vue")
+        },
+        {
+          path: "pointorder",
+          name: "pointorder",
+          component: () => import("../views/Other/Pointorder.vue")
+        },
       ]
     }
   ]

@@ -7,7 +7,58 @@
   background-color: #fff;
   width: 100%;
   height: 100%;
-
+  .login_top {
+    width: 351px;
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+  
+}
+.login_main {
+    width: 316px;
+    height: 402px;
+    margin: 30px auto;
+    text-align: left;
+    .logo {
+      width: 59px;
+	height: 59px;
+	background-image: linear-gradient(0deg, 
+		#6eaffa 0%, 
+		#7276f7 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     
+      img {
+        width: 35px;
+      }
+    }
+    .welcome {
+      font-family: PingFang SC;
+      font-size: 24px;
+      line-height: 22px;
+      color: #303133;
+      padding: 10px 0 ;
+      font {
+        color: #3d7eff;
+      }
+    }
+    .text {
+      font-size: 12px;
+      color: #909399;
+    }
+    h3.title {
+      height: 40px;
+      line-height: 40px;
+        font-size: 18px;
+        color: #303133;
+      }
+    
+    
+}
+    
+  // }
   .container{
     position: relative;
   }
@@ -41,13 +92,13 @@
     bottom: 30px;
   }
 
-  .top {
-    width: 100%;
-    height: 232px;
-    background: url("../../assets/images/login/loginBg.jpg") 50% 50% no-repeat;
-    background-color: #d31d11;
-    background-size: cover;
-  }
+  // .top {
+  //   width: 100%;
+  //   height: 232px;
+  //   // background: url("../../assets/images/login/loginBg.jpg") 50% 50% no-repeat;
+  //   // background-color: #d31d11;
+  //   background-size: cover;
+  // }
 
   .login-panel {
     padding: 0 30px;
@@ -73,14 +124,14 @@
   }
 
   .login-input{
-    height: 50px;
-    padding:5px 10px;
+    height: 34px;
+    padding:5px 0px;
     border:0;
     border-bottom: solid 1px #f3f3f3;
-    padding-left: 45px;
+    // padding-left: 45px;
     color:#333;
     outline: none;
-    width: 100%;
+    width: 65%;
   }
 
   .login-check{
@@ -111,40 +162,40 @@
     background-size: 28px auto;
   }
   .btn-login{
-    width: 315px;
-    background: url("../../assets/images/login/buttonBg@2x.png") 50% 50% no-repeat;
-    background-size: 315px auto;
-    height: 50px;
     margin-top: 30px;
-    letter-spacing: 3px;
-    color: #fff;
     border:0;
-    outline: none;
-    font-weight: bold;
+    width: 314px;
+    height: 49px;
+    background-color: #3d7eff;
+    border-radius: 25px;
+      font-size: 18px;
+      color: #ffffff;
+    
   }
 
   .eye{
-    display: block;
-    position: absolute;
-    right:0;
-    top: 0;
-    width: 100px;
-    height: 50px;
-    border:solid 0px red;
-    padding-top: 5px;
+    display: inline-block;
+    // position: absolute;
+    // right:0;
+    // top: 0;
+    // width: 100px;
+    height: 34px;
+    padding: 5px 0;
+    border-bottom: solid 1px #f3f3f3
   }
 
   .bg-code{
     position: absolute;
     right:0;
-    top: 9px;
+    // top: 9px;
+    bottom: 12px;
     width: auto;
     height: 30px;
     line-height: 30px;
     min-width: 80px;
-    background-color: #aaaaaa;
-    border-radius: 15px;
-    color: #f3f3f3;
+    // background-color: #aaaaaa;
+    // border-radius: 15px;
+    color: #3d73ff;
     padding: 0 10px;
     display: flex;
     white-space: nowrap;

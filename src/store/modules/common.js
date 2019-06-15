@@ -1,6 +1,7 @@
 import types from "../mutation-types";
 import {apiGet} from './httpsnow'//记得带上{}花括号
 import axios from 'axios'
+import {loadingState, loadingMutations} from 'vue-ajax-loading'
 
 export default {
     state: {
@@ -14,7 +15,9 @@ export default {
         webnav: [],
         sysPicObj: {},
         apigetnum: 0,
-        systemSettings: {}
+        systemSettings: {},
+        
+        ...loadingState
     },
     getters: {
         getGonggaos: state => {
@@ -119,6 +122,7 @@ export default {
             localStorage.setItem('tab',payload);
             state.tab = payload;
         },
+        ...loadingMutations
     },
     actions: {
         [types.COMMON_GONGGAO]({commit}, vueContext) {

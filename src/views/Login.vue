@@ -1,14 +1,19 @@
 <template>
     <div class="login">
-        <div style="position: absolute;right: 10px; top:10px;"  @click="$router.push({name:'Home'})">
-            <img src="../assets/images/login/Home.png" width="25px"/>
+        <div class=" login_top" >
+            <!-- <img src="../assets/images/login/Home.png" width="25px"/> -->
+            <span><van-icon name="close"  @click="$router.push({name:'Home'})" /></span>
+            <span @click="showVan = true">账号密码登录 <van-icon name="arrow" /></span>
         </div>
-        <div class="top"></div>
+        <!-- <div class="top"></div> -->
         <div class="container">
-            <Icon type="ios-arrow-back" @click="activeName='mobileLogin'" class="goBack" v-if="activeName=='register'"/>
-            <el-tabs v-model="activeName" class="login-panel">
-                <el-tab-pane :label="$t('login.mobileLogin')" name="mobileLogin" v-if="activeName!='register' && apiKey">
-                    <div style="position: relative">
+            <section class="login_main">
+                <div class="logo"> <img src="../assets/images/reglogin/logo.png" alt=""></div>
+                <p class="welcome">欢迎来到<font>{{name}}</font></p>
+                <p class="text">赶快登陆挣钱吧</p>
+                
+                <div style="position: relative;margin-top:25px;">
+                    <h3 class="title">手机号码</h3>
                         <el-select v-model="areaCode" filterable placeholder="请选择" class="eye area">
                             <el-option v-for="(item,index) in phoneAreaCode"
                                        :key="index"
@@ -17,9 +22,8 @@
                             >
                             </el-option>
                         </el-select>
-                        <input type="number" ref="username" class="login-input phone" :placeholder="$t('login.enterPhoneNumber')"
+                        <input type="number" ref="username" class="login-input" :placeholder="$t('login.enterPhoneNumber')"
                                @click="$refs.phone1.close()" v-model="phone"
-                               style="padding-left: 170px"
                         />
                         <cube-tip ref="phone1"
                                 class="tip"
@@ -29,7 +33,8 @@
                         </cube-tip>
                     </div>
                     <div style="position: relative">
-                        <input type="text" ref="checkcode" class="login-input code" :placeholder="$t('login.enterVerifyCode')"
+                         <h3 class="title">验证码</h3>
+                        <input type="text" ref="checkcode" style="width:100%" class="login-input" :placeholder="$t('login.enterVerifyCode')"
                                @click="$refs.phone2.close()" v-model="verifyCode" autocomplete="off"
                         />
                         <div class="bg-code" @click="getCode">{{$t('login.getVerifyCode')}}</div>
@@ -42,15 +47,26 @@
                         </cube-tip>
                     </div>
 
-                    <div class="login-check">
+                    <!-- <div class="login-check">
                         <span class="link-b" @click="activeName='register'">{{$t('login.register')}}</span>
-                    </div>
-                    <input type="button" class="btn-login" :value="$t('login.login')" @click="mPhoneLogin"/>
-
-                </el-tab-pane>
-                <el-tab-pane :label="$t('login.userLogin')" name="login" v-if="activeName!='register'">
-                    <div>
-                        <input type="text" ref="username" class="login-input user" :placeholder="$t('login.enterUserName')"
+                    </div> -->
+                    <input type="button" class="btn-login" :value="'注册登录'" @click="mPhoneLogin"/>
+                    <input type="button" class="btn-login" style="background-color:#fff;color:#3d7eff;font-size:13px;margin-top:5px;" :value="'选择线路'" @click="isshowLines =true"/>
+            </section>
+            <van-popup v-model="showVan" position="right" style="width:100%;height:100%">
+      <section class="el-container is-vertical">
+          
+          <div class=" login_top" >
+           <van-icon name="arrow-left" class="icon-menu" @click="showVan = false"/>
+            <!-- <Icon type="ios-arrow-back" class="icon-menu" @click="back"/> -->
+        </div>
+         <section class="login_main">
+                <div class="logo"><img src="../assets/images/reglogin/logo.png" alt=""></div>
+                <p class="welcome">欢迎来到<font>{{name}}</font></p>
+                <p class="text">赶快登陆挣钱吧</p>
+                   <div style="margin-top:25px;">
+                       <h3 class="title">账号/手机号</h3>
+                        <input type="text" ref="username" class="login-input" :placeholder="$t('login.enterUserName')"
                                @click="$refs.tip1.close()" v-model="username"/>
                         <cube-tip
                                 ref="tip1"
@@ -61,7 +77,8 @@
                         </cube-tip>
                     </div>
                     <div>
-                        <input type="password" ref="password" class="login-input pwd" :placeholder="$t('login.mustPwd620')"
+                        <h3 class="title">密码</h3>
+                        <input type="password" ref="password" class="login-input" :placeholder="$t('login.mustPwd620')"
                                @click="$refs.tip2.close()" v-model="password"/>
                         <cube-tip
                                 ref="tip2"
@@ -72,7 +89,8 @@
                         </cube-tip>
                     </div>
                     <div style="position: relative">
-                        <input type="text" ref="checkcode" class="login-input code" :placeholder="$t('login.alert7')"
+                        <h3 class="title">验证码</h3>
+                        <input type="text" ref="checkcode" class="login-input" :placeholder="$t('login.alert7')"
                                @click="$refs.tip3.close()" v-model="checkcode"/>
                         <span class="eye"><img :src="cgetCodeUrl" @click="mVCode()"></span>
                         <cube-tip
@@ -88,99 +106,34 @@
                         <span style="font-size: 12px">{{$t('login.losePwd')}}?</span>
                     </div>
                     <input type="button" class="btn-login" :value="$t('login.login')" @click="mLogin"/>
-                    <div class="reg">
+                    <!-- <div class="reg">
                         {{$t('login.noAccount')}}？
                         <span @click="activeName='register'" style="color:#0288d1">{{$t('login.register')}}</span>
-                    </div>
-                </el-tab-pane>
-                <el-tab-pane :label="$t('login.reg')" name="register" v-if="activeName=='register'">
-                    <div>
-                        <input type="text" class="login-input user" :placeholder="$t('login.enterUserName')"
-                               @click="$refs.reg1.close();$refs.reg2.close();" v-model="vm.username"/>
-                        <cube-tip
-                                ref="reg1"
-                                class="tip"
-                                direction="top"
-                        >
-                            {{ this.$t('login.enterUserName') }}
-                        </cube-tip>
-                        <cube-tip
-                                ref="reg2"
-                                class="tip"
-                                direction="top"
-                        >
-                            {{ this.$t('login.must412') }}
-                        </cube-tip>
-                    </div>
-                    <div>
-                        <input type="password" class="login-input pwd" :placeholder="$t('login.mustPwd620')"
-                               @click="$refs.reg3.close();$refs.reg4.close()" v-model="vm.password"/>
-                        <cube-tip
-                                ref="reg3"
-                                class="tip"
-                                direction="top"
-                        >
-                            {{ this.$t('login.mustPwd620') }}
-                        </cube-tip>
-                        <cube-tip
-                                ref="reg4"
-                                class="tip"
-                                direction="top"
-                        >
-                            {{ this.$t('login.must612') }}
-                        </cube-tip>
-                    </div>
-                    <div>
-                        <input type="password" class="login-input pwd" :placeholder="$t('login.confirmPwd')"
-                               @click="$refs.reg5.close()" v-model="vm.truePassword"/>
-                        <cube-tip
-                                ref="reg5"
-                                class="tip"
-                                direction="top"
-                        >
-                            {{ this.$t('login.mustSame') }}
-                        </cube-tip>
-                    </div>
-                    <div>
-                        <input type="number" class="login-input phone"  :placeholder="$t('login.enterPhoneNumber')"
-                               @click="$refs.reg6.close()" v-model="vm.mobile"/>
-                        <cube-tip
-                                ref="reg6"
-                                class="tip"
-                                direction="top"
-                        >
-                            {{ this.$t('login.enterTruePhoneNumber') }}
-                        </cube-tip>
-                    </div>
-
-                    <div style="position: relative">
-                        <input type="text" class="login-input code" :placeholder="$t('login.enterVerifyCode')" @click="$refs.reg7.close()"
-                               v-model="vm.checkcode"/>
-                        <span class="eye"><img :src="cgetCodeUrl" @click="mVCode()"></span>
-                        <cube-tip
-                                ref="reg7"
-                                class="tip"
-                                direction="top"
-                        >
-                            {{ this.$t('login.enterVerifyCode') }}
-                        </cube-tip>
-                    </div>
-                    <input type="button" class="btn-login" :value="$t('login.register')" @click="mSave"/>
-                </el-tab-pane>
-            </el-tabs>
+                    </div> -->
+                   
+                   
+                    <input type="button" class="btn-login" style="background-color:#fff;color:#3d7eff;font-size:13px;margin-top:5px;" :value="'选择线路'" @click="isshowLines = true"/>
+            </section>
+      </section>
+    </van-popup>
+          
         </div>
+        <line-selectdlg :isshow = "isshowLines"></line-selectdlg>
     </div>
 </template>
 <script>
     import types from '@/store/mutation-types';
     import message from '@/mixins/message';
     import {mapState} from 'vuex';
-
+    import LineSelectdlg from '@/common/LineSelectdlg.vue'
     let timer;
     export default {
         mixins: [message],
         data() {
             return {
+                name:'万豪娱乐',
+                showVan:false,
+                isshowLines:false,
                 activeName: 'mobileLogin',
                 vcodeurl: '',
                 username: '',
@@ -202,6 +155,9 @@
                     mobile: ""
                 },
             }
+        },
+        components:{
+            LineSelectdlg,
         },
         computed: {
             ...mapState({
@@ -453,8 +409,7 @@
         padding-bottom: 10px;
     }
     .area {
-        width: 120px;
-        left: 30px;
+        width: 35%;
     }
 
     .reg{
@@ -466,6 +421,18 @@
         width: 100%;
         left: 0;
         color: #7f7f7f;
+    }
+
+    .login >>> .el-input__inner {
+        border: 0;
+        height: inherit;
+        line-height: inherit;
+    }
+    .login >>> .el-input__icon {
+        line-height: inherit;
+    }
+    .icon-menu {
+        font-size: 0.72rem;
     }
 </style>
 

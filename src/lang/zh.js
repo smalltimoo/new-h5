@@ -91,8 +91,8 @@ export default {
     score: {
         score: '商城',
         score1:'每日签到',
-        score2:'我的积分',
-        score3:'我的收益',
+        score2:'积分中心',
+        score3:'积分明细',
         score4:'积分订单',
         score5:'会员•精选',
         pleaseLogin: '请登录',

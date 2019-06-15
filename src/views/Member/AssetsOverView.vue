@@ -1,6 +1,6 @@
 <template>
     <div class="assetsOverview">
-        <div class="header">
+        <!-- <div class="header">
             <div class="header-left">
                 <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
             </div>
@@ -10,7 +10,8 @@
             <div class="header-right" @click="transferAll">
                 {{$t('member.assetsOverView.ao1')}}
             </div>
-        </div>
+        </div> -->
+        <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
         <div class="container">
             <div class="top">
                 <div class="total-amount">
@@ -33,6 +34,8 @@
             </div>
             <div class="wallet-panel">
                 <div class="wallet">
+                    <h3 class="title" >资产分布</h3>
+                   <ve-ring :data="chartData" :loading="true" :settings="chartSettings" height="200px"></ve-ring>
                     <div v-for="item in walletlist"
                          :key="item.gameCompanyId"
                          class="wallet-line"
@@ -65,11 +68,21 @@
 </template>
 <script>
     import {mapState} from 'vuex';
-
+    import headerComponent from "@/common/Header.vue";
+    
     export default {
         name: "AssetsOverView",
         data() {
+            this.chartSettings = {
+                radius: [30, 50],
+                offsetY: 100
+            }
             return {
+                logo: this.$t('member.assetsOverView.ao2'),
+                chartData: {
+                    columns: ['name', 'data'],
+                   rows:[]
+                    },
                 walletlist: [
                     {
                         coin: ''
@@ -79,15 +92,27 @@
                 otherCoins: ''
             };
         },
+        components:{
+            headerComponent
+        },
         mounted() {
             this.mGetCoin();
+            
         },
         computed: {
             ...mapState({
                 sysPicObj: state => state.common.sysPicObj,
+                
             }),
         },
         methods: {
+            getcoins(a){
+                    if(a == 0){
+                        return this.otherCoins
+                    }else{
+                   return this.walletlist[0].coin / 100 ||0.00
+                    }
+                },
             mGetCoin() {
                 this.mLoading(true);
                 this.$http
@@ -102,7 +127,10 @@
                             return parseFloat(x + coin || 0);
                         }, 0);
                         this.otherCoins = parseFloat((this.totalCoins - this.walletlist[0].coin) / 100).toFixed(2)
-
+                        this.chartData.rows =   [
+                        { 'name': '游戏余额', 'data': this.otherCoins },
+                        { 'name': '可用余额', 'data': this.walletlist[0].coin /100 }
+                    ]
                         this.mLoading(false);
                     })
                     .catch(err => {
@@ -137,6 +165,7 @@
                                 return parseFloat(x + coin || 0);
                             }, 0);
                             this.otherCoins = parseFloat((this.totalCoins - this.walletlist[0].coin) / 100).toFixed(2)
+                            
                         }
                         else{
                             this.$Message.error(this.$t('member.assetsOverView.ao10'))
@@ -197,3 +226,12 @@
         }
     };
 </script>
+<style lang="less" scoped>
+    .wallet {
+        .title {
+            font-size: 17px;
+            color: #111;
+        }
+    }
+</style>
+
