@@ -12,7 +12,7 @@
           </div>
           <div class="link_right">
             <span class="link_text" v-text="item.type?'已设置':'未设置'"></span>
-            <span class="sanjiao"  @click="routetodraw(item.routeName,item.type)"></span>
+            <span class="sanjiao" @click="routetodraw(item.routeName,item.type)"></span>
           </div>
         </div>
         <!-- <span>{{this.$t('member.userMember.um11')}}</span> -->
@@ -26,7 +26,7 @@
             <span class="text_name">{{item.name}}</span>
           </div>
           <div class="link_right">
-            <span class="link_text"  v-text="item.type?'已设置':'未设置'"></span>
+            <span class="link_text" v-text="item.type?'已设置':'未设置'"></span>
             <span class="sanjiao" @click="routetodraw(item.routeName,item.type)"></span>
           </div>
         </div>
@@ -34,7 +34,7 @@
       </div>
     </div>
     <!-- 提款密码 -->
-    <van-popup v-model="show1" position="right" style="width:100%;height:100%">
+    <van-popup :value="show == 3" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
@@ -73,22 +73,26 @@
       </section>
     </van-popup>
     <!-- 我的收货地址 -->
-    <van-popup v-model="show2" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle2" @notgoback="notgoback"></headerComponent>
+    <van-popup :value="show == 8" position="right" style="width:100%;height:100%">
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
-        <div class="line title">{{popuptitle2}}</div>
+        <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
           <div>
             <span>收货人</span>
-            <span v-text="getgoods"></span>
+            <span v-text="addrVm.memberName"></span>
           </div>
           <div>
             <span>联系电话</span>
-            <span v-text="getgoods"></span>
+            <span v-text="addrVm.phone"></span>
           </div>
           <div>
             <span>配送地址</span>
-            <span v-text="getgoods"></span>
+            <span v-text="addrVm.address"></span>
+          </div>
+          <div>
+            <!-- //todo -->
+            <span></span>
           </div>
 
           <div class="info" style="margin-top: 20px;font-size:12px;">
@@ -105,30 +109,30 @@
       </section>
     </van-popup>
     <!-- 新增收货地址 -->
-    <van-popup v-model="show3" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle3" @notgoback="notgoback"></headerComponent>
+    <van-popup :value="show == 7" position="right" style="width:100%;height:100%">
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
-        <div class="line title">{{popuptitle3}}</div>
+        <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
           <div>
             <span>收货人</span>
-            <el-input placeholder="请填写姓名" v-model="passwordVm.password" show-password></el-input>
+            <el-input placeholder="请填写姓名" v-model="passwordVm.password"></el-input>
           </div>
           <div>
             <span>联系电话</span>
-            <el-input placeholder="请填写电话" v-model="passwordVm.password" show-password></el-input>
+            <el-input placeholder="请填写电话" v-model="passwordVm.password"></el-input>
           </div>
           <div>
             <span>配送地址</span>
             <el-cascader
               v-model="shipaddr.addr"
-              :options="shiplist"
+              :options="provinces"
               :props="{ expandTrigger: 'hover' }"
               @change="handleChange"
             ></el-cascader>
           </div>
           <div>
-            <el-input placeholder="请填写详细地址(街道,楼牌号等)" v-model="passwordVm.password" show-password></el-input>
+            <el-input placeholder="请填写详细地址(街道,楼牌号等)" v-model="passwordVm.password"></el-input>
           </div>
           <cube-button :active="true" @click="mSave" class="save-btn">
             <span>{{ $t('member.withdrawals.wa11') }}</span>
@@ -138,10 +142,10 @@
       </section>
     </van-popup>
     <!-- 我的银行卡 -->
-    <van-popup v-model="show4" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle4" @notgoback="notgoback"></headerComponent>
+    <van-popup :value="show ==6" position="right" style="width:100%;height:100%">
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
-        <div class="line title">{{popuptitle4}}</div>
+        <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
           <div>
             <span>{{ $t('member.userBankCard.ubc4') }}</span>
@@ -178,41 +182,48 @@
       </section>
     </van-popup>
     <!-- 新增银行卡信息 -->
-    <van-popup v-model="show5" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle5" @notgoback="notgoback"></headerComponent>
+    <van-popup :value="show == 5" position="right" style="width:100%;height:100%">
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
-        <div class="line title">{{popuptitle5}}</div>
+        <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
           <div>
             <span>真实姓名</span>
-            <el-input placeholder="请填写姓名" v-model="passwordVm.password" show-password></el-input>
+            <el-input placeholder="请填写姓名" v-model="bankAddVm.drawAccountName"></el-input>
           </div>
           <div>
             <span>银行卡号</span>
-            <el-input placeholder="请填写电话" v-model="passwordVm.password" show-password></el-input>
+            <el-input placeholder="请填写银行卡号" v-model="bankAddVm.account"></el-input>
           </div>
           <div>
             <span>银行种类</span>
+            <el-select v-model="bankAddVm.bankTypeName" placeholder="请选择">
+              <el-option
+                v-for="item in banktypes"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
+          <div>
+            <span>开户行地址</span>
             <el-cascader
-              v-model="shipaddr.addr"
-              :options="shiplist"
+              v-model="bankAddVm.drawAddress"
+              :options="provinces"
               :props="{ expandTrigger: 'hover' }"
               @change="handleChange"
             ></el-cascader>
           </div>
           <div>
-            <span>开户行地址</span>
-            <el-input placeholder="请填写电话" v-model="passwordVm.password" show-password></el-input>
-          </div>
-          <div>
             <span>手机号码</span>
-            <el-input placeholder="请填写电话" v-model="passwordVm.password" show-password></el-input>
+            <el-input placeholder="请输入预留银行的手机号码" v-model="bankAddVm.mobile"></el-input>
           </div>
           <div>
             <span>资金密码</span>
-            <el-input placeholder="请填写电话" v-model="passwordVm.password" show-password></el-input>
+            <el-input placeholder="请输入资金密码" v-model="bankAddVm.password" show-password></el-input>
           </div>
-          <cube-button :active="true" @click="mSave" class="save-btn">
+          <cube-button :active="true" @click="mSavebanks" class="save-btn">
             <span>{{ $t('member.withdrawals.wa11') }}</span>
             <!--下一步 -->
           </cube-button>
@@ -220,10 +231,10 @@
       </section>
     </van-popup>
     <!-- 修改提款密码 -->
-    <van-popup v-model="show6" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle6" @notgoback="notgoback"></headerComponent>
+    <van-popup :value="show == 4" position="right" style="width:100%;height:100%">
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
-        <div class="line title">{{popuptitle6}}</div>
+        <div class="line title">{{popuptitle}}</div>
         <div class="editpassword">
           <div>
             <span>原提款密码</span>
@@ -255,8 +266,8 @@
       </section>
     </van-popup>
     <!-- 账户信息 -->
-    <van-popup :value="show == 7" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle7" @notgoback="notgoback"></headerComponent>
+    <van-popup :value="show == 10" position="right" style="width:100%;height:100%">
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="container">
           <div class="line title">
@@ -314,7 +325,7 @@
 import headerComponent from "@/common/Header.vue";
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
-import { userInfo } from 'os';
+import { userInfo } from "os";
 export default {
   name: "safecenter",
   components: {
@@ -329,26 +340,31 @@ export default {
   data() {
     return {
       logo: this.$t("member.userMember.um21"),
-      show:'',
-      show1: false,
-      show2: false,
-      show3: false,
-      show4: false,
-      show5: false,
-      show6: false,
-      show7: false,
-      hasCoinPassword:false,
+      show: "",
+      hasCoinPassword: false,
       popuptitle: "设定提款密码",
-      popuptitle2: "收货地址信息",
-      popuptitle3: "新增收获地址",
-      popuptitle4: "设定提款密码",
-      popuptitle5: "收货地址信息",
-      popuptitle6: "新增收获地址",
-      popuptitle7: "新增收获地址",
+      banktypes: [],
+      provinces: [],
       getgoods: "",
       passwordVm: {
         password: "",
         truePassword: ""
+      },
+      addrVm: {
+        address: "",
+        memberName: "",
+        phone: ""
+      },
+      bankAddVm: {
+        drawAccountType: "",
+        drawAddress: "",
+        account: "",
+        drawAccountName: "",
+        mobile: "",
+        remark: "",
+        bankProvinceid: 0,
+        bankCityid: 0,
+        bankAreaid: 0
       },
       editpassword: {
         oldPass: "",
@@ -364,7 +380,7 @@ export default {
       },
       shiplist: [],
       shipaddr: {},
-      addr:'',
+      addr: "",
       passSet: [
         {
           name: "登录密码",
@@ -408,31 +424,66 @@ export default {
   },
   methods: {
     routetodraw(...a) {
-       let map = {
+      let map = {
         islist0: {
-          add: () => (this.show = 1),
-          edit: () => (this.show = 0)
+          add: () => {
+            this.show = 1;
+            this.popuptitle = "登录密码";
+          },
+          edit: () => {
+            this.show = 2;
+            this.popuptitle = "修改登录密码";
+          }
         },
         islist1: {
-          add: () => (this.show = 2),
-          edit: () => (this.show = 0)
+          add: () => {
+            this.show = 3;
+            this.popuptitle = "提款密码";
+          },
+          edit: () => {
+            this.show = 4;
+            this.popuptitle = "修改提款密码";
+          }
         },
         islist2: {
-          add: () => (this.show = 2),
-          edit: () => (this.show = 0)
+          add: () => {
+            this.show = 5;
+            this.popuptitle = "绑定银行卡";
+          },
+          edit: () => {
+            this.show = 6;
+            this.popuptitle = "绑定银行卡";
+          }
         },
         islist3: {
-          add: () => (this.show = 2),
-          edit: () => (this.show = 0)
+          add: () => {
+            this.show = 7;
+            this.popuptitle = "新建收货地址";
+          },
+          edit: () => {
+            this.show = 8;
+            this.popuptitle = "修改收货地址";
+          }
         },
         islist4: {
-          add: () => (this.show = 7),
-          edit: () => (this.show = 7)
+          add: () => {
+            this.show = 9;
+            this.popuptitle = "账户信息";
+          },
+          edit: () => {
+            this.show = 10;
+            this.popuptitle = "账户信息";
+          }
         }
       };
-      console.info(a)
-      let firstKey = `islist${["loginpass","withdrawpassword","bank","shipaddr","UserLimit"].indexOf(a[0])}`
-      console.info(firstKey)
+      let firstKey = `islist${[
+        "loginpass",
+        "withdrawpassword",
+        "bank",
+        "shipaddr",
+        "UserLimit"
+      ].indexOf(a[0])}`;
+      console.info(firstKey);
       let lastKey = a[1] ? "edit" : "add";
       return map[firstKey][lastKey]();
     },
@@ -546,6 +597,112 @@ export default {
     },
     mGetBindBank() {
       return this.$http.get("/memberUser/getbindbank.json");
+    },
+    mGetBanks() {
+      let sysInfo = this.$store.getters.getSysInfo;
+      return this.$http.post("/banktypes.json", {
+        lineCountry: sysInfo.lineCountry
+          ? sysInfo.lineCountry
+          : this.$i18n.local == "th"
+          ? "2"
+          : "1"
+      });
+    },
+    mGetProvinces() {
+      return this.$http.post("/provinces.json");
+    },
+    mSavebanks() {
+      if (this.sysInfo.lineCountry == "2") {
+        this.vm.drawAddress = 0;
+      }
+      if (this.vm.drawAccountType <= 0) {
+        //请选择银行类型
+        this.mAlert(
+          this.$t("member.userCapitalPassword.ucp18"),
+          null,
+          "warning"
+        );
+        return;
+      }
+      if (this.vm.bankProvinceid < 0) {
+        //请选择所在省份
+        this.mAlert(
+          this.$t("member.userCapitalPassword.ucp19"),
+          null,
+          "warning"
+        );
+        return;
+      }
+      if (this.vm.bankCityid < 0) {
+        //请选择所在城市
+        this.mAlert(
+          this.$t("member.userCapitalPassword.ucp20"),
+          null,
+          "warning"
+        );
+        return;
+      }
+      if (this.vm.bankAreaid < 0) {
+        //请选择所在区县
+        this.mAlert(
+          this.$t("member.userCapitalPassword.ucp21"),
+          null,
+          "warning"
+        );
+        return;
+      }
+      if (this.vm.drawAddress.length <= 0) {
+        //请填写开户行
+        this.mAlert(
+          this.$t("member.userCapitalPassword.ucp22"),
+          null,
+          "warning"
+        );
+        return;
+      }
+      if (this.vm.account == "") {
+        //请填写银行账号
+        this.mAlert(
+          this.$t("member.userCapitalPassword.ucp23"),
+          null,
+          "warning"
+        );
+        return;
+      }
+      if (this.vm.drawAccountName == "") {
+        //请填写开户人姓名
+        this.mAlert(
+          this.$t("member.userCapitalPassword.ucp24"),
+          null,
+          "warning"
+        );
+        return;
+      }
+      if (this.vm.mobile == "") {
+        //请填写开户人手机号
+        this.mAlert(
+          this.$t("member.userCapitalPassword.ucp25"),
+          null,
+          "warning"
+        );
+        return;
+      }
+      this.mLoading(true);
+      this.$http.post("/memberUser/bindbank.json", this.vm).then(result => {
+        this.mLoading(false);
+        if (result.code == 0) {
+          this.mAlert(
+            //操作成功
+            this.$t("member.userCapitalPassword.ucp27"),
+            () => {
+              this.$router.push({ name: "UserBankCard" });
+            },
+            "success"
+          );
+        } else {
+          this.mAlert(result.message, () => {}, "error");
+        }
+      });
     }
   },
   created() {
@@ -564,8 +721,11 @@ export default {
         this.userdatainfo.lastLoginStr = result.data.lastLoginStr;
         this.userdatainfo.id = result.data.id;
         //提款密码
-        this.passSet[1].type =  result.data.coinPassword?true:false;
-        this.userInfo[2].type =  result.data.weixin&&result.data.qq&&result.data.realName?true:false;
+        this.passSet[1].type = result.data.coinPassword ? true : false;
+        this.userInfo[2].type =
+          result.data.weixin && result.data.qq && result.data.realName
+            ? true
+            : false;
       }
     });
     // 我的银行卡数据
@@ -580,24 +740,72 @@ export default {
         }
         if (rbindbank.code == 0) {
           this.mycard = Object.assign(this.mycard, rbindbank.data);
-          this.userInfo[0].type = rbindbank.data?true:false;
+          this.userInfo[0].type = rbindbank.data ? true : false;
         }
         this.mLoading(false);
       })
     );
     //收货地址
     this.$http.get("/memberUser/getMemberAddress.json").then(result => {
-          if (result.code == 0) {
-              this.vm = !!result.data ? result.data : {};
-              // this.addr = result.data;
-              this.userInfo[1].type = result.data?true:false;
+      if (result.code == 0) {
+        this.addrVm = !!result.data ? result.data : {};
+        // this.addr = result.data;
+        this.userInfo[1].type = result.data ? true : false;
+      }
+    });
+
+    // 绑定银行卡 银行卡下拉 省市县下拉
+    this.$http
+      .all([this.mGetBanks(), this.mGetBindBank(), this.mGetProvinces()])
+      .then(
+        this.$http.spread((rbanks, rbindbank, provincesRes) => {
+          if (provincesRes.code === 0) {
+            let list = provincesRes.data.list ? provincesRes.data.list : [];
+            list.forEach(pro => {
+              pro.value = pro.id;
+              pro.label = pro.province;
+              pro.citieVos &&
+                pro.citieVos.forEach(city => {
+                  city.value = city.id;
+                  city.label = city.city;
+                  city.areas &&
+                    city.areas.forEach(area => {
+                      area.value = area.id;
+                      area.label = area.area;
+                    });
+                  city.children = city.areas;
+                });
+              pro.children = pro.citieVos;
+            });
+            this.provinces = list;
+            // this.mInitProvincePicker();
           }
-      });
+          if (rbanks.code == 0) {
+            let list = rbanks.data.list ? rbanks.data.list : [];
+            const ids = [2, 3, 21]; //支付宝 微信 财付通
+            ids.forEach(ele => {
+              list.splice(list.findIndex(item => item.id === ele), 1);
+            });
+
+            list.forEach(ele => {
+              ele.value = ele.id;
+              ele.label = ele.bankName;
+            });
+            this.banktypes = list;
+            // this.mInitBankPicker();
+          } else {
+            this.mAlert(rbanks.message, () => {}, "error");
+          }
+          // if (rbindbank.code == 0) {
+          //     this.vm = Object.assign(this.vm, rbindbank.data);
+          // }
+          this.mLoading(false);
+        })
+      );
   }
 };
 </script>
 <style lang="less" scoped>
-
 .safecenter {
   width: 351px;
   margin: 0 auto;
@@ -607,7 +815,7 @@ export default {
     font-size: 16px;
     height: 60px;
     line-height: 60px;
-    
+
     // margin-top: 50px;
   }
   // .container {
@@ -686,8 +894,19 @@ export default {
         border: 0;
       }
       & > span {
-        min-width: 80px;
+        min-width: 85px;
+        text-align: left;
       }
+      & > span:nth-child(1) {
+        text-align: left;
+      }
+
+      & > span:nth-child(2) {
+        text-align: right;
+      }
+    }
+    .info {
+      border-bottom: 0;
     }
   }
   section {

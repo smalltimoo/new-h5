@@ -1,7 +1,7 @@
 <template>
     <div class="header hasApp" >
       <div class="header-left">
-        <Icon type="ios-arrow-back" v-if="showIcon" class="icon-menu" @click="back"/>
+        <Icon type="ios-arrow-back" v-if="showIcon" class="icon-menu" @click.stop="back"/>
         <span class="logo" v-if="showLogo">{{logo}}</span>
       </div>
       <div class="header-right">

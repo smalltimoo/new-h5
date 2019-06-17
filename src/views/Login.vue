@@ -51,7 +51,7 @@
                         <span class="link-b" @click="activeName='register'">{{$t('login.register')}}</span>
                     </div> -->
                     <input type="button" class="btn-login" :value="'注册登录'" @click="mPhoneLogin"/>
-                    <input type="button" class="btn-login" style="background-color:#fff;color:#3d7eff;font-size:13px;margin-top:5px;" :value="'选择线路'" @click="isshowLines =true"/>
+                    <input type="button" class="btn-login" style="background-color:#fff;color:#3d7eff;font-size:13px;margin-top:5px;" :value="'选择线路'" @click.stop="isshowLines =true"/>
             </section>
             <van-popup v-model="showVan" position="right" style="width:100%;height:100%">
       <section class="el-container is-vertical">
@@ -112,7 +112,7 @@
                     </div> -->
                    
                    
-                    <input type="button" class="btn-login" style="background-color:#fff;color:#3d7eff;font-size:13px;margin-top:5px;" :value="'选择线路'" @click="isshowLines = true"/>
+                    <input type="button" class="btn-login" style="background-color:#fff;color:#3d7eff;font-size:13px;margin-top:5px;" :value="'选择线路'" @click.stop="isshowLines = true"/>
             </section>
       </section>
     </van-popup>
