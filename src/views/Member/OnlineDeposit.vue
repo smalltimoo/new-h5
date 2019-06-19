@@ -440,7 +440,11 @@ export default {
       }
     }
   },
-  mounted() {},
+  mounted() {console.info(13)
+    let params = this.$route.params
+     if(params&& params.from =='transfer') this.tabType ='1'
+    else if(params&& params.from =='withdrawal') this.tabType ='2'
+  },
   methods: {
     mInit() {
       //线上支付方式  isAjax=1显示二维码   2本页面打开链接    3新窗口打开链接

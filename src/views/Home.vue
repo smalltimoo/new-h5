@@ -1,53 +1,6 @@
 <template>
   <div class="home">
-    <!-- <div class="get-app" v-if="sysPicObj.appUrl && showApp">
-      <i class="icon-close" style="margin-left: 12px" @click="closeApp"/>
-      <div class="img-app">
-        <img :src="sysPicObj.mobileLogo" class="img-logo">
-        <span style="color:#fff;padding-top: 2px">
-          <b>{{ $t('home.home1')}}{{sysPicObj.name}}App</b>
-        </span>
-        <span>
-          <b>{{ $t('home.home2')}}</b>
-        </span>
-      </div>
-      <a class="download" :href="sysPicObj.appUrl" target="_blank">{{ $t('home.home3')}}</a>
-    </div> -->
     <header-component :logo="logo" :showIcon="false" :showLogo="true"></header-component>
-    <!-- <div class="header" :class="sysPicObj.appUrl && showApp ? 'hasApp' : 'noApp'">
-      <div class="header-left">
-        <span class="logo">{{logo}}</span>
-      </div>
-      <div class="header-right">
-        <div class="yue">余额:{{yue}}</div>
-        <Poptip trigger="click" placement="bottom-end">
-          <i class="icon-menu message"></i>
-          <ul slot="content">
-            <li class="icon-kefu" @click="mOpenCService">{{$t('customservice')}}</li>
-            <li class="icon-qq" :style="{display:cQQ1||cQQ2?'block':'none'}">
-              <a
-                v-if="cQQ1"
-                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'"
-              >{{cQQ1}}</a>
-              <a
-                v-if="cQQ2"
-                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ2+'&version=1&src_type=web'"
-              >{{cQQ2}}</a>
-            </li>
-            <li class="icon-agent" v-if="agentQQ">
-              <a
-                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'"
-              >{{agentQQ}}</a>
-            </li>
-            <li class="icon-line" v-if="sysInfo.lineUrl">
-              <a
-                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'"
-              >{{sysInfo.lineUrl}}</a>
-            </li>
-          </ul>
-        </Poptip>
-      </div>
-    </div> -->
     <div class="container">
       <div class="slider-wrap">
         <div id="iSlider-wrapper" ref="swipe"></div>
@@ -86,7 +39,11 @@
       </div>
       <div class="game_block">
         <router-link  class="game_link" v-for="(img,index) in imgSrcs" :to="{name:'Games'}"  :key="index" @click="this.$router.push({'name':'Games',params:{}})">
-            <img :src="img">
+            <el-image :src="img" :fit="'cover'">
+              <div slot="placeholder" class="image-slot">
+                加载中<span class="dot">...</span>
+              </div>
+            </el-image>
         </router-link>
         
       </div>

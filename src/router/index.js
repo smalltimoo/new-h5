@@ -274,6 +274,11 @@ export default new Router({
           name: "pointorder",
           component: () => import("../views/Other/Pointorder.vue")
         },
+        {
+          path: "confirmorder",
+          name: "confirmorder",
+          component: () => import("../views/Other/Confirmorder.vue")
+        },
       ]
     }
   ]

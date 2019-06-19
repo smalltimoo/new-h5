@@ -31,7 +31,8 @@ export default {
   name: "App",
   data: () => ({
     winVisible: false,
-    onLine: navigator.onLine
+    onLine: navigator.onLine,
+    walletlist:[]
   }),
   mixins: [win],
   components: {},
@@ -75,6 +76,7 @@ export default {
       if (!v) {
         this.mWinClose();
       }
+      
     },
     alertDownloadApp() {
       this.$http
@@ -96,13 +98,28 @@ export default {
       if(!this.onLine){
           this.$router.push({name:'404',params:{type:'network'}})
       }
-    }
+    },
+    mGetCoin() {
+      this.mLoading(true);
+      this.$http
+        .post("/managerGame/getWalletCoins.json")
+        .then(result => {
+         sessionStorage.setItem("walletcoinsList", JSON.stringify(result.data.walletlist));
+        })
+        .catch(err => {
+          console.info(this.$t("member.userMember.um24")); //获取余额失败
+        });
+    },
   },
   mounted() {
     this.alertDownloadApp();
     // 监听网络状态
     window.addEventListener("online", this.updateOnlineStatus);
     window.addEventListener("offline", this.updateOnlineStatus);
+    this.$nextTick((vm)=>{
+      console.info(111)
+      this.mGetCoin()
+    })
   },
   created() {
     this.$store.commit(types.SESSION_TOKEN);

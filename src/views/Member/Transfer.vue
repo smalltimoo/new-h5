@@ -73,11 +73,13 @@ export default {
   },
   methods: {
     createLocalData() {
-      this.$http.post("/managerGame/getWalletCoins.json").then(result => {
-        if (result.code === 0) {
-          this.options = this.transferData = result.data.walletlist;
-        }
-      });
+      // this.$http.post("/managerGame/getWalletCoins.json").then(result => {
+      //   if (result.code === 0) {
+      //     this.options = this.transferData = result.data.walletlist;
+      //   }
+      // });
+      console.info(sessionStorage.getItem("walletcoinsList"))
+      this.options = this.transferData = JSON.parse( sessionStorage.getItem("walletcoinsList"));
     },
     selectoptionsa(a) {
       if (this.value2 && a === this.value2) {
@@ -242,11 +244,11 @@ export default {
     flex-wrap: wrap;
     .item {
       display: flex;
-      width: 92px;
-      height: 65px;
+      width: 91.5px;
+      height: 59.25px;
       flex-direction: column;
       padding: 10px 0;
-       border-bottom: 1px solid #f3f3f3;
+      //  border-bottom: 1px solid #f3f3f3;
       position: relative;
       span.count {
         margin: 5px 0;
@@ -284,6 +286,17 @@ export default {
     }
     .item:nth-child(4n-3){
         border-left: none;
+    }
+     .item:nth-child(4n-3):before {
+        content: '';
+        position: absolute;
+        left: 20px;
+        top: auto;
+        bottom: 0px;
+        right: 0;
+        height: 1px;
+        width: 320px;
+        background-color: #f3f3f3;
     }
   }
   .chang_select {

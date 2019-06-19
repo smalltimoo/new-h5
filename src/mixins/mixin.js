@@ -9,6 +9,7 @@ export default {
     data() {
         return {
             leftDrawer: false,
+    walletlist:[]
         }
     },
     computed: {
@@ -167,6 +168,17 @@ export default {
                         }
                     });
             });
-        }
+        },
+        mGetCoin() {
+            this.mLoading(true);
+            this.$http
+              .post("/managerGame/getWalletCoins.json")
+              .then(result => {
+                this.walletlist = result.data.walletlist;
+              })
+              .catch(err => {
+                console.info(this.$t("member.userMember.um24")); //获取余额失败
+              });
+          },
     }
 };

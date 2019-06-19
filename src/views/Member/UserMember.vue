@@ -8,7 +8,7 @@
             <div class="icon"></div>
             <div class="user_base_info">
               <p class="name">帅的被人砍</p>
-              <div class="fillinfo">
+              <div class="fillinfo" @click="$router.push({name:'safecenter',params:{to:'accountInfo'}})">
                 <span class="icon icon_left"></span>
                 <span class="text">快速完善资料</span>
                 <span class="icon icon_right"></span>
@@ -19,12 +19,13 @@
         </div>
         <div class="usercount deposit">
           <div class="count_item">
+            <!-- 用户积分 -->
             <router-link :to="{name:'Score'}">
               <span v-if="cLoginUser.integral || cLoginUser.integral==0">
-                {{ cLoginUser.integral ? parseFloat(cLoginUser.integral/100).toFixed(2) :'0.00' }}
+                {{ getamountstyle('integral','int') }}
                 <span
                   style="font-size: 12px"
-                >{{$t('fen')}}</span>
+                >{{ getamountstyle('integral','float') }}{{$t('fen')}}</span>
               </span>
               <i class="el-icon-loading" v-else></i>
               <span>{{this.$t('member.userMember.um4')}}</span>
@@ -32,10 +33,13 @@
           </div>
           <el-divider direction="vertical"></el-divider>
           <div class="count_item">
+            <!-- 账户余额 -->
             <router-link :to="{name:'AssetsOverView'}">
               <span v-if="amount || cLoginUser.integral==0">
-                {{ parseFloat(amount/100).toFixed(2) }}
-                <span style="font-size: 12px">{{$t('yuan')}}</span>
+                {{ getamountstyle('amount','int') }}
+                <span
+                  style="font-size: 12px"
+                >{{ getamountstyle('amount','float') }}{{$t('yuan')}}</span>
               </span>
               <i class="el-icon-loading" v-else></i>
               <span>{{this.$t('member.userMember.um5')}}</span>
@@ -43,12 +47,13 @@
           </div>
           <el-divider direction="vertical"></el-divider>
           <div class="count_item">
+            <!-- 总资产 -->
             <router-link :to="{name:'AssetsOverView'}">
               <span v-if="totalCoins || cLoginUser.integral==0">
-                {{ parseFloat(totalCoins/100).toFixed(2) }}
+                {{ getamountstyle('totalCoins','int') }}
                 <span
                   style="font-size: 12px"
-                >{{$t('yuan')}}</span>
+                >{{ getamountstyle('totalCoins','float') }}{{$t('yuan')}}</span>
               </span>
 
               <i class="el-icon-loading" v-else></i>
@@ -58,19 +63,19 @@
         </div>
         <div class="userpay">
           <div>
-            <router-link :to="{name:'Score'}">
+            <router-link :to="{name:'OnlineDeposit',params:{from:'recharge'}}">
               <img src="@/assets/images/mycenter/wode2@2x.png">
               <span>充值</span>
             </router-link>
           </div>
           <div>
-            <router-link :to="{name:'Score'}">
+            <router-link :to="{name:'OnlineDeposit',params:{from:'transfer'}}">
               <img src="@/assets/images/mycenter/wode3@2x.png">
               <span>转账</span>
             </router-link>
           </div>
           <div>
-            <router-link :to="{name:'Score'}">
+            <router-link :to="{name:'OnlineDeposit',params:{from:'withdrawal'}}">
               <img src="@/assets/images/mycenter/wode4@2x.png">
               <span>提现</span>
             </router-link>
@@ -82,7 +87,7 @@
         <!-- <div class="title">{{this.$t('member.userMember.um7')}}</div> -->
         <div class="my-pay">
           <!-- 交易记录 -->
-          <router-link :to="{name:'IndoorTransfer'}">
+          <router-link :to="{name:'RechargeRecord'}">
             <div>
               <img src="../../assets/images/mycenter/wode10@2x.png" width="43px">
             </div>
@@ -235,23 +240,25 @@ export default {
   methods: {
     mGetCoin() {
       this.mLoading(true);
-      this.$http
-        .post("/managerGame/getWalletCoins.json")
-        .then(result => {
-          this.walletlist = result.data.walletlist;
-          this.totalCoins = this.walletlist.reduce((x, y) => {
-            let coin = y.coin;
-            if (y.coin < 0) {
-              coin = 0;
-            }
-            return parseFloat(x + coin || 0);
-          }, 0);
+      // this.$http
+      //   .post("/managerGame/getWalletCoins.json")
+      //   .then(result => {
 
-          this.mLoading(false);
-        })
-        .catch(err => {
-          this.$Message.warning(this.$t("member.userMember.um24")); //获取余额失败
-        });
+      // this.walletlist = result.data.walletlist;
+      this.walletlist = JSON.parse(sessionStorage.getItem("walletcoinsList"));
+      this.totalCoins = this.walletlist.reduce((x, y) => {
+        let coin = y.coin;
+        if (y.coin < 0) {
+          coin = 0;
+        }
+        return parseFloat(x + coin || 0);
+      }, 0);
+
+      //   this.mLoading(false);
+      // })
+      // .catch(err => {
+      //   this.$Message.warning(this.$t("member.userMember.um24")); //获取余额失败
+      // });
     },
     drawGame() {
       this.$http
@@ -261,6 +268,27 @@ export default {
             this.isDraw = result.data;
           }
         });
+    },
+    getamountstyle(...a) {
+      let temp;
+      switch (a[0]) {
+        case "integral":
+          //jifen
+          temp =
+            (this.cLoginUser.integral
+              ? parseFloat(this.cLoginUser.integral / 100).toFixed(2)
+              : "0.00") + "";
+          break;
+        case "amount":
+          //zongzichan
+          temp = parseFloat(this.amount / 100).toFixed(2) + "";
+          break;
+        case "totalCoins":
+          //jifen
+          temp = parseFloat(this.totalCoins / 100).toFixed(2);
+          break;
+      }
+      return a[1] == "int" ? temp.split(".")[0] : "." + temp.split(".")[1];
     },
     mMemberAmount() {
       if (!this.toNeedLogin()) {

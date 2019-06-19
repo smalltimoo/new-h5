@@ -5,7 +5,7 @@
       <div class="line title">
         <span>密码设置</span>
       </div>
-      <div v-for="(item, index) in passSet" :to="{name:item.routeName}" :key="index">
+      <div v-for="(item, index) in passSet" :to="{name:item.routeName}" :key="index+'A'">
         <div class="wrap">
           <div class="name_left">
             <span class="text_name">{{item.name}}</span>
@@ -20,7 +20,7 @@
       <div class="line title">
         <span>账户信息</span>
       </div>
-      <div v-for="(item, idx) in userInfo" :to="{name:item.routeName}" :key="idx">
+      <div v-for="(item, idx) in userInfo" :to="{name:item.routeName}" :key="idx+'B'">
         <div class="wrap">
           <div class="name_left">
             <span class="text_name">{{item.name}}</span>
@@ -116,25 +116,25 @@
         <div class="editpassword setshipaddr">
           <div>
             <span>收货人</span>
-            <el-input placeholder="请填写姓名" v-model="passwordVm.password"></el-input>
+            <el-input placeholder="请填写姓名" v-model="addrVm.memberName"></el-input>
           </div>
           <div>
             <span>联系电话</span>
-            <el-input placeholder="请填写电话" v-model="passwordVm.password"></el-input>
+            <el-input placeholder="请填写电话" v-model="addrVm.phone"></el-input>
           </div>
           <div>
             <span>配送地址</span>
             <el-cascader
-              v-model="shipaddr.addr"
+              v-model="addrVm.address"
               :options="provinces"
               :props="{ expandTrigger: 'hover' }"
               @change="handleChange"
             ></el-cascader>
           </div>
           <div>
-            <el-input placeholder="请填写详细地址(街道,楼牌号等)" v-model="passwordVm.password"></el-input>
+            <el-input placeholder="请填写详细地址(街道,楼牌号等)" v-model="addrVm.detailAddr"></el-input>
           </div>
-          <cube-button :active="true" @click="mSave" class="save-btn">
+          <cube-button :active="true" @click="mSaveAdd" class="save-btn">
             <span>{{ $t('member.withdrawals.wa11') }}</span>
             <!--下一步 -->
           </cube-button>
@@ -266,7 +266,7 @@
       </section>
     </van-popup>
     <!-- 账户信息 -->
-    <van-popup :value="show == 10" position="right" style="width:100%;height:100%">
+    <van-popup :value="[9,10].indexOf(show) >-1" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="container">
@@ -280,7 +280,8 @@
             </div>
             <div>
               <span>真实姓名</span>
-              <span v-text="userdatainfo.realName"></span>
+              <span v-text="userdatainfo.realName" v-if="userdatainfo.realName"></span>
+              <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
             </div>
             <div>
               <span>手机号码</span>
@@ -351,20 +352,22 @@ export default {
         truePassword: ""
       },
       addrVm: {
-        address: "",
+        address: [],
         memberName: "",
         phone: ""
       },
       bankAddVm: {
         drawAccountType: "",
-        drawAddress: "",
+        drawAddress: [],
         account: "",
         drawAccountName: "",
         mobile: "",
         remark: "",
         bankProvinceid: 0,
         bankCityid: 0,
-        bankAreaid: 0
+        bankAreaid: 0,
+        bankTypeName:'',
+        password:''
       },
       editpassword: {
         oldPass: "",
@@ -607,6 +610,7 @@ export default {
           ? "2"
           : "1"
       });
+     
     },
     mGetProvinces() {
       return this.$http.post("/provinces.json");
@@ -703,12 +707,43 @@ export default {
           this.mAlert(result.message, () => {}, "error");
         }
       });
-    }
+    },
+    mSaveAdd() {
+                if (!this.vm.memberName) {
+                    this.$refs.tip1.show()
+                    return;
+                }
+                if (!this.vm.phone) {
+                    this.$refs.tip2.show()
+                    return;
+                }
+                if (!this.vm.address) {
+                    this.$refs.tip3.show()
+                    return;
+                }
+                this.mLoading(true);
+                this.$http
+                    .post("/memberUser/saveMemberAddress.json", this.vm)
+                    .then(result => {
+                        this.mLoading(false);
+                        if (result.code == 0) {
+                            //恭喜，设置成功！
+                            this.$Message.success(this.$t("member.receiving.receive13"));
+                            this.mInit()
+                        } else {
+                            this.$Message.error(result.message);
+                        }
+                    });
+            }
   },
   created() {
     // this.mInit();
   },
   mounted() {
+    let params = this.$route.params;
+    if(params&&params.to === 'accountInfo'){
+      this.routetodraw(this.userInfo[2].routeName,this.userInfo[2].type)
+    }
     /*账户信息数据 */
     this.$http.get("/memberUser/memberinfo.json").then(result => {
       if (result.code == 0) {

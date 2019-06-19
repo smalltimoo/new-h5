@@ -1,7 +1,14 @@
 <template>
   <div>
     <div class="star mb-10" :class="starType">
-        <span class="star-item" v-for = "(itemClass,index) in itemClassess" :class="itemClass" :key="index">
+        <div v-if="type == 'flor'" class="gou" v-for = "(itemClass,index) in itemClassess" :key="index">
+            <span class="star-item"  :class="itemClass" :key="index">
+                <!-- {{++index}}天 -->
+            </span>
+            <span class="week">{{week[index]}}</span>
+        </div>
+        
+        <span class="star-item" v-else v-for = "(itemClass,index) in itemClassess" :class="itemClass" :key="index">
             {{++index}}天
         </span>
     </div>
@@ -16,12 +23,20 @@
 
     export default {
          props: {
+            type:{
+                type:String
+            },
             size: {
                 type : Number//参数：尺寸
             },
             score: {
                 type : Number//参数：评分
             }
+         },
+         data() {
+             return {
+                 week:['周一','周二','周三','周四','周五','周六','周日']
+             }
          },
          computed: {
             starType(){//设置星星尺寸
@@ -81,6 +96,36 @@
         /* background-image: url("./on.png"); */
         color: #317cfd;
       border:1px solid #317cfd;
+    }
+    .star-48 .gou {
+        width: 28px;
+        height: 46px;
+    }
+    .star-48 .gou .star-item {
+        width: 28px;
+        height: 28px;
+        background-repeat: no-repeat;
+        text-align: center;
+        line-height: 0.88rem;
+            /* background-size: 20px 20px; */
+        border-radius: 50%;
+        color: #dadada;
+        border:1px solid #dadada;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 33px;
+    }
+    .star-48 .gou .week {
+        color: #909399;
+    }
+    .star-48 .gou .star-item.on {
+        background-color: #317cfd;
+    }
+    .star-48 .gou .star-item.on:before {
+         content:'\2713'; /*对号的 Unicode字符*/
+         /* background: #fff; */
     }
     .star-48 .star-item.half {
         /* background-image: url("./half.png"); */

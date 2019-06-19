@@ -1,3 +1,4 @@
+@btncolor: #3d7eff;
 .score {
   .usercard {
     width: 351px;
@@ -320,7 +321,7 @@
 .order-drawer {
   .ivu-drawer-content {
     margin-top: 44px;
-    background-color: #efeff4;
+    background-color: #f3f3f3;
   }
 
   .ivu-drawer-body {
@@ -341,12 +342,15 @@
     height: 35px;
     line-height: 35px;
     font-size: 14px;
-    padding: 0 10px;
+    // padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     &>span:first-child {
-      color: #000;
-      font-weight: bold;
-      float: left;
+      color: #303133;
+      // font-weight: bold;
+      // float: left;
       width: 100px;
       overflow: hidden;
       white-space: nowrap;
@@ -354,12 +358,21 @@
     }
 
     &>span:last-child {
-      float: right;
+      // float: right;
+        width: 40px;
+        height: 17px;
+        font-size: 11px;
+        line-height: 17px;
+        border-radius: 9px;
+        border: solid 1px @btncolor;
+        color: @btncolor;
+        text-align: center;
+        cursor: pointer;
     }
   }
 
   .order-content {
-    background-color: #f0f0f0;
+    background-color: #fff;
     padding: 10px;
     display: flex;
 
@@ -374,8 +387,10 @@
     }
 
     .order-img {
-      width: 100px;
-      height: 67px;
+        width: 100px;
+        height: 100px;
+        background-color: #f8f8f8;
+        border-radius: 2px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -387,7 +402,7 @@
 .buy-drawer {
   .ivu-drawer-content {
     margin-top: 44px;
-    background-color: #efeff4;
+    background-color: #f3f3f3;
   }
 
   .ivu-drawer-body {
@@ -413,6 +428,7 @@
     align-items: center;
     padding: 0 10px;
     font-size: 14px;
+    border-top: 1px solid #f3f3f3;
 
     .address {
       width: 80%;
@@ -424,6 +440,7 @@
   }
 
   .order-content {
+    height: 126px;
     background-color: #fff;
     padding: 10px;
     margin-top: 10px;
@@ -433,7 +450,7 @@
       width: 80%;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
 
       &>span {
         padding: 2px 0;
@@ -442,7 +459,9 @@
 
     .order-img {
       width: 100px;
-      height: 67px;
+      height: 100px;
+      background-color: #f8f8f8;
+      border-radius: 2px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -450,12 +469,15 @@
     }
 
     .ready {
-      padding: 0 5px;
-      background-color: #cd0005;
+        width: 64px;
+        height: 17px;
+        line-height: 17px;
+        text-align: center;
+        border-radius: 3px;
+      background-color: @btncolor;
       border-radius: 3px;
-      color: #fff;
+      color: #f5f5f5;
       font-size: 12px;
-      margin-top: 3px;
     }
   }
 
@@ -471,6 +493,8 @@
     border-top: solid 1px #eaeaea;
     padding: 0 10px;
     height: 30px;
+    font-size: 13px;
+    color: #606266;
     overflow: hidden;
   }
 
@@ -483,6 +507,8 @@
       height: 30px;
       line-height: 30px;
       width: 240px;
+    font-size: 13px;
+    color: #909399;
     }
   }
 
@@ -527,7 +553,7 @@
 
     &>span:last-child {
       font-size: 16px;
-      color: #ff0000;
+      color: @btncolor;
     }
   }
 
@@ -551,7 +577,7 @@
     .comfirm {
       height: 100%;
       line-height: 50px;
-      background-color: #ff0000;
+      background-color: @btncolor;
       width: 120px;
       text-align: center;
       color: #fff;

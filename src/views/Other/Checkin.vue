@@ -247,7 +247,9 @@ export default {
   }
   /deep/ .vanmodal {
      width:296px;
-     height:295px;
+     height:297px;
+     background: url('~@/assets/images/score/qiandaochengong@2x.png') center center no-repeat;
+     background-size: cover;
       .el-divider--vertical {
       display: inline-block;
       width: 0.5px;
@@ -258,6 +260,11 @@ export default {
       margin-top: -19px;
       font-size: 12px;
       color: #4892ff;
+    }
+    .van-dialog__header {
+      padding-top: 10px;
+      color: #fff;
+      font-size: 15px;
     }
     .el-divider.el-divider--horizontal {
       width: 80%;
