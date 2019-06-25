@@ -99,7 +99,7 @@
                     >{{$t('agent.transactionsdetailList.transactionsdetailList8')}}&nbsp;&nbsp;￥{{item.beforeAmount/100}}</span>
                     <span>
                       {{ $t('agent.transactionsdetailList.transactionsdetailList10')}}&nbsp;&nbsp;
-                      <font style="color:#f03838">￥{{item.afterAmount/100}}</font>
+                      <font style="color:#3d7eff">￥{{item.afterAmount/100}}</font>
                     </span>
                   </div>
                 </div>
@@ -268,8 +268,8 @@ export default {
     background-color: #fb9736;
   }
   /deep/ .delete {
-    border-color: #f03838;
-    background-color: #f03838;
+    border-color: #3d7eff;
+    background-color: #3d7eff;
   }
 }
 .grid-content {

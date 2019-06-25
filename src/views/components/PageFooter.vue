@@ -2,23 +2,28 @@
     <div class="footer">
         <ul>
             <li  :class="{active: tab=='Home'}" @click="changeTab('Home')">
-                <i class="icon icon-home"></i>
+                <!-- <i class="icon icon-home"></i> -->
+                <lottie :options="Home_options" class="icon icon-home" :isStopped='state.state_home' @animCreated="handleAnimation($event,'Home')"/>
                 <div>{{$t('pageFooter.home')}}</div>
             </li>
             <li  :class="{active: tab=='Discount'}" @click="changeTab('Discount')">
-                <i class="icon icon-activity"></i>
+                <!-- <i class="icon icon-activity"></i> -->
+                <lottie :options="Discount_options" class="icon icon-activity"  @animCreated="handleAnimation($event,'Discount')"/>
                 <div>{{$t('pageFooter.discount')}}</div>
             </li>
-            <li @click="changeTab('Score')">
-                <i class="icon icon-score"></i>
+            <li :class="{active: tab == 'Score'}" @click="changeTab('Score')">
+                <!-- <i class="icon icon-score"></i> -->
+                <lottie :options="Score_options" class="icon icon-score"  @animCreated="handleAnimation($event,'Score')"/>
                 <div class="score">{{$t('pageFooter.score')}}</div>
             </li>
             <li :class="{active: tab=='OnlineDeposit'}" @click="changeTab('OnlineDeposit')">
-                <i class="icon icon-deposit"></i>
+                <!-- <i class="icon icon-deposit"></i> -->
+                <lottie :options="OnlineDeposit_options" class="icon icon-deposit"  @animCreated="handleAnimation($event,'OnlineDeposit')" />
                 <div>{{$t('pageFooter.onlineDeposit')}}</div>
             </li>
             <li :class="{active: tab=='UserMember'}" @click="changeTab('UserMember')">
-                <i class="icon icon-user"></i>
+                <!-- <i class="icon icon-user"></i> -->
+                <lottie :options="UserMember_options" class="icon icon-user"  @animCreated="handleAnimation($event,'UserMember')"/>
                 <div>{{$t('pageFooter.memberCenter')}}</div>
             </li>
         </ul>
@@ -26,13 +31,30 @@
 </template>
 <script>
     import {mapState} from 'vuex';
+    import lottie from 'vue-lottie';
+    import * as animationData from '@/assets/footeranimate/shouye.json';
+    import * as animationData2 from '@/assets/footeranimate/huodong.json';
+    import * as animationData3 from '@/assets/footeranimate/shangcheng.json';
+    import * as animationData4 from '@/assets/footeranimate/qianbao.json';
+    import * as animationData5 from '@/assets/footeranimate/wode.json';
 
     export default {
         name: 'PageFooter',
         data() {
             return {
-                showDownApp: true
+                showDownApp: true,
+                state:{state_home:true},
+                prevtab:null,
+                Home_options: {animationData: animationData.default,loop:false,autoplay:false},
+                Discount_options: {animationData: animationData2.default,loop:false,autoplay:false},
+                Score_options: {animationData: animationData3.default,loop:false,autoplay:false},
+                OnlineDeposit_options: {animationData: animationData4.default,loop:false,autoplay:false},
+                UserMember_options: {animationData: animationData5.default,loop:false,autoplay:false,},
+                animationSpeed: .5
             }
+        },
+        components:{
+            lottie
         },
         computed: {
             ...mapState({
@@ -49,6 +71,17 @@
             changeTab(tab) {
                 this.$store.commit('CHANGE_TAB', tab);
                 this.$router.push({name: tab})
+                // this.anim = this[tab+'_options']
+                this.prevtab && this[`${this.prevtab}_anim`].goToAndStop(0)
+                this.prevtab = tab
+                this[`${tab}_anim`].play()
+                // console.info(this.anim)
+                // this.anim.autoplay = true;
+                // this.anim.play()
+                // this.state.state_home = false
+            },
+            handleAnimation (...a) {
+                this[`${a[1]}_anim`] = a[0];
             },
             mbaiduCount(){
                 if(this.$store.getters.getSysPicObj!=undefined){

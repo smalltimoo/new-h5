@@ -9,19 +9,13 @@
             </div>
             <div class="header-right"></div>
     </div>-->
-    <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="no-list" v-if="!dataList||dataList.length==0"></div>
     <div class="manage-type">
       <div :class="{active: manageType=='1'}" @click="manageType=1">{{ $t("agentMember.am13")}}</div>
       <div :class="{active: manageType=='2'}" @click="manageType=2">{{ $t("agentMember.am15")}}</div>
       <!-- <div > -->
-      <el-button
-        style="float:right;padding-right:20px;"
-        size="small"
-        @click="changsearch()"
-        icon="el-icon-search"
-      >帅选</el-button>
-
+      <span class="shaixuan-room" @click = 'changsearch'>筛选<span class="icon-shaixuan" ></span></span>
       <!-- </div> -->
     </div>
     <div class="mui-content" v-if="manageType == '1'">
@@ -29,7 +23,7 @@
         <div class="searchVm">
           <div>
             <span>时间：</span>
-            <el-date-picker
+            <!-- <el-date-picker
               style="width:131px;"
               size="small"
               v-model="search1.startTime"
@@ -44,7 +38,12 @@
               type="datetime"
               placeholder="请选择结束时间"
               default-time="12:00:00"
-            ></el-date-picker>
+            ></el-date-picker> -->
+            <div class="time">
+              <input type="text" v-model="searchVm.time[0]" readonly @click="showDatePicker($event,0)">
+              <font>~</font>
+              <input type="text" v-model="searchVm.time[1]" readonly @click="showDatePicker($event,1)">
+            </div>
           </div>
 
           <div class="search_buttons">
@@ -67,6 +66,11 @@
           </div>
         </div>
       </section>
+      <Scroll v-if="dataList&&dataList.length>0"
+                                ref="ivuScrollContainer"
+                                :on-reach-bottom="mReachBottom"
+                                :height="ivuScrollContainerHeight"
+                        >
       <div v-for="(item,i) in dataList" :key="i" style="background-color:#f3f3f3">
         <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
         <div class="rowbg el-row">
@@ -102,17 +106,18 @@
           </div>
         </div>
       </div>
+      </Scroll>
     </div>
     <div class="mui-content" v-if="manageType == '2'">
       <section class="el-container is-vertical" v-show="manageTypesearch == 2">
         <div class="searchVm">
           <div>
             <span>用户名：</span>
-            <el-input placeholder="请输入内容" v-model="searchVM.username"></el-input>
+            <el-input placeholder="请输入内容" v-model="searchVm.username"></el-input>
           </div>
           <div>
             <span>用户类型：</span>
-            <el-select v-model="searchVM.memberType" placeholder="请选择">
+            <el-select v-model="searchVm.memberType" placeholder="请选择">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -142,7 +147,11 @@
           </div>
         </div>
       </section>
-
+      <Scroll v-if="dataList2&&dataList2.length>0"
+                                ref="ivuScrollContainer"
+                                :on-reach-bottom="mReachBottom"
+                                :height="ivuScrollContainerHeight"
+                        >
       <div v-for="(item,i) in dataList2" :key="i" style="background-color:#f3f3f3">
         <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
         <div class="rowbg el-row">
@@ -179,6 +188,7 @@
           </div>
         </div>
       </div>
+      </Scroll>
     </div>
     <van-dialog
         v-model="show"
@@ -220,8 +230,10 @@ export default {
       logo: this.$t("agentMember.am24"),
       dataList: [],
       show:false,
+      currenttime:1,
       manageType: "1",
       manageTypesearch: 0,
+      ivuScrollContainerHeight: 620,
       search1: {
         startTime: "",
         endTime: ""
@@ -242,11 +254,12 @@ export default {
       ],
       showSearch: false,
       dataList2: [],
-      searchVM: {
+      searchVm: {
         memberType: "",
         username: "", //用户名查询
         orderBy: "id desc",
-        rows: 20
+        rows: 20,
+        time:[]
       },
       vmd:{}
     };
@@ -275,7 +288,7 @@ export default {
     },
     mPullData() {
       this.mLoading(true);
-      var params = Object.assign({}, this.searchVM);
+      var params = Object.assign({}, this.searchVm);
       this.$http.post("/agentUser/agentliks.json", {}).then(result => {
         if (result.code == 0) {
           this.dataList = !!result.rows ? result.rows : [];
@@ -308,22 +321,22 @@ export default {
                 this.ivuScrollContainerHeight =
                     window.innerHeight - this.$refs.TopHeader.offsetHeight;
             },
-            mTouzhu(rows) {
-                this.$router.push({
-                    path: "./bettingdetaillist",
-                    query: {username: rows.username}
-                });
-            },
-            mJiaoyi(rows) {
-                // this.$router.push({
-                //     path: "./transactionsdetaillist",
-                //     query: {username: rows.username}
-                // });
-                this.$router.push({
-                    path: "./mjiaoyi",
-                    query: {username: rows.username}
-                });
-            },
+      mTouzhu(rows) {
+          this.$router.push({
+              path: "./mjiaoyi",
+              query: {username: rows.username,name:'BettingdetailList'}
+          });
+      },
+      mJiaoyi(rows) {
+          // this.$router.push({
+          //     path: "./transactionsdetaillist",
+          //     query: {username: rows.username}
+          // });
+          this.$router.push({
+              path: "./mjiaoyi",
+              query: {username: rows.username,name:''}
+          });
+      },
     mShow(rows) {
     //   this.mWinOpen(
     //     //分红比例详情
@@ -342,18 +355,35 @@ export default {
     mClose(rows) {
 
     },
+    showDatePicker(event,index) {
+      this.currenttime = index;
+      if (!this.datePicker) {
+        this.datePicker = this.$createDatePicker({
+          title: "请选择开始时间",
+          min: new Date(2008, 7, 8),
+          max: new Date(2020, 9, 20),
+          value: new Date(),
+          onSelect: this.selectHandle,
+          format:{ year: 'YY年', month: 'MM月', date: '第 D 日' }
+        });
+      }
+      this.datePicker.show();
+    },
+    selectHandle(date, selectedVal, selectedText) {console.info(date, selectedVal, selectedText)
+    this.$set(this.searchVm.time,this.currenttime,selectedVal.join('/'))
+    },
     mReachBottom() {
       return new Promise(resolve => {
         this.mLoading(true);
         if (
           parseInt(
-            this.initData.total / (this.searchVM.rows * this.searchVM.page)
+            this.initData.total / (this.searchVm.rows * this.searchVm.page)
           ) > 0
         ) {
-          ++this.searchVM.page;
-          this.searchVM.start = (this.searchVM.page - 1) * this.searchVM.rows;
-          this.searchVM.limit = this.searchVM.rows;
-          var params = Object.assign({}, this.searchVM);
+          ++this.searchVm.page;
+          this.searchVm.start = (this.searchVm.page - 1) * this.searchVm.rows;
+          this.searchVm.limit = this.searchVm.rows;
+          var params = Object.assign({}, this.searchVm);
           params.endTime = dateFormat(new Date().getTime(), "yyyy-MM-dd");
           this.$http
             .post("/memberCoin/queryTransfer.json", params)
@@ -423,8 +453,8 @@ export default {
     background-color: #fb9736;
   }
    /deep/ .delete {
-    border-color: #f03838;
-    background-color: #f03838;
+    border-color: #3d7eff;
+    background-color: #3d7eff;
   }
 }
 
@@ -485,6 +515,7 @@ export default {
   z-index: 999;
   width: 100%;
   justify-content: flex-start;
+  align-items: center;
 
   & > div {
     float: left;
@@ -530,7 +561,7 @@ export default {
     display: flex;
     justify-content: space-between;
     /deep/ & > button {
-      width: 136px;
+      width: 126px;
       height: 25px;
       line-height: 25px;
       background-color: #3d7eff;
@@ -571,6 +602,16 @@ export default {
         }
     }
 }
+/deep/ .time {
+    width: 245px;
+    height: 34px;
+    line-height: 34px;
+    background-color: #ededed;
+    input {
+      width:118px;
+      background-color: #ededed;
+    }
+  }
 
 </style>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="safecenter">
-    <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="container">
       <div class="line title">
         <span>密码设置</span>

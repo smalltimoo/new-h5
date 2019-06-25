@@ -1,6 +1,6 @@
 <template>
   <div class="helpcenter">
-    <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="container">
       <el-input :placeholder="$t('member.systemSet.placeh0')" v-model="inputValue">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>

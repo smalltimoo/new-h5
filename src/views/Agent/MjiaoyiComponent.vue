@@ -1,22 +1,19 @@
 <template>
   <div class="main-body">
-    <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="no-list" v-if="!dataList||dataList.length==0"></div>
-    <div class="manage-type">
-      <div :class="{active: manageType=='1'}" @click="manageType=1">{{ $t("agentMember.am19")}}</div>
-      <div :class="{active: manageType=='2'}" @click="manageType=2">{{ $t("agentMember.am17")}}</div>
-      <div :class="{active: manageType=='3'}" @click="manageType=3">{{ $t("agentMember.am25")}}</div>
-      <div :class="{active: manageType=='4'}" @click="manageType=4">{{ $t("agentMember.am20")}}</div><!--提现记录-->
-      <div :class="{active: manageType=='5'}" @click="manageType=5">{{ $t("agentMember.am18")}}</div><!--投注明细-->
-      <!-- <div > -->
-      <el-button
-        style="float:right;padding-right:20px;"
-        size="small"
-        @click="changsearch()"
-        icon="el-icon-search"
-      >筛选</el-button>
-      
+    <div class="menunav">
+      <div class="manage-type">
+        <div :class="{active: manageType=='1'}" @click="manageType=1">{{ $t("agentMember.am19")}}</div>
+        <div :class="{active: manageType=='2'}" @click="manageType=2">{{ $t("agentMember.am17")}}</div>
+        <div :class="{active: manageType=='3'}" @click="manageType=3">{{ $t("agentMember.am25")}}</div>
+        <div :class="{active: manageType=='4'}" @click="manageType=4">{{ $t("agentMember.am20")}}</div><!--提现记录-->
+        <div :class="{active: manageType=='5'}" @click="manageType=5">{{ $t("agentMember.am18")}}</div><!--投注明细-->
+        <!-- <div > -->
+      </div>
+      <span class="shaixuan-room" @click="changsearch()">筛选<span class="icon-shaixuan" ></span></span>
     </div>
+    
     <div class="mui-content" v-if="manageType == '1'">
       <transactions-detaillist :username="this.$route.query.username" :manageTypesearch="this.manageTypesearch"></transactions-detaillist>
     </div>
@@ -216,6 +213,18 @@ export default {
           case 'MembermanAgement':
                   this.manageType = '2'
               break;
+          case 'BettingdetailList':
+              this.manageType = '5'
+          break;
+          case 'agentCashList':
+                  this.manageType = '4'
+              break;
+          case 'agentCoinList':
+              this.manageType = '3'
+          break;
+          default:
+                  this.manageType = '1'
+              break;
       }
   }
 };
@@ -257,8 +266,8 @@ export default {
     background-color: #fb9736;
   }
   /deep/ .delete {
-    border-color: #f03838;
-    background-color: #f03838;
+    border-color: #3d7eff;
+    background-color: #3d7eff;
   }
 }
 
@@ -317,8 +326,10 @@ export default {
   background-color: white;
   padding-left: 10px;
   z-index: 999;
-  width: 100%;
+  width: 80%;
   justify-content: flex-start;
+  align-items: center;
+  margin-top: 10px;
 
   & > div {
     float: left;
@@ -328,9 +339,9 @@ export default {
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    margin-right: 20px;
+    margin-right: 60px;
     font-size: 16px;
-    line-height: 35px;
+    // line-height: 35px;
   }
   .active {
     border-bottom: 2px solid #3d7eff;
@@ -378,7 +389,16 @@ export default {
     width: 260px;
   }
 }
-
+.menunav {
+  position: fixed;
+  width: 100%;
+  height: 40px;
+  background-color: #fff;
+  z-index: 999;
+}
+.manage-type::-webkit-scrollbar {
+  color: #fff;
+}
 /deep/ .van-dialog {
   width: 300px;
   height: 300px;
@@ -403,6 +423,9 @@ export default {
       font-size: 15px;
     }
   }
+}
+.shaixuan-room {
+  top: 10px;
 }
 </style>
 

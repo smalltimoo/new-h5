@@ -54,7 +54,7 @@
                     <span>
                       {{ $t('agent.agentCashList.theActualAmount')}}&nbsp;&nbsp;
                       <font
-                        style="color:#f03838"
+                        style="color:#3d7eff"
                       >￥{{item.realAmount/100}}</font>
                     </span>
                   </div>
@@ -244,8 +244,8 @@ export default {
     background-color: #fb9736;
   }
   /deep/ .delete {
-    border-color: #f03838;
-    background-color: #f03838;
+    border-color: #3d7eff;
+    background-color: #3d7eff;
   }
 }
 .grid-content {

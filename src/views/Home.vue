@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <header-component :logo="logo" :showIcon="false" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="false" :showLogo="true"></header-component>
     <div class="container">
       <div class="slider-wrap">
         <div id="iSlider-wrapper" ref="swipe"></div>
@@ -10,21 +10,15 @@
       </div>
       <div class="notice">
         <div class="icon laba">
-          <p class="label__num">20</p>
+          <p class="label__num">{{getDate}}</p>
           <p class="label_gonggao">公告</p>
         </div>
         <Divider type="vertical"/>
         <div class="marquee_box">
           <ul class="marquee_list" :style="{ top: -num + 'px'}" :class="{marquee_top:num}">
             <!-- 当显示最后一条的时候（num=0转换布尔类型为false）去掉过渡效果-->
-            <li v-for="(item, index) in marqueeList" :key="index">
-              <span class="`list_style ${item.ac} `"></span>
-              <span>{{item.name}}</span>
-              <span>在</span>
-              <span class="red">{{item.city}}</span>
-              <span>杀敌</span>
-              <span class="red">{{item.amount}}</span>
-              <span>万</span>
+            <li v-for="(item, index) in cGongGaos" :key="index">
+              <span>{{item.content}}</span>
             </li>
           </ul>
         </div>
@@ -33,13 +27,13 @@
         <div class="title">
           <span>{{ $t('home.title1')}}</span>
           <span>
-            <router-link :to="{name:'Discount'}">{{ $t('home.home31')}}</router-link>
+            <router-link :to="{name:'Games'}">{{ $t('home.home31')}}</router-link>
           </span>
         </div>
       </div>
       <div class="game_block">
-        <router-link  class="game_link" v-for="(img,index) in imgSrcs" :to="{name:'Games'}"  :key="index" @click="this.$router.push({'name':'Games',params:{}})">
-            <el-image :src="img" :fit="'cover'">
+        <router-link  class="game_link" v-for="(item,index) in companyCustomGames" :to="{name:'Games',params:{typeId:item.typeId}}"  :key="index">
+            <el-image :src="item.mobileBackgroundUrl" :fit="'cover'">
               <div slot="placeholder" class="image-slot">
                 加载中<span class="dot">...</span>
               </div>
@@ -49,7 +43,7 @@
       </div>
       <div class="activity">
         <div class="title">
-          <span>{{ $t('home.title2')}}</span>
+          <span>{{ $t('home.home30')}}</span>
           <span>
             <router-link :to="{name:'Discount'}">{{ $t('home.more')}}</router-link>
           </span>
@@ -103,34 +97,6 @@ export default {
           label: "ไทย"
         }
       ],
-      swipeinfo: [
-        {
-          content: require("../assets/images/2x/lbt@2x.png")
-        },
-        {
-          content: require("../assets/images/2x/lb@2x.png")
-        },
-        {
-          content: require("../assets/images/2x/hd@2x.png")
-        }
-      ],
-      swipeinfo2: [
-        {
-          content: require("../assets/images/2x/lbt@2x.png"),
-          activityTitle: "新会员专享五重好礼",
-          endTimeStr: "2019.04.30-2019.10.30"
-        },
-        {
-          content: require("../assets/images/2x/lb@2x.png"),
-          activityTitle: "新会员专享五重好礼",
-          endTimeStr: "2019.04.30-2019.10.30"
-        },
-        {
-          content: require("../assets/images/2x/hd@2x.png"),
-          activityTitle: "新会员专享五重好礼",
-          endTimeStr: "2019.04.30-2019.10.30"
-        }
-      ],
       imgSrcs: [],
       showApp: true,
       gameType: 0,
@@ -153,28 +119,6 @@ export default {
       yue: 2000.0,
       logo: "万豪娱乐",
       num: 2,
-      marqueeList: [
-        {
-          name: "1军",
-          city: "北京",
-          amount: "10"
-        },
-        {
-          name: "2军",
-          city: "上海",
-          amount: "20"
-        },
-        {
-          name: "3军",
-          city: "广州",
-          amount: "30"
-        },
-        {
-          name: "4军",
-          city: "重庆",
-          amount: "40"
-        }
-      ]
     };
   },
   computed: {
@@ -196,13 +140,17 @@ export default {
     cGongGaos() {
       return this.$store.getters.getGonggaos;
     },
+    getDate() {
+      return (new Date).getDate();
+    },
     getBanner() {
       var mobileBanner = this.$store.getters.getSysPicObj.mobileBanner;
       var banner = [];
       if (mobileBanner != undefined && mobileBanner != "") {
-        let bs = mobileBanner.split(",");
+        let bs = mobileBanner.slice().split(",");
         bs.map(item => {
-          banner.push({ imgUrl: item });
+          // banner.push({ imgUrl: item });
+          banner.push({content:item})
         });
       }
       return banner;
@@ -297,12 +245,12 @@ export default {
     },
     allGame() {
       this.$http
-        .post("/gamesbytype.json", { playType: -1, state: 1, sysId: 0 })
+        .post("/webnav.json", {})
         .then(result => {
           if (result.code == 0) {
             this.companyCustomGames = Object.assign(
-              {},
-              result.data.companyCustomGames
+              [],
+              result.data.companyCustomGametypes.sort((a,b)=>{a-b})
             );
           }
         });
@@ -310,7 +258,33 @@ export default {
     activity() {
       this.$http.post("/activities.json", { sysId: 0 }).then(result => {
         if (result.code == 0) {
-          this.activities = Object.assign({}, result.data.activityVoList);
+          this.activities = Object.assign([], result.data.activityVoList);
+          let data2 = this.activities.map((item, idx) => {
+          item.content = `<div class="active_box" style="width:312px;height:100%;">
+                                        <div class="active_title" style="width:100%;height:22px;">
+                                          <span style="width: 110px;text-align: left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis" >${
+                                            item.activityTitle
+                                          }</span>
+                                          <span>${item.endTimeStr}</span>
+                                        </div>
+                                        <img src="${item.mobileImg}">
+                                      </div>
+                                      `;
+          return item;
+        });
+        console.info(data2)
+        //优惠活动
+        self.L = new iSlider(
+          document.getElementById("iSlider-wrapper2"),
+          data2,
+          {
+            isLooping: 1,
+            isOverspread: 1,
+            isAutoplay: true,
+            animateTime: 800,
+            animateType: "depth"
+          }
+        );
         }
       });
     },
@@ -318,9 +292,10 @@ export default {
       this.showApp = false;
       localStorage.setItem("showApp", "false");
     },
-    showMarquee: function(num) {
-      this.marqueeList.push(this.marqueeList[0]);
-      var max = this.marqueeList.length;
+    showMarquee() {
+      let num = this.num;
+      this.cGongGaos.push(this.cGongGaos[0]);
+      var max = this.cGongGaos.length;
       var that = this;
       let marqueetimer = setInterval(function() {
         num++;
@@ -333,7 +308,7 @@ export default {
     neiStyle() {
       setTimeout(() => {
         let self = this;
-        let data = this.swipeinfo;
+        let data = this.getBanner;
         //轮盘
         self.S = new iSlider(
           document.getElementById("iSlider-wrapper"),
@@ -349,31 +324,7 @@ export default {
           },
           300
         );
-        let data2 = this.swipeinfo2.map((item, idx) => {
-          item.content = `<div class="active_box" style="width:312px;height:100%;">
-                                        <div class="active_title" style="width:100%;height:22px;">
-                                          <span style="width: 110px;text-align: left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis" >${
-                                            item.activityTitle
-                                          }</span>
-                                          <span>${item.endTimeStr}</span>
-                                        </div>
-                                        <img src="${item.content}">
-                                      </div>
-                                      `;
-          return item;
-        });
-        //优惠活动
-        self.L = new iSlider(
-          document.getElementById("iSlider-wrapper2"),
-          data2,
-          {
-            isLooping: 1,
-            isOverspread: 1,
-            isAutoplay: true,
-            animateTime: 800,
-            animateType: "depth"
-          }
-        );
+        
       });
     },
     requireimg() {
@@ -389,10 +340,19 @@ export default {
       this.imgSrcs = tempArr.map((val, inx) => {
         return require(`../assets/images/2x/${val}`);
       });
+    },
+    initEvent(){
+      $('#iSlider-wrapper2').on('click',(event)=>{
+        event = event || window.event;
+        if($(event.target).hasClass('active_box')){
+            console.info(event.target)
+        }
+      })
     }
   },
   mounted() {
     this.neiStyle();
+    // this.showMarquee()
   },
   created() {
     _this = this;
@@ -402,8 +362,9 @@ export default {
     this.allGame();
     this.activity();
     // this._initSwiper();
-    this.showMarquee(this.num);
+    ;
     this.requireimg();
+    this.initEvent();
 
     // window.onscroll = function () {
     //     let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
@@ -520,6 +481,7 @@ export default {
     font-size: 14px;
     padding-left: 20px;
     background-color: #fff;
+    text-align: left;
   }
   .marquee_list li span {
     padding: 0 2px;

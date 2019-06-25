@@ -43,7 +43,7 @@
                     </div>
                 </aside>
                 <!-- 主页面标题 -->
-                <div class="header">
+                <!-- <div class="header">
                     <div class="header-left">
                         <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
                     </div>
@@ -53,16 +53,16 @@
                     <div class="header-right" @tap="mShowSearch('open')">
                         {{ $t('member.bettingRecord.br6') }}
                     </div>
-                </div>
-                <div class="dama">
+                </div> -->
+                <!-- <div class="dama">
                     <div style="text-align: left">
                         {{ $t('member.bettingRecord.br3') }}: {{ gameRoomName }}
                     </div>
                     <div style="text-align: right">
                         {{ $t('member.bettingRecord.br17') }} {{ totalDama.toFixed(2) }}
                     </div>
-                </div>
-
+                </div> -->
+                <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true" ></header-component>
                 <!-- 主页面内容容器 -->
 
                 <div  class="no-list" v-if="(!dataList||dataList.length==0)&&!showSearch"></div>
@@ -71,37 +71,30 @@
 
                         <Scroll v-if="dataList&&dataList.length>0&&!showSearch" :on-reach-bottom="mReachBottom"
                                 :height="ivuScrollContainerHeight" style="margin-bottom: 30px">
-                            <div v-for="(item,i) in dataList" :key="i">
-                                <div style="font-size: 12px">{{item.createTimeStr}}</div>
+                            <div v-for="(item,i) in dataList" :key="i" style="background-color:#f3f3f3">
+                                <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
                                 <div class="rowbg el-row">
-                                    <div class="el-col el-col-24">
-                                        <div class="el-col el-col-24">
-                                            <div class="el-col el-col-24">
-                                                <div class="grid-content">
-                                                    <span class="Save success">{{item.gameTypeStr}}</span>
-                                                    <span style="height: 30px;line-height: 30px">{{item.gameCompanyName}} {{item.gameName}}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div class="grid-content grid-content1">
+                                    <div>
+                                    <span class="num">{{item.investAmount / 100}}</span>
+                                    <span
+                                        class="user"
+                                    >{{ $t('member.bettingRecord.br8') }}</span>
                                     </div>
-                                    <div class="info">
-                                        <div>
-                                            <div class="status">{{item.investAmount / 100}}</div>
-                                            <div class="Types">{{ $t('member.bettingRecord.br8') }}</div><!-- 下注金额-->
-                                        </div>
-                                        <div>
-                                            <div class="status">{{item.validAmount / 100}}</div>
-                                            <div class="Types">{{ $t('member.bettingRecord.br9') }}</div><!-- 有效金额-->
-                                        </div>
-                                        <div>
-                                            <div class="status">{{item.validAmount / 100}}</div>
-                                            <div class="Types">{{ $t('member.bettingRecord.br10') }}</div><!-- 打码量-->
-                                        </div>
-                                        <div>
-                                            <div class="status">{{item.bunkoAmount / 100}}</div>
-                                            <div class="Types">{{ $t('member.bettingRecord.br11') }}</div><!--输赢金额 -->
-                                        </div>
+                                    <div style="align-items:flex-end">
+                                    <span class="btn success" style="margin-bottom:9px;">{{item.gameCompanyName}}</span>
+                                    <span class="user">{{item.createTimeStr}}</span>
                                     </div>
+                                </div>
+                                <div class="grid-content grid-content3">
+                                    <span
+                                    class="num"
+                                    >{{ $t("member.rechargeRecord.rr6") }}&nbsp;&nbsp;￥{{item.validAmount / 100}}</span>
+                                    <span>
+                                    {{ $t("member.rechargeRecord.rr7") }}&nbsp;&nbsp;
+                                    <font style="color:#3d7eff">￥{{item.bunkoAmount / 100}}</font>
+                                    </span>
+                                </div>
                                 </div>
                             </div>
                         </Scroll>
@@ -114,13 +107,14 @@
 <script>
     import slist from "@/mixins/list";
     import {dateFormat} from "../../assets/lib/util";
-
+    import headerComponent from "@/common/Header.vue";
     require('../../style/mui/index.less')
     var vue;
     export default {
         mixins: [slist],
         data() {
             return {
+                logo:'投注记录',
                 showSearch: false,
                 initData: {
                     gamecompays: [],
@@ -153,6 +147,9 @@
         },
         mounted() {
             this.mPullData();
+        },
+        components: {
+            headerComponent
         },
         methods: {
             mInit() {
@@ -289,15 +286,15 @@
     };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
     .mui-bar .mui-title {
         margin-top: 10px;
         text-align: center;
     }
 
-    .mui-content {
-        margin-top: 80px;
-    }
+    // .mui-content {
+    //     margin-top: 80px;
+    // }
 
     .mui-scalable {
         background-color: #efeff4 !important;
@@ -392,4 +389,123 @@
         padding:0 15px;
         z-index: 99;
     }
+
+    .rowbg {
+  margin: 5px 0 10px;
+  padding: 10px 15px;
+  // display: flex;
+
+  // width: 375px;
+  // height: 149px;
+  background-color: #fff;
+  border-radius: 2px;
+  /deep/ .ivu-btn {
+    border-radius: 2px;
+    width: 60px;
+    height: 19px;
+  }
+  /deep/ .ivu-btn-info {
+    border-color: #377eff;
+    background-color: #3d7eff;
+  }
+  /deep/ .ratio {
+    border-color: #fb9736;
+    background-color: #fb9736;
+  }
+  /deep/ .delete {
+    border-color: #3d7eff;
+    background-color: #3d7eff;
+  }
+}
+.grid-content {
+  width: 100%;
+  display: flex;
+  //   margin-top: 3px;
+  justify-content: space-between;
+  border-bottom: 1px solid #f3f3f3;
+  .time {
+    color: #606266;
+    font-size: 9px;
+  }
+  .btn {
+    width: 96px;
+    height: 18px;
+    line-height: 18px;
+    background-color: #3d7eff;
+    border-radius: 2px;
+    line-height: 18px;
+    font-size: 11px;
+    color: #f5f5f5;
+  }
+  .user {
+    font-size: 12px;
+    color: #606266;
+  }
+}
+.grid-content1 {
+  height: 72px;
+  & > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  .num {
+    width: 60px;
+    // height: 15px;
+    // font-family: PingFangSC-Regular;
+    font-size: 20px;
+    color: #3d7eff;
+    text-align: center;
+  }
+}
+.grid-content2 {
+  height: 38px;
+  color: #377eff;
+  display: flex;
+  align-items: center;
+}
+.grid-content3 {
+  height: 38px;
+  display: flex;
+  align-items: center;
+  border: none;
+  justify-content: space-between;
+}
+
+.searchVm {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+  flex-wrap: wrap;
+  background-color:#f3f3f3;
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    & > span {
+      min-width: 80px;
+    }
+  }
+  .search_buttons {
+    padding-left: 80px;
+    display: flex;
+    justify-content: space-between;
+    /deep/ & > button {
+      width: 136px;
+      height: 25px;
+      line-height: 25px;
+      background-color: #3d7eff;
+      border-radius: 6px;
+      color: #f3f3f3;
+      padding: 0;
+      text-align: center;
+    }
+  }
+  /deep/ .el-input__inner {
+    width: 260px;
+  }
+  
+}
 </style>

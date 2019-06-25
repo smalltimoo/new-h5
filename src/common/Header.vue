@@ -5,7 +5,8 @@
       <span class="logo" v-if="showLogo">{{logo}}</span>
     </div>
     <div class="header-right">
-      <div class="yue">余额:{{yue}}</div>
+      <div class="yue" v-if="showyue">余额:{{yue}}</div>
+      <div class="yue" v-else>积分:{{jifen}}</div>
       <Poptip trigger="click" placement="bottom-end">
         <i class="icon-menu message"></i>
         <ul slot="content">
@@ -40,11 +41,12 @@
 import { mapState } from "vuex";
 export default {
   name: "Header",
-  props: ["showIcon", "showLogo", "logo"],
+  props: ["showIcon", "showLogo", "logo","showyue","jifen"],
   data() {
     return {
       // logo:'ss',
-      yue: 5100
+      yue: 5100,
+      // jifen:2000
     };
   },
   computed: {
@@ -91,6 +93,9 @@ export default {
 
     font-family: PingFang SC;
     letter-spacing: 1px;
+  }
+  .ivu-poptip-rel {
+    top: 8px;
   }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="discount">
-        <header-component :logo="logo" :showIcon="false" :showLogo="true"></header-component>
+        <header-component :showyue="true" :logo="logo" :showIcon="false" :showLogo="true"></header-component>
         <div class="container">
             <div class="activity-type">
                 <span :class="{active: isJoin=='-1'}" @click="changeTab('-1')">{{$t('discount.dis1')}}</span>
@@ -21,8 +21,8 @@
                     <div class="tip">
                         <div class="tip_left">
                             <span v-text="item.activityTitle" class="_tip tip_title"></span>
-                             <span v-text="item.activityTitle" class="_tip tip_text" ></span>
-                             <span v-text="item.activityTitle" class="_tip time" ></span>
+                             <span v-text="item.activityDesc" class="_tip tip_text" ></span>
+                             <span v-text="item.endTimeStr" class="_tip time" ></span>
                         </div>
                         <div class="tip_right">
                             <span class="join" v-if="[6, 7, 8, 9].includes(item.activityType) && item.isJoin=='0'" @click="signed(item)">{{$t('discount.dis4')}}</span>

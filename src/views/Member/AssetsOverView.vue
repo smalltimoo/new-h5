@@ -11,7 +11,7 @@
                 {{$t('member.assetsOverView.ao1')}}
             </div>
         </div> -->
-        <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+        <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
         <div class="container">
             <div class="top">
                 <div class="total-amount">
@@ -60,8 +60,8 @@
                 </div>
             </div>
             <div class="bottom">
-                <span><router-link :to="{name:'OnlineDeposit'}">{{$t('member.assetsOverView.ao7')}}</router-link></span>
                 <span style="background-color: grey"><router-link :to="{name:'Withdrawals'}">{{$t('member.assetsOverView.ao8')}}</router-link></span>
+                <span><router-link :to="{name:'OnlineDeposit'}">{{$t('member.assetsOverView.ao7')}}</router-link></span>
             </div>
         </div>
     </div>

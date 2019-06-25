@@ -14,8 +14,15 @@ import api from'./api/api'
 import Cube from 'cube-ui';
 import Vant from 'vant';
 import veRIng from 'v-charts/lib/ring.common'
-    Vue.component(veRIng.name, veRIng)
 
+    Vue.component(veRIng.name, veRIng)
+    // lottie.loadAnimation({
+    //   container: element, // the dom element that will contain the animation
+    //   renderer: 'svg',
+    //   loop: true,
+    //   autoplay: true,
+    //   path: 'data.json' // the path to the animation json
+    // });
 /**全局处理异常 */
 import ErrorPlugin from  './errorPlugin'
 
@@ -273,7 +280,23 @@ Vue.prototype.changelang = function (...a){
   }
 }
 
-
+Vue.prototype.getMyDate = function(str) {
+  function addZero(num){
+    if(parseInt(num) < 10){
+        num = '0'+num;
+    }
+    return num;
+  }
+      var oDate = new Date(str),
+      oYear = oDate.getFullYear(),
+      oMonth = oDate.getMonth()+1,
+      oDay = oDate.getDate(),
+      oHour = oDate.getHours(),
+      oMin = oDate.getMinutes(),
+      oSen = oDate.getSeconds(),
+      oTime = oYear +'-'+ addZero(oMonth) +'-'+ addZero(oDay)
+      return oTime;
+  }
 Vue.directive('preventReClick', {
   inserted (el, binding) {
     el.addEventListener('click', () => {

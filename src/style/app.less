@@ -17,6 +17,7 @@ html {
   margin: 0;
   padding: 0;
 }
+input:-webkit-autofill { box-shadow: 0 0 0px 1000px white inset !important;}
 
 ul, ul > li {
   margin: 0;
@@ -62,6 +63,7 @@ input {
   overflow: auto;
   background: #fff;
   z-index: 70;
+  height: 640px;
 }
 
 .header {
@@ -277,12 +279,12 @@ input {
   }
 
   .message {
-    height: 32px;
-    width: 32px;
+    height: 24px;
+    width: 25px;
     background: url("../assets/images/messageIcon@2x.png?__inline") 70% 70% no-repeat;
-    background-size: 16px auto;
+    background-size: cover;
     display: flex;
-    margin: 0 15px;
+    margin: 0 15px 0 7px;
   }
 
   .ivu-poptip-popper {
@@ -571,6 +573,79 @@ input {
     }
   }
 }
+.shaixuan-room{
+    position: absolute;
+    right: 10px;
+    width: 53px;
+    height: 18px;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 1px;
+    color: #4c4c4c;
+  .icon-shaixuan {
+    background: url("../assets/images/shaixuan@2x.png") 50% 50% no-repeat;
+    vertical-align: bottom;
+    background-size: cover;
+    display: inline-block;
+    width:20px;
+    height: 18px;
+  }
+}
+.ivu-date-picker-rel {
+  width: 100%;
+}
+
+/*
+修改cube-ui 样式
+*/
+
+.cube-popup-container {
+  @cubeuiheight:245px;
+  @cubeuiwidth:300px;
+  //  width:300px;
+  //  height: cubeuiheight;
+  transform: inherit;
+  .cube-picker-choose.border-bottom-1px {
+      width: 100%;
+      height: 46px;
+      line-height: 16px;
+      background-color: #3d7eff;
+      border-radius: 4px 4px 0px 0px;
+      font-size: 16px;
+      position: static;
+      .cube-picker-title {
+        color: #f5f5f5;
+      }
+     
+  }
+  .cube-picker-cancel {
+    display: none;
+  }
+  .cube-picker-confirm {
+      width: 279px;
+      height: 37px;
+      line-height: 37px;
+      background-color: #3d7eff;
+      border-radius: 4px;
+      color: #f5f5f5;
+      position: absolute;
+      padding: 0;
+      font-size: 18px;
+      bottom:0;
+      right: 10px;
+  }
+  .cube-popup-content {
+    transform: translateY(50%);
+    width: 300px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .cube-picker-footer {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
 
 @import "module/page-footer";
 @import "module/home";

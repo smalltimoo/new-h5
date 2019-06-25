@@ -40,7 +40,7 @@
                     <span class="num">有效金额&nbsp;&nbsp;￥{{item.commissionAmount/100}}</span>
                     <span>
                       <font
-                        style="color:#f03838"
+                        style="color:#3d7eff"
                       >{{ $t('agent.beetingdetaiList.winAndLossAmount')}}&nbsp;&nbsp;￥{{item.bunkoAmount/100}}</font>
                     </span>
                   </div>
@@ -310,8 +310,8 @@ export default {
     background-color: #fb9736;
   }
   /deep/ .delete {
-    border-color: #f03838;
-    background-color: #f03838;
+    border-color: #3d7eff;
+    background-color: #3d7eff;
   }
 }
 .grid-content {
@@ -343,7 +343,7 @@ export default {
   }
 
   .failed {
-    background-color: #f03838;
+    background-color: #3d7eff;
   }
   .user {
     font-size: 12px;

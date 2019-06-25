@@ -1,25 +1,26 @@
 <template>
   <div class="checkin">
-    <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :logo="logo" :showIcon="true" :showLogo="true" :jifen="vm.integral/100"></header-component>
     <div class="container">
       <section class="info">
         <div class="info_left">
-          <span class="count">8888.00</span>
+          <span class="count">{{vm.integral/100}}</span>
           <div>
             <span>我的积分</span>
             <el-divider direction="vertical"></el-divider>
             <span>
               今日已领取
-              <font style="color:#317cfd">303</font>积分
+              <font style="color:#317cfd">{{vm.dayIntegral}}</font>积分
             </span>
           </div>
         </div>
-        <span class="btn" @click="mShow = true">签到</span>
+        <span class="btn" v-if="!vm.isSign" @click="mShow = true">签到</span>
+        <span class="btn" v-else>已签到</span>
       </section>
       <section class="areacard">
         <span>本月漏签&nbsp;2&nbsp;天</span>
         <span>
-          补签卡&nbsp;0&nbsp;张
+          你已连续签到&nbsp;{{checkInVm.continuitySignDays}}&nbsp;天
           <span class="rightsanjiao"></span>
         </span>
       </section>
@@ -36,26 +37,23 @@
       <section class="rule">
         <h3>活动规则</h3>
         <ul>
-          <li v-for="( item, index) in rulelist" :key="index">
-            <span></span>{{item}}
+          <li v-for="( item, index) in activityRules" :key="index">
+            <span></span>
+            {{item.activityRules}}
           </li>
         </ul>
       </section>
     </div>
-    <van-dialog
-      v-model="mShow"
-      title="签到成功"
-     :className="'vanmodal'"
-    >
-     <star style="margin-top:130px;" :size="48" :score="5"></star>
+    <van-dialog v-model="mShow" title="签到成功" :className="'vanmodal'">
+      <star style="margin-top:130px;" :size="48" :score="5"></star>
       <el-divider>已累计签到一天，获得20积分</el-divider>
     </van-dialog>
   </div>
 </template>
 <script>
 import headerComponent from "@/common/Header.vue";
-import star from "@/common/Star.vue"
-import StarRate from 'vue-cute-rate';
+import star from "@/common/Star.vue";
+import StarRate from "vue-cute-rate";
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
 export default {
@@ -73,21 +71,64 @@ export default {
   data() {
     return {
       logo: "签到中心",
-      mShow:false,
-      totalcount:7,
-      rulelist:['每天可签到1次，随机2-8积分;','当月累计签到满10天，当日额外赠送20积分;','当月累计签到满20天，当日额外赠送40积分;','当月累计签到满30天，当日额外赠送60积分']
+      mShow: false,
+      totalcount: 7,
+      vm: {
+        integral: 0,
+        isSign: 0,
+        dayIntegral: 0
+      },
+      activityRules: [],
+      checkInVm: {}
     };
   },
-  methods: {},
+  methods: {
+    mInit() {
+      this.$http.get("/memberUser/memberinfo.json").then(result => {
+        if (result.code == 0) {
+          this.vm.integral = result.data.integral;
+        }
+      });
+    },
+    queryIntegral() {
+      this.$http
+        .get("/activity/queryMemberSignIntegral.json", {})
+        .then(result => {
+          if (result.code == 0) {
+            this.vm.isSign = result.data.isSign;
+            this.vm.dayIntegral = result.data.dayIntegral;
+          }
+        });
+    },
+    getActivityRules() {
+      this.$http
+        .post("/memberUser/getActivityRules.json", { activityType: 10 })
+        .then(result => {
+          if (result.code == 0) {
+            this.activityRules = result.data.list;
+          }
+        });
+    },
+    getSignDays() {
+      this.$http.get("/memberUser/getSignDays.json").then(result => {
+        if (result.code == 0) {
+          this.checkInVm = result.data;
+        }
+      });
+    }
+  },
   created() {
-    // this.mInit();
+    this.mInit();
+    this.queryIntegral();
+    this.getActivityRules();
+    this.getSignDays();
   }
 };
 </script>
 <style lang="less" scoped>
 .checkin {
   .container {
-    overflow-y:auto;
+    overflow-y: auto;
   }
   .info {
     width: 351px;
@@ -154,7 +195,7 @@ export default {
     /deep/ .el-calendar__body {
       padding: 0px;
     }
-    /deep/ .el-calendar__header{
+    /deep/ .el-calendar__header {
       border-bottom: 0;
     }
     /deep/ .el-calendar__button-group {
@@ -201,9 +242,10 @@ export default {
       color: #317cfd;
       margin: 5px 0;
     }
-    ul,li{
+    ul,
+    li {
       font-size: 14px;
-      height: 28px;
+      // height: 28px;
       color: #606266;
       line-height: 28px;
       list-style: none;
@@ -218,39 +260,39 @@ export default {
       }
     }
   }
-  /deep/ .star-main{
+  /deep/ .star-main {
     width: 275px;
-    height:33px;
+    height: 33px;
     .icon-heart {
       display: inline-block;
       width: 25px;
       height: 25px;
       border-radius: 50%;
       color: #dadada;
-      border:1px solid #dadada;
+      border: 1px solid #dadada;
     }
     .icon-heart:before {
-      content: '1天';
-      font-size:12px;
-      
+      content: "1天";
+      font-size: 12px;
     }
     .star-half {
       display: none;
     }
     .star-full {
-      margin-right:5px;
+      margin-right: 5px;
     }
     .icon-full {
       color: #317cfd;
-      border:1px solid #317cfd;
+      border: 1px solid #317cfd;
     }
   }
   /deep/ .vanmodal {
-     width:296px;
-     height:297px;
-     background: url('~@/assets/images/score/qiandaochengong@2x.png') center center no-repeat;
-     background-size: cover;
-      .el-divider--vertical {
+    width: 296px;
+    height: 297px;
+    background: url("~@/assets/images/score/qiandaochengong@2x.png") center
+      center no-repeat;
+    background-size: cover;
+    .el-divider--vertical {
       display: inline-block;
       width: 0.5px;
       height: 15px;
@@ -279,7 +321,7 @@ export default {
     }
     .van-button__text {
       display: inline-block;
-      width:232px;
+      width: 232px;
       height: 34px;
       line-height: 34px;
       color: #f5f5f5;

@@ -182,7 +182,7 @@
             },
             mTouzhu(rows) {
                 this.$router.push({
-                    path: "./bettingdetaillist",
+                    name: "BettingRecord",
                     query: {username: rows.username}
                 });
             },

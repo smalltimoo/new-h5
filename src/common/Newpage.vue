@@ -1,6 +1,6 @@
 <template>
   <div class="bg_newpage">
-    <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="img_room">
       <img :src="getbg()" width="187px">
       <p>{{des}}</p>

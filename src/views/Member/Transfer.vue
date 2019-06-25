@@ -1,9 +1,9 @@
 <template>
   <div class="transfer">
     <div class="contain_main">
-      <div class="item" v-for="(item ,index) in transferData" :key="index">
+      <div class="item" v-for="(item ,index) in walletlist" :key="index" @click="mGetCoin(item,index)">
         <span class="name">{{item.gameCompanyName}}</span>
-        <span class="count">{{item.coin}}</span>
+        <span class="count" v-loading="item.loading">{{item.coin}}</span>
       </div>
     </div>
     <div class="chang_select">
@@ -61,12 +61,13 @@ export default {
   props:['moneys','amount','activeAmount'],
   data() {
     return {
-      transferData: [],
+      walletlist: [],
       options: [],
       ovalue1: "",
       ovalue2: "",
       value1: "",
       value2: "",
+      loading:false,
     //   amount:'',
     //   moneys:[]
     };
@@ -75,11 +76,14 @@ export default {
     createLocalData() {
       // this.$http.post("/managerGame/getWalletCoins.json").then(result => {
       //   if (result.code === 0) {
-      //     this.options = this.transferData = result.data.walletlist;
+      //     this.options = this.walletlist = result.data.walletlist;
       //   }
       // });
-      console.info(sessionStorage.getItem("walletcoinsList"))
-      this.options = this.transferData = JSON.parse( sessionStorage.getItem("walletcoinsList"));
+      // console.info(sessionStorage.getItem("walletcoinsList"))
+      this.options = this.walletlist = JSON.parse( sessionStorage.getItem("walletcoinsList")).map(item => {
+        item.loading = false;
+        return item;
+      });
     },
     selectoptionsa(a) {
       if (this.value2 && a === this.value2) {
@@ -92,6 +96,29 @@ export default {
         [this.value1, this.ovalue1] = [this.ovalue2, this.ovalue2];
       }
       this.ovalue2 = a;
+    },
+    mGetCoin(item,index) {
+      console.info('aa:'.padEnd(10,item.id))
+      // this.mLoading(true);
+      item.loading = true;
+      this.$http
+        .get("/managerGame/getWalletCoin.json?id=" + item.gameCompanyId)
+        .then(result => {
+          if (result.code === 0 && result.data > 0) {
+            // this.walletlist.forEach(wl => {
+            //   if (wl.gameCompanyId == item.gameCompanyId) {
+            //     wl.coin = result.data;
+            //   }
+            // });
+            this.walletlist[index] = result["data"]
+          }
+          // this.mLoading(false);
+          item.loading = false;
+        })
+        .catch(err => {
+            //获取余额失败
+          this.mAlert(this.$t("member.indoorTransfer.getMoneyError"));
+        });
     },
     recyc (){
 
@@ -228,7 +255,7 @@ export default {
   created() {
     this.createLocalData();
     this.$parent.moneys = [100,200,500,1000,5000]
-    console.info(this.moneys)
+    // console.info(this.moneys)
   }
 };
 </script>

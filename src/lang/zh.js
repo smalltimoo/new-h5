@@ -171,6 +171,7 @@ export default {
             game5: '棋牌',
             game6: '捕鱼',
             game7: '体育',
+            game8:'电竞'
         },
         gameContainer: {
             gameContainer1: '请先登陆！',

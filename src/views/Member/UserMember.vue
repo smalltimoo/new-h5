@@ -1,6 +1,6 @@
 <template>
   <div class="user-member">
-    <header-component :logo="logo" :showIcon="false" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="false" :showLogo="true"></header-component>
     <div class="container">
       <div class="usercard">
         <div class="userbase">
@@ -94,7 +94,7 @@
             <span>{{this.$t('member.userMember.um8')}}</span>
           </router-link>
           <!-- 投注记录 -->
-          <router-link :to="{name:'CapitalRecord'}">
+          <router-link :to="{name:'BettingRecord'}">
             <div>
               <img src="../../assets/images/mycenter/wode9@2x.png" width="43px">
             </div>
@@ -108,14 +108,14 @@
             <span>{{this.$t('member.userMember.um10')}}</span>
           </router-link>
           <!-- 代理中心 -->
-          <router-link :to="{name:'AgentMember'}">
+          <router-link :to="{name:'AgentMember'}" v-if="cLoginUser.agnetLevel>0">
             <div>
               <img src="../../assets/images/mycenter/wo7@2x.png" width="43px">
             </div>
             <span>{{this.$t('member.userMember.um18')}}</span>
           </router-link>
           <!-- 积分中心 -->
-          <router-link :to="{name:'TransferRecords'}">
+          <router-link :to="{name:'pointcenter'}">
             <div>
               <img src="../../assets/images/mycenter/wode8@2x.png" width="43px">
             </div>
@@ -180,7 +180,8 @@ export default {
         {
           name: "我的消息",
           newInfo: true,
-          text: "专业解答"
+          text: "专业解答",
+          routeName:'MessageList'
         },
         {
           name: "线路选择",

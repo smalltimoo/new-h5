@@ -1,6 +1,6 @@
 <template>
-  <div class="score">
-    <header-component :logo="logo" :showIcon="false" :showLogo="true"></header-component>
+  <div class="score"> 
+    <header-component :logo="logo" :showIcon="false" :showLogo="true" :jifen="vm.integral/100"></header-component>
     <div class="container">
       <div class="usercard">
         <div id="usercard"></div>
@@ -123,7 +123,7 @@
     </Drawer>
 
     <Drawer :closable="false" v-model="order" width="100" class="order-drawer">
-      <header-component
+      <header-component :showyue="true"
         :logo="jifendingdan"
         :showIcon="true"
         :showLogo="true"
@@ -171,7 +171,7 @@
                 <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.confirmOrder')}}</div>
                 <div class="header-right"></div>
       </div>-->
-      <header-component
+      <header-component :showyue="true"
         :logo="dingdanqueren"
         :showIcon="true"
         :showLogo="true"
@@ -501,7 +501,7 @@ export default {
     }
   },
   created() {
-    this.$store.commit("CHANGE_TAB", "UserMember");
+    this.$store.commit("CHANGE_TAB", "Score");
     this.mPullData();
     this.neiStyle();
   }
@@ -522,7 +522,7 @@ export default {
   }
 }
 .score {
-    .usercard {
+  /deep/  .usercard {
       .islider-dot-wrap {
         z-index: 1000;
       }

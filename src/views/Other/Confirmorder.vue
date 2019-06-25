@@ -1,6 +1,6 @@
 <template>
   <div class="confirmorder buy-drawer">
-    <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="buy">
       <router-link :to="{name:'Receiving'}">
         <div class="receive-address" v-if="hasAddress">

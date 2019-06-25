@@ -1,6 +1,6 @@
 <template>
   <div class="main-body option">
-    <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div style="margin-top: 44px">
       <div class="title">{{$t('agent.openInvitation.openInvitation0')}}</div>
       <div class="mui-input-group panel">

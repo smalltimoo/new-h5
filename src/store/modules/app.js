@@ -101,7 +101,7 @@ export default {
       if (!!payload.content) {
         state.loadingModel.content = payload.content;
       } else {
-        state.loadingModel.content = "请稍等，处理中...";
+        state.loadingModel.content = "loading...";
       }
     },
     [types.GOTO_PAGE](state, payload) {

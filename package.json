@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "npm run dev",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "vue-cli-service serve --open"
@@ -54,6 +55,7 @@
     "vue-ajax-loading": "^1.0.1",
     "vue-cli-plugin-cube-ui": "^0.2.4",
     "vue-cute-rate": "^1.0.2",
+    "vue-lottie": "^0.2.1",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {

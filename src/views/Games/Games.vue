@@ -1,6 +1,6 @@
 <template>
   <div class="games">
-    <header-component :logo="logo" :showIcon="true" :showLogo="false"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="false"></header-component>
     <div class="game-center">
       <div
         class="hot"
@@ -10,18 +10,19 @@
       <div class="game-type">
         <div :class="{active: gameType=='2'}" @click="gameType=2">{{ $t('games.gameTabs.game2')}}</div>
         <div :class="{active: gameType=='1'}" @click="gameType=1">{{ $t('games.gameTabs.game3')}}</div>
-        <div :class="{active: gameType=='4'}" @click="gameType=4">{{ $t('games.gameTabs.game4')}}</div>
-        <div :class="{active: gameType=='6'}" @click="gameType=6">{{ $t('games.gameTabs.game6')}}</div>
+        <div :class="{active: gameType=='4'}" @click="gameType=4">{{ $t('games.gameTabs.game7')}}</div>
+        <div :class="{active: gameType=='5'}" @click="gameType=5">{{ $t('games.gameTabs.game4')}}</div>
+        <!-- <div :class="{active: gameType=='6'}" @click="gameType=6">{{ $t('games.gameTabs.game6')}}</div> -->
         <div
-          :class="{active: gameType=='5'}"
-          @click="gameType=5"
+          :class="{active: gameType=='6'}"
+          @click="gameType=6"
           v-if="Object.values(companyCustomGames).filter(item=>item.typeId==5).length>0"
         >{{ $t('games.gameTabs.game5')}}</div>
         <div
           :class="{active: gameType=='7'}"
           @click="gameType=7"
           v-if="Object.values(companyCustomGames).filter(item=>item.typeId==7).length>0"
-        >{{ $t('games.gameTabs.game4')}}</div>
+        >{{ $t('games.gameTabs.game8')}}</div>
         <div
           :class="{active: gameType=='50'}"
           @click="gameType=50"
@@ -34,16 +35,16 @@
           :key="index"
           @click="mEnterGame(game.gameId==601?301:game.gameId,game.typeId==50?0:((game.gameId==601||(game.gameId==301&&game.typeId==6))?'ws00':''),game.typeId,game.gameName,game.gameCompanyId)"
         >
-          <img :src="game.mobileImg" width="100%"  v-if="game.mobileImg">
+          <img :src="game.mobileImg" width="100%" v-if="game.mobileImg">
           <div class="img-error" style="height: 105px;" v-else></div>
           <div class="game-text">
-              <div class="game_text_left">
-                  <span v-text="game.gameName"></span>
-                  <span v-text="game.typeName"></span>
-              </div>
-              <div class="game_text_right">
-                  <span >立即进入</span>
-              </div>
+            <div class="game_text_left">
+              <span v-text="game.gameName"></span>
+              <span v-text="game.typeName"></span>
+            </div>
+            <div class="game_text_right">
+              <span>立即进入</span>
+            </div>
           </div>
         </div>
       </div>
@@ -87,7 +88,7 @@ export default {
           label: "ไทย"
         }
       ],
-      logo:'',
+      logo: "",
       showApp: true,
       gameType: 0,
       isDraw: false,
@@ -105,8 +106,9 @@ export default {
       sysPicObj: state => state.common.sysPicObj
     }),
     selectedGames() {
-      return Object.values(this.companyCustomGames).filter((item ,idx) => {
-          if(idx<20) item.mobileImg = require(`@/assets/images/games/${idx}.png`)
+      return Object.values(this.companyCustomGames).filter((item, idx) => {
+        if (idx < 20)
+          item.mobileImg = require(`@/assets/images/games/${idx}.png`);
         if (this.gameType == 0) {
           return item.state == 3 || item.state == 2;
         } else if (this.gameType == 2) {
@@ -227,7 +229,7 @@ export default {
             this.companyCustomGames = Object.assign(
               {},
               result.data.companyCustomGames
-            )
+            );
           }
         });
     },
@@ -247,10 +249,36 @@ export default {
     _this = this;
     this.$store.commit("CHANGE_TAB", "Home");
     this.showApp = localStorage.getItem("showApp") ? false : true;
-    // this.init();
     this.drawGame();
     this.allGame();
-    // this.activity();
+    console.info(this);
+    let params = this.$route.params;
+    if (params && params.typeId) {
+      switch (params.typeId) {
+        case 6: //棋牌游戏
+          this.gameType = 6;
+          break;
+        case 1: //真人视讯
+          this.gameType = 1;
+          break;
+        // 彩票游戏
+        case 3:
+          this.gameType = 2;
+          break;
+        case 4: //体育竞技
+          this.gameType = 4;
+          break;
+        case 5: //电子游戏
+          this.gameType = 5;
+          break;
+        case 50: //捕鱼达人
+          this.gameType = 50;
+          break;
+        case 7: //电子竞技
+          this.gameType = 7;
+          break;
+      }
+    }
 
     window.onscroll = function() {
       let scrollheight =

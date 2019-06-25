@@ -1,6 +1,6 @@
 <template>
   <div class="agent">
-    <header-component :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="container">
       <div class="usercard">
         <div class="userbase">
@@ -92,27 +92,27 @@
             <span>{{$t('agentMember.am17')}}</span>
           </router-link>
           <!-- 下级报表 -->
-          <router-link :to="{name:'MembermanAgement'}" class="icon-panel">
+          <router-link :to="{name:'mjiaoyi',query:{name:'transactionsDetaillist'}}" class="icon-panel">
             <img src="../../assets/images/agent/daili9@2x.png" width="36px">
             <span>{{$t('agentMember.am23')}}</span>
           </router-link>
           <!-- 投注明细 -->
-          <router-link :to="{name:'BettingdetailList'}" class="icon-panel">
+          <router-link :to="{name:'mjiaoyi',query:{name:'bettingDetailList'}}" class="icon-panel">
             <img src="../../assets/images/agent/daili10@2x.png" width="36px">
             <span>{{$t('agentMember.am18')}}</span>
           </router-link>
           <!-- 交易明细 -->
-          <router-link :to="{name:'TransactionsdetailList'}" class="icon-panel">
+          <router-link :to="{name:'mjiaoyi',query:{name:'transactionsDetaillist'}}" class="icon-panel">
             <img src="../../assets/images/agent/daili11@2x.png" width="36px">
             <span>{{$t('agentMember.am19')}}</span>
           </router-link>
           <!-- 提现记录 -->
-          <router-link :to="{name:'AgentCashList'}" class="icon-panel">
+          <router-link :to="{name:'mjiaoyi',query:{name:'agentCashList'}}" class="icon-panel">
             <img src="../../assets/images/agent/daili12@2x.png" width="36px">
             <span>{{$t('agentMember.am20')}}</span>
           </router-link>
           <!-- 钱包日志 -->
-          <router-link :to="{name:'AgentCoinList'}" class="icon-panel">
+          <router-link :to="{name:'mjiaoyi',query:{name:'agentCoinList'}}" class="icon-panel">
             <img src="../../assets/images/agent/daili13@2x.png" width="36px">
             <span>{{$t('agentMember.am21')}}</span>
           </router-link>

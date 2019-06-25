@@ -1,6 +1,6 @@
 <template>
     <div class="main-body">
-        <div class="header">
+        <!-- <div class="header">
             <div class="header-left">
                 <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
             </div>
@@ -8,7 +8,8 @@
                 {{$t('member.messageList.ml1')}}
             </div>
             <div class="header-right"></div>
-        </div>
+        </div> -->
+        <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
         <div  class="no-list" v-if="!dataList||dataList.length==0"></div>
         <div class="message">
             <div v-for="item in dataList" :key="item.id" class="msg-panel">
@@ -32,11 +33,16 @@
 </template>
 
 <script>
+    import headerComponent from '@/common/Header.vue';
     export default {
         data() {
             return {
-                dataList: {}
+                dataList: {},
+                logo: "我的消息",
             };
+        },
+        components:{
+            headerComponent
         },
         mounted() {
             this.mInit();
@@ -58,7 +64,7 @@
 <style scoped>
     .message{
         width: 100%;
-        margin-top: 50px;
+        /* margin-top: 50px; */
     }
     .msg-panel{
         display: flex;
