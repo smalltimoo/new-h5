@@ -29,7 +29,7 @@
           <div style="margin-top: 10px">{{$t('member.onlineDeposit.od46')}}</div>
           <div v-if="selectData.accountType==1">{{$t('member.onlineDeposit.od47')}}</div>
           <div v-if="selectData.accountType==2">{{$t('member.onlineDeposit.od48')}}</div>
-          <div style="color: #cd0005">{{$t('member.onlineDeposit.od49')}}</div>
+          <div style="color: #2d8cf0">{{$t('member.onlineDeposit.od49')}}</div>
         </div>
       </div>
       <div class="panel" v-else>

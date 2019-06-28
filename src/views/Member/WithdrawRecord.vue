@@ -285,7 +285,7 @@
     }
 
     .success {
-        background-color: #cd0005;
+        background-color: #2d8cf0;
     }
 
     .failed {

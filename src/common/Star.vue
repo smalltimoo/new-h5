@@ -3,12 +3,11 @@
     <div class="star mb-10" :class="starType">
         <div v-if="type == 'flor'" class="gou" v-for = "(itemClass,index) in itemClassess" :key="index">
             <span class="star-item"  :class="itemClass" :key="index">
-                <!-- {{++index}}天 -->
             </span>
             <span class="week">{{week[index]}}</span>
         </div>
         
-        <span class="star-item" v-else v-for = "(itemClass,index) in itemClassess" :class="itemClass" :key="index">
+        <span class="star-item" v-if="type=='star'" v-for = "(itemClass,index) in itemClassess" :class="itemClass" :key="index">
             {{++index}}天
         </span>
     </div>
@@ -29,12 +28,13 @@
             size: {
                 type : Number//参数：尺寸
             },
-            score: {
-                type : Number//参数：评分
-            }
+            // score: {
+            //     type : Array//参数：评分
+            // }
          },
          data() {
              return {
+                 score:[],
                  week:['周一','周二','周三','周四','周五','周六','周日']
              }
          },
@@ -42,29 +42,25 @@
             starType(){//设置星星尺寸
                 return "star-" + this.size;
             },
-            itemClassess(){console.info(111)
-                let result = [];//记录状态的数组
-                let score = Math.floor(this.score * 2) / 2;
-                let hasDecimal = score % 1 !==0;
-                let integer = Math.floor(score);//向下取整
-                //全星
-                for(let i = 0; i < integer; i++){
-                    result.push(CLS_ON);
-                }
-                // //半星
-                // if(hasDecimal){
-                //     result.push(CLS_HALF);
-                // }
-                //无星
-                // if(result.length < LENGTH){
-                //     result.push(CLS_OFF);
-                // }
-                for(let i= result.length;i<LENGTH;i++){
-                    result.push(CLS_OFF)
-                }
-                console.info(result)
-                return result;
+            itemClassess(){
+                return this.score.map(item=>{
+                    return Object.values(item)[0]?CLS_ON:CLS_OFF
+                });
             }
+         },
+         methods:{
+             
+            getSignDays() {
+            this.$http.get("/memberUser/getSignDays.json").then(result => {
+                if (result.code == 0) {
+                console.info(result.data)
+                this.score = result.data.weekIsSign;
+                }
+            });
+            }
+         },
+         created(){
+             this.getSignDays()
          }
     }
 </script>

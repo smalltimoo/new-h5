@@ -10,17 +10,17 @@
             <el-divider direction="vertical"></el-divider>
             <span>
               今日已领取
-              <font style="color:#317cfd">{{vm.dayIntegral}}</font>积分
+              <font style="color:#317cfd">{{vm2.dayIntegral/100}}</font>积分
             </span>
           </div>
         </div>
-        <span class="btn" v-if="!vm.isSign" @click="mShow = true">签到</span>
-        <span class="btn" v-else>已签到</span>
+        <span class="btn" v-if="!vm2.isSign" @click="checkIn">签到</span>
+        <span class="btn aready" v-else>已签到</span>
       </section>
       <section class="areacard">
-        <span>本月漏签&nbsp;2&nbsp;天</span>
+        <span>本月已签到&nbsp;{{vm2.monthSignDays}}&nbsp;天</span>
         <span>
-          你已连续签到&nbsp;{{checkInVm.continuitySignDays}}&nbsp;天
+          你已连续签到&nbsp;{{vm2.continuitySignDays}}&nbsp;天
           <span class="rightsanjiao"></span>
         </span>
       </section>
@@ -29,7 +29,7 @@
           <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
           <template slot="dateCell" slot-scope="{date, data}">
             <p
-              :class="data.isSelected ? 'is-selected' : ''"
+              :class="vm2.signDates.indexOf(data.day)>-1 ? 'is-selected' : ''"
             >{{ data.day.split('-').slice(2).join('-') }}</p>
           </template>
         </el-calendar>
@@ -45,15 +45,14 @@
       </section>
     </div>
     <van-dialog v-model="mShow" title="签到成功" :className="'vanmodal'">
-      <star style="margin-top:130px;" :size="48" :score="5"></star>
-      <el-divider>已累计签到一天，获得20积分</el-divider>
+      <star style="margin-top:130px;" :size="48" :score="checkInVm.weekIsSign" :type="'star'"></star>
+      <el-divider>已累计签到{{checkInVm.sumSignDays}}天，获得{{checkInVm.sumSignIntegral/100}}积分</el-divider>
     </van-dialog>
   </div>
 </template>
 <script>
 import headerComponent from "@/common/Header.vue";
 import star from "@/common/Star.vue";
-import StarRate from "vue-cute-rate";
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
 export default {
@@ -78,6 +77,7 @@ export default {
         isSign: 0,
         dayIntegral: 0
       },
+      vm2: {},
       activityRules: [],
       checkInVm: {}
     };
@@ -95,8 +95,11 @@ export default {
         .get("/activity/queryMemberSignIntegral.json", {})
         .then(result => {
           if (result.code == 0) {
-            this.vm.isSign = result.data.isSign;
-            this.vm.dayIntegral = result.data.dayIntegral;
+            console.info(result.data);
+            // this.vm.isSign = result.data.isSign;
+            // this.vm.dayIntegral = result.data.dayIntegral;
+            // result.data.isSign = 0;
+            this.vm2 = result.data;
           }
         });
     },
@@ -106,6 +109,18 @@ export default {
         .then(result => {
           if (result.code == 0) {
             this.activityRules = result.data.list;
+          }
+        });
+    },
+    checkIn() {
+      this.$http
+        .post("/activity/joinActivity.json", {
+          activityType: 10,
+          memberId: this.cLoginUser.id
+        })
+        .then(result => {
+          if (result.code == 0) {
+            this.mShow = true;
           }
         });
     },
@@ -162,6 +177,9 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+    span.aready {
+      background-color: #f90;
     }
   }
   .areacard {

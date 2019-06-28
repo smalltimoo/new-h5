@@ -260,7 +260,7 @@
           <div style="margin-top: 10px">{{$t('member.onlineDeposit.od46')}}</div>
           <div v-if="selectData.accountType==1">{{$t('member.onlineDeposit.od47')}}</div>
           <div v-if="selectData.accountType==2">{{$t('member.onlineDeposit.od48')}}</div>
-          <div style="color: #cd0005">{{$t('member.onlineDeposit.od49')}}</div>
+          <div style="color: #2d8cf0">{{$t('member.onlineDeposit.od49')}}</div>
         </div>
       </div>
       <div class="panel" v-else>
@@ -807,7 +807,14 @@ export default {
       this.mUnderlineTypes();
       this.mCompanyAccount();
       this.mBanktypes();
+      
     }
+    this.$http.post("/memberUser/memberamount.json").then((result)=>{
+      if(result.code == 0){
+        console.info(result.data)
+        this.yue = (result.data/100).toFixed(2)
+      }
+     })
   }
 };
 </script>
@@ -824,11 +831,11 @@ export default {
   }
   .header-left {
     width: 70%;
-    padding-top: 10px;
+    // padding-top: 10px;
     background-color: #fff;
     font-size: 16px;
     color: #606266;
-    padding-bottom: 10px;
+    // padding-bottom: 10px;
   }
   .activity-type::-webkit-scrollbar {
     display: none;

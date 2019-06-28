@@ -45,7 +45,7 @@ export default {
   data() {
     return {
       // logo:'ss',
-      yue: 5100,
+      yue: '',
       // jifen:2000
     };
   },
@@ -63,8 +63,18 @@ export default {
       } else {
         this.$router.go(-1); //返回上一层
       }
+    },
+    
+  },
+  created () {
+     this.$http.post("/memberUser/memberamount.json").then((result)=>{
+      if(result.code == 0){
+        console.info(result.data)
+        this.yue = (result.data/100).toFixed(2)
+      }
+     })
+      // this.yue = await this.mgetToalCoin();
     }
-  }
 };
 </script>
 

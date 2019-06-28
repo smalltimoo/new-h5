@@ -8,13 +8,14 @@
           <span class="count">8888.00</span>
             
         </div>
-        <span class="btn qiandao">立即签到</span>
-        <span class="btn jifenshop">积分商城</span>
+        <span class="btn qiandao" v-if="!vm.isSign" @click="$router.push({name:'checkin'})">立即签到</span>
+        <span class="btn qiandao" v-else>已签到</span>
+        <span class="btn jifenshop"  @click="$router.push({name:'Score'})">积分商城</span>
       </section>
       <section class="areacard">
-        <span class="text1">已连续签到&nbsp;<font>2&nbsp;天</font></span>
+        <span class="text1">已连续签到&nbsp;<font>{{vm.continuitySignDays}}&nbsp;天</font></span>
         <span class="text2">明日签到即可获得&nbsp;<font>5&nbsp;积分</font></span>
-        <star :size="48" :score="7" :type="'flor'"></star>
+        <star :size="48" :type="'flor'"></star>
       </section>
       <div class="title" >
         <h3 class="title_main">积分任务</h3>
@@ -31,7 +32,8 @@
               <p class="pri_title">{{item.title}}</p>
               <p class="pri_desc">{{item.desc}}</p>
             </div>
-            <span class="btnl">去完成</span>
+            <span class="btnl" v-if="item.type == 0">去完成</span>
+             <span class="btnl" v-else>已完成</span>
           </div>
         </div>
       </section>
@@ -45,7 +47,7 @@ import star from "@/common/Star.vue"
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
 export default {
-  name: "checkin",
+  name: "pointcenter",
   components: {
     headerComponent,
     star
@@ -59,21 +61,36 @@ export default {
   data() {
     return {
       logo: "积分中心",
+      vm:{},
+      checkInVm:{},
       prilist: [
         {
-          title: "10元现金券",
-          desc: "打码满2000元,期限>=25天可用",
-          img: "shiyuan"
+          title: "签到",
+          desc: "连续签到可获得积分",
+          img: "shiyuan",
+          type:0,
+          routeName:'checkin'
         },
         {
-          title: "10元现金券",
-          desc: "打码满2000元,期限>=25天可用",
-          img: "qukuan"
+          title: "打码",
+          desc: "打码越多，赠送积分越多",
+          img: "qukuan",
+          type:0,
+          routeName:'checkin'
         },
         {
-          title: "10元现金券",
-          desc: "打码满2000元,期限>=25天可用",
-          img: "lihe"
+          title: "推荐我们",
+          desc: "成功推荐一位即可获得500积分",
+          img: "lihe",
+          type:0,
+          routeName:'checkin'
+        },
+        {
+          title: "完善资料",
+          desc: "完善资料可获得积分",
+          img: "lihe",
+          type:0,
+          routeName:'checkin'
         }
       ],
      };
@@ -82,9 +99,32 @@ export default {
     getpaysrc(a) {
       return require(`@/assets/images/membercentre/${a}@2x.png`);
     },
+    queryIntegral() {
+      this.$http
+        .get("/activity/queryMemberSignIntegral.json", {})
+        .then(result => {
+          if (result.code == 0) {
+            console.info(result.data);
+            // this.vm.isSign = result.data.isSign;
+            // this.vm.dayIntegral = result.data.dayIntegral;
+            // result.data.isSign = 0;
+            this.vm = result.data;
+          }
+        });
+    },
+    getSignDays() {
+      this.$http.get("/memberUser/getSignDays.json").then(result => {
+        if (result.code == 0) {
+          console.info(result.data)
+          this.checkInVm = result.data;
+        }
+      });
+    }
   },
   created() {
     // this.mInit();
+    this.queryIntegral();
+    this.getSignDays();
   }
 };
 </script>
@@ -171,9 +211,6 @@ export default {
       font{
         color:@basecolor;
       }
-    }
-    star {
-
     }
     
   }

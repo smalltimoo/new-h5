@@ -28,6 +28,7 @@ export default {
       callback: undefined,
       onclose: undefined
     },
+    yue:0,
     noticeMessage: {
       show: false,
       index: 0
@@ -38,6 +39,9 @@ export default {
   getters: {
     getLoginUser: state => {
       return state.loginUser;
+    },
+    getLoginUserYue: state =>{
+      return state.yue
     },
     getNeedLogin: state => {
       let needLogin = false;
@@ -70,6 +74,10 @@ export default {
     [types.SAVE_LOGIN_USER](state, user) {
       state.loginUser = user;
       sessionStorage.setItem("loginUser", JSON.stringify(user));
+    },
+    [types.SAVE_LOGIN_USER_YUE](state, user) {
+      state.loginUserYue = user;
+      sessionStorage.setItem("loginUserYue", JSON.stringify(user));
     },
     [types.LOAD_LOGIN_USER](state) {
       if (isEmptyObject(state.loginUser) || !state.loginUser) {
@@ -123,6 +131,9 @@ export default {
   actions: {
     [types.SAVE_LOGIN_USER]({ commit }, payload) {
       commit(types.SAVE_LOGIN_USER, payload);
+    },
+    [types.SAVE_LOGIN_USER_YUE]({ commit }, payload) {
+      commit(types.SAVE_LOGIN_USER_YUE, payload);
     },
     [types.LOAD_LOGIN_USER]({ commit }) {
       commit(types.LOAD_LOGIN_USER);

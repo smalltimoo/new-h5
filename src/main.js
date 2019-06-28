@@ -309,3 +309,52 @@ Vue.directive('preventReClick', {
     })
   }
 })
+
+/**
+ *
+ * 对字符传进行加密掩码
+ * by smalltimoo
+ * @param {*} str
+ * @param {*} frontLen  开头保留的长度
+ * @param {*} endLen    结尾保留的长度
+ * @returns
+ */
+Vue.prototype.plusXing = function(str,frontLen, endLen) {
+  var len =str.length -frontLen - endLen;
+  let xing = [...Array(len)].map(_=>'*').join('');
+  return str.substring(0,frontLen) + xing +str.substring(str.length -endLen);
+  }
+
+  /*
+*@param s 即将被转化的字符  String
+*@param num 字符的间隔    Number
+*@param type 字符的类型  String
+*/
+Vue.prototype.getSpace = function (s,num,type){
+    //过滤了空格的存在
+    //实际中根据需求是否必须去掉空格
+    s = s.replace(/\s*/g,'');
+    if(s.length === 0){
+        return '';
+    }
+    if(s.length < num && s.length !== 0){
+        return s;
+    }
+    var m,n,res = '';
+    var reg = new RegExp('(\\w{'+num+'})','g');
+    var reg2 = new RegExp('(?:\\w{'+num+'})+(\\w+)','g');
+    var reg3 = new RegExp(''+type+'$');
+    while(m = reg.exec(s)){
+        res += m[1] + type;
+    }
+    if(s.length%num == 0){
+        return res.replace(reg3,'');
+    }else{
+        var n = reg2.exec(s);
+        return (res+n[1]);
+    }
+}
+
+  window.oncontextmenu=function(e){
+    e.preventDefault();
+  }

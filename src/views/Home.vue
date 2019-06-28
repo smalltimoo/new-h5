@@ -32,14 +32,19 @@
         </div>
       </div>
       <div class="game_block">
-        <router-link  class="game_link" v-for="(item,index) in companyCustomGames" :to="{name:'Games',params:{typeId:item.typeId}}"  :key="index">
-            <el-image :src="item.mobileBackgroundUrl" :fit="'cover'">
-              <div slot="placeholder" class="image-slot">
-                加载中<span class="dot">...</span>
-              </div>
-            </el-image>
+        <router-link
+          class="game_link"
+          v-for="(item,index) in companyCustomGames"
+          :to="{name:'Games',params:{typeId:item.typeId}}"
+          :key="index"
+        >
+          <el-image :src="item.mobileBackgroundUrl" :fit="'cover'">
+            <div slot="placeholder" class="image-slot">
+              加载中
+              <span class="dot">...</span>
+            </div>
+          </el-image>
         </router-link>
-        
       </div>
       <div class="activity">
         <div class="title">
@@ -66,7 +71,7 @@ import { mapState } from "vuex";
 require("islider.js");
 import message from "@/mixins/message";
 import types from "../store/mutation-types";
-import  headerComponent from '@/common/Header.vue'
+import headerComponent from "@/common/Header.vue";
 function StartGameForIframe(gameId) {
   _this.mEnterGame(gameId);
 }
@@ -118,7 +123,7 @@ export default {
       },
       yue: 2000.0,
       logo: "万豪娱乐",
-      num: 2,
+      num: 2
     };
   },
   computed: {
@@ -141,7 +146,7 @@ export default {
       return this.$store.getters.getGonggaos;
     },
     getDate() {
-      return (new Date).getDate();
+      return new Date().getDate();
     },
     getBanner() {
       var mobileBanner = this.$store.getters.getSysPicObj.mobileBanner;
@@ -150,7 +155,7 @@ export default {
         let bs = mobileBanner.slice().split(",");
         bs.map(item => {
           // banner.push({ imgUrl: item });
-          banner.push({content:item})
+          banner.push({ content: item });
         });
       }
       return banner;
@@ -244,23 +249,24 @@ export default {
       }
     },
     allGame() {
-      this.$http
-        .post("/webnav.json", {})
-        .then(result => {
-          if (result.code == 0) {
-            this.companyCustomGames = Object.assign(
-              [],
-              result.data.companyCustomGametypes.sort((a,b)=>{a-b})
-            );
-          }
-        });
+      this.$http.post("/webnav.json", {}).then(result => {
+        if (result.code == 0) {
+          this.companyCustomGames = Object.assign(
+            [],
+            result.data.companyCustomGametypes.sort((a, b) => {
+              a - b;
+            })
+          );
+        }
+      });
     },
     activity() {
+     
       this.$http.post("/activities.json", { sysId: 0 }).then(result => {
         if (result.code == 0) {
           this.activities = Object.assign([], result.data.activityVoList);
           let data2 = this.activities.map((item, idx) => {
-          item.content = `<div class="active_box" style="width:312px;height:100%;">
+            item.content = `<div class="active_box" style="width:312px;height:100%;">
                                         <div class="active_title" style="width:100%;height:22px;">
                                           <span style="width: 110px;text-align: left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis" >${
                                             item.activityTitle
@@ -270,21 +276,29 @@ export default {
                                         <img src="${item.mobileImg}">
                                       </div>
                                       `;
-          return item;
-        });
-        console.info(data2)
-        //优惠活动
-        self.L = new iSlider(
-          document.getElementById("iSlider-wrapper2"),
-          data2,
-          {
-            isLooping: 1,
-            isOverspread: 1,
-            isAutoplay: true,
-            animateTime: 800,
-            animateType: "depth"
-          }
-        );
+            return item;
+          });
+          console.info(data2);
+          //优惠活动
+          self.L = new iSlider(
+            document.getElementById("iSlider-wrapper2"),
+            data2,
+            {
+              isLooping: 1,
+              isOverspread: 1,
+              isAutoplay: true,
+              animateTime: 800,
+              animateType: "depth",
+              fixPage: false
+            }
+          );
+            self.L.delegate("click", "img", function(ev) {
+              ev = ev || window.event;
+              console.info(ev);
+              let imgUrl = ev.srcElement.currentSrc;
+              let item = _this.activities.find(ele=>ele.mobileImg == imgUrl);
+              _this.$router.push({name:'Discount',query:{id:item.id}})``
+            });
         }
       });
     },
@@ -309,6 +323,7 @@ export default {
       setTimeout(() => {
         let self = this;
         let data = this.getBanner;
+        console.info(data)
         //轮盘
         self.S = new iSlider(
           document.getElementById("iSlider-wrapper"),
@@ -319,12 +334,18 @@ export default {
             isAutoplay: true,
             animateTime: 800,
             animateType: "depth",
-            isDebug:true,
-            depth:'.9'
+            isDebug: true,
+            depth: ".9",
+            fixPage: false
           },
           300
         );
-        
+        self.S.delegate("click", "img", function(ev) {
+          ev = ev || window.event;
+          console.info(ev);
+          let imgUrl = ev.srcElement.currentSrc;
+          
+        });
       });
     },
     requireimg() {
@@ -341,13 +362,13 @@ export default {
         return require(`../assets/images/2x/${val}`);
       });
     },
-    initEvent(){
-      $('#iSlider-wrapper2').on('click',(event)=>{
+    initEvent() {
+      $("#iSlider-wrapper2").on("click", event => {
         event = event || window.event;
-        if($(event.target).hasClass('active_box')){
-            console.info(event.target)
+        if ($(event.target).hasClass("active_box")) {
+          console.info(event.target);
         }
-      })
+      });
     }
   },
   mounted() {
@@ -362,9 +383,7 @@ export default {
     this.allGame();
     this.activity();
     // this._initSwiper();
-    ;
     this.requireimg();
-    this.initEvent();
 
     // window.onscroll = function () {
     //     let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
@@ -393,18 +412,16 @@ export default {
   },
   destroyed() {
     _this = undefined;
-    window.onscroll = function() {
-      if (document.querySelector(".header")) {
-        document.querySelector(".header").style.position = "fixed";
-        document.querySelector(".header").style.marginTop = "0";
-      }
-    };
+    // window.onscroll = function() {
+    //   if (document.querySelector(".header")) {
+    //     document.querySelector(".header").style.position = "fixed";
+    //     document.querySelector(".header").style.marginTop = "0";
+    //   }
+    // };
   }
 };
 </script>
 <style lang="less" scoped>
-
-
 .notice {
   width: 348px;
   height: 67px;
@@ -506,7 +523,7 @@ export default {
     position: absolute;
   }
 
- /deep/ ul {
+  /deep/ ul {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -558,9 +575,9 @@ export default {
 }
 .game_block a.game_link {
   margin: 7px 4px;
-  img{
+  img {
     width: 100%;
-    height: 100%
+    height: 100%;
   }
 }
 

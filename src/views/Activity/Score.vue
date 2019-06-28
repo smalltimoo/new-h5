@@ -347,6 +347,7 @@ export default {
   methods: {
     notgoback(data) {
       this.buy = data;
+      this.order = data
     },
     mGetCoin() {
       this.mLoading(true);

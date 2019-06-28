@@ -20,6 +20,9 @@ export default {
         cLoginUser: function () {
             return this.$store.getters.getLoginUser;
         },
+        cLoginUserYue: function(){
+            return this.$store.getters.getLoginUserYue
+        },
         cNeedLogin() {
             return this.$store.getters.getNeedLogin;
         },
@@ -152,6 +155,7 @@ export default {
                     .then(result => {
                         if (result.code == 0) {
                             this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
+                            this.mgetToalCoin();
                             this.mLoading(false);
                             this.mMessage(
                                 this.$t('mixin.loginSuccess'),
@@ -168,6 +172,9 @@ export default {
                         }
                     });
             });
+        },
+        mgetToalCoin(){
+            return this.$http.post("/memberUser/memberamount.json")
         },
         mGetCoin() {
             this.mLoading(true);

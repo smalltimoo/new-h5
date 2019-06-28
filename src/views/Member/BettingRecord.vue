@@ -354,7 +354,7 @@
     }
 
     .success {
-        background-color: #cd0005;
+        background-color: #2d8cf0;
     }
 
     .failed {
@@ -380,7 +380,7 @@
         width: 100%;
         margin-top: 43px;
         font-size: 14px;
-        background-color: #cd0005;
+        background-color: #2d8cf0;
         height: 40px;
         display: flex;
         color: #fff;

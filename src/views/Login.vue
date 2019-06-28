@@ -118,7 +118,7 @@
     </van-popup>
           
         </div>
-        <line-selectdlg :isshow = "isshowLines"></line-selectdlg>
+        <line-selectdlg :is-show="isshowLines" @close="CB_dialog"></line-selectdlg>
     </div>
 </template>
 <script>
@@ -339,6 +339,10 @@
                     }
                 });
             },
+            
+                CB_dialog (val){
+                this.isshowLines = false;
+                },
             getCode() {
                 if (this.getCodes) {
                     if (this.phone.trim() == "") {

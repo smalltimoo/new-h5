@@ -1,13 +1,21 @@
 <template>
   <div class="withdraw">
+     <router-link :to="{name:'UserBankCard'}" v-if="bindBank" >
+                <div style="display: flex;align-items: center">
+                    <Icon type="md-add-circle"
+                          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
+                    <span>{{ $t('agentMember.addBank')}}</span>
+                </div>
+                <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
+            </router-link>
     <div
       class="user_bank_card"
-      :style="{ 'background': 'url(' + require('../../assets/images/withdraw/'+bgDef+'@2x.png') + ') no-repeat center center', 'background-size': '100% 100%'}"
+      v-else
+      :style="{ 'background-image': 'url(' + bankInfo.drawBackgroundImg + ')', 'background-size': '100% 100%'}"
     >
-      <!-- <div class="item" v-for="(item ,index) in withdrawData" :key="index">
-        <span class="name">{{item.gameCompanyName}}</span>
-        <span class="count">{{item.coin}}</span>
-      </div>-->
+      <span class="bankTypeName">{{bankInfo.bankTypeName}}</span>
+      <div class="account"></div>
+      <span class="drawAddress">姓名：{{bankInfo.drawAddress}}</span>
     </div>
 
     <div class="recharge" style="margin-top: 14px;">
@@ -21,7 +29,7 @@
         </span>
         <input
           type="number"
-          v-model="amount"
+          v-model="vm.dealcoin"
           class="input-number"
           :placeholder="$t('member.onlineDeposit.os10')"
         >
@@ -32,42 +40,54 @@
           v-if="index<5"
           :key="index"
           :class="{active: activeAmount==item}"
-          @click="amount=item;activeAmount=amount"
+          @click="vm.dealcoin=item;activeAmount=vm.dealcoin"
         >{{$t('symbol.t1')}}{{ item }}</span>
       </div>
       <div class="can_withdraw">
         <span>
           {{$t('member.onlineDeposit.os11')}}
-          <span class="count">{{amount}}</span>
+          <span class="count">{{parseInt(yue)}}</span>
           {{$t('yuan')}}
         </span>
-        <span class="all_withdraw">{{$t('member.onlineDeposit.os12')}}</span>
+        <span
+          class="all_withdraw"
+          @click="vm.dealcoin = parseInt(yue)"
+        >{{$t('member.onlineDeposit.os12')}}</span>
       </div>
       <div>
         <span style="font-size:15px;color:#4c4c4c" class="title">{{$t('member.onlineDeposit.os13')}}</span>
         <span style="font-size:15px;color:#bfc2cc" class="tmux">{{$t('member.onlineDeposit.os14')}}</span>
       </div>
-      <div class="passContainer">
-        <input type="password">
-        <div class="passItem"></div>
-        <div class="passItem"></div>
-        <div class="passItem"></div>
-        <div class="passItem"></div>
-        <div class="passItem"></div>
-        <div class="passItem"></div>
-      </div>
-      <cube-button :active="true" @click="save" class="save-btn">{{$t('member.onlineDeposit.od15')}}</cube-button>
+      <el-input
+        :type="'password'"
+        v-model="vm.coinpwd"
+        placeholder="请输入提款密码"
+        maxlength="8"
+      >
+      </el-input>
+      <cube-button
+        :active="true"
+        @click="mSave"
+        class="save-btn"
+      >{{$t('member.onlineDeposit.od15')}}</cube-button>
     </div>
   </div>
 </template>
 
 <script>
+import { version } from "punycode";
 export default {
   name: "withdraw",
   props: ["moneys", "amount", "activeAmount"],
   data() {
     return {
-      bgDef: "北京银行"
+      bankInfo: [],
+      account: "",
+      bindBank: false,
+      vm: {
+        dealcoin: "",
+        coinpwd: ""
+      }
       //   amount:'',
       //   moneys:[]
     };
@@ -76,31 +96,112 @@ export default {
     createLocalData() {
       this.$http.post("/memberUser/getbindbank.json").then(result => {
         if (result.code === 0) {
-          console.info(result);
+          this.bankInfo = result.data;
+          this.account = this.plusXing(this.bankInfo.account, 0, 4);
+          let i = 0;
+          let $accountDom = $(".account");
+          while (i * 4 <= this.account.length + 1) {
+            $accountDom.append(
+              `<span class="count_li">${this.account.substr(4 * i, 4)}</span>`
+            );
+            i++;
+          }
         }
       });
     },
-    selectoptionsa(a) {
-      if (this.value2 && a === this.value2) {
-        [this.value2, this.ovalue2] = [this.ovalue1, this.ovalue1];
-      }
-      this.ovalue1 = a;
+    mInit() {
+      this.mLoading(true);
+      this.$http.all([this.mGetAgentCashBalance(), this.mGetBindBank()]).then(
+        this.$http.spread((resAgentCashBalance, rbindbank) => {
+          if (resAgentCashBalance.data == -1) {
+          } else if (resAgentCashBalance.data == -2) {
+            this.bindBank = true;
+            this.$Message.warning(this.$t("agent.withdrawals.withdrawals15")); //请先绑定银行卡
+          } else {
+            this.vmCard.agentCashBalance = resAgentCashBalance.data;
+          }
+          if (rbindbank.code == 0) {
+            this.vmCard = Object.assign(this.vmCard, rbindbank.data);
+          }
+          this.mLoading(false);
+        })
+      );
     },
-    selectoptionsb(a) {
-      if (this.value1 && a === this.value1) {
-        [this.value1, this.ovalue1] = [this.ovalue2, this.ovalue2];
+    mGetAgentCashBalance() {
+      return this.$http.get("/agentUser/agentCashBalance.json");
+    },
+    mGetBindBank() {
+      return this.$http.get("/memberUser/getbindbank.json");
+    },
+    mSave() {
+      if (this.loading) {
+        return;
       }
-      this.ovalue2 = a;
+      if (this.vm.dealcoin == "") {
+        this.$Message.warning(this.$t("agent.withdrawals.withdrawals16")); //取现金额不能为空
+        return;
+      }
+      if (this.vm.dealcoin < 1) {
+        this.$Message.warning(this.$t("agent.withdrawals.withdrawals17")); //取现金额必须大于1元
+        return;
+      }
+      if (this.vm.coinpwd == "") {
+        this.$Message.warning(this.$t("agent.withdrawals.withdrawals18")); //请输入资金密码
+        return;
+      }
+      if (this.vm.dealcoin > this.yue) {
+        this.$Message.warning(this.$t("agent.withdrawals.withdrawals19")); //余额不足
+        return;
+      }
+      this.mLoading(true);
+      this.loading = true;
+      let params = Object.assign({}, this.vm);
+      this.$http
+        .post("/agentUser/agentcash.json", params)
+        .then(result => {
+          this.mLoading(false);
+          this.loading = false;
+          if (result.code == 0) {
+            this.vm.dealcoin = 0;
+            if (result.data == 0) {
+              this.$Message.success(
+                this.$t("agent.withdrawals.withdrawals20")
+              ); //提现成功
+              this.mInit();
+            } else if (result.data == 1) {
+              this.setPwd = true;
+              this.$Message.warning(
+                this.$t("agent.withdrawals.withdrawals14")
+              );
+              this.mAlert(this.$t("agent.withdrawals.withdrawals21"), () => {
+                //请先设置资金密码
+                this.$router.push({ name: "SafaPassword" });
+              });
+            } else if (result.data == 2) {
+              this.bindBank = true;
+              this.$Message.warning(
+                this.$t("agent.withdrawals.withdrawals22")
+              ); //请先绑定银行卡
+            }
+          } else {
+            this.$Message.error(result.message);
+          }
+        })
+        .catch(error => {
+          this.vm.dealcoin = 0;
+          this.loading = false;
+        });
     }
   },
   created() {
     this.createLocalData();
-    this.$parent.moneys=[]
+    this.$parent.moneys = [];
+    this.yue = this.$parent.yue;
   }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
 .withdraw {
   width: 100%;
   margin-top: 8px;
@@ -109,23 +210,27 @@ export default {
     height: 175.5px;
     border-radius: 8px;
     margin: 0 auto;
-    .item {
-      display: flex;
-      width: 92px;
-      height: 65px;
-      flex-direction: column;
-      padding: 10px 0;
-      border: 1px solid #f3f3f3;
-      span.count {
-        margin: 5px 0;
-        color: #3d7eff;
-      }
-      span.name {
-        font-size: 14px;
-        color: #606266;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    /* padding-left: 78px; */
+    padding: 30px 78px;
+    color: #f3f3f3;
+    font-size: 12px;
+
+    .account {
+      width: auto;
+      .count_li {
+        display: inline-block;
+        font-size: 18px;
+        padding-right: 10px;
+        color: #fff;
+        // box-shadow: 0px 1px 1px 0px rgba(211, 4, 30, 0.5);
       }
     }
   }
+
   .can_withdraw {
     width: 351px;
     height: 40px;
@@ -138,7 +243,7 @@ export default {
       font-size: 12px;
       color: #4c4c4c;
       .count {
-        color: #cd0005;
+        color: #2d8cf0;
       }
     }
     .all_withdraw {
@@ -148,7 +253,7 @@ export default {
   .passContainer {
     // border-bottom: 1px solid #f3f3f3;
     // border-radius: 16px;
-    width:351px;
+    width: 351px;
     height: 50px;
     margin: 0 auto;
     overflow: hidden;
@@ -161,7 +266,7 @@ export default {
     .passItem {
       width: 50px;
       height: 100%;
-       border-bottom: 1px solid #f3f3f3;
+      border-bottom: 1px solid #f3f3f3;
       // float: left;
       // margin-right: 0;
       box-sizing: border-box;

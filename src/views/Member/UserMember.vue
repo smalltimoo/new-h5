@@ -5,17 +5,32 @@
       <div class="usercard">
         <div class="userbase">
           <div class="name_block">
-            <div class="icon"></div>
+            <div class="icon user-logo"></div>
+            <div class="user-name" v-if="cLoginUser.userName2">
+              <span class="level-ico level_img_vip0" v-if="memberLevel==0"></span>
+              <span class="level-ico level_img_vip1" v-else-if="memberLevel==1"></span>
+              <span class="level-ico level_img_vip2" v-else-if="memberLevel==2"></span>
+              <span class="level-ico level_img_vip3" v-else-if="memberLevel==3"></span>
+              <span class="level-ico level_img_vip4" v-else-if="memberLevel==4"></span>
+              <span class="level-ico level_img_vip5" v-else-if="memberLevel==5"></span>
+              <span class="level-ico level_img_vip6" v-else-if="memberLevel==6"></span>
+              <span class="level-ico level_img_vip7" v-else-if="memberLevel==7"></span>
+              <span class="level-ico level_img_vip8" v-else-if="memberLevel==8"></span>
+              <span title="新会员" class="level-ico level_img_vip11" v-else-if="memberLevel==11"></span>
+            </div>
             <div class="user_base_info">
-              <p class="name">帅的被人砍</p>
-              <div class="fillinfo" @click="$router.push({name:'safecenter',params:{to:'accountInfo'}})">
+              <p class="name">{{cLoginUser.userName2}}</p>
+              <div
+                class="fillinfo"
+                @click="$router.push({name:'safecenter',params:{to:'accountInfo'}})"
+              >
                 <span class="icon icon_left"></span>
                 <span class="text">快速完善资料</span>
                 <span class="icon icon_right"></span>
               </div>
             </div>
           </div>
-          <div class="qiandao">签到应积分</div>
+          <div class="qiandao" @click="$router.push({name:'checkin'})">签到赢积分</div>
         </div>
         <div class="usercount deposit">
           <div class="count_item">
@@ -131,34 +146,51 @@
       </div>
       <div class="pst-top"></div>
       <div class="router-panel manager">
-        <router-link v-for="(item, index) in routePanel" :to="{name:item.routeName}" :key="index">
-          <div class="wrap">
-            <div class="name_left">
-              <span class="icon_new" :class="{'icon_new_white':!item.newInfo}"></span>
-              <span class="text_name">{{item.name}}</span>
+        <div v-for="(item, index) in routePanel" :key="index">
+          <router-link :to="{name:item.routeName}" v-if="item.type!='lineselect'">
+            <div class="wrap">
+              <div class="name_left">
+                <span class="icon_new" :class="{'icon_new_white':!item.newInfo}"></span>
+                <span class="text_name">{{item.name}}</span>
+              </div>
+              <div class="link_right">
+                <span class="link_text">{{item.text}}</span>
+                <span class="sanjiao"></span>
+              </div>
             </div>
-            <div class="link_right">
-              <span class="link_text">{{item.text}}</span>
-              <span class="sanjiao"></span>
+            <!-- <span>{{this.$t('member.userMember.um11')}}</span> -->
+          </router-link>
+          <div v-else @click="isshowLines = true">
+            <div class="wrap">
+              <div class="name_left">
+                <span class="icon_new" :class="{'icon_new_white':!item.newInfo}"></span>
+                <span class="text_name">{{item.name}}</span>
+              </div>
+              <div class="link_right">
+                <span class="link_text">{{item.text}}</span>
+                <span class="sanjiao"></span>
+              </div>
             </div>
+            <!-- <span>{{this.$t('member.userMember.um11')}}</span> -->
           </div>
-          <!-- <span>{{this.$t('member.userMember.um11')}}</span> -->
-        </router-link>
+        </div>
       </div>
       <div style="height: 20px;"></div>
     </div>
+    <line-selectdlg :is-show="isshowLines" @close="CB_dialog"></line-selectdlg>
   </div>
 </template>
 <script>
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
 import headerComponent from "@/common/Header.vue";
-
+import LineSelectdlg from "@/common/LineSelectdlg.vue";
 export default {
   data() {
     return {
       logo: "我的",
       amount: "",
+      isshowLines: false,
       agnetLevel: "",
       isDraw: false,
       memberLevel: 0,
@@ -168,30 +200,31 @@ export default {
         {
           name: "帮助中心",
           newInfo: true,
-          text: "专业解答",
+          text: "专业解答问题",
           routeName: "helpcenter"
         },
         {
           name: "安全中心",
           newInfo: false,
-          text: "专业解答",
+          text: "",
           routeName: "safecenter"
         },
         {
           name: "我的消息",
           newInfo: true,
-          text: "专业解答",
-          routeName:'MessageList'
+          text: "",
+          routeName: "MessageList"
         },
         {
           name: "线路选择",
           newInfo: true,
-          text: "专业解答"
+          text: "",
+          type: "lineselect"
         },
         {
           name: "系统设置",
           newInfo: true,
-          text: "专业解答",
+          text: "",
           routeName: "systemset"
         }
       ],
@@ -215,7 +248,8 @@ export default {
     };
   },
   components: {
-    headerComponent
+    headerComponent,
+    LineSelectdlg
   },
   mounted() {
     if (!this.toNeedLogin()) {
@@ -317,6 +351,9 @@ export default {
           }
         });
       });
+    },
+    CB_dialog (val){
+      this.isshowLines = false;
     }
   },
   created() {
