@@ -3,9 +3,10 @@
         <div class="header">
             <div class="header-left">
                 <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
+                 <span class="logo">{{ $t('agent.agentThat.agentThatText1')}}</span>
             </div>
             <div class="header-middle">
-                {{ $t('agent.agentThat.agentThatText1')}}
+                <!-- {{ $t('agent.agentThat.agentThatText1')}} -->
             </div>
             <div class="header-right"></div>
         </div>
@@ -187,7 +188,7 @@
         width: 100%;
         height: 100%;
         overflow: auto;
-        margin-top: 44px;
+        /* margin-top: 44px; */
         background: #ffffff;
         z-index: 10;
     }

@@ -279,6 +279,20 @@ export default new Router({
           name: "confirmorder",
           component: () => import("../views/Other/Confirmorder.vue")
         },
+        {
+          path: "shareapp",
+          name: "shareapp",
+          component: () => import("../views/Other/Shareapp.vue")
+        },
+        {
+          path: "sharefri",
+          name: "sharefri",
+          component: () => import("../views/Other/Sharefri.vue")
+        }, {
+          path: "sharerecord",
+          name: "sharerecord",
+          component: () => import("../views/Other/Sharerecord.vue")
+        },
       ]
     }
   ]

@@ -226,6 +226,11 @@ export default {
           newInfo: true,
           text: "",
           routeName: "systemset"
+        },{
+          name: "分享app",
+          newInfo: true,
+          text: "",
+          routeName: "shareapp"
         }
       ],
       countInfo: [

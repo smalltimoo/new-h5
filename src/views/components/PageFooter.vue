@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <ul ref="tabs">
-      <li :class="{active: tab=='Home'}" @click="changeTab('Home')">
+      <li @click="changeTab('Home')">
         <!-- <i class="icon icon-home"></i> -->
         <lottie
           :options="Home_options"
@@ -11,7 +11,7 @@
         />
         <div>{{$t('pageFooter.home')}}</div>
       </li>
-      <li :class="{active: tab=='Discount'}" @click="changeTab('Discount')">
+      <li  @click="changeTab('Discount')">
         <!-- <i class="icon icon-activity"></i> -->
         <lottie
           :options="Discount_options"
@@ -20,7 +20,7 @@
         />
         <div>{{$t('pageFooter.discount')}}</div>
       </li>
-      <li :class="{active: tab == 'Score'}" @click="changeTab('Score')">
+      <li @click="changeTab('Score')">
         <!-- <i class="icon icon-score"></i> -->
         <lottie
           :options="Score_options"
@@ -29,7 +29,7 @@
         />
         <div class="score">{{$t('pageFooter.score')}}</div>
       </li>
-      <li :class="{active: tab=='OnlineDeposit'}" @click="changeTab('OnlineDeposit')">
+      <li @click="changeTab('OnlineDeposit')">
         <!-- <i class="icon icon-deposit"></i> -->
         <lottie
           :options="OnlineDeposit_options"
@@ -38,7 +38,7 @@
         />
         <div>{{$t('pageFooter.onlineDeposit')}}</div>
       </li>
-      <li :class="{active: tab=='UserMember'}" @click="changeTab('UserMember')">
+      <li @click="changeTab('UserMember')">
         <!-- <i class="icon icon-user"></i> -->
         <lottie
           :options="UserMember_options"
@@ -53,6 +53,7 @@
 <script>
 import { mapState } from "vuex";
 import lottie from "vue-lottie";
+import types from "@/store/mutation-types";
 import * as animationData from "@/assets/footeranimate/shouye.json";
 import * as animationData2 from "@/assets/footeranimate/huodong.json";
 import * as animationData3 from "@/assets/footeranimate/shangcheng.json";

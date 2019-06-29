@@ -1,13 +1,50 @@
 <template>
   <div class="agent">
-    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <div class="header">
+      <div class="header-left">
+        <Icon type="ios-arrow-back" class="icon-menu" @click.stop="goBack"/>
+        <span class="logo">{{logo}}</span>
+      </div>
+      <div class="header-middle">
+        <!-- {{$t('member.onlineDeposit.od1')}} -->
+      </div>
+      <div class="header-right">
+         <router-link class="desc" :to="{name:'AgentThat'}">{{$t('agentMember.am2')}}</router-link>
+        <Poptip trigger="click" placement="bottom-end">
+          <i class="icon-menu message"></i>
+          <ul slot="content">
+            <li class="icon-kefu" @click="mOpenCService">{{$t('customservice')}}</li>
+            <li class="icon-qq" :style="{display:cQQ1||cQQ2?'block':'none'}">
+              <a
+                v-if="cQQ1"
+                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'"
+              >{{cQQ1}}</a>
+              <a
+                v-if="cQQ2"
+                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ2+'&version=1&src_type=web'"
+              >{{cQQ2}}</a>
+            </li>
+            <li class="icon-agent" v-if="agentQQ">
+              <a
+                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'"
+              >{{agentQQ}}</a>
+            </li>
+            <li class="icon-line" v-if="sysInfo.lineUrl">
+              <a
+                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'"
+              >{{sysInfo.lineUrl}}</a>
+            </li>
+          </ul>
+        </Poptip>
+      </div>
+    </div>
     <div class="container">
       <div class="usercard">
         <div class="userbase">
           <div class="name_block">
             <div class="icon"></div>
             <div class="user_base_info">
-              <p class="name">帅的被人砍</p>
+              <p class="name">{{cLoginUser.userName2}}({{cLoginUser.id}})</p>
               <div class="fillinfo">
                 {{$t('agentMember.am9')}}
                 <!-- <span class="icon icon_left"></span> -->
@@ -17,7 +54,8 @@
               </div>
             </div>
           </div>
-          <div class="qiandao">{{$t('agentMember.am4')}}</div>
+          <router-link :to="{name:'AgentDrawing'}" class="qiandao">{{$t('agentMember.am4')}}</router-link>
+          <!-- <div class="qiandao">{{$t('agentMember.am4')}}</div> -->
         </div>
         <div class="usercount deposit">
           <div class="count_item">
@@ -92,7 +130,10 @@
             <span>{{$t('agentMember.am17')}}</span>
           </router-link>
           <!-- 下级报表 -->
-          <router-link :to="{name:'mjiaoyi',query:{name:'transactionsDetaillist'}}" class="icon-panel">
+          <router-link
+            :to="{name:'mjiaoyi',query:{name:'transactionsDetaillist'}}"
+            class="icon-panel"
+          >
             <img src="../../assets/images/agent/daili9@2x.png" width="36px">
             <span>{{$t('agentMember.am23')}}</span>
           </router-link>
@@ -102,7 +143,10 @@
             <span>{{$t('agentMember.am18')}}</span>
           </router-link>
           <!-- 交易明细 -->
-          <router-link :to="{name:'mjiaoyi',query:{name:'transactionsDetaillist'}}" class="icon-panel">
+          <router-link
+            :to="{name:'mjiaoyi',query:{name:'transactionsDetaillist'}}"
+            class="icon-panel"
+          >
             <img src="../../assets/images/agent/daili11@2x.png" width="36px">
             <span>{{$t('agentMember.am19')}}</span>
           </router-link>
@@ -174,6 +218,12 @@ export default {
   position: relative;
   color: #fff;
   /* margin-top: -19px; */
+}
+.header-right .desc {
+  font-size: 12px;
+	line-height: 35px;
+	letter-spacing: 1px;
+	color: #303133;
 }
 </style>
 

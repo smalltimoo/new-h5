@@ -14,13 +14,26 @@
           <p class="label_gonggao">公告</p>
         </div>
         <Divider type="vertical"/>
-        <div class="marquee_box">
+        <!-- <div class="marquee_box">
           <ul class="marquee_list" :style="{ top: -num + 'px'}" :class="{marquee_top:num}">
-            <!-- 当显示最后一条的时候（num=0转换布尔类型为false）去掉过渡效果-->
             <li v-for="(item, index) in cGongGaos" :key="index">
               <span>{{item.content}}</span>
             </li>
           </ul>
+        </div> -->
+        <div class="vueBox" style="background: #fdfbde;">
+            <div class="marquee">
+                <div class="marquee_title">
+                    <img style="width: 15px; height: 15px; margin-left: 4px;margin-top: 2px;" src="../../assets/home/laba.png" />
+                </div>
+                <div class="marquee_box">
+                    <ul class="marquee_list" :class="{marquee_top:animate}">
+                        <li v-for="(item, index) in cGongGaos" :key="index">
+                            <span>{{item.content}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
       </div>
       <div class="activity">
@@ -308,16 +321,23 @@ export default {
     },
     showMarquee() {
       let num = this.num;
-      this.cGongGaos.push(this.cGongGaos[0]);
-      var max = this.cGongGaos.length;
-      var that = this;
-      let marqueetimer = setInterval(function() {
-        num++;
-        if (num >= max) {
-          num = 0;
-        }
-        that.num = num * 30;
-      }, 2000);
+      // this.cGongGaos.push(this.cGongGaos[0]);
+      // var max = this.cGongGaos.length;
+      // var that = this;
+      // let marqueetimer = setInterval(function() {
+      //   num++;
+      //   if (num >= max) {
+      //     num = 0;
+      //   }
+      //   that.num = num * 30;
+      // }, 2000);
+
+      this.animate = true;
+      setTimeout(() => {
+          this.cGongGaos.push(this.cGongGaos[0]);
+          this.cGongGaos.shift();
+          this.animate = false;
+      }, 1000)
     },
     neiStyle() {
       setTimeout(() => {
@@ -475,34 +495,34 @@ export default {
   .list_style.active {
     background-color: #3d7eff;
   }
-  .marquee_box {
-    display: block;
-    position: relative;
-    width: 272px;
-    height: 52px; /*关键样式*/
-    overflow: hidden;
-    float: left;
-  }
-  .marquee_list {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .marquee_top {
-    transition: top 0.5s;
-  } /*关键样式*/
-  .marquee_list li {
-    height: 30px; /*关键样式*/
-    line-height: 30px; /*关键样式*/
-    font-size: 14px;
-    padding-left: 20px;
-    background-color: #fff;
-    text-align: left;
-  }
-  .marquee_list li span {
-    padding: 0 2px;
-  }
+  // .marquee_box {
+  //   display: block;
+  //   position: relative;
+  //   width: 272px;
+  //   height: 52px; /*关键样式*/
+  //   overflow: hidden;
+  //   float: left;
+  // }
+  // .marquee_list {
+  //   display: block;
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  // }
+  // .marquee_top {
+  //   transition: top 0.5s;
+  // } /*关键样式*/
+  // .marquee_list li {
+  //   height: 30px; /*关键样式*/
+  //   line-height: 30px; /*关键样式*/
+  //   font-size: 14px;
+  //   padding-left: 20px;
+  //   background-color: #fff;
+  //   text-align: left;
+  // }
+  // .marquee_list li span {
+  //   padding: 0 2px;
+  // }
   .ivu-divider-vertical {
     width: 1px;
     height: 40px;
@@ -602,4 +622,55 @@ export default {
   margin: 0 5px;
   top: 5px;
 }
+
+
+
+.marquee {
+        width: 100%;
+        height: 30px;
+        align-items: center;
+        color: #3A3A3A;
+        background-color: #fdfbde;
+        display: flex;
+        box-sizing: border-box;
+    }
+
+    .marquee_title {
+        padding: 0 20px;
+        height: 20px;
+        font-size: 12px;
+        align-items: center;
+    }
+
+    .marquee_box {
+        display: block;
+        position: relative;
+        width: 60%;
+        height: 30px;
+        overflow: hidden;
+    }
+
+    .marquee_list {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .marquee_top {
+        transition: all 0.5s;
+        margin-top: -30px
+    }
+
+    .marquee_list li {
+        height: 30px;
+        line-height: 30px;
+        font-size: 12px;
+        padding-left: 20px;
+    }
+
+    .marquee_list li span {
+        padding: 0 2px;
+        color: #f1543a;
+    }
 </style>
