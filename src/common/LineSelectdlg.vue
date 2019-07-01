@@ -2,9 +2,9 @@
   <van-dialog class="main" v-model="active" title="线路选择">
     <h3>
       当前线路：
-      <font>线路2</font>
+      <font>{{line}}</font>
     </h3>
-    <van-picker :columns="columns" @confirm="onConfirm"/>
+    <van-picker :columns="columns" @confirm="onConfirm" @change="onChange"/>
   </van-dialog>
 </template>
 <script>
@@ -13,7 +13,8 @@ export default {
     return {
       value: "",
       active: false,
-      columns: []
+      columns: [],
+      line: process.env.VUE_APP_BASE_API
     };
   },
   props: {
@@ -21,7 +22,6 @@ export default {
   },
   methods: {
     minit() {
-      console.info("start:");
       this.$http
         .post("http://192.168.0.168:8082/memberApiList.json")
         .then(result => {
@@ -29,6 +29,12 @@ export default {
             this.columns = JSON.parse(result.data);
           }
         });
+    },
+    onChange(...a) {
+      console.info(a)
+       this.$http.defaults.baseURL = a[1];
+      //  process.env.VUE_APP_BASE_API = a[1];
+       this.line = a[1];
     },
     onConfirm(value) {
       // this.value = value;
@@ -71,12 +77,18 @@ export default {
     display: inline-block;
     font-size: 16px;
   }
-/deep/ .van-picker-column__item {background: #fff; font-size: 13px; color: #393939;}
-/deep/ .van-picker-column__item:nth-child(2n){ background: #f3f3f3;}
-/deep/ .van-picker-column__item--selected {
-  background-color: #3d7eff!important;
-  color: #fff;
-}
+  /deep/ .van-picker-column__item {
+    background: #fff;
+    font-size: 13px;
+    color: #393939;
+  }
+  /deep/ .van-picker-column__item:nth-child(2n) {
+    background: #f3f3f3;
+  }
+  /deep/ .van-picker-column__item--selected {
+    background-color: #3d7eff !important;
+    color: #fff;
+  }
   h3 {
     width: 300px;
     height: 40px;

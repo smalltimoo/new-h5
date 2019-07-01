@@ -14,26 +14,29 @@
           <p class="label_gonggao">公告</p>
         </div>
         <Divider type="vertical"/>
-        <!-- <div class="marquee_box">
-          <ul class="marquee_list" :style="{ top: -num + 'px'}" :class="{marquee_top:num}">
+        <div class="marquee_box">
+          <!-- <ul class="marquee_list" :style="{ top: -num + 'px'}" :class="{marquee_top:num}">
             <li v-for="(item, index) in cGongGaos" :key="index">
               <span>{{item.content}}</span>
             </li>
-          </ul>
-        </div> -->
-        <div class="vueBox" style="background: #fdfbde;">
-            <div class="marquee">
-                <div class="marquee_title">
-                    <img style="width: 15px; height: 15px; margin-left: 4px;margin-top: 2px;" src="../../assets/home/laba.png" />
-                </div>
-                <div class="marquee_box">
-                    <ul class="marquee_list" :class="{marquee_top:animate}">
-                        <li v-for="(item, index) in cGongGaos" :key="index">
-                            <span>{{item.content}}</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+          </ul>-->
+          <div
+            class="list_one"
+            style="padding-top:5px;"
+            v-if="cGongGaos[0]"
+          >{{cGongGaos[0].content}}</div>
+          <!-- <Scroller :lists="cLists" class="scrollContainer left list_other" /> -->
+
+          <!-- <div class="list_other" >
+          <div class="content" :style="{'font-size': fontSize,'height': height, 'line-height': height,'width': this.width + 'px', 'animation-duration': (this.width / 36) + 's'}">
+            {{text}}
+          </div>
+          </div>-->
+
+          <div id="scroll_div" class="fl list_other">
+            <div id="scroll_begin">{{cLists}}</div>
+            <div id="scroll_end"></div>
+          </div>
         </div>
       </div>
       <div class="activity">
@@ -85,6 +88,7 @@ require("islider.js");
 import message from "@/mixins/message";
 import types from "../store/mutation-types";
 import headerComponent from "@/common/Header.vue";
+import Scroller from "@/common/Scroller.vue";
 function StartGameForIframe(gameId) {
   _this.mEnterGame(gameId);
 }
@@ -101,8 +105,10 @@ export default {
   name: "Home",
   mixins: [message],
   components: {
-    headerComponent
+    headerComponent,
+    Scroller
   },
+  props: ["lists"],
   data() {
     return {
       options: [
@@ -157,6 +163,16 @@ export default {
     },
     cGongGaos() {
       return this.$store.getters.getGonggaos;
+    },
+    cLists() {
+      let [...temp] = this.cGongGaos;
+      temp.shift();
+      return temp
+        .map(item => {
+          console.info(item.content);
+          return item.content;
+        })
+        .reduce((sum, s) => sum + " " + s);
     },
     getDate() {
       return new Date().getDate();
@@ -274,7 +290,6 @@ export default {
       });
     },
     activity() {
-     
       this.$http.post("/activities.json", { sysId: 0 }).then(result => {
         if (result.code == 0) {
           this.activities = Object.assign([], result.data.activityVoList);
@@ -305,13 +320,13 @@ export default {
               fixPage: false
             }
           );
-            self.L.delegate("click", "img", function(ev) {
-              ev = ev || window.event;
-              console.info(ev);
-              let imgUrl = ev.srcElement.currentSrc;
-              let item = _this.activities.find(ele=>ele.mobileImg == imgUrl);
-              _this.$router.push({name:'Discount',query:{id:item.id}})``
-            });
+          self.L.delegate("click", "img", function(ev) {
+            ev = ev || window.event;
+            console.info(ev);
+            let imgUrl = ev.srcElement.currentSrc;
+            let item = _this.activities.find(ele => ele.mobileImg == imgUrl);
+            _this.$router.push({ name: "Discount", query: { id: item.id } })``;
+          });
         }
       });
     },
@@ -321,29 +336,47 @@ export default {
     },
     showMarquee() {
       let num = this.num;
-      // this.cGongGaos.push(this.cGongGaos[0]);
-      // var max = this.cGongGaos.length;
-      // var that = this;
-      // let marqueetimer = setInterval(function() {
-      //   num++;
-      //   if (num >= max) {
-      //     num = 0;
-      //   }
-      //   that.num = num * 30;
-      // }, 2000);
+      this.cGongGaos.push(this.cGongGaos[0]);
+      var max = this.cGongGaos.length;
+      var that = this;
+      let marqueetimer = setInterval(function() {
+        num++;
+        if (num >= max) {
+          num = 0;
+        }
+        that.num = num * 30;
+      }, 2000);
+    },
 
-      this.animate = true;
-      setTimeout(() => {
-          this.cGongGaos.push(this.cGongGaos[0]);
-          this.cGongGaos.shift();
-          this.animate = false;
-      }, 1000)
+    //文字横向滚动
+    ScrollImgLeft() {
+      var speed = 50; //初始化速度 也就是字体的整体滚动速度
+      var MyMar = null; //初始化一个变量为空 用来存放获取到的文本内容
+      var scroll_begin = document.getElementById("scroll_begin"); //获取滚动的开头id
+      var scroll_end = document.getElementById("scroll_end"); //获取滚动的结束id
+      var scroll_div = document.getElementById("scroll_div"); //获取整体的开头id
+      scroll_end.innerHTML = scroll_begin.innerHTML; //滚动的是html内部的内容,原生知识!
+      //定义一个方法
+      function Marquee() {
+        if (scroll_end.offsetWidth - scroll_div.scrollLeft <= 0)
+          scroll_div.scrollLeft -= scroll_begin.offsetWidth;
+        else scroll_div.scrollLeft++;
+      }
+      MyMar = setInterval(Marquee, speed); //给上面的方法设置时间  setInterval
+      //鼠标点击这条公告栏的时候,清除上面的方法,让公告栏暂停
+      scroll_div.onmouseover = function() {
+        clearInterval(MyMar);
+      };
+      //鼠标点击其他地方的时候,公告栏继续运动
+      scroll_div.onmouseout = function() {
+        MyMar = setInterval(Marquee, speed);
+      };
     },
     neiStyle() {
       setTimeout(() => {
         let self = this;
         let data = this.getBanner;
-        console.info(data)
+        console.info(data);
         //轮盘
         self.S = new iSlider(
           document.getElementById("iSlider-wrapper"),
@@ -364,7 +397,6 @@ export default {
           ev = ev || window.event;
           console.info(ev);
           let imgUrl = ev.srcElement.currentSrc;
-          
         });
       });
     },
@@ -404,6 +436,9 @@ export default {
     this.activity();
     // this._initSwiper();
     this.requireimg();
+    this.$nextTick(vm => {
+      this.ScrollImgLeft();
+    });
 
     // window.onscroll = function () {
     //     let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
@@ -446,8 +481,8 @@ export default {
   width: 348px;
   height: 67px;
   background-color: #ffffff;
-  margin: 0 auto;
-  box-shadow: 0px 2px 11px 1px rgba(0, 0, 0, 0.05);
+  margin: 0px auto 10px;
+  box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
 
   ul {
@@ -495,34 +530,34 @@ export default {
   .list_style.active {
     background-color: #3d7eff;
   }
-  // .marquee_box {
-  //   display: block;
-  //   position: relative;
-  //   width: 272px;
-  //   height: 52px; /*关键样式*/
-  //   overflow: hidden;
-  //   float: left;
-  // }
-  // .marquee_list {
-  //   display: block;
-  //   position: absolute;
-  //   top: 0;
-  //   left: 0;
-  // }
-  // .marquee_top {
-  //   transition: top 0.5s;
-  // } /*关键样式*/
-  // .marquee_list li {
-  //   height: 30px; /*关键样式*/
-  //   line-height: 30px; /*关键样式*/
-  //   font-size: 14px;
-  //   padding-left: 20px;
-  //   background-color: #fff;
-  //   text-align: left;
-  // }
-  // .marquee_list li span {
-  //   padding: 0 2px;
-  // }
+  .marquee_box {
+    display: block;
+    position: relative;
+    width: 272px;
+    height: 100%; /*关键样式*/
+    overflow: hidden;
+    float: left;
+  }
+  .marquee_list {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .marquee_top {
+    transition: top 0.5s;
+  } /*关键样式*/
+  .marquee_list li {
+    height: 30px; /*关键样式*/
+    line-height: 30px; /*关键样式*/
+    font-size: 14px;
+    padding-left: 20px;
+    background-color: #fff;
+    text-align: left;
+  }
+  .marquee_list li span {
+    padding: 0 2px;
+  }
   .ivu-divider-vertical {
     width: 1px;
     height: 40px;
@@ -623,54 +658,27 @@ export default {
   top: 5px;
 }
 
+.list_one,
+.list_other {
+  height: 50%;
+  line-height: 2;
+  display: flex;
+  // transform: translateY(5px);
+  overflow: hidden;
+}
 
-
-.marquee {
-        width: 100%;
-        height: 30px;
-        align-items: center;
-        color: #3A3A3A;
-        background-color: #fdfbde;
-        display: flex;
-        box-sizing: border-box;
-    }
-
-    .marquee_title {
-        padding: 0 20px;
-        height: 20px;
-        font-size: 12px;
-        align-items: center;
-    }
-
-    .marquee_box {
-        display: block;
-        position: relative;
-        width: 60%;
-        height: 30px;
-        overflow: hidden;
-    }
-
-    .marquee_list {
-        display: block;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-
-    .marquee_top {
-        transition: all 0.5s;
-        margin-top: -30px
-    }
-
-    .marquee_list li {
-        height: 30px;
-        line-height: 30px;
-        font-size: 12px;
-        padding-left: 20px;
-    }
-
-    .marquee_list li span {
-        padding: 0 2px;
-        color: #f1543a;
-    }
+#scroll_div {
+  // height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+  background-color: #fff;
+  // color: #999999;
+  // margin: 1rem 0rem;
+  text-align: left;
+}
+#scroll_begin,
+#scroll_end {
+  display: inline;
+}
 </style>

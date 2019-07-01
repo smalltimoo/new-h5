@@ -129,6 +129,13 @@
             </div>
             <span>{{this.$t('member.userMember.um18')}}</span>
           </router-link>
+          <!-- 分享app -->
+          <router-link :to="{name:'shareapp'}" v-else>
+            <div>
+              <img src="../../assets/images/mycenter/wo7@2x.png" width="43px">
+            </div>
+            <span>{{this.$t('member.userMember.um28')}}</span>
+          </router-link>
           <!-- 积分中心 -->
           <router-link :to="{name:'pointcenter'}">
             <div>
@@ -280,12 +287,12 @@ export default {
   methods: {
     mGetCoin() {
       this.mLoading(true);
-      // this.$http
-      //   .post("/managerGame/getWalletCoins.json")
-      //   .then(result => {
+      this.$http
+        .post("/managerGame/getWalletCoins.json")
+        .then(result => {
 
-      // this.walletlist = result.data.walletlist;
-      this.walletlist = JSON.parse(sessionStorage.getItem("walletcoinsList"));
+      this.walletlist = result.data.walletlist;
+      // this.walletlist = JSON.parse(sessionStorage.getItem("walletcoinsList"));
       this.totalCoins = this.walletlist.reduce((x, y) => {
         let coin = y.coin;
         if (y.coin < 0) {
@@ -294,11 +301,11 @@ export default {
         return parseFloat(x + coin || 0);
       }, 0);
 
-      //   this.mLoading(false);
-      // })
-      // .catch(err => {
-      //   this.$Message.warning(this.$t("member.userMember.um24")); //获取余额失败
-      // });
+        this.mLoading(false);
+      })
+      .catch(err => {
+        this.$Message.warning(this.$t("member.userMember.um24")); //获取余额失败
+      });
     },
     drawGame() {
       this.$http

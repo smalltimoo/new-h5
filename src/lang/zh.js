@@ -569,6 +569,7 @@ export default {
             um25: '确定要退出账号吗?',
             um26: '请稍等...',
             um27: '退出成功',
+            um28: '分享app',
         },
         systemSet: {
             s0: '系统设置',
