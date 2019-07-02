@@ -400,7 +400,8 @@ export default {
             transactionsdetailList9: '操作资金',
             transactionsdetailList10: '操作后资金',
             transactionsdetailList11: '备注',
-            transactionsdetailList12: '没有更多记录了'
+            transactionsdetailList12: '没有更多记录了',
+            transactionsdetailList13: '游戏厅',
         },
         withdrawals: {
             withdrawals1: '分红提现',

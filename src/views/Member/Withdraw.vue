@@ -215,7 +215,7 @@ export default {
     justify-content: space-around;
     align-items: flex-start;
     /* padding-left: 78px; */
-    padding: 30px 78px;
+    padding: 30px 0 0 78px;
     color: #f3f3f3;
     font-size: 12px;
 
@@ -230,7 +230,9 @@ export default {
       }
     }
   }
-
+  /deep/ .el-input__inner {
+    border-bottom:1px solid #f3f3f3;
+  }
   .can_withdraw {
     width: 351px;
     height: 40px;

@@ -165,7 +165,7 @@ export default {
       // start = ();
       this.searchVm.startOperateTime = this.getMyDate(start.getTime() - 3600 * 1000 * 24 * value)
       this.searchVm.endOperateTime = this.getMyDate(end)
-      
+      this.searchpoint()
       // let picker = this.$refs.time.$options;
       // start.setTime(start.getTime() - 3600 * 1000 * 24 * 1);
       // picker.$emit('pick', [start, end]);

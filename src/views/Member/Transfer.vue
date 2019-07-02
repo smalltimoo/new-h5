@@ -8,7 +8,9 @@
         @click="mGetCoin(item,index)"
       >
         <span class="name">{{item.value}}</span>
-        <span class="count" v-loading="item.loading">{{item.coin}}</span>
+        <span class="count" v-loading="item.loading" element-loading-spinner="el-icon-loading">{{item.coin}}</span>
+        <!-- <span class="count" v-if="item.coin||item.coin === 0">{{item.coin}}</span> -->
+        <!-- <van-loading type="spinner" v-else /> -->
       </div>
     </div>
     <div class="chang_select">

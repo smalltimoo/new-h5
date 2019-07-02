@@ -1,89 +1,93 @@
 <template>
-    <div class="main-body">
-        <div class="header">
-            <div class="header-left">
-                <Icon type="ios-arrow-back" class="icon-menu" @click="goBack"/>
-            </div>
-            <div class="header-middle">
-                {{ $t('agent.withdrawals.withdrawals1')}}
-            </div>
-            <div class="header-right"></div>
-        </div>
-        <div class="bank-info">
-            <router-link :to="{name:'UserBankCard'}" v-if="bindBank">
-                <div style="display: flex;align-items: center">
-                    <Icon type="md-add-circle"
-                          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
-                    <span>{{ $t('agentMember.addBank')}}</span>
-                </div>
-                <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
-            </router-link>
-            <router-link :to="{name:'UserBankCard'}" v-else>
-                <div>
-                    <span>{{ $t('member.withdrawals.wa4') }}:</span> <!-- 到账银行卡-->
-                    <span>{{ vmCard.drawAccountName }}</span>
-                    <span>{{ vmCard.bankTypeName }}</span>
-                    <span>{{ vmCard.account.slice(0,4) }} **** **** {{ vmCard.account.slice(vmCard.account.length-5,vmCard.account.length-1) }}</span>
-                </div>
-                <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
-            </router-link>
-        </div>
-        <div class="bank-info" style="margin-top: 10px">
-            <router-link :to="{name:'SafaPassword'}" v-if="setPwd">
-                <div style="display: flex;align-items: center">
-                    <Icon type="md-add-circle"
-                          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
-                    <span>{{ $t('agentMember.setPwd')}}</span>
-                </div>
-                <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
-            </router-link>
-        </div>
-        <div class="main-panel"
-             style="margin-top: 10px;flex-direction: column;align-items: flex-start;position: relative">
-            <span style="position: absolute;top: 47px;left: 10px;font-size: 18px;">{{$t('symbol.t1')}}</span>
-            <p style="padding:10px"> {{ $t('member.withdrawals.wa7')}}</p>
-            <input v-model="vm.dealcoin"
-                   autocomplete="off"
-                   :placeholder="$t('agentMember.enterAmount')"
-                   size="mini"
-                   maxlength="8"
-                   type="text"
-                   validateevent="true"
-                   class="el-input__inner"
-                   oninput="value=value.replace(/[^\d]/g,'')"
-                   style="width: 100%;border:0;border-bottom: solid 1px #f3f3f3;padding-left: 38px"
-            >
-            <div style="height: 40px;display: flex;justify-content: space-between;align-items: center;padding: 0 10px;font-size: 12px;width: 100%;">
-                <span>
-                    {{$t('member.withdrawals.wa6')}}: {{$t('symbol.t1')}}{{cAgentCashBalance.toFixed(2)}}
-                </span>
-                <span style="color: #007bc9;" @click="vm.dealcoin=cAgentCashBalance.toFixed(2)">{{ $t('agentMember.allWithdraw')}}</span>
-            </div>
-        </div>
-        <div style="margin-top: 10px;background-color: #fff;display: flex;justify-content: flex-start;align-items: center">
-            <label class="el-form-item__label" style="margin-left: 10px">{{ $t('member.withdrawals.wa10') }}</label>
-            <!--提款密码 -->
-            <input v-model="vm.coinpwd"
-                   autocomplete="off"
-                   :placeholder="$t('member.withdrawals.wa10')"
-                   size="mini"
-                   type="password"
-                   validateevent="true"
-                   style="width: 240px;border:0;margin-bottom: 0;height: 40px"
-            ><!-- 提款密码-->
-        </div>
-        <cube-button :active="true" @click="mSave" class="save-btn">
-            <span>{{ $t('member.withdrawals.wa11') }}</span><!--下一步 -->
-        </cube-button>
+  <div class="withdraw onlineDeposit">
+    <div class="header hasApp">
+      <div class="header-left">
+        <Icon type="ios-arrow-back" class="icon-menu" @click.stop="goBack"/>
+        <span class="logo">{{logo}}</span>
+      </div>
+      <div class="header-right">
+        <div class="yue">余额:{{cAgentCashBalance.toFixed(2)}}</div>
+      </div>
     </div>
+    <router-link :to="{name:'UserBankCard'}" v-if="bindBank">
+      <div style="display: flex;align-items: center">
+        <Icon
+          type="md-add-circle"
+          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"
+        />&nbsp;&nbsp;
+        <span>{{ $t('agentMember.addBank')}}</span>
+      </div>
+      <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
+    </router-link>
+    <div
+      class="user_bank_card"
+      v-else
+      :style="{ 'background-image': 'url(' + bankInfo.drawBackgroundImg + ')', 'background-size': '100% 100%'}"
+    >
+      <span class="bankTypeName">{{bankInfo.bankTypeName}}</span>
+      <div class="account"></div>
+      <span class="drawAddress">姓名：{{bankInfo.drawAddress}}</span>
+    </div>
+
+    <div class="recharge" style="margin-top: 14px;">
+      <div>
+        <span class="title">{{$t('member.onlineDeposit.os6')}}</span>
+        <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
+      </div>
+      <div class="input-panel">
+        <span style="font-size: 16px">
+          <b>{{$t('symbol.t1')}}</b>
+        </span>
+        <input
+          type="number"
+          v-model="vm.dealcoin"
+          class="input-number"
+          :placeholder="$t('member.onlineDeposit.os10')"
+        >
+      </div>
+      <!-- <div class="recommend" v-if="moneys.length>0">
+        <span
+          v-for="(item,index) in moneys"
+          v-if="index<5"
+          :key="index"
+          :class="{active: activeAmount==item}"
+          @click="vm.dealcoin=item;activeAmount=vm.dealcoin"
+        >{{$t('symbol.t1')}}{{ item }}</span>
+      </div> -->
+      <div class="can_withdraw">
+        <span>
+          {{$t('member.onlineDeposit.os11')}}
+          <span class="count">{{parseInt(cAgentCashBalance)}}</span>
+          {{$t('yuan')}}
+        </span>
+        <span
+          class="all_withdraw"
+          @click="vm.dealcoin = parseInt(cAgentCashBalance)"
+        >{{$t('member.onlineDeposit.os12')}}</span>
+      </div>
+      <div>
+        <span style="font-size:15px;color:#4c4c4c" class="title">{{$t('member.onlineDeposit.os13')}}</span>
+        <span style="font-size:15px;color:#bfc2cc" class="tmux">{{$t('member.onlineDeposit.os14')}}</span>
+      </div>
+      <el-input :type="'password'" v-model="vm.coinpwd" placeholder="请输入提款密码" maxlength="8"></el-input>
+      <cube-button
+        :active="true"
+        @click="mSave"
+        class="save-btn"
+      >{{$t('member.onlineDeposit.od15')}}</cube-button>
+    </div>
+  </div>
 </template>
 
 <script>
-    var _this;
-    export default {
-        data() {
-            return {
-                banktypes: [],
+import { version } from "punycode";
+export default {
+  name: "withdrawsa",
+  data() {
+    return {
+      yue: Number,
+      logo: "分红提现",
+       banktypes: [],
                 amount: 0,
                 bindBank: false,
                 setPwd: false,
@@ -92,30 +96,37 @@
                     account: "",
                     agentCashBalance: 0
                 },
+                bankInfo:{},
                 vm: {
                     dealcoin: "",
                     coinpwd: ""
                 }
-            };
-        },
-        computed: {
+    };
+  },
+  computed: {
             cAgentCashBalance() {
                 let cb = this.vmCard.agentCashBalance / 100;
                 return cb ? cb : 0;
             }
         },
-        mounted() {
-            this.mInit();
-            this.$http.get("/memberUser/memberinfo.json").then(result => {
-                if (result.code == 0) {
-                    if (!result.data.coinPassword) {
-                        this.setPwd = true;
-                    }
-                }
-            });
-        },
-        methods: {
-            mInit() {
+  methods: {
+      createLocalData() {
+      this.$http.post("/memberUser/getbindbank.json").then(result => {
+        if (result.code === 0) {
+          this.bankInfo = result.data;
+          this.account = this.plusXing(this.bankInfo.account, 0, 4);
+          let i = 0;
+          let $accountDom = $(".account");
+          while (i * 4 <= this.account.length + 1) {
+            $accountDom.append(
+              `<span class="count_li">${this.account.substr(4 * i, 4)}</span>`
+            );
+            i++;
+          }
+        }
+      });
+    },
+      mInit() {
                 this.mLoading(true);
                 this.$http.all([this.mGetAgentCashBalance(), this.mGetBindBank()]).then(
                     this.$http.spread((resAgentCashBalance, rbindbank) => {
@@ -191,138 +202,115 @@
                         this.loading = false;
                     })
             }
-        },
-        created() {
-            _this = this;
-        }
-    };
+  },
+  created() {
+  },
+  mounted(){
+      this.createLocalData();
+       this.mInit();
+            this.$http.get("/memberUser/memberinfo.json").then(result => {
+                if (result.code == 0) {
+                    if (!result.data.coinPassword) {
+                        this.setPwd = true;
+                    }
+                }
+            });
+  }
+};
 </script>
 
-<style scoped>
+<style lang="less" >
+.withdraw {
+  width: 100%;
+  margin-top: 8px;
+  .user_bank_card {
+    width: 351px;
+    height: 175.5px;
+    border-radius: 8px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+    /* padding-left: 78px; */
+    padding: 30px 0 0 78px;
+    color: #f3f3f3;
+    font-size: 12px;
 
-    .Withdrawals .G-card-box {
-        position: relative;
-        margin-top: 15px;
-        border: 1px solid #c8a675;
-        width: 200px;
-        height: 100px;
-    }
-
-    .Withdrawals .G-card-name {
-        font-size: 20px;
-        line-height: 50px;
-        font-weight: 900;
-        height: 50px;
-    }
-
-    .Withdrawals .line-w {
-        height: 1px;
-        width: 100%;
-        border-bottom: 1px solid #3a3a3a;
-    }
-
-    .Withdrawals .G-card-num {
-        line-height: 40px;
-        font-size: 16px;
-    }
-
-    .Withdrawals .G-card-box i {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 20px;
-        height: 20px;
-    }
-
-    .Withdrawals .G-card-right a {
-        display: block;
-        line-height: 20px;
-        font-size: 15px;
-        text-align: left;
-        margin-top: 15px;
-        color: #c8a675;
-    }
-
-    .Withdrawals .el-form-item__label {
-        font-weight: 900;
-    }
-
-    .Withdrawals .el-form-item {
-        background: #ffffff;
-        height: 55px;
-        padding-top: 7px;
-        margin-bottom: 0;
-    }
-
-    .Withdrawals .el-input.is-disabled .el-input__inner {
-        background-color: transparent;
-    }
-
-    .Withdrawals input {
-        border: none;
-        outline: none;
-        font-size: 15px;
-    }
-
-    .Withdrawals .el-input__inner {
-        background-color: #545478;
-        color: #fff;
-    }
-
-    .Withdrawals span.Description {
-        position: absolute;
-        font-size: 14px;
-        right: 0;
-        top: 0;
-        height: 50px;
-        width: 100px;
-        color: #c8a675;
-    }
-
-    .Withdrawals .el-button--primary {
-        background-color: #ffb301;
-        border-color: #ffc501;
-    }
-
-    .Withdrawals .G-Warm {
-        margin: 30px 20px;
-    }
-
-    .Withdrawals .G-Warm p {
-        line-height: 24px;
-        font-size: 15px;
-        text-align: left;
-    }
-
-    .ivu-select-single .ivu-select-selection .ivu-select-selected-value {
+    .account {
+      width: auto;
+      .count_li {
+        display: inline-block;
         font-size: 18px;
-        background-color: #545478;
-        height: 35px;
-        line-height: 35px;
+        padding-right: 10px;
+        color: #fff;
+        // box-shadow: 0px 1px 1px 0px rgba(211, 4, 30, 0.5);
+      }
+    }
+  }
+  /deep/ .el-input__inner {
+      border: none;
+    border-bottom: 1px solid #f3f3f3;
+  }
+  .can_withdraw {
+    width: 351px;
+    height: 40px;
+    padding-top: 5px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      font-size: 12px;
+      color: #4c4c4c;
+      .count {
+        color: #2d8cf0;
+      }
+    }
+    .all_withdraw {
+      color: #2d8cf0;
+    }
+  }
+  .passContainer {
+    // border-bottom: 1px solid #f3f3f3;
+    // border-radius: 16px;
+    width: 351px;
+    height: 50px;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    // padding: 0;
+    // position: relative;
+
+    .passItem {
+      width: 50px;
+      height: 100%;
+      border-bottom: 1px solid #f3f3f3;
+      // float: left;
+      // margin-right: 0;
+      box-sizing: border-box;
+    }
+    .passItem:not(:last-child) {
+      border-right: inherit;
     }
 
-    .ivu-select-single .ivu-select-selection {
-        border: none;
-        /*width: 165px;*/
+    input {
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      background: transparent;
+      position: absolute;
+      border: none;
+      padding: 0 10px;
+      outline: none;
+      font-size: 40px;
+      font-family: "courier new", sans-serif;
+      letter-spacing: 0.82em;
+      text-align: left;
+      text-overflow: hidden;
     }
-
-    .bank-info {
-        /*height: 50px;*/
-        background-color: #fff;
-        margin-top: 44px;
-        padding: 0px 10px;
-        font-size: 13px;
-    }
-
-    .bank-info > a {
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: #4c4c4c;
-    }
-
-    .bank-info > a > div > span {
-        margin-right: 5px;
-    }
+  }
+}
 </style>

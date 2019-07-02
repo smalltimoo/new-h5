@@ -440,7 +440,7 @@ export default {
       }
     }
   },
-  mounted() {console.info(13)
+  mounted() {
     let params = this.$route.params
      if(params&& params.from =='transfer') this.tabType ='1'
     else if(params&& params.from =='withdrawal') this.tabType ='2'

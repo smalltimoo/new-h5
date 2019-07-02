@@ -7,29 +7,36 @@
         <div :class="{active: manageType=='1'}" @click="manageType=1">{{ $t("agentMember.am19")}}</div>
         <div :class="{active: manageType=='2'}" @click="manageType=2">{{ $t("agentMember.am17")}}</div>
         <div :class="{active: manageType=='3'}" @click="manageType=3">{{ $t("agentMember.am25")}}</div>
-        <div :class="{active: manageType=='4'}" @click="manageType=4">{{ $t("agentMember.am20")}}</div><!--提现记录-->
-        <div :class="{active: manageType=='5'}" @click="manageType=5">{{ $t("agentMember.am18")}}</div><!--投注明细-->
+        <div :class="{active: manageType=='4'}" @click="manageType=4">{{ $t("agentMember.am20")}}</div>
+        <!--提现记录-->
+        <div :class="{active: manageType=='5'}" @click="manageType=5">{{ $t("agentMember.am18")}}</div>
+        <!--投注明细-->
         <!-- <div > -->
       </div>
-      <span class="shaixuan-room" @click="changsearch()">筛选<span class="icon-shaixuan" ></span></span>
+      <span class="shaixuan-room" @click="changsearch()">
+        筛选
+        <span class="icon-shaixuan"></span>
+      </span>
     </div>
-    
+
     <div class="mui-content" v-if="manageType == '1'">
-      <transactions-detaillist :username="this.$route.query.username" :manageTypesearch="this.manageTypesearch"></transactions-detaillist>
+      <transactions-detaillist
+        :username="$route.query.username"
+        :manageTypesearch="manageTypesearch"
+      ></transactions-detaillist>
     </div>
     <div class="mui-content" v-if="manageType == '2'">
-      <memberman-agement :username="this.$route.query.username" :manageTypesearch="this.manageTypesearch"></memberman-agement>
+      <memberman-agement :username="$route.query.username" :manageTypesearch="manageTypesearch"></memberman-agement>
     </div>
     <div class="mui-content" v-if="manageType == '3'">
-      <agent-coinList :username="this.$route.query.username" :manageTypesearch="this.manageTypesearch"></agent-coinList>
+      <agent-coinList :username="$route.query.username" :manageTypesearch="manageTypesearch"></agent-coinList>
     </div>
     <div class="mui-content" v-if="manageType == '4'">
-      <agent-cashList :username="this.$route.query.username" :manageTypesearch="this.manageTypesearch"></agent-cashList>
+      <agent-cashList :username="$route.query.username" :manageTypesearch="manageTypesearch"></agent-cashList>
     </div>
     <div class="mui-content" v-if="manageType == '5'">
-      <betting-detailList :username="this.$route.query.username" :manageTypesearch="this.manageTypesearch"></betting-detailList>
+      <betting-detailList :username="$route.query.username" :manageTypesearch="manageTypesearch"></betting-detailList>
     </div>
-    
   </div>
 </template>
 <script>
@@ -37,11 +44,11 @@ import window from "@/mixins/window";
 import slist from "@/mixins/list";
 // require('../../style/mui/index.less')
 import headerComponent from "@/common/Header.vue";
-import transactionsDetaillist from './TransactionsdetailList.vue' //交易明细
-import membermanAgement from './MembermanAgement.vue' //代理报表
-import agentCoinList from './AgentCoinList.vue' //钱包日志
-import agentCashList from './AgentCashList.vue' //提现记录
-import bettingDetailList from './BettingdetailList.vue' //投注明细
+import transactionsDetaillist from "./TransactionsdetailList.vue"; //交易明细
+import membermanAgement from "./MembermanAgement.vue"; //代理报表
+import agentCoinList from "./AgentCoinList.vue"; //钱包日志
+import agentCashList from "./AgentCashList.vue"; //提现记录
+import bettingDetailList from "./BettingdetailList.vue"; //投注明细
 var _this = this;
 export default {
   mixins: [window, slist],
@@ -102,9 +109,21 @@ export default {
         islist2: {
           show: () => (this.manageTypesearch = 2),
           not: () => (this.manageTypesearch = 0)
+        },
+        islist3: {
+          show: () => (this.manageTypesearch = 3),
+          not: () => (this.manageTypesearch = 0)
+        },
+        islist4: {
+          show: () => (this.manageTypesearch = 4),
+          not: () => (this.manageTypesearch = 0)
+        },
+        islist5: {
+          show: () => (this.manageTypesearch = 5),
+          not: () => (this.manageTypesearch = 0)
         }
       };
-      let firstKey = this.manageType == "1" ? "islist1" : "islist2";
+      let firstKey = `islist${this.manageType}`
       let lastKey = !this.manageTypesearch ? "show" : "not";
       return map[firstKey][lastKey]();
     },
@@ -207,25 +226,25 @@ export default {
   created() {
     _this = this;
     // this.mReachBottom();
-    let from_name = this.$route.query.name
-    switch(from_name){
-        //代理报表
-          case 'MembermanAgement':
-                  this.manageType = '2'
-              break;
-          case 'BettingdetailList':
-              this.manageType = '5'
-          break;
-          case 'agentCashList':
-                  this.manageType = '4'
-              break;
-          case 'agentCoinList':
-              this.manageType = '3'
-          break;
-          default:
-                  this.manageType = '1'
-              break;
-      }
+    let from_name = this.$route.query.name;
+    switch (from_name) {
+      //代理报表
+      case "membermanAgement":
+        this.manageType = "2";
+        break;
+      case "bettingDetailList":
+        this.manageType = "5";
+        break;
+      case "agentCashList":
+        this.manageType = "4";
+        break;
+      case "agentCoinList":
+        this.manageType = "3";
+        break;
+      default:
+        this.manageType = "1";
+        break;
+    }
   }
 };
 </script>

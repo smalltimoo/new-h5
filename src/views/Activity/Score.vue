@@ -71,7 +71,8 @@
             </div>
             <div class="product-name" v-text="item.title"></div>
             <div class="use">
-              <span>{{$t('symbol.t1')}}{{item.originalPrice}}</span>
+              <!-- <span>{{$t('symbol.t1')}}{{item.originalPrice}}</span> -->
+              <span>{{item.currentPrice}} {{$t('score.degits')}}</span>
               <span>{{item.currentPrice}} {{$t('score.degits')}}</span>
             </div>
           </li>
