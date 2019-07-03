@@ -15,24 +15,11 @@
         </div>
         <Divider type="vertical"/>
         <div class="marquee_box">
-          <!-- <ul class="marquee_list" :style="{ top: -num + 'px'}" :class="{marquee_top:num}">
-            <li v-for="(item, index) in cGongGaos" :key="index">
-              <span>{{item.content}}</span>
-            </li>
-          </ul>-->
           <div
             class="list_one"
             style="padding-top:5px;"
             v-if="cGongGaos[0]"
           >{{cGongGaos[0].content}}</div>
-          <!-- <Scroller :lists="cLists" class="scrollContainer left list_other" /> -->
-
-          <!-- <div class="list_other" >
-          <div class="content" :style="{'font-size': fontSize,'height': height, 'line-height': height,'width': this.width + 'px', 'animation-duration': (this.width / 36) + 's'}">
-            {{text}}
-          </div>
-          </div>-->
-
           <div id="scroll_div" class="fl list_other">
             <div id="scroll_begin">{{cLists}}</div>
             <div id="scroll_end"></div>
@@ -88,7 +75,6 @@ require("islider.js");
 import message from "@/mixins/message";
 import types from "../store/mutation-types";
 import headerComponent from "@/common/Header.vue";
-import Scroller from "@/common/Scroller.vue";
 function StartGameForIframe(gameId) {
   _this.mEnterGame(gameId);
 }
@@ -106,7 +92,6 @@ export default {
   mixins: [message],
   components: {
     headerComponent,
-    Scroller
   },
   props: ["lists"],
   data() {
@@ -167,12 +152,11 @@ export default {
     cLists() {
       let [...temp] = this.cGongGaos;
       temp.shift();
-      return temp
+      return temp.length?temp
         .map(item => {
-          console.info(item.content);
           return item.content;
         })
-        .reduce((sum, s) => sum + " " + s);
+        .reduce((sum, s) => sum + " " + s):''
     },
     getDate() {
       return new Date().getDate();
@@ -306,7 +290,6 @@ export default {
                                       `;
             return item;
           });
-          console.info(data2);
           //优惠活动
           self.L = new iSlider(
             document.getElementById("iSlider-wrapper2"),
@@ -322,7 +305,6 @@ export default {
           );
           self.L.delegate("click", "img", function(ev) {
             ev = ev || window.event;
-            console.info(ev);
             let imgUrl = ev.srcElement.currentSrc;
             let item = _this.activities.find(ele => ele.mobileImg == imgUrl);
             _this.$router.push({ name: "Discount", query: { id: item.id } })``;
@@ -333,19 +315,6 @@ export default {
     closeApp() {
       this.showApp = false;
       localStorage.setItem("showApp", "false");
-    },
-    showMarquee() {
-      let num = this.num;
-      this.cGongGaos.push(this.cGongGaos[0]);
-      var max = this.cGongGaos.length;
-      var that = this;
-      let marqueetimer = setInterval(function() {
-        num++;
-        if (num >= max) {
-          num = 0;
-        }
-        that.num = num * 30;
-      }, 2000);
     },
 
     //文字横向滚动
@@ -376,7 +345,6 @@ export default {
       setTimeout(() => {
         let self = this;
         let data = this.getBanner;
-        console.info(data);
         //轮盘
         self.S = new iSlider(
           document.getElementById("iSlider-wrapper"),
@@ -395,7 +363,6 @@ export default {
         );
         self.S.delegate("click", "img", function(ev) {
           ev = ev || window.event;
-          console.info(ev);
           let imgUrl = ev.srcElement.currentSrc;
         });
       });
@@ -414,18 +381,9 @@ export default {
         return require(`../assets/images/2x/${val}`);
       });
     },
-    initEvent() {
-      $("#iSlider-wrapper2").on("click", event => {
-        event = event || window.event;
-        if ($(event.target).hasClass("active_box")) {
-          console.info(event.target);
-        }
-      });
-    }
   },
   mounted() {
     this.neiStyle();
-    // this.showMarquee()
   },
   created() {
     _this = this;

@@ -31,7 +31,6 @@ export default {
         });
     },
     onChange(...a) {
-      console.info(a)
        this.$http.defaults.baseURL = a[1];
       //  process.env.VUE_APP_BASE_API = a[1];
        this.line = a[1];

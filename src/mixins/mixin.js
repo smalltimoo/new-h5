@@ -1,4 +1,6 @@
-import {dateFormat} from "../assets/lib/util";
+import {
+    dateFormat
+} from "../assets/lib/util";
 import types from "../store/mutation-types";
 import alert from "../mixins/alert";
 import message from "../mixins/message";
@@ -9,7 +11,7 @@ export default {
     data() {
         return {
             leftDrawer: false,
-    walletlist:[]
+            walletlist: []
         }
     },
     computed: {
@@ -20,13 +22,13 @@ export default {
         cLoginUser: function () {
             return this.$store.getters.getLoginUser;
         },
-        cLoginUserYue: function(){
+        cLoginUserYue: function () {
             return this.$store.getters.getLoginUserYue
         },
         cNeedLogin() {
             return this.$store.getters.getNeedLogin;
         },
-        sysInfo: function() {
+        sysInfo: function () {
             return this.$store.getters.getSysInfo;
         },
         cQQ1() {
@@ -48,7 +50,7 @@ export default {
             document.documentElement.lang = this.$i18n.locale;
             // window.location.reload();
         },
-        quickEnterGame(roomId,gameId,comGameType,gameName){
+        quickEnterGame(roomId, gameId, comGameType, gameName) {
             if (comGameType == 5) {
                 this.$router.push({
                     name: 'GameList',
@@ -81,12 +83,14 @@ export default {
         },
         //复制功能
         copy() {
-            var clipboard = new Clipboard('.clipboard');
-            clipboard.on('success', () => {
+            if (JSON.stringify(this.clipboard)) {
+                this.clipboard.destroy()
+            }
+            this.clipboard = new Clipboard('.clipboard');
+            this.clipboard.on('success', () => {
                 this.$Message.success(this.$t('mixin.alreadyCopy'));
             })
-            clipboard.on('error', function (e) {
-            })
+            this.clipboard.on('error', function (e) {})
         },
         mLoading(visible, content) {
             this.$store.commit(types.UPDATE_LOADING_MODEL_VISIBLE, {
@@ -97,7 +101,9 @@ export default {
         toNeedLogin() {
             if (this.cNeedLogin) {
                 this.mConfirm(this.$t('mixin.pleaseLogin'), () => {
-                    this.$router.push({name: 'Login'})
+                    this.$router.push({
+                        name: 'Login'
+                    })
                 })
                 return false
             } else {
@@ -111,11 +117,15 @@ export default {
                 this.$store.dispatch(types.COMMON_GONGGAO, this);
                 if (this.$route.name !== "Login" && this.$route.name !== "Home" && this.$route.name !== "Score" && this.$route.name !== "Discount" && this.tab !== "Score") {
                     this.mConfirm(this.$t('mixin.pleaseLogin'), () => {
-                        this.$router.push({name: 'Login'})
+                        this.$router.push({
+                            name: 'Login'
+                        })
                     })
                 }
             } else {
-                this.$router.push({name: this.tab})
+                this.$router.push({
+                    name: this.tab
+                })
             }
         },
         mReLogin() {
@@ -137,7 +147,10 @@ export default {
             if (sysInfo.customUrl) {
                 this.$router.push({
                     name: "CustomerService",
-                    params: {aType: "cs", cUrl: sysInfo.customUrl}
+                    params: {
+                        aType: "cs",
+                        cUrl: sysInfo.customUrl
+                    }
                 });
             } else {
                 this.$store.dispatch(types.SYSTEM_SETTINGS, this);
@@ -161,7 +174,9 @@ export default {
                                 this.$t('mixin.loginSuccess'),
                                 () => {
                                     this.$store.dispatch(types.COMMON_GONGGAO, this);
-                                    this.$router.push({name: "Home"});
+                                    this.$router.push({
+                                        name: "Home"
+                                    });
                                 },
                                 "success",
                                 0.5
@@ -173,19 +188,19 @@ export default {
                     });
             });
         },
-        mgetToalCoin(){
+        mgetToalCoin() {
             return this.$http.post("/memberUser/memberamount.json")
         },
         mGetCoin() {
             this.mLoading(true);
             this.$http
-              .post("/managerGame/getWalletCoins.json")
-              .then(result => {
-                this.walletlist = result.data.walletlist;
-              })
-              .catch(err => {
-                console.info(this.$t("member.userMember.um24")); //获取余额失败
-              });
-          },
+                .post("/managerGame/getWalletCoins.json")
+                .then(result => {
+                    this.walletlist = result.data.walletlist;
+                })
+                .catch(err => {
+                    console.info(this.$t("member.userMember.um24")); //获取余额失败
+                });
+        },
     }
 };

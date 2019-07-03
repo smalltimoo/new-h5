@@ -46,6 +46,8 @@ export default {
         mobileLogin: '手机登录',
         enterPhoneNumber: '请输入手机号',
         enterTruePhoneNumber: '请正确输入手机号码',
+        invitCode:'邀请码',
+        enterInvitCode:'请输入邀请码',
         enterVerifyCode: '请输入验证码',
         getVerifyCode: '获取验证码',
         register: '立即注册',
@@ -102,6 +104,7 @@ export default {
         luckyDrawer: '幸运大转盘',
         hotExchange: '热门兑换',
         degits: '积分',
+        degits2: '人已兑',
         detail: '详细说明',
         recordTime: '记录时间',
         exchangeRecord: '兑换记录',
@@ -541,6 +544,10 @@ export default {
             od29: '请求付款地址失败1',
             od30: '请求付款地址失败2',
             od31: '存款渠道暂不可用',
+
+            od32:'云闪付',
+            od33:'网银',
+            od34:'银联',
         },
         userMember: {
             um1: '请登录',

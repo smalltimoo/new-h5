@@ -297,7 +297,6 @@ export default {
       this.datePicker.show();
     },
     selectHandle(date, selectedVal, selectedText) {
-      // console.info(date, selectedVal, selectedText);
       if (currenttime == 1) {
         this.searchVM.endTime = selectedVal.join("/");
       } else {

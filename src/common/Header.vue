@@ -69,7 +69,6 @@ export default {
   created () {
      this.$http.post("/memberUser/memberamount.json").then((result)=>{
       if(result.code == 0){
-        console.info(result.data)
         this.yue = (result.data/100).toFixed(2)
       }
      })

@@ -77,6 +77,30 @@
             <img :src="getpaysrc('bank')">
             <span>{{$t('member.onlineDeposit.od11')}}</span>
           </div>
+           <div
+            :class="{active: tab=='yinglian'}"
+            v-if="rechargeTypes.filter(item=>item.id==7).length>0 && lang != 'th'"
+            @click="mSelectRechargeType('yinglian',rechargeTypes.filter(item=>item.id==7)[0].list)"
+          >
+            <img :src="getpaysrc('yinglian')" width="23px">
+            <span>{{$t('member.onlineDeposit.od33')}}</span>
+          </div>
+          <div
+            :class="{active: tab=='yunshanfu'}"
+            v-if="rechargeTypes.filter(item=>item.id==9).length>0 && lang != 'th'"
+            @click="mSelectRechargeType('yunshanfu',rechargeTypes.filter(item=>item.id==9)[0].list)"
+          >
+            <img :src="getpaysrc('yunshanfu')" width="23px">
+            <span>{{$t('member.onlineDeposit.od32')}}</span>
+          </div>
+          <div
+            :class="{active: tab=='yinglian2'}"
+            v-if="rechargeTypes.filter(item=>item.id==12).length>0 && lang != 'th'"
+            @click="mSelectRechargeType('yinglian2',rechargeTypes.filter(item=>item.id==12)[0].list)"
+          >
+            <img :src="getpaysrc('yinglian2')" width="23px">
+            <span>{{$t('member.onlineDeposit.od34')}}</span>
+          </div>
           <div
             :class="{active: tab=='scan'}"
             @click="mSelectRechargeType('scan',rechargeOther)"
@@ -94,7 +118,7 @@
             v-for="(item,index) in rechargeTypes"
             position="right"
             :key="index"
-            v-if="tab=='alpay' || tab=='wechat'"
+            v-if="tab=='alpay' || tab=='wechat' || tab == 'yunshanfu' || tab == 'wangyin'||tab=='yinglian'||tab=='yinglian2'"
           >
             <div
               style="width: 100%;"
@@ -132,6 +156,69 @@
                 >
                 <span>
                   {{$t('member.onlineDeposit.od10')}}
+                  <span v-if="it.typeid==4">app</span>
+                </span>&nbsp;&nbsp;&nbsp;
+                <span>{{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}}</span>
+                <span class="radio-id">{{ it.apiid}}</span>
+              </Radio>
+            </div>
+                        <div
+              style="width: 100%;"
+              v-for="it in item.list"
+              :key="it.id"
+              v-if="item.id==9 && tab=='yunshanfu'"
+              @click="mUpdateMoneys(it)"
+            >
+              <Radio :label="it.id">
+                <img
+                  src="../../assets/images/recharge/yunshanfu2@2x.png"
+                  width="20px"
+                  style="margin-left: 8px;margin-right: 8px"
+                >
+                <span>
+                  {{$t('member.onlineDeposit.od32')}}
+                  <span v-if="it.typeid==4">app</span>
+                </span>&nbsp;&nbsp;&nbsp;
+                <span>{{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}}</span>
+                <span class="radio-id">{{ it.apiid}}</span>
+              </Radio>
+            </div>
+            <div
+              style="width: 100%;"
+              v-for="it in item.list"
+              :key="it.id"
+              v-if="item.id==12 && tab=='yinglian2'"
+              @click="mUpdateMoneys(it)"
+            >
+              <Radio :label="it.id">
+                <img
+                  src="../../assets/images/recharge/yinglian2@2x.png"
+                  width="20px"
+                  style="margin-left: 8px;margin-right: 8px"
+                >
+                <span>
+                  {{$t('member.onlineDeposit.od34')}}
+                  <span v-if="it.typeid==4">app</span>
+                </span>&nbsp;&nbsp;&nbsp;
+                <span>{{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}}</span>
+                <span class="radio-id">{{ it.apiid}}</span>
+              </Radio>
+            </div>
+             <div
+              style="width: 100%;"
+              v-for="it in item.list"
+              :key="it.id"
+              v-if="item.id==7 && tab=='yinglian'"
+              @click="mUpdateMoneys(it)"
+            >
+              <Radio :label="it.id">
+                <img
+                  src="../../assets/images/recharge/yinglian2@2x.png"
+                  width="20px"
+                  style="margin-left: 8px;margin-right: 8px"
+                >
+                <span>
+                  {{$t('member.onlineDeposit.od33')}}
                   <span v-if="it.typeid==4">app</span>
                 </span>&nbsp;&nbsp;&nbsp;
                 <span>{{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}}</span>
@@ -379,6 +466,7 @@ export default {
       rechargeTypes: [],
       rechargeOther: [],
       moneys: [],
+      lang:'',
       yue: "5200.00",
       amount: "",
       tabType: "0",
@@ -497,8 +585,11 @@ export default {
     },
     /** 切换 支付方式图片*/
     getpaysrc(...a) {
-      let temp = ["zhifubao", "weixin", "xianxiazhifu", "qitazhifu"];
-      let index = ["alpay", "wechat", "bank", "scan"].indexOf(a[0]);
+      if(a[0]=='yinglian2'){
+        console.info(12)
+      }
+      let temp = ["zhifubao", "weixin", "xianxiazhifu", "qitazhifu",'yinglian','yunshanfu'];
+      let index = ["alpay", "wechat", "bank", "scan",'yinglian','yunshanfu'].indexOf(a[0]=='yinglian2'?'yinglian':a[0]);
       return require(`../../assets/images/recharge/${temp[index]}${
         this.tab == a[0] ? 1 : 2
       }@2x.png`);
@@ -798,6 +889,7 @@ export default {
     }
   },
   created() {
+    this.lang = document.documentElement.lang;
     this.$store.commit("CHANGE_TAB", "OnlineDeposit");
     if (this.cNeedLogin) {
       this.$router.push({ name: "Login" });

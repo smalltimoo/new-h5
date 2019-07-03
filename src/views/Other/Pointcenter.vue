@@ -1,6 +1,6 @@
 <template>
   <div class="checkin">
-    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <header-component :showyue="false" :logo="logo" :showIcon="true" :showLogo="true" :jifen="(integral/100).toFixed(2)"></header-component>
     <div class="container">
       <section class="info">
         <div class="info_left">
@@ -33,7 +33,7 @@
               <p class="pri_desc">{{item.desc}}</p>
             </div>
             <span class="btnl" v-if="item.type == 0">去完成</span>
-             <span class="btnl" v-else>已完成</span>
+             <span class="btnl" style="background:#ccc" v-else>已完成</span>
           </div>
         </div>
       </section>
@@ -62,6 +62,7 @@ export default {
     return {
       logo: "积分中心",
       vm:{},
+      integral:'',
       checkInVm:{},
       prilist: [
         {
@@ -96,6 +97,13 @@ export default {
      };
   },
   methods: {
+    mInit(){
+       this.$http.get("/memberUser/memberinfo.json").then(result => {
+        if (result.code == 0) {
+          this.integral = result.data.integral;
+        }
+      });
+    },
     getpaysrc(a) {
       return require(`@/assets/images/membercentre/${a}@2x.png`);
     },
@@ -104,11 +112,12 @@ export default {
         .get("/activity/queryMemberSignIntegral.json", {})
         .then(result => {
           if (result.code == 0) {
-            console.info(result.data);
             // this.vm.isSign = result.data.isSign;
             // this.vm.dayIntegral = result.data.dayIntegral;
             // result.data.isSign = 0;
             this.vm = result.data;
+            //签到
+            this.prilist[0].type = this.vm.isSign
           }
         });
     },
@@ -122,7 +131,7 @@ export default {
     }
   },
   created() {
-    // this.mInit();
+    this.mInit();
     this.queryIntegral();
     this.getSignDays();
   }

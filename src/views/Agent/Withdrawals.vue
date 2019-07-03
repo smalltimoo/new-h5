@@ -6,7 +6,7 @@
         <span class="logo">{{logo}}</span>
       </div>
       <div class="header-right">
-        <div class="yue">余额:{{cAgentCashBalance.toFixed(2)}}</div>
+        <div class="yue">分红余额:{{cAgentCashBalance.toFixed(2)}}</div>
       </div>
     </div>
     <router-link :to="{name:'UserBankCard'}" v-if="bindBank">

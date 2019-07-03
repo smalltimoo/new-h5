@@ -1,6 +1,6 @@
 <template>
   <div class="score"> 
-    <header-component :logo="logo" :showIcon="false" :showLogo="true" :jifen="vm.integral/100"></header-component>
+    <header-component :logo="logo" :showIcon="false" :showLogo="true" :jifen="(vm.integral/100).toFixed(2)"></header-component>
     <div class="container">
       <div class="usercard">
         <div id="usercard"></div>
@@ -73,7 +73,7 @@
             <div class="use">
               <!-- <span>{{$t('symbol.t1')}}{{item.originalPrice}}</span> -->
               <span>{{item.currentPrice}} {{$t('score.degits')}}</span>
-              <span>{{item.currentPrice}} {{$t('score.degits')}}</span>
+              <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span>
             </div>
           </li>
         </ul>
@@ -124,10 +124,12 @@
     </Drawer>
 
     <Drawer :closable="false" v-model="order" width="100" class="order-drawer">
-      <header-component :showyue="true"
+      <header-component 
+      :showyue="false"
         :logo="jifendingdan"
         :showIcon="true"
         :showLogo="true"
+        :jifen="(vm.integral/100).toFixed(2)"
         @notgoback="notgoback"
       ></header-component>
       <div
@@ -172,10 +174,11 @@
                 <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.confirmOrder')}}</div>
                 <div class="header-right"></div>
       </div>-->
-      <header-component :showyue="true"
-        :logo="dingdanqueren"
+      <header-component :showyue="false"
+        :logo="dingdanqueren" 
         :showIcon="true"
         :showLogo="true"
+        :jifen="(amount/100).toFixed(2)"
         @notgoback="notgoback"
       ></header-component>
       <div class="buy">
@@ -326,6 +329,7 @@ export default {
       if (result.code == 0) {
         this.agnetLevel = result.data.agnetLevel;
         this.memberLevel = result.data.memberLevel;
+        this.vm.integral = result.data.integral;
         this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
       }
     });
@@ -386,14 +390,6 @@ export default {
       this.$http.post("/memberUser/memberamount.json").then(result => {
         if (result.code == 0) {
           this.amount = result.data;
-        }
-      });
-    },
-    mInit() {
-      this.mLoading(true);
-      this.$http.get("/memberUser/memberinfo.json").then(result => {
-        if (result.code == 0) {
-          this.vm.integral = result.data.integral;
         }
       });
     },
@@ -464,7 +460,7 @@ export default {
             //兑换成功！
             // this.$Message.success(this.$t("store.order.order12"));
             this.duihuan = true;
-            this.mInit();
+            // this.mInit();
             this.mPullData();
             this.mPullScoreDetail();
           } else {
@@ -506,6 +502,7 @@ export default {
     this.$store.commit("CHANGE_TAB", "Score");
     this.mPullData();
     this.neiStyle();
+    // this.mInit();
   }
 };
 </script>

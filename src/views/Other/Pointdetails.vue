@@ -3,8 +3,8 @@
     <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="container">
       <section class="info">
-        <div>
-          <img src alt class="pointimg">
+        <div style="padding-top:20px">
+          <img src="../../assets/images/score/jifen@2x.png" alt class="pointimg" height="70">
           <span class="curcount" v-text="count"></span>
           <span class="curpoint">当前积分</span>
           <span class="addpoint">本月新增积分：{{count}}</span>
@@ -72,7 +72,7 @@
         </section>
         <div class="pri" v-for="(item,index) in integralLog" :key="index">
           <div class="pri_img">
-            <img :src="getpaysrc(item.img)" alt height="18px">
+            <img :src="getpaysrc(item.img)" alt height="22px">
           </div>
           <div class="pri_main">
             <div>
@@ -190,8 +190,8 @@ export default {
         });
     },
     getpaysrc(a) {
-      // return require(`../../assets/images/membercentre/${a}@2x.png`);
-      return "";
+      return require(`../../assets/images/score/jifen2@2x.png`);
+      // return "";
     },
     showDatePicker(event, index) {
       currenttime = index;
@@ -237,8 +237,8 @@ export default {
       align-items: center;
       justify-content: space-around;
       .pointimg {
-        width: 50px;
-        height: 70px;
+        // width: 50px;
+        // height: 70px;
       }
       .curcount {
         font-size: 34px;
@@ -288,7 +288,7 @@ export default {
     display: flex;
     .pri_img {
       width: 40px;
-      text-align: left;
+      // text-align: left;
     }
     .pri_main {
       width: 311px;

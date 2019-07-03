@@ -141,7 +141,7 @@ export default {
     },
     recyc() {},
 
-    trans() {console.info(1122)
+    trans() {
       if (this.loading) {
         return;
       }

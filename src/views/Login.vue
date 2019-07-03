@@ -45,6 +45,18 @@
                         >
                             {{$t('login.enterVerifyCode')}}
                         </cube-tip>
+                        
+                    </div>
+                    <div style="position: relative">
+                         <h3 class="title">邀请码</h3>
+                       <input type="number" class="login-input invit" maxlength="6"  :placeholder="$t('login.enterInvitCode')" v-model="vm.invitationCode"/>
+                        <cube-tip
+                                ref="reg9"
+                                class="tip"
+                                direction="top"
+                        >
+                            {{ this.$t('login.enterTrueInvitCode') }}
+                        </cube-tip>
                     </div>
 
                     <!-- <div class="login-check">
@@ -151,6 +163,7 @@
                     username: "",
                     password: "",
                     truePassword: "",
+                    invitationCode:'',
                     checkcode: "",
                     mobile: ""
                 },
@@ -230,6 +243,7 @@
                 params.password = this.vm.password.trim();
                 params.checkcode = this.vm.checkcode.trim();
                 params.mobile = this.vm.mobile.trim();
+                params.invitationCode = this.vm.checkcode.trim();
                 if (this.$route.query && this.$route.query.registerCode) {
                     params.registerCode = this.$route.query.registerCode;
                     sessionStorage.setItem("registerCode", params.registerCode);

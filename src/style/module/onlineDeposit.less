@@ -112,7 +112,7 @@
     // padding: 5px 0 15px 0 !important;
     flex-flow: row nowrap;
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     align-items: center;
     //border-bottom: solid 1px #f3f3f3;
     overflow-x: scroll;
@@ -144,6 +144,7 @@
       white-space: nowrap;
       flex-direction: column;
       padding-top: 13px;
+      margin-right: 10px;
       background: url("../../assets/images/recharge/chongzhi2@2x.png") 100% 100% no-repeat;
      
         font-family: PingFangSC-Regular;
@@ -157,6 +158,9 @@
         height: 36px;
 
       }
+    }
+    & > div:last-child{
+      // margin-right: 0;
     }
   }
 

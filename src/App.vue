@@ -117,7 +117,6 @@ export default {
     window.addEventListener("online", this.updateOnlineStatus);
     window.addEventListener("offline", this.updateOnlineStatus);
     this.$nextTick((vm)=>{
-      console.info(111)
       this.mGetCoin()
     })
   },
