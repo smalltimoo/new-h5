@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="chang_select">
-      <el-select v-model="vm.walletIn" @change="selectoptionsa" ref="select1">
+      <el-select class="toselect" v-model="vm.walletIn" @change="selectoptionsa" ref="select1">
         <el-option
           v-for="item in options"
           :key="item.id"
@@ -36,7 +36,7 @@
         <span class="title">{{$t('member.onlineDeposit.os5')}}</span>
         <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
       </div>
-      <div class="input-panel">
+      <div class="input-panel" style="padding:0">
         <span style="font-size: 16px">
           <b>{{$t('symbol.t1')}}</b>
         </span>
@@ -90,6 +90,7 @@ export default {
         .post("/managerGame/getWalletCoinsForLoad.json")
         .then(result => {
           if (result.code === 0) {
+            [this.vm.walletIn,this.vm.walletOut]= [result.data.gamecompays[0].id,result.data.gamecompays[1].id]
             this.options = this.walletlist = result.data.gamecompays.map(
               (item, index) => {
                 item.loading = true;
@@ -307,5 +308,26 @@ export default {
     background-color: #ededed;
     color: #303133;
   }
+ 
+   .toselect:after,  .toselect:before {
+            border: solid transparent;
+            content: ' ';
+            height: 0;
+            left: 100%;    //根据三角形的位置，可以随意更改。
+            position: absolute;
+            width: 0;
+        } 
+ 
+         .toselect:after {
+            border-width: 10px;
+            border-left-color: #fff;
+            top: 20px;//根据三角的位置改变
+        }//此处是一个白色的三角
+ 
+         .toselect:before {
+            border-width: 12px;
+            border-left-color: #000;
+            top: 18px;
+        }
 }
 </style>

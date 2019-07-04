@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="activity">
+      <div class="activity" style="padding:0">
         <div class="title">
           <span>{{ $t('home.title1')}}</span>
           <span style="display:none">
@@ -278,15 +278,14 @@ export default {
         if (result.code == 0) {
           this.activities = Object.assign([], result.data.activityVoList);
           let data2 = this.activities.map((item, idx) => {
-            item.content = `<div class="active_box" style="width:312px;height:100%;">
-                                        <div class="active_title" style="width:100%;height:22px;">
-                                          <span style="width: 110px;text-align: left;white-space: nowrap;overflow: hidden;text-overflow: ellipsis" >${
+            item.content = `
+                                        <div class="active_title">
+                                          <span>${
                                             item.activityTitle
                                           }</span>
                                           <span>${item.endTimeStr}</span>
                                         </div>
                                         <img src="${item.mobileImg}">
-                                      </div>
                                       `;
             return item;
           });
@@ -601,16 +600,7 @@ export default {
     margin: 0 auto;
   }
 }
-.active_box {
-  width: 326px;
-  height: 135px;
-  box-shadow: 0px 2px 11px 1px rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
-  .active_title {
-    width: 100%;
-    height: 22px;
-  }
-}
+
 .ivu-poptip-rel {
   margin: 0 5px;
   top: 5px;
@@ -640,3 +630,35 @@ export default {
   display: inline;
 }
 </style>
+<style lang="less">
+#iSlider-wrapper2 ul li {
+  width:312px;
+  height: 131.5px;
+  box-shadow: 0px 2px 11px 1px rgba(0, 0, 0, 0.05);
+  padding: 0 7px 4.5px;
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+   .active_title {
+    width: 282.623px;
+    height: 22px;
+  }
+  img {
+    // width: 312px!important;
+    // height: 104px!important;
+    width: 282.623px!important;
+  height: 94.208px!important;
+    border:0;
+  }
+}
+  .active_box {
+  width: 282.623px;
+  height: 94.208px;
+  box-shadow: 0px 2px 11px 1px rgba(0, 0, 0, 0.05);
+  padding: 0 7px 4.5px;
+  border-radius: 5px;
+ 
+}
+</style>
+

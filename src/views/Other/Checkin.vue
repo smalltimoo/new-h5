@@ -21,7 +21,7 @@
         <span>本月已签到&nbsp;{{vm2.monthSignDays}}&nbsp;天</span>
         <span>
           你已连续签到&nbsp;{{vm2.continuitySignDays}}&nbsp;天
-          <span class="rightsanjiao"></span>
+          <!-- <span class="rightsanjiao"></span> -->
         </span>
       </section>
       <section class="calendar">
@@ -95,7 +95,6 @@ export default {
         .get("/activity/queryMemberSignIntegral.json", {})
         .then(result => {
           if (result.code == 0) {
-            console.info(result.data);
             // this.vm.isSign = result.data.isSign;
             // this.vm.dayIntegral = result.data.dayIntegral;
             // result.data.isSign = 0;
@@ -161,6 +160,7 @@ export default {
         font-size: 31px;
         color: #303133;
         letter-spacing: -2px;
+        text-align: left;
       }
       & > div {
         color: #909399;

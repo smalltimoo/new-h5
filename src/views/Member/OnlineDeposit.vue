@@ -51,7 +51,7 @@
       </div>
     </div>
     <div class="container" v-if="tabType=='0'">
-      <div class="recharge it" style="margin-top: 10px;">
+      <div class="recharge it">
         <div>
           <span class="title">{{$t('member.onlineDeposit.od8')}}</span>
           <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
@@ -271,7 +271,7 @@
           <span class="title">{{$t('member.onlineDeposit.od5')}}</span>
           <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
         </div>
-        <div class="input-panel">
+        <div class="input-panel" style="padding-left:0">
           <span style="font-size: 16px">
             <b>{{$t('symbol.t1')}}</b>
           </span>

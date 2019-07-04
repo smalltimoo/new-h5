@@ -6,7 +6,7 @@
                 <span :class="{active: isJoin=='-1'}" @click="changeTab('-1')">{{$t('discount.dis1')}}</span>
                 <span :class="{active: isJoin=='0'}" @click="changeTab('0')">{{$t('discount.dis2')}}</span>
                 <span :class="{active: isJoin=='1'}" @click="changeTab('1')">{{$t('discount.dis3')}}</span>
-                <span :class="{active: isJoin=='2'}" @click="changeTab('2')">{{$t('discount.dis10')}}</span>
+                <!-- <span :class="{active: isJoin=='2'}" @click="changeTab('2')">{{$t('discount.dis10')}}</span> -->
             </div>
             <div  class="no-list" v-if="(!avtByIsJoin||avtByIsJoin.length==0)" style="top: 100px;bottom:100px;left: 0;"></div>
             <div v-for="(item, index) in avtByIsJoin" :key="index" style="margin-top: 10px">
@@ -126,6 +126,7 @@ import headerComponent from '@/common/Header.vue'
                                 : [];
                             list.forEach(element => {
                                 element.selected = false;
+                                element.activityDesc = element.activityDesc  ||'赠送比例高达50%';
                             });
                             this.activities = list;
                             this.changeTab();

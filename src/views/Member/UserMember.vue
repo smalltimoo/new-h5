@@ -7,7 +7,7 @@
           <div class="name_block">
             <div class="icon user-logo"></div>
             <div class="user-name" v-if="cLoginUser.userName2">
-              <span class="level-ico level_img_vip0" v-if="memberLevel==0"></span>
+              <span class="level-ico level_img_vip0" v-if="memberLevel==0"></span> 
               <span class="level-ico level_img_vip1" v-else-if="memberLevel==1"></span>
               <span class="level-ico level_img_vip2" v-else-if="memberLevel==2"></span>
               <span class="level-ico level_img_vip3" v-else-if="memberLevel==3"></span>
@@ -104,48 +104,48 @@
           <!-- 交易记录 -->
           <router-link :to="{name:'RechargeRecord'}">
             <div>
-              <img src="../../assets/images/mycenter/wode10@2x.png" width="43px">
+              <img src="../../assets/images/mycenter/wode10@2x.png" height="43">
             </div>
             <span>{{this.$t('member.userMember.um8')}}</span>
           </router-link>
           <!-- 投注记录 -->
           <router-link :to="{name:'BettingRecord'}">
             <div>
-              <img src="../../assets/images/mycenter/wode9@2x.png" width="43px">
+              <img src="../../assets/images/mycenter/wode9@2x.png" height="43">
             </div>
             <span>{{this.$t('member.userMember.um9')}}</span>
           </router-link>
           <!-- 会员中心 -->
           <router-link :to="{name:'membercentre'}">
             <div>
-              <img src="../../assets/images/mycenter/wode11@2x.png" width="43px">
+              <img src="../../assets/images/mycenter/wode11@2x.png" height="43">
             </div>
             <span>{{this.$t('member.userMember.um10')}}</span>
           </router-link>
           <!-- 代理中心 -->
           <router-link :to="{name:'AgentMember'}" v-if="cLoginUser.agnetLevel>0">
             <div>
-              <img src="../../assets/images/mycenter/wo7@2x.png" width="43px">
+              <img src="../../assets/images/mycenter/wo7@2x.png" height="43">
             </div>
             <span>{{this.$t('member.userMember.um18')}}</span>
           </router-link>
           <!-- 分享app -->
           <router-link :to="{name:'shareapp'}" v-else>
             <div>
-              <img src="../../assets/images/mycenter/wo7@2x.png" width="43px">
+              <img src="../../assets/images/mycenter/wo7@2x.png" height="43">
             </div>
             <span>{{this.$t('member.userMember.um28')}}</span>
           </router-link>
           <!-- 积分中心 -->
-          <router-link :to="{name:'pointcenter'}">
+          <!-- <router-link :to="{name:'pointcenter'}">
             <div>
-              <img src="../../assets/images/mycenter/wode8@2x.png" width="43px">
+              <img src="../../assets/images/mycenter/wode8@2x.png" height="43">
             </div>
             <span>{{this.$t('member.userMember.um11')}}</span>
-          </router-link>
+          </router-link> -->
           <!-- <router-link :to="{name:'WithdrawRecord'}">
             <div>
-              <img src="./../assets/images/mycenter/wo10@2x.png" width="30px">
+              <img src="./../assets/images/mycenter/wo10@2x.png" height="30px">
             </div>
             <span>{{this.$t('member.userMember.um12')}}</span>
           </router-link>-->
@@ -212,7 +212,7 @@ export default {
         },
         {
           name: "安全中心",
-          newInfo: false,
+          newInfo: true,
           text: "",
           routeName: "safecenter"
         },
@@ -233,11 +233,18 @@ export default {
           newInfo: true,
           text: "",
           routeName: "systemset"
-        },{
-          name: "分享app",
+        },
+        // {
+        //   name: "分享app",
+        //   newInfo: true,
+        //   text: "",
+        //   routeName: "shareapp"
+        // },
+        {
+          name: this.$t('member.userMember.um11'),
           newInfo: true,
           text: "",
-          routeName: "shareapp"
+          routeName: "pointcenter"
         }
       ],
       countInfo: [

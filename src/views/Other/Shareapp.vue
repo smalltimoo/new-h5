@@ -28,7 +28,7 @@
             <i class="el-icon-arrow-right"></i>
           </router-link>
         </div>
-        <div class="usercount">
+        <div class="usercount" @click="$router.push({name:'sharerecord'})">
           <div class="count_item">
             <span v-if="vm.inviteCount">{{vm.inviteCount}}</span>
             <i class="el-icon-loading" v-else></i>

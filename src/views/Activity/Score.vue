@@ -12,21 +12,21 @@
           <!-- 签到 -->
           <router-link :to="{name:'checkin'}">
             <div>
-              <img src="../../assets/images/pointmall/jifen4@2x.png" width="30px">
+              <img src="../../assets/images/pointmall/jifen4@2x.png" height="43.5">
             </div>
             <span>{{this.$t('score.score1')}}</span>
           </router-link>
           <!-- 积分中心 -->
           <router-link :to="{name:'pointcenter'}">
             <div>
-              <img src="../../assets/images/pointmall/jifen3@2x.png" width="28px">
+              <img src="../../assets/images/pointmall/jifen3@2x.png" height="43.5">
             </div>
             <span>{{this.$t('score.score2')}}</span>
           </router-link>
           <!-- 积分明细 -->
           <router-link :to="{name:'pointdetails'}">
             <div>
-              <img src="../../assets/images/pointmall/jifen2@2x.png" width="29px">
+              <img src="../../assets/images/pointmall/jifen2@2x.png" height="43.5">
             </div>
             <span>{{this.$t('score.score3')}}</span>
           </router-link>
@@ -34,7 +34,7 @@
           <!-- <router-link :to="{name:'pointorder'}"> -->
           <a href="#" @click="mPullScoreDetail">
             <div>
-              <img src="../../assets/images/pointmall/jifen1@2x.png" width="32px">
+              <img src="../../assets/images/pointmall/jifen1@2x.png" height="43.5">
             </div>
             <span>{{this.$t('score.score4')}}</span>
           </a>

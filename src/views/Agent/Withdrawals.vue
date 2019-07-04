@@ -34,7 +34,7 @@
         <span class="title">{{$t('member.onlineDeposit.os6')}}</span>
         <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
       </div>
-      <div class="input-panel">
+      <div class="input-panel" style="padding-left:0">
         <span style="font-size: 16px">
           <b>{{$t('symbol.t1')}}</b>
         </span>
@@ -54,7 +54,7 @@
           @click="vm.dealcoin=item;activeAmount=vm.dealcoin"
         >{{$t('symbol.t1')}}{{ item }}</span>
       </div> -->
-      <div class="can_withdraw">
+      <div class="can_withdraw" style="padding-left:0">
         <span>
           {{$t('member.onlineDeposit.os11')}}
           <span class="count">{{parseInt(cAgentCashBalance)}}</span>
@@ -69,7 +69,7 @@
         <span style="font-size:15px;color:#4c4c4c" class="title">{{$t('member.onlineDeposit.os13')}}</span>
         <span style="font-size:15px;color:#bfc2cc" class="tmux">{{$t('member.onlineDeposit.os14')}}</span>
       </div>
-      <el-input :type="'password'" v-model="vm.coinpwd" placeholder="请输入提款密码" maxlength="8"></el-input>
+      <el-input class="paddingLeft0" style="padding-left:0" :type="'password'" v-model="vm.coinpwd" placeholder="请输入提款密码" maxlength="8"></el-input>
       <cube-button
         :active="true"
         @click="mSave"
@@ -255,6 +255,7 @@ export default {
   .can_withdraw {
     width: 351px;
     height: 40px;
+    padding-left:0;
     padding-top: 5px;
     margin: 0 auto;
     display: flex;
@@ -263,6 +264,7 @@ export default {
     span {
       font-size: 12px;
       color: #4c4c4c;
+       padding-top: 10px;
       .count {
         color: #2d8cf0;
       }
@@ -311,6 +313,9 @@ export default {
       text-align: left;
       text-overflow: hidden;
     }
+  }
+  /deep/ .el-input {
+    padding-left:0
   }
 }
 </style>

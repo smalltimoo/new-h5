@@ -22,7 +22,7 @@
         <span class="title">{{$t('member.onlineDeposit.os6')}}</span>
         <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
       </div>
-      <div class="input-panel">
+      <div class="input-panel" style="padding-left:0">
         <span style="font-size: 16px">
           <b>{{$t('symbol.t1')}}</b>
         </span>
@@ -295,7 +295,7 @@ export default {
 <style lang="less" >
 .withdraw {
   width: 100%;
-  margin-top: 8px;
+  // margin-top: 8px;
   .user_bank_card {
     width: 351px;
     height: 175.5px;
@@ -322,11 +322,13 @@ export default {
     }
   }
   /deep/ .el-input__inner {
+    border: 0;
     border-bottom: 1px solid #f3f3f3;
   }
   .can_withdraw {
     width: 351px;
     height: 40px;
+    padding-left: 0!important;
     padding-top: 5px;
     margin: 0 auto;
     display: flex;
@@ -335,6 +337,7 @@ export default {
     span {
       font-size: 12px;
       color: #4c4c4c;
+      padding-top: 10px;
       .count {
         color: #2d8cf0;
       }
@@ -404,6 +407,9 @@ export default {
           background-size: cover;
         }
       }
+  }
+  /deep/ .el-input {
+    padding-left:0!important;
   }
 }
 </style>

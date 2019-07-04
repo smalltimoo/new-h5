@@ -1,7 +1,7 @@
 
   .game-center {
     width: 100%;
-    padding-top: 10px;
+    // padding-top: 10px;
     background-color: #fff;
     font-size: 16px;
     color: #606266;
@@ -19,9 +19,10 @@
       background-size: 35px auto;
       display: flex;
       justify-content: center;
-      align-items: flex-end;
+      align-items: center;
       background-color: #fff;
       z-index: 95;
+      line-height: 2;
     }
 
     .active {
@@ -30,6 +31,7 @@
       color: #2d8cf0;
       font-size: 24px;
       color: #303313;
+      line-height: 2;
     }
 
     .game-type {
@@ -38,18 +40,19 @@
       overflow-x: scroll;
       white-space: nowrap;
       display: flex;
+      align-items: center;
       position: relative;
       padding-left: 80px;
 
       & > div {
-        float: left;
+        // float: left;
         min-width: 40px;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
+        // height: 100%;
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: flex-end;
         align-items: center;
-        margin-right: 20px;
+        margin-right: 16px;
       }
 
 
@@ -121,7 +124,7 @@
       height: 45px;
       line-height: 25px;
       justify-content: space-between;
-      padding: 0 5px;
+      padding: 5px 5px 0;
 
       &  span {
         display: block;
@@ -138,22 +141,22 @@
       & > span:last-child {
         color: #606266;
         font-size: 14px;
+        line-height: 16px;
       }
     }
      .game_text_right {
-      width: 100px;
+      width: 80px;
       position: relative;
         span {
-          border: solid 0.026667rem #3d7eff;
-          border-radius: 0.08rem;
-          padding: 0 0.213333rem;
-          font-size: 0.32rem;
-          font-family: PingFangSC-Light;
+          border: solid 1px #3d7eff;
+          border-radius: 0.2px;
+          width: 100%;
+          text-align: center;
+          // padding: 0 0.213333rem;
+          font-size: 12px;
           color: #3d7eff;
-          height: 0.666667rem;
-          line-height: 0.666667rem;
-          border-radius: 0.106667rem;
-          border: solid 0.053333rem #3d7eff;
+          height: 25.5px;
+          line-height: 2;
           position: absolute;
           bottom: 0;
           right: 0;
