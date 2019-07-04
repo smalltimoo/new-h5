@@ -29,7 +29,7 @@
       <div class="activity">
         <div class="title">
           <span>{{ $t('home.title1')}}</span>
-          <span>
+          <span style="display:none">
             <router-link :to="{name:'Games'}">{{ $t('home.home31')}}</router-link>
           </span>
         </div>
@@ -565,7 +565,7 @@ export default {
 .game_block a.game_link:nth-child(1) {
   display: inline-block;
   width: 351px;
-  height: 135px;
+  // height: 135px;
 }
 .game_block a.game_link:nth-child(2),
 .game_block a.game_link:nth-child(5) {

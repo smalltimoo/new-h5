@@ -16,18 +16,8 @@ import Vant from 'vant';
 import veRIng from 'v-charts/lib/ring.common'
 
     Vue.component(veRIng.name, veRIng)
-    // lottie.loadAnimation({
-    //   container: element, // the dom element that will contain the animation
-    //   renderer: 'svg',
-    //   loop: true,
-    //   autoplay: true,
-    //   path: 'data.json' // the path to the animation json
-    // });
 /**全局处理异常 */
 import ErrorPlugin from  './errorPlugin'
-
-// import swiper from "swiper";
-import VueAwesomeSwiper from 'vue-awesome-swiper'
 
 require('islider.js');
 
@@ -51,8 +41,6 @@ Vue.use(Cube);
 Vue.use(Vant);
 
 Vue.use(ErrorPlugin);
-// Vue.use(swiper);
-Vue.use(VueAwesomeSwiper)
 
 Vue.prototype.$api = api;
 function geturlQueryParam(paramName) {

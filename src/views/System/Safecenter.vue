@@ -35,7 +35,7 @@
     </div>
     <!-- 提款密码 -->
     <van-popup :value="show == 3" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword">
@@ -74,7 +74,7 @@
     </van-popup>
     <!-- 我的收货地址 -->
     <van-popup :value="show == 8" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
@@ -110,7 +110,7 @@
     </van-popup>
     <!-- 新增收货地址 -->
     <van-popup :value="show == 7" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
@@ -143,7 +143,7 @@
     </van-popup>
     <!-- 我的银行卡 -->
     <van-popup :value="show ==6" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
@@ -183,7 +183,7 @@
     </van-popup>
     <!-- 新增银行卡信息 -->
     <van-popup :value="show == 5" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
@@ -232,7 +232,7 @@
     </van-popup>
     <!-- 修改提款密码 -->
     <van-popup :value="show == 4" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword">
@@ -267,7 +267,7 @@
     </van-popup>
     <!-- 账户信息 -->
     <van-popup :value="[9,10].indexOf(show) >-1" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" @notgoback="notgoback"></headerComponent>
+      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="container">
           <div class="line title">
@@ -743,6 +743,9 @@ export default {
     let params = this.$route.params;
     if(params&&params.to === 'accountInfo'){
       this.routetodraw(this.userInfo[2].routeName,this.userInfo[2].type)
+    }
+    if(params&&params.to === 'bandBank'){
+      this.routetodraw(this.userInfo[0].routeName,this.userInfo[0].type)
     }
     /*账户信息数据 */
     this.$http.get("/memberUser/memberinfo.json").then(result => {

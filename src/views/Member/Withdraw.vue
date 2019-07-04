@@ -1,17 +1,16 @@
 <template>
   <div class="withdraw">
-     <router-link :to="{name:'UserBankCard'}" v-if="bindBank" >
-                <div style="display: flex;align-items: center">
-                    <Icon type="md-add-circle"
-                          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"/>&nbsp;&nbsp;
-                    <span>{{ $t('agentMember.addBank')}}</span>
-                </div>
-                <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
-            </router-link>
+     <router-link :to="{name:'safecenter',params:{to:'bandBank'}}" v-if="bindBank" class="user_bank_card bandbank">
+   
+      <div class="wrap">
+             <span class="icon"></span>     
+             <span class="text">点击此处添加银行卡</span> 
+    </div>
+     </router-link>
     <div
       class="user_bank_card"
       v-else
-      :style="{ 'background-image': 'url(' + bankInfo.drawBackgroundImg + ')', 'background-size': '100% 100%'}"
+      :style="{ 'baackground-image': 'url(' + bankInfo.drawBackgroundImg + ')', 'background-size': '100% 100%'}"
     >
       <span class="bankTypeName">{{bankInfo.bankTypeName}}</span>
       <div class="account"></div>
@@ -58,13 +57,7 @@
         <span style="font-size:15px;color:#4c4c4c" class="title">{{$t('member.onlineDeposit.os13')}}</span>
         <span style="font-size:15px;color:#bfc2cc" class="tmux">{{$t('member.onlineDeposit.os14')}}</span>
       </div>
-      <el-input
-        :type="'password'"
-        v-model="vm.coinpwd"
-        placeholder="请输入提款密码"
-        maxlength="8"
-      >
-      </el-input>
+      <el-input :type="'password'" v-model="vm.coinpwd" placeholder="请输入提款密码" maxlength="8"></el-input>
       <cube-button
         :active="true"
         @click="mSave"
@@ -84,6 +77,12 @@ export default {
       bankInfo: [],
       account: "",
       bindBank: false,
+      setPwd: false,
+      vmCard: {
+        account: ""
+      },
+      loading: false,
+      lineCountry: 1,
       vm: {
         dealcoin: "",
         coinpwd: ""
@@ -91,6 +90,36 @@ export default {
       //   amount:'',
       //   moneys:[]
     };
+  },
+  mounted() {
+    if (!this.cNeedLogin) {
+      this.$http.post("/memberUser/memberamount.json").then(result => {
+        if (result.code == 0) {
+          this.amount = result.data;
+        }
+      });
+    }
+    this.$http.get("/memberUser/getbindbank.json").then(result => {
+      if (result.code == 0) {
+        if (result.data == null) {
+          this.bindBank = true;
+          this.$Message.warning(this.$t("member.withdrawals.wa15")); //请先绑定银行卡
+        }
+      }
+    });
+    this.$http.get("/memberUser/memberinfo.json").then(result => {
+      if (result.code == 0) {
+        if (!result.data.coinPassword) {
+          this.setPwd = true;
+        }
+      }
+    });
+    this.$http.post("/getsys.json").then(res => {
+      if (res.code == 0) {
+        this.lineCountry = res.data.lineCountry;
+        this.mBanks();
+      }
+    });
   },
   methods: {
     createLocalData() {
@@ -109,88 +138,150 @@ export default {
         }
       });
     },
-    mInit() {
-      this.mLoading(true);
-      this.$http.all([this.mGetAgentCashBalance(), this.mGetBindBank()]).then(
-        this.$http.spread((resAgentCashBalance, rbindbank) => {
-          if (resAgentCashBalance.data == -1) {
-          } else if (resAgentCashBalance.data == -2) {
-            this.bindBank = true;
-            this.$Message.warning(this.$t("agent.withdrawals.withdrawals15")); //请先绑定银行卡
+    mBanks() {
+      this.$http.all([this.mGetBanks(), this.mGetBindBank()]).then(
+        this.$http.spread((rbanks, rbindbank) => {
+          this.mLoading(false);
+          if (rbanks.code == 0) {
+            this.banktypes = rbanks.data.list;
           } else {
-            this.vmCard.agentCashBalance = resAgentCashBalance.data;
+            this.$Message.warning(rbanks.message, "error");
           }
           if (rbindbank.code == 0) {
             this.vmCard = Object.assign(this.vmCard, rbindbank.data);
           }
-          this.mLoading(false);
         })
       );
     },
-    mGetAgentCashBalance() {
-      return this.$http.get("/agentUser/agentCashBalance.json");
+    mInit() {
+      this.mLoading(true);
+      this.$http.get("/memberUser/membercoin.json").then(result => {
+        if (result.code == 0) {
+          if (result.data >= 0) {
+            this.coin = result.data / 100;
+          }
+        }
+      });
     },
-    mGetBindBank() {
-      return this.$http.get("/memberUser/getbindbank.json");
+    mCash() {
+      this.mLoading(true);
+      this.$http.post("/memberUser/membercash.json", this.vm).then(result => {
+        this.mLoading(false);
+        if (result.code == 0) {
+          this.vm.dealcoin = 0;
+          if (result.data == 0) {
+            this.$Message.success(this.$t("member.withdrawals.wa16")); //操作成功
+          } else if (result.data == 1) {
+            this.$Message.warning(this.$t("member.withdrawals.wa17")); //请先设置资金密码
+          } else if (result.data == 2) {
+            this.$Message.warning(this.$t("member.withdrawals.wa18")); //请先绑定银行卡
+          } else {
+            this.$Message.error(result.message, () => {});
+          }
+        } else {
+          this.$Message.error(result.message, () => {});
+          this.vm.dealcoin = 0;
+        }
+      });
     },
     mSave() {
       if (this.loading) {
         return;
       }
+      if (this.bindBank) {
+        this.$Message.warning(this.$t("member.withdrawals.wa18")); //绑定银行卡
+        return;
+      }
       if (this.vm.dealcoin == "") {
-        this.$Message.warning(this.$t("agent.withdrawals.withdrawals16")); //取现金额不能为空
+        //取现金额不能为空
+        this.$Message.warning(this.$t("member.withdrawals.wa19"));
         return;
       }
       if (this.vm.dealcoin < 1) {
-        this.$Message.warning(this.$t("agent.withdrawals.withdrawals17")); //取现金额必须大于1元
+        //取现金额必须大于1元
+        this.$Message.warning(this.$t("member.withdrawals.wa20"));
         return;
       }
       if (this.vm.coinpwd == "") {
-        this.$Message.warning(this.$t("agent.withdrawals.withdrawals18")); //请输入资金密码
+        //请输入资金密码
+        this.$Message.warning(this.$t("member.withdrawals.wa21"));
         return;
       }
-      if (this.vm.dealcoin > this.yue) {
-        this.$Message.warning(this.$t("agent.withdrawals.withdrawals19")); //余额不足
+      if (this.vm.dealcoin > this.coin) {
+        //余额不足
+        this.$Message.warning(this.$t("member.withdrawals.wa22"));
         return;
       }
       this.mLoading(true);
       this.loading = true;
-      let params = Object.assign({}, this.vm);
+      //先检查是否给手续费
       this.$http
-        .post("/agentUser/agentcash.json", params)
+        .post("/memberUser/checkmembercash.json", this.vm)
         .then(result => {
           this.mLoading(false);
           this.loading = false;
           if (result.code == 0) {
-            this.vm.dealcoin = 0;
-            if (result.data == 0) {
-              this.$Message.success(
-                this.$t("agent.withdrawals.withdrawals20")
-              ); //提现成功
-              this.mInit();
-            } else if (result.data == 1) {
-              this.setPwd = true;
-              this.$Message.warning(
-                this.$t("agent.withdrawals.withdrawals14")
-              );
-              this.mAlert(this.$t("agent.withdrawals.withdrawals21"), () => {
-                //请先设置资金密码
-                this.$router.push({ name: "SafaPassword" });
+            let isCharge = false;
+            if (
+              result.data.bool &&
+              result.data.washCodeState != 0 &&
+              (result.data.countGame > result.data.gameAmount ||
+                (result.data.countGame == 0 && result.data.gameAmount == 0))
+            ) {
+              isCharge = true;
+            }
+            if (isCharge) {
+              var wa23 = this.$t("member.withdrawals.wa23");
+              if (result.data.gameflag == 1) {
+                //总打码不足
+                wa23 = this.$t("member.withdrawals.wa23");
+              } else if (result.data.gameflag == 2) {
+                //最后一笔不足
+                wa23 = this.$t("member.withdrawals.wa29");
+              }
+
+              let strConfirm =
+                wa23 + //当前打码量不足
+                result.data.countGame / 100 +
+                this.$t("member.withdrawals.wa24") + //，将收取
+                result.data.washCodeCharge +
+                this.$t("member.withdrawals.wa25"); //%的手续费，你确定要取现吗？
+              if (result.data.countGame <= 0) {
+                strConfirm =
+                  this.$t("member.withdrawals.wa27") + //当前没有打码量，将收取            %的手续费，你确定要取现吗？
+                  result.data.washCodeCharge +
+                  this.$t("member.withdrawals.wa28");
+              }
+              this.mConfirm(strConfirm, () => {
+                this.mLoading(true);
+                setTimeout(() => {
+                  this.mCash();
+                }, 300);
               });
-            } else if (result.data == 2) {
-              this.bindBank = true;
-              this.$Message.warning(
-                this.$t("agent.withdrawals.withdrawals22")
-              ); //请先绑定银行卡
+            } else {
+              this.mCash();
             }
           } else {
-            this.$Message.error(result.message);
+            this.vm.dealcoin = 0;
+            this.$Message.warning(result.message);
           }
         })
         .catch(error => {
-          this.vm.dealcoin = 0;
           this.loading = false;
         });
+    },
+    mGetBanks() {
+      let sysInfo = this.$store.getters.getSysInfo;
+      return this.$http.post("/banktypes.json", {
+        lineCountry: sysInfo.lineCountry
+          ? sysInfo.lineCountry
+          : this.$i18n.local == "th"
+          ? "2"
+          : "1"
+      });
+    },
+    mGetBindBank() {
+      return this.$http.get("/memberUser/getbindbank.json");
     }
   },
   created() {
@@ -231,7 +322,7 @@ export default {
     }
   }
   /deep/ .el-input__inner {
-    border-bottom:1px solid #f3f3f3;
+    border-bottom: 1px solid #f3f3f3;
   }
   .can_withdraw {
     width: 351px;
@@ -292,6 +383,27 @@ export default {
       text-align: left;
       text-overflow: hidden;
     }
+  }
+  .bandbank {
+      background-color: #3d73ff;
+      padding: 0;
+      margin: 0 auto;
+      .wrap {
+        width: 113px;
+        height: 61px;
+        display: flex;
+        margin: 0 auto;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        .icon {
+          width: 37px;
+          height: 37px;
+          // border: solid 2px #ffffff;
+          background: url('~@/assets/images/default/jia@2x.png');
+          background-size: cover;
+        }
+      }
   }
 }
 </style>

@@ -35,7 +35,7 @@
       <div class="wallet-panel">
         <div class="wallet">
           <h3 class="title">资产分布</h3>
-          <ve-ring :data="chartData" :loading="true" :settings="chartSettings" height="200px"></ve-ring>
+          <ve-ring :data="chartData" :legend-position="'bottom'" :colors="colors" :loading="true" :settings="chartSettings" height="200px"></ve-ring>
           <div v-for="item in walletlist" :key="item.gameCompanyId" class="wallet-line">
             <div style="display: flex;align-items: center">
               <img :src="item.logoUrl" width="36px" v-if="item.logoUrl">
@@ -84,7 +84,7 @@ export default {
   name: "AssetsOverView",
   data() {
     this.chartSettings = {
-      colors: ["#0088ff", "#f66262"],
+      
       radius: [30, 50],
       offsetY: 100
     };
@@ -94,6 +94,7 @@ export default {
         columns: ["name", "data"],
         rows: []
       },
+      colors: ["#0088ff", "#f66262"],
       walletlist: [
         {
           coin: ""
@@ -246,6 +247,26 @@ export default {
   .title {
     font-size: 17px;
     color: #111;
+  }
+}
+</style>
+<style lang="less">
+.assetsOverview {
+  .header {
+    background-color: #3481ff;
+    .header-left .icon-menu,
+    .header-left .logo,
+    .yue {
+      color: #fff;
+    }
+    .yue {
+      background-color: #0854eb;
+    }
+
+    .header-right .message {
+        background: url("~@/assets/images/message-gary-min@2x.png") no-repeat;
+        background-size: 100% 100% ;
+    }
   }
 }
 </style>

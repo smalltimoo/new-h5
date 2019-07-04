@@ -396,7 +396,7 @@
           >
           <Icon type="ios-arrow-forward" class="icon-menu"/>
         </div>
-        <div class="deposit" style="justify-content: flex-start;padding: 0 10px">
+        <div class="deposit" style="justify-content: flex-start;padding: 0 10px" v-if="!(selectData.accountType==1 || selectData.accountType==2)">
           <span
             style="margin-left: 10px;white-space: nowrap;min-width: 80px"
           >{{$t('member.onlineDeposit.od59')}}</span>

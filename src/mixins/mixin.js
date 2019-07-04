@@ -183,6 +183,8 @@ export default {
                             );
                             ok(result);
                         } else {
+                            console.info(result)
+                            this.mAlert(result.message);
                             error(result);
                         }
                     });

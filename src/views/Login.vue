@@ -34,7 +34,7 @@
                     </div>
                     <div style="position: relative">
                          <h3 class="title">验证码</h3>
-                        <input type="text" ref="checkcode" style="width:100%" class="login-input" :placeholder="$t('login.enterVerifyCode')"
+                        <input type="text" ref="checkcode" maxlength="4" style="width:100%" class="login-input" :placeholder="$t('login.enterVerifyCode')"
                                @click="$refs.phone2.close()" v-model="verifyCode" autocomplete="off"
                         />
                         <div class="bg-code" @click="getCode">{{$t('login.getVerifyCode')}}</div>
