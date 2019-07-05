@@ -571,7 +571,7 @@ export default {
   width: 137px;
   height: 188px;
   float: left;
-  margin-left: 12px;
+  margin-left: 11px;
 }
 .game_block a.game_link:nth-child(3),
 .game_block a.game_link:nth-child(4),
@@ -580,13 +580,13 @@ export default {
   width: 204px;
   height: 88px;
   float: right;
-  margin-right: 12px;
+  margin-right: 11px;
 }
 .game_block {
   height: 524px;
 }
 .game_block a.game_link {
-  margin: 7px 4px;
+  margin: 6px;
   img {
     width: 100%;
     height: 100%;

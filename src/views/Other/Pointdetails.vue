@@ -1,5 +1,5 @@
 <template>
-  <div class="pointdetails">
+  <div class="pointdetails main-body">
     <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="container">
       <section class="info">
@@ -118,7 +118,7 @@ export default {
         startOperateTime: "",
         endOperateTime: "", 
         memberId: 0,
-        integralType: 0,
+        integralType: '',
       },
       pickerOptions: {
         shortcuts: [

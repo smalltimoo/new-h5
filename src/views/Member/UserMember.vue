@@ -63,7 +63,7 @@
           <el-divider direction="vertical"></el-divider>
           <div class="count_item">
             <!-- 总资产 -->
-            <router-link :to="{name:'AssetsOverView'}">
+            <router-link :to="{name:'AssetsOverView'}" class="hasrightsanjiao">
               <span v-if="totalCoins || cLoginUser.integral==0">
                 {{ getamountstyle('totalCoins','int') }}
                 <span

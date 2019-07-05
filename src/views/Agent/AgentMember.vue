@@ -1,5 +1,5 @@
 <template>
-  <div class="agent">
+  <div class="agent main-body">
     <div class="header">
       <div class="header-left">
         <Icon type="ios-arrow-back" class="icon-menu" @click.stop="goBack"/>

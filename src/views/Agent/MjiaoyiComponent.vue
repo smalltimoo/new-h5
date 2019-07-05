@@ -1,6 +1,7 @@
 <template>
   <div class="main-body">
     <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <div class="container">
     <div class="no-list" v-if="!dataList||dataList.length==0"></div>
     <div class="menunav">
       <div class="manage-type">
@@ -20,7 +21,8 @@
     </div>
 
     <div class="mui-content" v-if="manageType == '1'">
-      <transactions-detaillist
+      <transactions-detaillist 
+        class="mui-content2"
         :username="$route.query.username"
         :manageTypesearch="manageTypesearch"
       ></transactions-detaillist>
@@ -36,6 +38,7 @@
     </div>
     <div class="mui-content" v-if="manageType == '5'">
       <betting-detailList :username="$route.query.username" :manageTypesearch="manageTypesearch"></betting-detailList>
+    </div>
     </div>
   </div>
 </template>
@@ -334,9 +337,10 @@ export default {
   background-color: #3d7eff;
   color: #fff;
 }
-
+.menunav .shaixuan-room {
+    top:0px;
+  }
 .manage-type {
-  height: 40px;
   overflow: hidden;
   overflow-x: scroll;
   white-space: nowrap;
@@ -348,12 +352,12 @@ export default {
   width: 80%;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 10px;
-
+  margin-top: -14px;
+  
   & > div {
     float: left;
     min-width: 40px;
-    height: 100%;
+    height: 37px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -374,6 +378,9 @@ export default {
   /deep/ & > button {
     padding: inherit;
   }
+}
+.mui-content2 {
+  padding-top: 50px;
 }
 .searchVm {
   width: 100%;
@@ -414,6 +421,7 @@ export default {
   height: 40px;
   background-color: #fff;
   z-index: 999;
+  top: 44px;
 }
 .manage-type::-webkit-scrollbar {
   color: #fff;

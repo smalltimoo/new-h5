@@ -19,6 +19,7 @@
             </span>
           </div>
         </div>
+        <div class="container">
         <section class="el-container is-vertical" v-show="showSearch">
           <div class="searchVM">
             <el-select
@@ -93,6 +94,7 @@
               </div>
             </Scroll>
           
+      </div>
       </div>
     </div>
   </div>

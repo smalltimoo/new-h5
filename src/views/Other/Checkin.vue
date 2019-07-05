@@ -1,5 +1,5 @@
 <template>
-  <div class="checkin">
+  <div class="checkin main-body">
     <header-component :logo="logo" :showIcon="true" :showLogo="true" :jifen="vm.integral/100"></header-component>
     <div class="container">
       <section class="info">

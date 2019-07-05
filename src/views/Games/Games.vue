@@ -1,5 +1,5 @@
 <template>
-  <div class="games subpage">
+  <div class="games main-body">
     <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="false"></header-component>
     <div class="game-center">
       <div

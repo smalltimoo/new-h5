@@ -57,7 +57,7 @@ input {
   display: none;
 }
 .main-body {
-  // position: fixed;
+  position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
@@ -66,8 +66,14 @@ input {
   overflow: auto;
   background: #fff;
   z-index: 70;
-  height: 640px;
+  .container, .container + section {
+    margin-top: 44px;
+  }
+  // height: 640px;
 }
+// .main-body + * {
+//   margin-top: 44px;
+// }
 
 .header {
   position: fixed;
@@ -264,7 +270,23 @@ input {
 //   color: #fff;
 //   font-weight: bold;
 // }
-
+.hasrightsanjiao {
+  position: relative;
+ 
+}
+.hasrightsanjiao:after {
+        content:"";
+        position: absolute;
+        // left: 150px;
+        // bottom: -10px;
+        right:-8px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 0 10px 10px; // 上、右、下、左  三角朝哪个方向，哪个方向的宽度为0
+        border-color: #fff transparent transparent transparent;//上、右、下、左   三角朝哪个方向，该方向相对的方向有颜色
+        transform: rotate(45deg);
+  }
 .header-right {
   // width: 20%;
   display: flex;
@@ -611,7 +633,7 @@ input {
       height: 46px;
       line-height: 16px;
       background-color: #3d7eff;
-      border-radius: 4px 4px 0px 0px;
+      // border-radius: 4px 4px 0px 0px;
       font-size: 16px;
       position: static;
       .cube-picker-title {
@@ -623,18 +645,20 @@ input {
     display: none;
   }
   .cube-picker-confirm {
-      width: 279px;
+      // width: 279px;
+      width:100%;
       height: 37px;
       line-height: 37px;
       background-color: #3d7eff;
-      border-radius: 4px;
+      // border-radius: 4px;
       color: #f5f5f5;
       position: absolute;
       padding: 0;
       font-size: 18px;
-      bottom:0;
-      right: 10px;
+      bottom:0px;
+      // right: 10px;
   }
+  
   .cube-popup-content {
     transform: translateY(50%);
     width: 300px;
@@ -643,6 +667,7 @@ input {
   }
   .cube-picker-footer {
     width: 90%;
+    height: 20px;
     margin: 0 auto;
   }
 }

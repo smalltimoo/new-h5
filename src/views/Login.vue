@@ -445,6 +445,7 @@
         border: 0;
         height: inherit;
         line-height: inherit;
+        padding-left: 0px;
     }
     .login >>> .el-input__icon {
         line-height: inherit;

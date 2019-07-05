@@ -160,6 +160,16 @@ export default {
     border: solid 0.5px #cccccc;
     margin: 0 auto;
   }
+  /deep/ .el-input__inner {
+	width: 351px;
+	height: 26px;
+	background-color: #ffffff;
+	border-radius: 13px;
+	border: solid 1px #cccccc;
+}
+/deep/ .el-input__prefix {
+  top:-6px;
+}
 
   .router-panel {
     display: flex;

@@ -1,5 +1,5 @@
 <template>
-  <div class="checkin">
+  <div class="checkin main-body">
     <header-component
       :showyue="false"
       :logo="logo"
