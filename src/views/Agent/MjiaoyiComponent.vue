@@ -382,7 +382,7 @@ export default {
 .mui-content2 {
   padding-top: 50px;
 }
-.searchVm {
+.searchVm { padding-top:10px;
   width: 100%;
   display: flex;
   padding: 10px;

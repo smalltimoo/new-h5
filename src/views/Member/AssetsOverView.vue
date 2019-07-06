@@ -84,7 +84,6 @@ export default {
   name: "AssetsOverView",
   data() {
     this.chartSettings = {
-      
       radius: [30, 50],
       offsetY: 100
     };
@@ -95,6 +94,7 @@ export default {
         rows: []
       },
       colors: ["#0088ff", "#f66262"],
+      htmlbg:'',
       walletlist: [
         {
           coin: ""
@@ -109,11 +109,18 @@ export default {
   },
   mounted() {
     this.mGetCoin();
+    this.$nextTick(vm=>{
+      this.htmlbg = $('html').css('background-color')
+      $('html').css({'background-color':'#efeff4'})
+    })
   },
   computed: {
     ...mapState({
       sysPicObj: state => state.common.sysPicObj
     })
+  },
+  destroyed(){
+    $('html').css({'background-color':this.htmlbg});
   },
   methods: {
     getcoins(a) {

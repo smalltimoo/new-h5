@@ -42,7 +42,7 @@
       <div class="usercard">
         <div class="userbase">
           <div class="name_block">
-            <div class="icon"></div>
+            <div class="icon user-logo"></div>
             <div class="user_base_info">
               <p class="name">{{cLoginUser.userName2}}({{cLoginUser.id}})</p>
               <div class="fillinfo">

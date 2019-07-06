@@ -1,7 +1,7 @@
 <template>
   <div class="games main-body">
     <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="false"></header-component>
-    <div class="game-center">
+    <div class="game-center container">
       <div
         class="hot"
         :class="{active: gameType=='0'}"
@@ -223,7 +223,7 @@ export default {
     },
     allGame() {
       this.$http
-        .post("/gamesbytype.json", { playType: -1, state: 1, sysId: 0 })
+        .post("/gamesbytype.json", { playType: -1, state: 1, sysId: 0 ,version:2})
         .then(result => {
           if (result.code == 0) {
             this.companyCustomGames = Object.assign(

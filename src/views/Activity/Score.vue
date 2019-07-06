@@ -56,10 +56,16 @@
             <div class="product-img">
               <img :src="imgurl" width="105px">
             </div>
-            <div
-              class="product-name"
-              style="height: 54px;line-height: 54px"
-            >{{$t('score.luckyDrawer')}}</div>
+           <div class="product_props">
+              <div class="product-name" v-text="'幸运大转盘'"></div>
+              <div class="product-name" v-text="'积分抽奖活动'"></div>
+               <div class="use">
+              <span>{{$t('symbol.t1')}}{{(vm.integral/100).toFixed(2)}}{{$t('score.degits')}}</span>
+              <span> 2{{$t('score.degits')}}</span>
+              <!-- <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span> -->
+            </div>
+            </div>
+            
             <!--<div class="use">-->
             <!--<span></span>-->
             <!--<span></span>-->
@@ -69,12 +75,16 @@
             <div class="product-img">
               <img :src="item.img" height="100%">
             </div>
-            <div class="product-name" v-text="item.title"></div>
-            <div class="use">
+            <div class="product_props">
+              <div class="product-name" v-text="item.title"></div>
+              <div class="product-name" v-text="item.typeName"></div>
+              <div class="use">
               <!-- <span>{{$t('symbol.t1')}}{{item.originalPrice}}</span> -->
               <span>{{item.currentPrice}} {{$t('score.degits')}}</span>
               <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span>
             </div>
+            </div>
+            
           </li>
         </ul>
       </div>
@@ -269,7 +279,7 @@
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
 import headerComponent from "@/common/Header.vue";
-
+import imgurl from '../../assets/images/score/scoretu1@2x.png'
 export default {
   data() {
     return {
@@ -502,6 +512,11 @@ export default {
     this.$store.commit("CHANGE_TAB", "Score");
     this.mPullData();
     this.neiStyle();
+     if(document.documentElement.lang === 'zh'){
+                this.imgurl = imgurl
+            }else{
+                // this.imgurl = imgurl_en
+            }
     // this.mInit();
   }
 };

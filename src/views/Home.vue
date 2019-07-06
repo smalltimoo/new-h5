@@ -19,7 +19,8 @@
             class="list_one"
             style="padding-top:5px;"
             v-if="cGongGaos[0]"
-          >{{cGongGaos[0].content}}</div>
+          > <span class="span_icon"></span>{{cGongGaos[0].content}}</div>
+           <span class="span_icon icon_gray"></span>
           <div id="scroll_div" class="fl list_other">
             <div id="scroll_begin">{{cLists}}</div>
             <div id="scroll_end"></div>
@@ -41,7 +42,7 @@
           :to="{name:'Games',params:{typeId:item.typeId}}"
           :key="index"
         >
-          <el-image :src="item.mobileBackgroundUrl" :fit="'cover'">
+          <el-image :src="item.mobileImgUrl" :fit="'cover'">
             <div slot="placeholder" class="image-slot">
               加载中
               <span class="dot">...</span>
@@ -262,7 +263,7 @@ export default {
       }
     },
     allGame() {
-      this.$http.post("/webnav.json", {}).then(result => {
+      this.$http.post("/webnav.json", {version:2}).then(result => {
         if (result.code == 0) {
           this.companyCustomGames = Object.assign(
             [],
@@ -317,7 +318,7 @@ export default {
     },
 
     //文字横向滚动
-    ScrollImgLeft() {
+    ScrollImgLeft() {console.info('-------------------------------------------------------------------------')
       var speed = 50; //初始化速度 也就是字体的整体滚动速度
       var MyMar = null; //初始化一个变量为空 用来存放获取到的文本内容
       var scroll_begin = document.getElementById("scroll_begin"); //获取滚动的开头id
@@ -457,10 +458,14 @@ export default {
   }
   .icon.laba {
     padding-top: 15px;
+    .label__num {
+      font-size: 24px;
+    }
   }
-  .label_num {
+  .label__num {
     width: 60px;
     height: 19px;
+    font-size: 24px;
     font-family: SourceHanSansCN-Medium;
     font-size: 12px;
     line-height: 19px;
@@ -470,11 +475,12 @@ export default {
   .label_gonggao {
     text-align: center;
     width: 60px;
-    height: 24px;
     font-family: SourceHanSansCN-Medium;
     font-size: 12px;
-    line-height: 24px;
     color: #909399;
+    height: 12px;
+    line-height: 12px;
+    margin-top: 4.5px;
   }
   .list_style {
     display: inline-block;
@@ -549,6 +555,7 @@ export default {
       width: 294px;
       overflow: hidden;
       display: -webkit-box;
+      border-radius: 5px;
       -webkit-box-pack: center;
       -webkit-box-align: center;
       list-style: none;
@@ -611,8 +618,13 @@ export default {
   height: 50%;
   line-height: 2;
   display: flex;
+  align-items: center;
   // transform: translateY(5px);
   overflow: hidden;
+}
+.list_other  {
+  width: 95%;
+  margin-left: 5%;
 }
 
 #scroll_div {
@@ -658,7 +670,23 @@ export default {
   box-shadow: 0px 2px 11px 1px rgba(0, 0, 0, 0.05);
   padding: 0 7px 4.5px;
   border-radius: 5px;
- 
 }
+.span_icon {
+        display: inline-block;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        margin-right: 6px;
+        vertical-align: middle;
+        background-color: #3d7eff;
+        box-shadow: 0px 4px 14px 0px rgba(79, 139, 248, 0.27);
+ }
+ .icon_gray {
+   background-color: #8cb3ff;
+    opacity: 0.5;
+    position: absolute;
+    left:0;
+    bottom: 18px;
+ }
 </style>
 

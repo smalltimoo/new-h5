@@ -523,7 +523,7 @@ export default {
   width: 100%;
   height: 100px;
 }
-.searchVM {
+.searchVM { padding-top:10px;
   // width: 351px;
   background: #fff;
   width: 100%;

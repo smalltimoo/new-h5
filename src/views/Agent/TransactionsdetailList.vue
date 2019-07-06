@@ -409,7 +409,7 @@ export default {
   justify-content: space-between;
 }
 
-.searchVM {
+.searchVM { padding-top:10px;
   // width: 351px;
   width:100%;
   margin: 0 auto;

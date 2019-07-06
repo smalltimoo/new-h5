@@ -348,7 +348,7 @@ export default {
     }
   }
 }
-.searchVm {
+.searchVm { padding-top:10px;
   width: 325px;
   margin: 0 auto;
   display: flex;
