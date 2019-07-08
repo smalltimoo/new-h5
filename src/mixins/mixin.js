@@ -158,7 +158,6 @@ export default {
             }
         },
         mmLogin(userName, password, vcode) {
-            console.info(userName,typeof userName)
             return new Promise((ok, error) => {
                 this.$http
                     .post("/login.json", {

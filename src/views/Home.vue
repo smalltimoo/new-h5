@@ -686,7 +686,7 @@ export default {
     opacity: 0.5;
     position: absolute;
     left:0;
-    bottom: 18px;
+    bottom: 15px;
  }
 </style>
 

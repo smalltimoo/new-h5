@@ -10,7 +10,7 @@
     <div
       class="user_bank_card"
       v-else
-      :style="{ 'baackground-image': 'url(' + bankInfo.drawBackgroundImg + ')', 'background-size': '100% 100%'}"
+      :style="{ 'background-image': 'url(' + bankInfo.drawBackgroundImg + ')', 'background-size': '100% 100%'}"
     >
       <span class="bankTypeName">{{bankInfo.bankTypeName}}</span>
       <div class="account"></div>

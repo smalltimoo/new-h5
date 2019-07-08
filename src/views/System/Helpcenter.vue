@@ -1,7 +1,7 @@
 <template>
   <div class="helpcenter">
     <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
-    <div class="container">
+    <div class="container" style="padding-top:18px;">
       <el-input :placeholder="$t('member.systemSet.placeh0')" v-model="inputValue">
         <i slot="prefix" class="el-input__icon el-icon-search"></i>
       </el-input>

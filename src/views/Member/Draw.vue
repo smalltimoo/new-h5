@@ -6,7 +6,7 @@
       :showLogo="true"
       :jifen="balanceIntegral"
     ></header-component>
-    <div class="top bg-lunpan">
+    <div class="top bg-lunpan container">
       <!-- <img class="lucky-img" src="../../assets/images/draw/guize@2x.png"> -->
       <div class="lucky-img">{{ $t('member.draw.d9') }}</div>
       <div class="lucky-score">

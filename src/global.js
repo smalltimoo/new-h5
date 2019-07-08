@@ -110,3 +110,10 @@ export const swap = (arr, indexA, indexB) => {
 export const distinct = (arr = []) => {
   return [...new Set(arr)]
 }
+// 判断传入的日期与今天比较
+export const diffcurrentday = function (str) {
+  var d = new Date(str.replace(/-/g, "/"));
+  var todaysDate = new Date();
+  let diff = d.setHours(0, 0, 0, 0) - todaysDate.setHours(0, 0, 0, 0)
+  return diff ===0?'today':diff>0?'after':'before'
+}

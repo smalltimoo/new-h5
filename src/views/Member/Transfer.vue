@@ -9,6 +9,7 @@
       >
         <span class="name">{{item.value}}</span>
         <span class="count" v-loading="item.loading" element-loading-spinner="el-icon-loading">{{item.coin}}</span>
+        
         <!-- <span class="count" v-if="item.coin||item.coin === 0">{{item.coin}}</span> -->
         <!-- <van-loading type="spinner" v-else /> -->
       </div>
@@ -57,9 +58,9 @@
         >{{$t('symbol.t1')}}{{ item }}</span>
       </div>
     </div>
-    <cube-button @click="trans" class="trs-btn save-btn">{{$t('member.onlineDeposit.os8')}}</cube-button>
+    <cube-button :active="vm.dealCoin != ''" @click="trans" class="trs-btn save-btn">{{$t('member.onlineDeposit.os8')}}</cube-button>
     <!--立即转账-->
-    <cube-button :active="true" @click="recyc" class="save-btn">{{$t('member.onlineDeposit.os9')}}</cube-button>
+    <cube-button style="margin-top:10px;" :active="true" @click="recyc" class="save-btn">{{$t('member.onlineDeposit.os9')}}</cube-button>
   </div>
 </template>
 
@@ -78,7 +79,7 @@ export default {
       vm: {
         walletIn: "",
         walletOut: "",
-        dealCoin: ""
+        dealCoin: ''
       }
       //   amount:'',
       //   moneys:[]
@@ -308,7 +309,10 @@ export default {
     background-color: #ededed;
     color: #303133;
   }
- 
+ /deep/ .el-loading-spinner {
+   top:0;
+   margin-top:0
+ }
    .toselect:after,  .toselect:before {
             border: solid transparent;
             content: ' ';
@@ -320,14 +324,15 @@ export default {
  
          .toselect:after {
             border-width: 10px;
-            border-left-color: #fff;
+            border-left-color: #dbdbdb;
             top: 20px;//根据三角的位置改变
-        }//此处是一个白色的三角
+        }
  
          .toselect:before {
-            border-width: 12px;
-            border-left-color: #000;
-            top: 18px;
+            border-width: 5px;
+            border-left-color: #dbdbdb;
+            top: 16px;
+            z-index: 1;
         }
 }
 </style>

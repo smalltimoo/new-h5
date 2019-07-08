@@ -1,5 +1,5 @@
 <template>
-  <div class="checkin main-body">
+  <div class="pointcenter main-body">
     <header-component
       :showyue="false"
       :logo="logo"
@@ -148,7 +148,7 @@ export default {
 </script>
 <style lang="less" scoped>
 @basecolor: #3d7eff;
-.checkin {
+.pointcenter {
   .container {
     overflow-y: auto;
   }
@@ -232,11 +232,11 @@ export default {
   }
   .title {
     width: 345px;
-    height: 65px;
+    // height: 65px;
     background-color: #ffffff;
     border-radius: 4px 4px 0px 0px;
-    margin: 20px auto 0;
-    padding: 10px 15px;
+    margin: 0 auto 0;
+    padding: 40px 15px 13px;
     text-align: left;
     .title_main {
       font-size: 16px;
@@ -290,7 +290,8 @@ export default {
         color: #f5f5f5;
       }
       .aready {
-        background-image: url("~@/assets/images/score/yiwancheng@2x.png");
+        // background-image: url("~@/assets/images/score/yiwancheng@2x.png");
+        opacity: .5;
       }
     }
   }

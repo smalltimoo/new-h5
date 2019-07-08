@@ -29,7 +29,7 @@
           <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
           <template slot="dateCell" slot-scope="{date, data}">
             <p
-              :class="vm2.signDates.indexOf(data.day)>-1 ? 'is-selected' : ''"
+              :class="getClass(date,data)"
             >{{ data.day.split('-').slice(2).join('-') }}</p>
           </template>
         </el-calendar>
@@ -55,6 +55,7 @@ import headerComponent from "@/common/Header.vue";
 import star from "@/common/Star.vue";
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
+import { diffcurrentday} from '@/global'
 export default {
   name: "checkin",
   components: {
@@ -120,8 +121,17 @@ export default {
         .then(result => {
           if (result.code == 0) {
             this.mShow = true;
+            // this.vm2.isSign = 1;
+            this.getSignDays();
+            this.queryIntegral();
           }
         });
+    },
+    getClass(...a){
+      if(this.vm2.signDates === undefined) return
+      return this.vm2.signDates.includes(a[1].day)?'is-selected': diffcurrentday(a[1].day) === 'before'?'miss-selected':''
+      // return diffcurrentday(a[1].day) === 'before'?(this.vm2.signDates.includes(a[1].day) ? 'is-selected' : 'miss-selected'):''
+    // return this.vm2.signDates.includes(data.day) ? 'is-selected' : ''
     },
     getSignDays() {
       this.$http.get("/memberUser/getSignDays.json").then(result => {

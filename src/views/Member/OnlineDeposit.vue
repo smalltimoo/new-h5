@@ -78,11 +78,11 @@
             <span>{{$t('member.onlineDeposit.od11')}}</span>
           </div>
            <div
-            :class="{active: tab=='yinglian'}"
+            :class="{active: tab=='wangying'}"
             v-if="rechargeTypes.filter(item=>item.id==7).length>0 && lang != 'th'"
-            @click="mSelectRechargeType('yinglian',rechargeTypes.filter(item=>item.id==7)[0].list)"
+            @click="mSelectRechargeType('wangying',rechargeTypes.filter(item=>item.id==7)[0].list)"
           >
-            <img :src="getpaysrc('yinglian')" width="23px">
+            <img :src="getpaysrc('wangying')" width="23px">
             <span>{{$t('member.onlineDeposit.od33')}}</span>
           </div>
           <div
@@ -94,11 +94,11 @@
             <span>{{$t('member.onlineDeposit.od32')}}</span>
           </div>
           <div
-            :class="{active: tab=='yinglian2'}"
+            :class="{active: tab=='yinglian'}"
             v-if="rechargeTypes.filter(item=>item.id==12).length>0 && lang != 'th'"
-            @click="mSelectRechargeType('yinglian2',rechargeTypes.filter(item=>item.id==12)[0].list)"
+            @click="mSelectRechargeType('yinglian',rechargeTypes.filter(item=>item.id==12)[0].list)"
           >
-            <img :src="getpaysrc('yinglian2')" width="23px">
+            <img :src="getpaysrc('yinglian')" width="23px">
             <span>{{$t('member.onlineDeposit.od34')}}</span>
           </div>
           <div
@@ -118,7 +118,7 @@
             v-for="(item,index) in rechargeTypes"
             position="right"
             :key="index"
-            v-if="tab=='alpay' || tab=='wechat' || tab == 'yunshanfu' || tab == 'wangyin'||tab=='yinglian'||tab=='yinglian2'"
+            v-if="tab=='alpay' || tab=='wechat' || tab == 'yunshanfu' || tab == 'wangyin'||tab=='yinglian'||tab=='wangying'"
           >
             <div
               style="width: 100%;"
@@ -187,7 +187,7 @@
               style="width: 100%;"
               v-for="it in item.list"
               :key="it.id"
-              v-if="item.id==12 && tab=='yinglian2'"
+              v-if="item.id==12 && tab=='yinglian'"
               @click="mUpdateMoneys(it)"
             >
               <Radio :label="it.id">
@@ -208,12 +208,12 @@
               style="width: 100%;"
               v-for="it in item.list"
               :key="it.id"
-              v-if="item.id==7 && tab=='yinglian'"
+              v-if="item.id==7 && tab=='wangying'"
               @click="mUpdateMoneys(it)"
             >
               <Radio :label="it.id">
                 <img
-                  src="../../assets/images/recharge/yinglian2@2x.png"
+                  src="../../assets/images/recharge/wangying2@2x.png"
                   width="20px"
                   style="margin-left: 8px;margin-right: 8px"
                 >
@@ -585,11 +585,8 @@ export default {
     },
     /** 切换 支付方式图片*/
     getpaysrc(...a) {
-      if(a[0]=='yinglian2'){
-        console.info(12)
-      }
-      let temp = ["zhifubao", "weixin", "xianxiazhifu", "qitazhifu",'yinglian','yunshanfu'];
-      let index = ["alpay", "wechat", "bank", "scan",'yinglian','yunshanfu'].indexOf(a[0]=='yinglian2'?'yinglian':a[0]);
+      let temp = ["zhifubao", "weixin", "xianxiazhifu", "qitazhifu",'yinglian','yunshanfu','wangying'];
+      let index = ["alpay", "wechat", "bank", "scan",'yinglian','yunshanfu','wangying'].indexOf(a[0]);
       return require(`../../assets/images/recharge/${temp[index]}${
         this.tab == a[0] ? 1 : 2
       }@2x.png`);

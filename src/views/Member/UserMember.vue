@@ -209,6 +209,11 @@ export default {
           newInfo: true,
           text: "专业解答问题",
           routeName: "helpcenter"
+        },{
+          name: this.$t('member.userMember.um11'),
+          newInfo: true,
+          text: "",
+          routeName: "pointcenter"
         },
         {
           name: "安全中心",
@@ -240,12 +245,7 @@ export default {
         //   text: "",
         //   routeName: "shareapp"
         // },
-        {
-          name: this.$t('member.userMember.um11'),
-          newInfo: true,
-          text: "",
-          routeName: "pointcenter"
-        }
+        
       ],
       countInfo: [
         {

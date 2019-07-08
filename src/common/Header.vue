@@ -85,7 +85,8 @@ export default {
   // margin:16px auto;
   background-color: white;
   .yue {
-    width: 91px;
+    min-width: 85px;
+    padding: 0 3px;
     height: 21px;
     background-color: #f3f3f3;
     border-radius: 8px;

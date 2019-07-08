@@ -280,32 +280,32 @@ export default {
       }
     }
 
-    window.onscroll = function() {
-      let scrollheight =
-        document.body.scrollTop == 0
-          ? document.documentElement.scrollTop
-          : document.body.scrollTop;
-      if (scrollheight >= 44) {
-        document.querySelector(".header").style.position = "fixed";
-        if (_this.sysPicObj.appUrl && _this.showApp) {
-          document.querySelector(".header").style.marginTop = "0";
-          document.querySelector(".get-app")
-            ? (document.querySelector(".get-app").style.display = "none")
-            : null;
-        } else {
-          document.querySelector(".header").style.marginTop = "0";
-        }
-      } else {
-        if (_this.sysPicObj.appUrl && _this.showApp) {
-          document.querySelector(".header").style.position = "inherit";
-          document.querySelector(".header").style.marginTop = "5px";
-          document.querySelector(".get-app").style.display = "flex";
-        } else {
-          document.querySelector(".header").style.position = "fixed";
-          document.querySelector(".header").style.marginTop = "0";
-        }
-      }
-    };
+    // window.onscroll = function() {
+    //   let scrollheight =
+    //     document.body.scrollTop == 0
+    //       ? document.documentElement.scrollTop
+    //       : document.body.scrollTop;
+    //   if (scrollheight >= 44) {
+    //     document.querySelector(".header").style.position = "fixed";
+    //     if (_this.sysPicObj.appUrl && _this.showApp) {
+    //       document.querySelector(".header").style.marginTop = "0";
+    //       document.querySelector(".get-app")
+    //         ? (document.querySelector(".get-app").style.display = "none")
+    //         : null;
+    //     } else {
+    //       document.querySelector(".header").style.marginTop = "0";
+    //     }
+    //   } else {
+    //     if (_this.sysPicObj.appUrl && _this.showApp) {
+    //       document.querySelector(".header").style.position = "inherit";
+    //       document.querySelector(".header").style.marginTop = "5px";
+    //       document.querySelector(".get-app").style.display = "flex";
+    //     } else {
+    //       document.querySelector(".header").style.position = "fixed";
+    //       document.querySelector(".header").style.marginTop = "0";
+    //     }
+    //   }
+    // };
   },
   destroyed() {
     _this = undefined;

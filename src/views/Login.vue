@@ -49,7 +49,7 @@
                     </div>
                     <div style="position: relative">
                          <h3 class="title">邀请码</h3>
-                       <input type="number" class="login-input invit" maxlength="6"  :placeholder="$t('login.enterInvitCode')" v-model="vm.invitationCode"/>
+                       <input type="number" style="width:100%" class="login-input invit" maxlength="6"  :placeholder="$t('login.enterInvitCode')" v-model="vm.invitationCode"/>
                         <cube-tip
                                 ref="reg9"
                                 class="tip"
