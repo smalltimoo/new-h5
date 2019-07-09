@@ -14,12 +14,13 @@
           <p class="label_gonggao">公告</p>
         </div>
         <Divider type="vertical"/>
-        <div class="marquee_box">
-          <div
+        <div  class="marquee_box">
+          <a
             class="list_one"
             style="padding-top:5px;"
             v-if="cGongGaos[0]"
-          > <span class="span_icon"></span>{{cGongGaos[0].content}}</div>
+            :href="cGongGaosTitle[1]"
+          > <span class="span_icon"></span>{{cGongGaosTitle[0]}}</a>
            <span class="span_icon icon_gray"></span>
           <div id="scroll_div" class="fl list_other">
             <div id="scroll_begin">{{cLists}}</div>
@@ -149,6 +150,9 @@ export default {
     },
     cGongGaos() {
       return this.$store.getters.getGonggaos;
+    },
+    cGongGaosTitle() {
+      return this.cGongGaos&& this.cGongGaos[0].content.split('&')
     },
     cLists() {
       let [...temp] = this.cGongGaos;
@@ -621,6 +625,9 @@ export default {
   align-items: center;
   // transform: translateY(5px);
   overflow: hidden;
+}
+.list_one {
+  color:#3d7eff;
 }
 .list_other  {
   width: 95%;

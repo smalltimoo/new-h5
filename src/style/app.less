@@ -85,10 +85,12 @@ input {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  z-index: 100;
+  z-index: 1001;
   background-color: #fff;
 }
-
+.ivu-drawer-wrap {
+  z-index:1002
+}
 .color-theme{
   width: 60%;
   height: 100%;
@@ -485,6 +487,26 @@ input {
   top: 44px;
   bottom: 0;
   background-color: #fff;
+  flex-direction: column;
+  padding-top: 220px;
+  .desc {
+    font-family: Arial;
+    font-size: 16px;
+    color: #bfc2cc;
+  }
+  .btn {
+    display: inline-block;
+    width: 105px;
+    height: 24px;
+    border-radius: 3px;
+    border: solid 1px #317aed;
+    text-align: center;
+    font-family: PingFang SC;
+    font-size: 14px;
+    line-height: 24px;
+    color: #317aed;
+    margin-top: 5px;
+  }
 }
 .main-body .header .logo {
   padding-left: 0px;

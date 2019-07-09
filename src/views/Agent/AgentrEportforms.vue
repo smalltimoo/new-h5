@@ -58,7 +58,10 @@
                     </div>
                 </div>
 
-                <div class="no-list" v-if="(!dataList||dataList.length==0)&&!showSearch"></div>
+                <div class="no-list" v-if="(!dataList||dataList.length==0)&&!showSearch">
+                    <span class="desc">暂无记录</span>
+                <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+                </div>
                 <!-- 主页面内容容器 -->
                 <div class="mui-content mui-scroll-wrapper">
                     <div class="mui-scroll">

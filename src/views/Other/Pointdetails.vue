@@ -5,9 +5,9 @@
       <section class="info">
         <div style="padding-top:20px">
           <img src="../../assets/images/score/jifen@2x.png" alt class="pointimg" height="70">
-          <span class="curcount" v-text="count"></span>
+          <span class="curcount" v-text="(integral/100).toFixed(2)"></span>
           <span class="curpoint">当前积分</span>
-          <span class="addpoint">本月新增积分：{{count}}</span>
+          <span class="addpoint">本月新增积分：{{(monthIntegral/100).toFixed(2)}}</span>
         </div>
       </section>
       <section class="rooms">
@@ -77,11 +77,12 @@
           <div class="pri_main">
             <div>
               <p class="pri_title">{{item.remark}}</p>
-              <p class="pri_desc">{{item.exchangeRate}}</p>
+              <p class="pri_desc" v-if="item.integral>0" style="font-size:16px;color:#f03838">+{{(item.integral/100).toFixed(2)}}</p>
+              <p class="pri_desc" v-else style="font-size:16px;color:#fb9736">{{(item.integral/100).toFixed(2)}}</p>
             </div>
             <div>
               <p class="pri_title">{{item.operateTimeStr}}</p>
-              <p class="pri_desc">{{item.integralTypeStr}}</p>
+              <p class="pri_desc" style="font-size:12px;color:#909399">{{item.integralTypeStr}}</p>
             </div>
           </div>
         </div>
@@ -111,7 +112,8 @@ export default {
       logo: "积分明细",
       integralLog: [],
       showSearch: false,
-      count: 8888,
+      integral: 0,
+      monthIntegral:0,
       jifenoptions: [],
       activeClass: -1,
       searchVm: {
@@ -157,6 +159,16 @@ export default {
             this.integralLog = result.rows;
           }
         });
+        this.$http.get("/memberUser/memberinfo.json").then(result => {
+          if (result.code == 0) {
+            this.integral = result.data.integral;
+          }
+        });
+        this.$http.get("/memberCoin/getMonthIntegralAmount.json").then(result => {
+          if (result.code == 0) {
+            this.monthIntegral = result.data;
+          }
+        });
     },
     clickBtn(value, index) {
       this.activeClass = index;
@@ -175,7 +187,6 @@ export default {
         .post("/memberCoin/integralTypes.json", {})
         .then(result => {
           if (result.code == 0) {
-            console.info(result)
             this.jifenoptions = result.data.integralTypes
           }
         });

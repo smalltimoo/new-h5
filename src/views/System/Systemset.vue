@@ -12,10 +12,10 @@
       <div class="line set_sys" style="margin-top:50px;">
         <span>{{this.$t('member.systemSet.s5')}}</span>
       </div>
-      <div class="line set_sys">
+      <!-- <div class="line set_sys">
         <span>{{this.$t('member.systemSet.s6')}}</span>
         <span>{{version}}</span>
-      </div>
+      </div> -->
       <div class="line set_sys">
         <span>{{this.$t('member.systemSet.s7')}}</span>
         <span class="rightsanjiao"></span>
@@ -47,7 +47,7 @@ export default {
         { text: this.$t("member.systemSet.s1"), value: true },
         { text: this.$t("member.systemSet.s2"), value: true },
         { text: this.$t("member.systemSet.s3"), value: true },
-        { text: this.$t("member.systemSet.s4"), value: false }
+        // { text: this.$t("member.systemSet.s4"), value: false }
       ]
     };
   },

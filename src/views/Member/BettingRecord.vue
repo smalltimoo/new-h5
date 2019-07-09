@@ -59,7 +59,10 @@
             >{{item.text}}</el-button>
           </div>
         </section>
-        <div class="no-list" v-if="!dataList||dataList.length==0"></div>
+        <div class="no-list" v-if="!dataList||dataList.length==0">
+          <span class="desc">暂无记录</span>
+                <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+        </div>
             <Scroll
               v-if="dataList&&dataList.length>0"
               :on-reach-bottom="mReachBottom"

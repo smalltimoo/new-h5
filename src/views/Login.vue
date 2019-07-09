@@ -200,6 +200,9 @@
                 } else {
                     this.savenp = false
                 }
+
+                let params = this.$route.params;
+                if(params&&params.type == 'islogin') this.showVan = true;
             },
             mVCode() {
                 this.checkcode = ''

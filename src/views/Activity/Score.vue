@@ -60,7 +60,7 @@
               <div class="product-name" v-text="'幸运大转盘'"></div>
               <div class="product-name" v-text="'积分抽奖活动'"></div>
                <div class="use">
-              <span>{{$t('symbol.t1')}}{{(vm.integral/100).toFixed(2)}}{{$t('score.degits')}}</span>
+              <span>{{(vm.integral/100).toFixed(2)}}{{$t('score.degits')}}</span>
               <span> 2{{$t('score.degits')}}</span>
               <!-- <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span> -->
             </div>
@@ -130,7 +130,10 @@
         </span>
         <span v-text="item.operateTimeStr"></span>
       </div>
-      <div class="no-list" v-if="(!integralLog||integralLog.length==0)" style="top: 0;left: 0;"></div>
+      <div class="no-list" v-if="(!integralLog||integralLog.length==0)" style="top: 0;left: 0;">
+        <span class="desc">暂无记录</span>
+        <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+      </div>
     </Drawer>
 
     <Drawer :closable="false" v-model="order" width="100" class="order-drawer">
@@ -173,7 +176,10 @@
                     <span> {{$t('score.all')}}{{item.buyNum}}{{$t('score.products')}} &ensp;&ensp;{{$t('score.expend')}}{{item.totalPrice}}{{$t('score.degits')}}</span>
         </div>-->
       </div>
-      <div class="no-list" v-if="(!dataList||dataList.length==0)" style="top: 0;left: 0;"></div>
+      <div class="no-list" v-if="(!dataList||dataList.length==0)" style="top: 0;left: 0;">
+        <span class="desc">暂无记录</span>
+        <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+      </div>
     </Drawer>
 
     <Drawer :closable="false" v-model="buy" width="100" class="buy-drawer notback">

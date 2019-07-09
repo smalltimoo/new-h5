@@ -80,12 +80,15 @@
           </div>
         </section>
         <!-- 主页面内容容器 -->
-        <div class="no-list" v-if="(!dataList||dataList.length==0)&&!showSearch"></div>
+        <div class="no-list" v-if="!dataList||dataList.length==0">
+          <span class="desc">暂无记录</span>
+                <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+        </div>
         <div class="mui-content mui-scroll-wrapper" :style="{top:getScrollTop}">
           <div class="mui-scroll">
             <!-- 主界面具体展示内容 -->
             <Scroll
-              v-if="dataList&&dataList.length>0&&!showSearch"
+              v-if="dataList&&dataList.length>0"
               ref="ivuScrollContainer"
               :on-reach-bottom="mReachBottom"
               :height="ivuScrollContainerHeight"

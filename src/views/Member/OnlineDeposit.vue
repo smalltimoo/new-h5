@@ -467,7 +467,7 @@ export default {
       rechargeOther: [],
       moneys: [],
       lang:'',
-      yue: "5200.00",
+      yue: "",
       amount: "",
       tabType: "0",
       activeAmount: 0,

@@ -8,7 +8,10 @@
                 <span :class="{active: isJoin=='1'}" @click="changeTab('1')">{{$t('discount.dis3')}}</span>
                 <!-- <span :class="{active: isJoin=='2'}" @click="changeTab('2')">{{$t('discount.dis10')}}</span> -->
             </div>
-            <div  class="no-list" v-if="(!avtByIsJoin||avtByIsJoin.length==0)" style="top: 100px;bottom:100px;left: 0;"></div>
+            <div  class="no-list" v-if="(!avtByIsJoin||avtByIsJoin.length==0)" style="top: 100px;bottom:100px;left: 0;">
+                <span class="desc">暂无记录</span>
+                <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+            </div>
             <div v-for="(item, index) in avtByIsJoin" :key="index" style="margin-top: 10px">
                 <!--<span v-text="item.quotaStartTimeStr" style="font-size: 12px;"></span>-->
                 <div class="dis-panel">
@@ -91,8 +94,11 @@ import headerComponent from '@/common/Header.vue'
                 this.activityInfo = item;
                 this.drawer = true;
             },
-            signed(item) {
+            signed(item) { 
                 if(this.loading){return;}
+                if (!this.toNeedLogin()) {
+                    return;
+                }
                 this.loading=true;
                 this.$http
                     .post("/activity/joinActivity.json", {

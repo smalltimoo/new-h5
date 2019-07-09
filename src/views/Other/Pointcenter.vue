@@ -11,7 +11,7 @@
       <section class="info">
         <div class="info_left">
           <span class="label">我的积分</span>
-          <span class="count">8888.00</span>
+          <span class="count">{{(integral/100).toFixed(2)}}</span>
         </div>
         <span class="btn qiandao" v-if="!vm.isSign" @click="$router.push({name:'checkin'})">立即签到</span>
         <span class="btn qiandao" v-else>已签到</span>
@@ -43,7 +43,7 @@
               <p class="pri_title">{{item.title}}</p>
               <p class="pri_desc">{{item.desc}}</p>
             </div>
-            <span class="btnl" v-if="item.type == 0">去完成</span>
+            <span class="btnl" @click="$router.push({name:item.routeName,params:item.params})" v-if="item.type == 0">去完成</span>
             <span class="btnl aready" v-else>已完成</span>
           </div>
         </div>
@@ -87,21 +87,22 @@ export default {
           desc: "打码越多，赠送积分越多",
           img: "dama",
           type: 0,
-          routeName: "checkin"
+          routeName: "Home"
         },
         {
           title: "推荐我们",
           desc: "成功推荐一位即可获得500积分",
           img: "tuijian",
           type: 0,
-          routeName: "checkin"
+          routeName: "shareapp"
         },
         {
           title: "完善资料",
           desc: "完善资料可获得积分",
           img: "wanshan",
           type: 0,
-          routeName: "checkin"
+          routeName: "safecenter",
+          params:{to:'accountInfo'}
         }
       ]
     };

@@ -1,7 +1,7 @@
 <template>
   <div class="main-body shareapp" style="margin-top: 0">
     <header-component :logo="logo" :showIcon="true" :showLogo="true" :jifen="balanceIntegral"></header-component>
-    <div class="top bg-lunpan">
+    <div class="top bg-lunpan container">
       <div class="_title">
         <span>邀好友</span>
         <span>拿好礼</span>

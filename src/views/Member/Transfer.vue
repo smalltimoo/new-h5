@@ -8,28 +8,22 @@
         @click="mGetCoin(item,index)"
       >
         <span class="name">{{item.value}}</span>
-        <span class="count" v-loading="item.loading" element-loading-spinner="el-icon-loading">{{item.coin}}</span>
-        
+        <span
+          class="count"
+          v-loading="item.loading"
+          element-loading-spinner="el-icon-loading"
+        >{{item.coin}}</span>
+
         <!-- <span class="count" v-if="item.coin||item.coin === 0">{{item.coin}}</span> -->
         <!-- <van-loading type="spinner" v-else /> -->
       </div>
     </div>
     <div class="chang_select">
-      <el-select class="toselect" v-model="vm.walletIn" @change="selectoptionsa" ref="select1">
-        <el-option
-          v-for="item in options"
-          :key="item.id"
-          :label="item.value"
-          :value="item.id"
-        ></el-option>
+      <el-select class="toselect" v-model="vm.walletOut" @change="selectoptionsa" ref="select1">
+        <el-option v-for="item in options" :key="item.id" :label="item.value" :value="item.id"></el-option>
       </el-select>
-      <el-select v-model="vm.walletOut" @change="selectoptionsb" ref="select2">
-        <el-option
-          v-for="item in options"
-          :key="item.id"
-          :label="item.value"
-          :value="item.id"
-        ></el-option>
+      <el-select v-model="vm.walletIn" @change="selectoptionsb" ref="select2">
+        <el-option v-for="item in options" :key="item.id" :label="item.value" :value="item.id"></el-option>
       </el-select>
     </div>
     <div class="recharge" style="margin-top: 14px;">
@@ -46,7 +40,7 @@
           v-model="vm.dealCoin"
           class="input-number"
           :placeholder="$t('member.onlineDeposit.os7')"
-        >
+        />
       </div>
       <div class="recommend" v-if="moneys.length>0">
         <span
@@ -58,13 +52,23 @@
         >{{$t('symbol.t1')}}{{ item }}</span>
       </div>
     </div>
-    <cube-button :active="vm.dealCoin != ''" @click="trans" class="trs-btn save-btn">{{$t('member.onlineDeposit.os8')}}</cube-button>
+    <cube-button
+      :active="transferbtntype"
+      @click="trans"
+      class="trs-btn save-btn"
+    >{{$t('member.onlineDeposit.os8')}}</cube-button>
     <!--立即转账-->
-    <cube-button style="margin-top:10px;" :active="true" @click="recyc" class="save-btn">{{$t('member.onlineDeposit.os9')}}</cube-button>
+    <cube-button
+      style="margin-top:10px;"
+      :active="true"
+      @click="recyc"
+      class="save-btn"
+    >{{$t('member.onlineDeposit.os9')}}</cube-button>
   </div>
 </template>
 
 <script>
+import { Promise } from 'q';
 export default {
   name: "Transfer",
   props: ["moneys", "amount", "activeAmount"],
@@ -79,19 +83,29 @@ export default {
       vm: {
         walletIn: "",
         walletOut: "",
-        dealCoin: ''
+        dealCoin: ""
       }
       //   amount:'',
       //   moneys:[]
     };
   },
+  computed:{
+    transferbtntype(){
+     let flag = this.walletlist.filter(item=>[this.vm.walletIn,this.vm.walletOut].includes(item.id)).every(val=>val.coin!='获取异常')
+     return vm.dealCoin != ''&& flag
+    }
+  },
   methods: {
     createLocalData() {
+      // this.options = this.walletlist = localStorage.getItem('walletcoinsList');
       this.$http
         .post("/managerGame/getWalletCoinsForLoad.json")
         .then(result => {
           if (result.code === 0) {
-            [this.vm.walletIn,this.vm.walletOut]= [result.data.gamecompays[0].id,result.data.gamecompays[1].id]
+            [this.vm.walletOut,this.vm.walletIn] = [
+              result.data.gamecompays[0].id,
+              result.data.gamecompays[1].id
+            ];
             this.options = this.walletlist = result.data.gamecompays.map(
               (item, index) => {
                 item.loading = true;
@@ -100,7 +114,8 @@ export default {
               }
             );
             this.walletlist.forEach((val, index) => {
-              this.mGetCoin(val, index);
+              if(index) this.mGetCoin(val, index);
+              else this.getMemberAmount()
             });
           }
         });
@@ -112,15 +127,31 @@ export default {
       //   return item;
       // });
     },
+    getMemberAmount(){
+      this.walletlist[0].loading = true;
+        this.$http
+        .get("/memberUser/memberamount.json")
+        .then(result => {
+          if (result.code === 0) {
+            this.walletlist[0].coin = (result["data"]/100).toFixed(2);
+          }
+          // this.mLoading(false);
+          this.walletlist[0].loading = false;
+        })
+        .catch(err => {
+          //获取余额失败
+          this.mAlert(this.$t("member.indoorTransfer.getMoneyError"));
+        });
+    },
     selectoptionsa(a) {
-      if (this.vm.walletOut && a === this.vm.walletOut) {
-        [this.vm.walletOut, this.ovalue2] = [this.ovalue1, this.ovalue1];
+      if (this.vm.walletIn!==undefined && a === this.vm.walletIn) {
+        [this.vm.walletIn, this.ovalue2] = [this.ovalue1, this.ovalue1];
       }
       this.ovalue1 = a;
     },
     selectoptionsb(a) {
-      if (this.vm.walletIn && a === this.vm.walletIn) {
-        [this.vm.walletIn, this.ovalue1] = [this.ovalue2, this.ovalue2];
+      if (this.vm.walletOut!==undefined && a === this.vm.walletOut) {
+        [this.vm.walletOut, this.ovalue1] = [this.ovalue2, this.ovalue2];
       }
       this.ovalue2 = a;
     },
@@ -131,7 +162,9 @@ export default {
         .get("/managerGame/getWalletCoin.json?id=" + item.id)
         .then(result => {
           if (result.code === 0) {
-            this.walletlist[index].coin = result["data"];
+            this.walletlist[index].coin = (result["data"]/100).toFixed(2);
+          }else{
+            this.walletlist[index].coin = '获取异常'
           }
           // this.mLoading(false);
           item.loading = false;
@@ -141,7 +174,27 @@ export default {
           this.mAlert(this.$t("member.indoorTransfer.getMoneyError"));
         });
     },
-    recyc() {},
+    recyc() {
+      Promise.all(this.walletlist.forEach((val, index) => {
+        if (index) {
+          this.vm2 = {
+            walletIn: "0",
+            walletOut: val.id,
+            dealCoin: val.coin
+          };
+          this.$http
+            .post("/managerGame/wallettransferall.json", this.vm2)
+            .then(result => {});
+        }
+      })).then(res=>{
+        // this.createLocalData();
+      }).catch(err=>{
+        //  this.mAlert('余额回收失败');
+      }).finally(()=>{
+        this.createLocalData();
+      })
+      
+    },
 
     trans() {
       if (this.loading) {
@@ -174,7 +227,7 @@ export default {
       //   this.vm.walletIn = 0;
       //   this.vm.walletOut = this.wallet;
       // }
-      if(this.vm.walletIn == -1 || this.vm.walletOut == -1){
+      if (this.vm.walletIn == -1 || this.vm.walletOut == -1) {
         this.$Message.warning(this.$t("member.indoorTransfer.it10"));
         return;
       }
@@ -208,6 +261,7 @@ export default {
   },
   created() {
     this.createLocalData();
+    // this.getMemberAmount();
     this.$parent.moneys = [100, 200, 500, 1000, 5000];
     // console.info(this.moneys)
   }
@@ -309,30 +363,31 @@ export default {
     background-color: #ededed;
     color: #303133;
   }
- /deep/ .el-loading-spinner {
-   top:0;
-   margin-top:0
- }
-   .toselect:after,  .toselect:before {
-            border: solid transparent;
-            content: ' ';
-            height: 0;
-            left: 100%;    //根据三角形的位置，可以随意更改。
-            position: absolute;
-            width: 0;
-        } 
- 
-         .toselect:after {
-            border-width: 10px;
-            border-left-color: #dbdbdb;
-            top: 20px;//根据三角的位置改变
-        }
- 
-         .toselect:before {
-            border-width: 5px;
-            border-left-color: #dbdbdb;
-            top: 16px;
-            z-index: 1;
-        }
+  /deep/ .el-loading-spinner {
+    top: 0;
+    margin-top: 0;
+  }
+  .toselect:after,
+  .toselect:before {
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    left: 100%; //根据三角形的位置，可以随意更改。
+    position: absolute;
+    width: 0;
+  }
+
+  .toselect:after {
+    border-width: 10px;
+    border-left-color: #dbdbdb;
+    top: 20px; //根据三角的位置改变
+  }
+
+  .toselect:before {
+    border-width: 5px;
+    border-left-color: #dbdbdb;
+    top: 16px;
+    z-index: 1;
+  }
 }
 </style>

@@ -11,7 +11,10 @@
     </div>-->
     <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
     <div class="container">
-      <div class="no-list" v-if="!dataList||dataList.length==0"></div>
+      <div class="no-list" v-if="!dataList||dataList.length==0">
+        <span class="desc">暂无记录</span>
+                <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+      </div>
       <div class="manage-type">
         <div :class="{active: manageType=='1'}" @click="manageType=1">{{ $t("agentMember.am13")}}</div>
         <div :class="{active: manageType=='2'}" @click="manageType=2">{{ $t("agentMember.am15")}}</div>

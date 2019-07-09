@@ -102,9 +102,16 @@ export default {
     mGetCoin() {
       this.mLoading(true);
       this.$http
-        .post("/managerGame/getWalletCoins.json")
+        .post("/managerGame/getWalletCoinsForLoad.json")
         .then(result => {
-         sessionStorage.setItem("walletcoinsList", JSON.stringify(result.data.walletlist));
+          let comp = result.data.gamecompays.map(
+              (item, index) => {
+                item.loading = true;
+                item.coin = 0;
+                return item;
+              }
+            );
+         localStorage.setItem("walletcoinsList", JSON.stringify(comp));
         })
         .catch(err => {
           console.info(this.$t("member.userMember.um24")); //获取余额失败

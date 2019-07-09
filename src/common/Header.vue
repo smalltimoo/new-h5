@@ -5,7 +5,7 @@
       <span class="logo" v-if="showLogo">{{logo}}</span>
     </div>
     <div class="header-right">
-      <router-link  :to="{name:'Login'}" class="yue" v-if="cNeedLogin">登录</router-link>
+      <router-link  :to="{name:'Login',params:{type:'islogin'}}" class="yue" v-if="cNeedLogin">登录</router-link>
       <div class="yue" v-else-if="showyue">余额:{{yue}}</div>
       <div class="yue" v-else>积分:{{jifen}}</div>
       <Poptip trigger="click" placement="bottom-end">

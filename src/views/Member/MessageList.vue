@@ -10,7 +10,11 @@
             <div class="header-right"></div>
         </div> -->
         <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
-        <div  class="no-list" v-if="!dataList||dataList.length==0"></div>
+        <div class="container">
+        <div  class="no-list" v-if="!dataList||dataList.length==0">
+            <span class="desc">暂无记录</span>
+                <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+        </div>
         <div class="message">
             <div v-for="item in dataList" :key="item.id" class="msg-panel">
                 <span v-text="item.createTimeStr" style="font-size: 12px"></span>
@@ -28,6 +32,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 </template>

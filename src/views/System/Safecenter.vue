@@ -34,7 +34,7 @@
       </div>
     </div>
     <!-- 提款密码 -->
-    <van-popup :value="show == 3" position="right" style="width:100%;height:100%">
+    <van-popup class="main-body" :value="show == 3" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
@@ -73,7 +73,7 @@
       </section>
     </van-popup>
     <!-- 我的收货地址 -->
-    <van-popup :value="show == 8" position="right" style="width:100%;height:100%">
+    <van-popup class="main-body" :value="show == 8" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
@@ -109,7 +109,7 @@
       </section>
     </van-popup>
     <!-- 新增收货地址 -->
-    <van-popup :value="show == 7" position="right" style="width:100%;height:100%">
+    <van-popup class="main-body" :value="show == 7" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
@@ -142,7 +142,7 @@
       </section>
     </van-popup>
     <!-- 我的银行卡 -->
-    <van-popup :value="show ==6" position="right" style="width:100%;height:100%">
+    <van-popup class="main-body" :value="show ==6" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
@@ -182,7 +182,7 @@
       </section>
     </van-popup>
     <!-- 新增银行卡信息 -->
-    <van-popup :value="show == 5" position="right" style="width:100%;height:100%">
+    <van-popup class="main-body" :value="show == 5" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
@@ -231,7 +231,7 @@
       </section>
     </van-popup>
     <!-- 修改提款密码 -->
-    <van-popup :value="show == 4" position="right" style="width:100%;height:100%">
+    <van-popup class="main-body" :value="show == 4" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
@@ -266,7 +266,7 @@
       </section>
     </van-popup>
     <!-- 账户信息 -->
-    <van-popup :value="[9,10].indexOf(show) >-1" position="right" style="width:100%;height:100%">
+    <van-popup class="main-body" :value="[9,10].indexOf(show) >-1" position="right" style="width:100%;height:100%">
       <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
       <section class="el-container is-vertical">
         <div class="container">
@@ -290,7 +290,7 @@
             </div>
             <div>
               <span>邮箱</span>
-              <span v-text="userdatainfo.createTimeStr"></span>
+              <span v-text="userdatainfo.email"></span>
             </div>
             <div>
               <span>qq</span>
@@ -301,6 +301,7 @@
               <span>微信</span>
               <span v-text="userdatainfo.weixin" v-if="userdatainfo.weixin"></span>
               <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
+              
             </div>
           </div>
           <div class="line title">
