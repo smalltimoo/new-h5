@@ -11,7 +11,7 @@
                 <div class="logo"> <img src="../assets/images/reglogin/logo.png" alt=""></div>
                 <p class="welcome">欢迎来到<font>{{name}}</font></p>
                 <p class="text">赶快登陆挣钱吧</p>
-                
+
                 <div style="position: relative;margin-top:25px;">
                     <h3 class="title">手机号码</h3>
                         <el-select v-model="areaCode" filterable placeholder="请选择" class="eye area">
@@ -45,7 +45,7 @@
                         >
                             {{$t('login.enterVerifyCode')}}
                         </cube-tip>
-                        
+
                     </div>
                     <div style="position: relative">
                          <h3 class="title">邀请码</h3>
@@ -67,7 +67,7 @@
             </section>
             <van-popup v-model="showVan" position="right" style="width:100%;height:100%">
       <section class="el-container is-vertical">
-          
+
           <div class=" login_top" >
            <van-icon name="arrow-left" class="icon-menu" @click="showVan = false"/>
             <!-- <Icon type="ios-arrow-back" class="icon-menu" @click="back"/> -->
@@ -90,7 +90,7 @@
                     </div>
                     <div>
                         <h3 class="title">密码</h3>
-                        <input type="password" ref="password" class="login-input" :placeholder="$t('login.mustPwd620')"
+                        <input type="password" ref="password" minlength="6" maxlength="12" class="login-input" :placeholder="$t('login.mustPwd620')"
                                @click="$refs.tip2.close()" v-model="password"/>
                         <cube-tip
                                 ref="tip2"
@@ -115,20 +115,20 @@
                     </div>
                     <div class="login-check">
                         <Checkbox v-model="savenp" style="float:left;">&nbsp;{{$t('login.rememberAccount')}}</Checkbox><!-- 记住密码-->
-                        <span style="font-size: 12px">{{$t('login.losePwd')}}?</span>
+                        <span style="font-size: 12px" @click="mOpenCService">{{$t('login.losePwd')}}?</span>
                     </div>
                     <input type="button" class="btn-login" :value="$t('login.login')" @click="mLogin"/>
                     <!-- <div class="reg">
                         {{$t('login.noAccount')}}？
                         <span @click="activeName='register'" style="color:#0288d1">{{$t('login.register')}}</span>
                     </div> -->
-                   
-                   
+
+
                     <input type="button" class="btn-login" style="background-color:#fff;color:#3d7eff;font-size:13px;margin-top:5px;" :value="'选择线路'" @click.stop="isshowLines = true"/>
             </section>
       </section>
     </van-popup>
-          
+
         </div>
         <line-selectdlg :is-show="isshowLines" @close="CB_dialog"></line-selectdlg>
     </div>
@@ -356,7 +356,7 @@
                     }
                 });
             },
-            
+
                 CB_dialog (val){
                 this.isshowLines = false;
                 },

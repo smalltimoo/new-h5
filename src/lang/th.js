@@ -37,7 +37,7 @@ export default {
         home19: 'DG 游戏厅',
         home20: 'BG 彩票厅',
         home21: 'QG 游戏厅',
-        
+
         home30: '优惠活动',
         home31: '更多>>>',
     },
@@ -111,7 +111,7 @@ export default {
         expend: '消耗',
         confirmOrder: '确认订单',
         receiveAddress: '收件地址',
-        addAddress: '添加地址',
+        addAddress: '新增收货地址',
         kucun: '库存',
         peisong: '配送信息',
         guanfang: '官方配送',

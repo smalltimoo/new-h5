@@ -1,5 +1,5 @@
 <template>
-  <div class="score"> 
+  <div class="score">
     <header-component :logo="logo" :showIcon="false" :showLogo="true" :jifen="(vm.integral/100).toFixed(2)"></header-component>
     <div class="container">
       <div class="usercard">
@@ -65,7 +65,7 @@
               <!-- <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span> -->
             </div>
             </div>
-            
+
             <!--<div class="use">-->
             <!--<span></span>-->
             <!--<span></span>-->
@@ -84,7 +84,7 @@
               <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span>
             </div>
             </div>
-            
+
           </li>
         </ul>
       </div>
@@ -137,7 +137,7 @@
     </Drawer>
 
     <Drawer :closable="false" v-model="order" width="100" class="order-drawer">
-      <header-component 
+      <header-component
       :showyue="false"
         :logo="jifendingdan"
         :showIcon="true"
@@ -191,14 +191,14 @@
                 <div class="header-right"></div>
       </div>-->
       <header-component :showyue="false"
-        :logo="dingdanqueren" 
+        :logo="dingdanqueren"
         :showIcon="true"
         :showLogo="true"
         :jifen="(amount/100).toFixed(2)"
         @notgoback="notgoback"
       ></header-component>
       <div class="buy">
-        <router-link :to="{name:'Receiving'}">
+        <router-link :to="{name:'safecenter',params:{to:'addaddress'}}">
           <div class="receive-address" v-if="hasAddress">
             <div class="address">{{$t('score.receiveAddress')}}:&ensp; {{hasAddress}}</div>
             <Icon
@@ -208,9 +208,9 @@
             />
           </div>
           <div class="add-address" v-else>
-            <i class="el-icon-circle-plus-outline" style="font-size: 20px"></i>
-            &nbsp;
             {{$t('score.addAddress')}}
+          &nbsp;
+          <i class="el-icon-circle-plus-outline" style="font-size: 20px"></i>
           </div>
         </router-link>
 
@@ -236,10 +236,10 @@
           <span>{{$t('score.peisong')}}</span>
           <span>{{$t('score.guanfang')}}</span>
         </div>
-        <div class="note peisong">
+        <!-- <div class="note peisong">
           <span>留言备注:</span>
           <input type="text" :placeholder="'这里可以留言哦'" v-model="content" class="text">
-        </div>
+        </div> -->
         <div style="padding: 10px; font-size: 16px">
           <b>{{$t('score.dingdan')}}</b>
         </div>
@@ -259,10 +259,10 @@
           <span>{{$t('score.shangpinzonge')}}:</span>
           <span>{{number * rows.currentPrice}} {{$t('score.degits')}}</span>
         </div>
-        <div class="flex content">
+        <!-- <div class="flex content">
           <span>运费:</span>
           <span>+50 积分</span>
-        </div>
+        </div> -->
         <div class="flex total">
           <span>{{$t('score.yingfuheji')}}:</span>
           <span>{{number * rows.currentPrice}} {{$t('score.degits')}}</span>
@@ -468,6 +468,10 @@ export default {
       // this.$router.push({name:'confirmorder',params:{number:1,rows:item}})
     },
     confirmOrder() {
+      if(!this.hasAddress){
+        this.$router.push({name:'safecenter',params:{to:'addaddress'}})
+        return;
+      }
       this.$http
         .post("/imo/exchange.json", { id: this.rows.id, buyNum: this.number })
         .then(result => {
@@ -583,7 +587,7 @@ export default {
       border-radius: 15px;
       box-shadow: rgba(0,0,0,.5) 0px 0px 5px;
     }
-  
+
 }
 </style>
 

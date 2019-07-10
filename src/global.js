@@ -115,5 +115,32 @@ export const diffcurrentday = function (str) {
   var d = new Date(str.replace(/-/g, "/"));
   var todaysDate = new Date();
   let diff = d.setHours(0, 0, 0, 0) - todaysDate.setHours(0, 0, 0, 0)
-  return diff ===0?'today':diff>0?'after':'before'
+  return diff === 0 ? 'today' : diff > 0 ? 'after' : 'before'
+}
+export const getMyDate = function (str) {
+  function addZero(num) {
+    if (parseInt(num) < 10) {
+      num = '0' + num;
+    }
+    return num;
+  }
+  var oDate = new Date(str),
+    oYear = oDate.getFullYear(),
+    oMonth = oDate.getMonth() + 1,
+    oDay = oDate.getDate(),
+    oHour = oDate.getHours(),
+    oMin = oDate.getMinutes(),
+    oSen = oDate.getSeconds(),
+    oTime = oYear + '-' + addZero(oMonth) + '-' + addZero(oDay)
+  return oTime;
+}
+/**
+ * 计算时间区间
+ * @param {*} str
+ */
+export const betweenday =  (timebetween = 3600 * 1000 * 24 * 30 * 3, diff)=> {
+  const end = new Date();
+  const start = new Date();
+  // start = ();
+  return [getMyDate(start.getTime() - timebetween), getMyDate(end)]
 }

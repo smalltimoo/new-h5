@@ -35,7 +35,13 @@
     </div>
     <!-- 提款密码 -->
     <van-popup class="main-body" :value="show == 3" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
+      <headerComponent
+        :showIcon="true"
+        :showLogo="true"
+        :logo="popuptitle"
+        :showyue="true"
+        @notgoback="notgoback"
+      ></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword">
@@ -74,7 +80,13 @@
     </van-popup>
     <!-- 我的收货地址 -->
     <van-popup class="main-body" :value="show == 8" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
+      <headerComponent
+        :showIcon="true"
+        :showLogo="true"
+        :logo="popuptitle"
+        :showyue="true"
+        @notgoback="notgoback"
+      ></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
@@ -110,7 +122,13 @@
     </van-popup>
     <!-- 新增收货地址 -->
     <van-popup class="main-body" :value="show == 7" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
+      <headerComponent
+        :showIcon="true"
+        :showLogo="true"
+        :logo="popuptitle"
+        :showyue="true"
+        @notgoback="notgoback"
+      ></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
@@ -143,7 +161,13 @@
     </van-popup>
     <!-- 我的银行卡 -->
     <van-popup class="main-body" :value="show ==6" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
+      <headerComponent
+        :showIcon="true"
+        :showLogo="true"
+        :logo="popuptitle"
+        :showyue="true"
+        @notgoback="notgoback"
+      ></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
@@ -183,7 +207,13 @@
     </van-popup>
     <!-- 新增银行卡信息 -->
     <van-popup class="main-body" :value="show == 5" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
+      <headerComponent
+        :showIcon="true"
+        :showLogo="true"
+        :logo="popuptitle"
+        :showyue="true"
+        @notgoback="notgoback"
+      ></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword setshipaddr">
@@ -232,7 +262,13 @@
     </van-popup>
     <!-- 修改提款密码 -->
     <van-popup class="main-body" :value="show == 4" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
+      <headerComponent
+        :showIcon="true"
+        :showLogo="true"
+        :logo="popuptitle"
+        :showyue="true"
+        @notgoback="notgoback"
+      ></headerComponent>
       <section class="el-container is-vertical">
         <div class="line title">{{popuptitle}}</div>
         <div class="editpassword">
@@ -266,8 +302,19 @@
       </section>
     </van-popup>
     <!-- 账户信息 -->
-    <van-popup class="main-body" :value="[9,10].indexOf(show) >-1" position="right" style="width:100%;height:100%">
-      <headerComponent :showIcon="true" :showLogo="true" :logo="popuptitle" :showyue="true" @notgoback="notgoback"></headerComponent>
+    <van-popup
+      class="main-body"
+      :value="[9,10].indexOf(show) >-1"
+      position="right"
+      style="width:100%;height:100%"
+    >
+      <headerComponent
+        :showIcon="true"
+        :showLogo="true"
+        :logo="popuptitle"
+        :showyue="true"
+        @notgoback="notgoback"
+      ></headerComponent>
       <section class="el-container is-vertical">
         <div class="container">
           <div class="line title">
@@ -301,7 +348,6 @@
               <span>微信</span>
               <span v-text="userdatainfo.weixin" v-if="userdatainfo.weixin"></span>
               <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
-              
             </div>
           </div>
           <div class="line title">
@@ -367,8 +413,8 @@ export default {
         bankProvinceid: 0,
         bankCityid: 0,
         bankAreaid: 0,
-        bankTypeName:'',
-        password:''
+        bankTypeName: "",
+        password: ""
       },
       editpassword: {
         oldPass: "",
@@ -611,7 +657,6 @@ export default {
           ? "2"
           : "1"
       });
-     
     },
     mGetProvinces() {
       return this.$http.post("/provinces.json");
@@ -710,43 +755,50 @@ export default {
       });
     },
     mSaveAdd() {
-                if (!this.vm.memberName) {
-                    this.$refs.tip1.show()
-                    return;
-                }
-                if (!this.vm.phone) {
-                    this.$refs.tip2.show()
-                    return;
-                }
-                if (!this.vm.address) {
-                    this.$refs.tip3.show()
-                    return;
-                }
-                this.mLoading(true);
-                this.$http
-                    .post("/memberUser/saveMemberAddress.json", this.vm)
-                    .then(result => {
-                        this.mLoading(false);
-                        if (result.code == 0) {
-                            //恭喜，设置成功！
-                            this.$Message.success(this.$t("member.receiving.receive13"));
-                            this.mInit()
-                        } else {
-                            this.$Message.error(result.message);
-                        }
-                    });
-            }
+      if (!this.vm.memberName) {
+        this.$refs.tip1.show();
+        return;
+      }
+      if (!this.vm.phone) {
+        this.$refs.tip2.show();
+        return;
+      }
+      if (!this.vm.address) {
+        this.$refs.tip3.show();
+        return;
+      }
+      this.mLoading(true);
+      this.$http
+        .post("/memberUser/saveMemberAddress.json", this.vm)
+        .then(result => {
+          this.mLoading(false);
+          if (result.code == 0) {
+            //恭喜，设置成功！
+            this.$Message.success(this.$t("member.receiving.receive13"));
+            this.mInit();
+          } else {
+            this.$Message.error(result.message);
+          }
+        });
+    }
   },
   created() {
     // this.mInit();
   },
   mounted() {
     let params = this.$route.params;
-    if(params&&params.to === 'accountInfo'){
-      this.routetodraw(this.userInfo[2].routeName,this.userInfo[2].type)
-    }
-    if(params&&params.to === 'bandBank'){
-      this.routetodraw(this.userInfo[0].routeName,this.userInfo[0].type)
+    if (params) {
+      switch (params.to) {
+        case "accountInfo":
+          this.routetodraw(this.userInfo[2].routeName, this.userInfo[2].type);
+          break;
+        case "bandBank":
+          this.routetodraw(this.userInfo[0].routeName, this.userInfo[0].type);
+          break;
+        case "addaddress":
+          this.routetodraw(this.userInfo[1].routeName, this.userInfo[1].type);
+          break;
+      }
     }
     /*账户信息数据 */
     this.$http.get("/memberUser/memberinfo.json").then(result => {

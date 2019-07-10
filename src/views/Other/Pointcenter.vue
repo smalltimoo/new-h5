@@ -24,7 +24,7 @@
         </span>
         <span class="text2">
           明日签到即可获得&nbsp;
-          <font>5&nbsp;积分</font>
+          <font>{{givePoint}}&nbsp;积分</font>
         </span>
         <star :size="48" :type="'flor'"></star>
       </section>
@@ -72,6 +72,7 @@ export default {
     return {
       logo: "积分中心",
       vm: {},
+      givePoint:'',
       integral: "",
       checkInVm: {},
       prilist: [
@@ -118,6 +119,15 @@ export default {
     getpaysrc(a) {
       return require(`@/assets/images/score/${a}@2x.png`);
     },
+    getPoint(){
+      this.$http
+        .get("/memberUser/daySignGiveAmount.json", {})
+        .then(result => {
+          if (result.code == 0) {
+            this.givePoint = result.data;
+          }
+        });
+    },
     queryIntegral() {
       this.$http
         .get("/activity/queryMemberSignIntegral.json", {})
@@ -142,6 +152,7 @@ export default {
   },
   created() {
     this.mInit();
+    this.getPoint();
     this.queryIntegral();
     this.getSignDays();
   }
@@ -167,7 +178,8 @@ export default {
     align-items: center;
     .info_left {
       text-align: left;
-      width: 100px;
+      width: 120px;
+      padding-left: 10px;
       display: flex;
       flex-direction: column;
       justify-items: center;

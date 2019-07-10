@@ -22,10 +22,15 @@
             :href="cGongGaosTitle[1]"
           > <span class="span_icon"></span>{{cGongGaosTitle[0]}}</a>
            <span class="span_icon icon_gray"></span>
-          <div id="scroll_div" class="fl list_other">
+          <!-- <div id="scroll_div" class="fl list_other">
             <div id="scroll_begin">{{cLists}}</div>
             <div id="scroll_end"></div>
-          </div>
+          </div> -->
+           <marquee behavior="scroll" direction="left" scrollamount="4"  class="fl list_other">
+                <span v-for="(item,index) in cGongGaosTop0" :key="index" v-text="item.content"
+                      style="margin-right: 50px">
+                </span>
+            </marquee>
         </div>
       </div>
       <div class="activity" style="padding:0">
@@ -151,12 +156,19 @@ export default {
     cGongGaos() {
       return this.$store.getters.getGonggaos;
     },
+    cGongGaosTop0() {
+       return this.$store.getters.getGonggaos.filter(item=>item.isTop == 0)
+    },
+    cGongGaosTop1() {
+      return this.$store.getters.getGonggaos.filter(item=>item.isTop == 1)
+    },
     cGongGaosTitle() {
-      return this.cGongGaos&& this.cGongGaos[0].content.split('&')
+      let temp = this.cGongGaosTop1.sort((a,b)=>a.id-b.id);
+      return  temp[temp.length-1].content.split('&');
     },
     cLists() {
-      let [...temp] = this.cGongGaos;
-      temp.shift();
+      let [...temp] = this.cGongGaosTop0;
+      // temp.shift();
       return temp.length?temp
         .map(item => {
           return item.content;

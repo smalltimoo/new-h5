@@ -76,7 +76,7 @@ export default {
       if (!v) {
         this.mWinClose();
       }
-      
+
     },
     alertDownloadApp() {
       this.$http
@@ -94,10 +94,9 @@ export default {
     },
     updateOnlineStatus(e) {
       const { type } = e;
+      console.info(type)
       this.onLine = type === "online";
-      if(!this.onLine){
-          this.$router.push({name:'404',params:{type:'network'}})
-      }
+      this.onLine?this.goBack():this.$router.push({name:'404',params:{type:'network'}})
     },
     mGetCoin() {
       this.mLoading(true);

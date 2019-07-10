@@ -8,9 +8,10 @@
           <Icon type="ios-arrow-forward" class="icon-menu" style="font-size: 16px;color: #4c4c4c;"/>
         </div>
         <div class="add-address" v-else>
-          <i class="el-icon-circle-plus-outline" style="font-size: 20px"></i>
-          &nbsp;
+
           {{$t('score.addAddress')}}
+          &nbsp;
+          <i class="el-icon-circle-plus-outline" style="font-size: 20px"></i>
         </div>
       </router-link>
 
@@ -89,7 +90,7 @@ export default {
       number: 1,
       integralLog: {},
       imgurl: "",
-      
+
       vm: {
         integral: 0
       },

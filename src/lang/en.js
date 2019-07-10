@@ -109,7 +109,7 @@ export default {
         expend: '消耗en',
         confirmOrder: '确认订单en',
         receiveAddress: '收件地址en',
-        addAddress: '添加地址en',
+        addAddress: '新增收货地址en',
         kucun: '库存en',
         peisong: '配送信息en',
         guanfang: '官方配送en',

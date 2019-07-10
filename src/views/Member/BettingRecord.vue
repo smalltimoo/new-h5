@@ -15,7 +15,7 @@
             <div class="yue">余额:{{yue}}</div>
             <span class="shaixuan-room" @click="showSearch = !showSearch">
               筛选
-              <span class="icon-shaixuan"></span>
+              <span class="icon-shaixuan" :class="{selected:showSearch}"></span>
             </span>
           </div>
         </div>
@@ -96,7 +96,7 @@
                 </div>
               </div>
             </Scroll>
-          
+
       </div>
       </div>
     </div>

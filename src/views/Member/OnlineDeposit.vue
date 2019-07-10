@@ -141,6 +141,7 @@
                 <span class="radio-id">{{ it.apiid}}</span>
               </Radio>
             </div>
+
             <div
               style="width: 100%;"
               v-for="it in item.list"
@@ -161,6 +162,7 @@
                 <span>{{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}}</span>
                 <span class="radio-id">{{ it.apiid}}</span>
               </Radio>
+
             </div>
                         <div
               style="width: 100%;"
@@ -264,6 +266,32 @@
               </Radio>
             </div>
           </RadioGroup>
+           <div
+              style="width: 100%;"
+              v-if="'alpay'==tab"
+              class="quickpay"
+              @click="mOpenCService"
+            >
+             <img
+                  src="../../assets/images/alipay.png"
+                  width="20px"
+                  style="margin-left: 8px;margin-right: 8px"
+                >
+                <span>支付宝闪充-10s到账</span>
+            </div>
+            <div
+              style="width: 100%;"
+              v-if="'wechat'==tab"
+              class="quickpay"
+              @click="mOpenCService"
+            >
+             <img
+                  src="../../assets/images/wechat.png"
+                  width="20px"
+                  style="margin-left: 8px;margin-right: 8px"
+                >
+                <span>微信闪充-10s到账</span>
+            </div>
         </div>
       </div>
       <div class="recharge" style="margin-top: 14px;">
@@ -315,7 +343,7 @@
     <div class="container" v-if="tabType=='2'">
       <withdraw :moneys="moneys" :amount="amount" :activeAmount="activeAmount"></withdraw>
     </div>
-    
+
     <Drawer :closable="false" v-model="underlineDrawer" width="100" class="underline-drawer notback">
       <headerComponent :showIcon="draw" :showLogo="true" :logo="logo" @notgoback="notgoback"></headerComponent>
       <!-- <div class="header">
@@ -743,7 +771,7 @@ export default {
               this.$nextTick(()=>{
                 window.location.href = openUrl;
               })
-              
+
               // this.$router.push({
               //     name: "CustomerService",
               //     params: {aType: "cz", title:'在线支付', cUrl: openUrl,}
@@ -896,7 +924,7 @@ export default {
       this.mUnderlineTypes();
       this.mCompanyAccount();
       this.mBanktypes();
-      
+
     }
     this.$http.post("/memberUser/memberamount.json").then((result)=>{
       if(result.code == 0){
@@ -956,5 +984,15 @@ export default {
       color: #303313;
     }
   }
+  .quickpay{
+    display: flex;
+     justify-content: flex-start;
+     align-items: center;
+     width: 100%;
+     min-height: 40px;
+     font-size: 12px;
+     //border-bottom: solid 1px #f3f3f3;
+     padding-left: 10px;
+ }
 }
 </style>

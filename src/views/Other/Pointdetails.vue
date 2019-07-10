@@ -15,7 +15,7 @@
           <span>积分记录</span>
           <span class="shaixuan-room" @click="showSearch = !showSearch">
             筛选
-            <span class="icon-shaixuan"></span>
+            <span class="icon-shaixuan" :class="{selected:showSearch}"></span>
           </span>
         </h2>
         <section class="el-container is-vertical" v-show="showSearch">
@@ -81,7 +81,7 @@
               <p class="pri_desc" v-else style="font-size:16px;color:#fb9736">{{(item.integral/100).toFixed(2)}}</p>
             </div>
             <div>
-              <p class="pri_title">{{item.operateTimeStr}}</p>
+              <p class="pri_title" style="font-size:13px;color:#909399">{{item.operateTimeStr}}</p>
               <p class="pri_desc" style="font-size:12px;color:#909399">{{item.integralTypeStr}}</p>
             </div>
           </div>
@@ -95,6 +95,7 @@ import headerComponent from "@/common/Header.vue";
 import star from "@/common/Star.vue";
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
+import {betweenday} from '@/global'
 let currenttime;
 export default {
   name: "pointdetails",
@@ -118,9 +119,9 @@ export default {
       activeClass: -1,
       searchVm: {
         startOperateTime: "",
-        endOperateTime: "", 
+        endOperateTime: "",
         memberId: 0,
-        integralType: '',
+        integralType: '0',
       },
       pickerOptions: {
         shortcuts: [
@@ -152,6 +153,7 @@ export default {
         sysId: this.cLoginUser.sysId,
         memberId: this.cLoginUser.id
       };
+      [this.searchVm.startOperateTime,this.searchVm.endOperateTime] = betweenday()
       this.$http
         .post("/memberCoin/queryIntegralLogs.json", params)
         .then(result => {
@@ -187,11 +189,13 @@ export default {
         .post("/memberCoin/integralTypes.json", {})
         .then(result => {
           if (result.code == 0) {
-            this.jifenoptions = result.data.integralTypes
+            this.jifenoptions = result.data.integralTypes;
+            this.jifenoptions.unshift({id:'0',value:'所有'})
           }
         });
     },
     searchpoint() {
+      this.searchVm.integralType = this.searchVm.integralType == '所有'?'':this.searchVm.integralType
       this.$http
         .post("/memberCoin/queryIntegralLogs.json", this.searchVm)
         .then(result => {
@@ -383,7 +387,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: inherit;
+    padding: 0;
   }
   .btns.active {
     background-color: #3d7eff;

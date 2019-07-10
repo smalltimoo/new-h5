@@ -26,7 +26,6 @@
       </section>
       <section class="calendar">
         <el-calendar>
-          <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
           <template slot="dateCell" slot-scope="{date, data}">
             <p
               :class="getClass(date,data)"
@@ -124,12 +123,14 @@ export default {
             // this.vm2.isSign = 1;
             this.getSignDays();
             this.queryIntegral();
+          }else{
+            this.$Message.warning(result.message);
           }
         });
     },
     getClass(...a){
       if(this.vm2.signDates === undefined) return
-      return this.vm2.signDates.includes(a[1].day)?'is-selected': diffcurrentday(a[1].day) === 'before'?'miss-selected':''
+      return this.vm2.signDates.includes(a[1].day)?'is-selected': diffcurrentday(a[1].day) === 'before'?'miss-selected':a[1].type=='current-month'?'current-month':''
       // return diffcurrentday(a[1].day) === 'before'?(this.vm2.signDates.includes(a[1].day) ? 'is-selected' : 'miss-selected'):''
     // return this.vm2.signDates.includes(data.day) ? 'is-selected' : ''
     },
@@ -259,8 +260,15 @@ export default {
         background-color: #dadada;
         color: #f5f5f5;
       }
+      .current-month{
+        color: #303133;
+      }
     }
   }
+  /deep/.el-calendar-table thead th {
+    padding-right: 10px;
+  }
+
   .rule {
     width: 351px;
     margin: 20px auto;

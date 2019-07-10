@@ -22,7 +22,7 @@
         <span v-text="balanceIntegral"></span>
         ,
         {{ $t('member.draw.d4') }}
-        <span class="lucky-big" v-text="luckyDrawTimes"></span>
+        <span class="lucky-big" v-text="`${luckyDrawTimes}次`"></span>
         {{
         $t('member.draw.d5') }}
       </div>
@@ -419,7 +419,7 @@ body {
   align-items: center;
   width: 100%;
   padding-top: 40%;
-  margin-top: -23%;
+  margin-top: -35%;
   background: url(../../assets/images/draw/clould@2x.png) 0 0 no-repeat;
   background-size: 100% auto;
 }
@@ -455,10 +455,7 @@ body {
   width: 80%;
   height: 160px;
   color: #fff;
-  background: -webkit-linear-gradient(#2a85ff, #71b1ff); /* Safari 5.1 - 6.0 */
-  background: -o-linear-gradient(#2a85ff, #71b1ff); /* Opera 11.1 - 12.0 */
-  background: -moz-linear-gradient(#2a85ff, #71b1ff); /* Firefox 3.6 - 15 */
-  background: linear-gradient(#2a85ff, #71b1ff); /* 标准的语法 */
+  background: -webkit-linear-gradient(#71b1ff,#2a85ff); /* Safari 5.1 - 6.0 */
   overflow: hidden;
   /*display: none;*/
 }
@@ -565,6 +562,7 @@ body {
   letter-spacing: 0px;
   color: #ffffff;
 }
+
 </style>
 
 
@@ -579,6 +577,10 @@ body {
     }
     .yue {
       background-color: #0854eb;
+    }
+    .header-right .message {
+        background: url("~@/assets/images/message-gary-min@2x.png") no-repeat;
+        background-size: 100% 100% ;
     }
   }
 }

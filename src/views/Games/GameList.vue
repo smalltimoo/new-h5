@@ -40,7 +40,7 @@
           </ul>
         </Poptip>
       </div>
-      
+
     </div>
     <div id="MG_game" class="MG_game gameThree">
       <div class="game-type">
@@ -53,6 +53,10 @@
       </div>
       <div class="A-game-content-wrapper row">
         <div class="el-rows">
+          <div  class="no-list" v-if="totalgames==0&&gameType == 1" style="top: 100px;left: 0;">
+                <span class="desc">暂无记录</span>
+                <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+            </div>
           <div
             v-for="(game,index) in games"
             :key="index"
@@ -72,6 +76,10 @@
               <span class="love" @click="saveGames(game)" :class="{actived:game.collection}"></span>
             </p>
           </div>
+           <div  class="no-list" v-if="collgames==0&&gameType == 2" style="top: 100px;left: 0;">
+                <span class="desc">你还没有收藏游戏</span>
+                <a href="#" @click="gameType = 1" class="btn">去逛逛</a>
+            </div>
           <div
             v-for="(game,index) in sGames"
             :key="index+'label'"
@@ -79,6 +87,8 @@
             class="Game"
             v-show="gameType == 2"
           >
+
+            <div>
             <p class="BgImg">
               <img
                 :src="game.prcUrl"
@@ -94,6 +104,7 @@
                 :class="{actived:game.collection}"
               ></span>
             </p>
+            </div>
           </div>
         </div>
       </div>
@@ -187,8 +198,8 @@ export default {
                         this.collgames = this.sGames.length
                     }
                 })
-              
-            
+
+
           }
         });
     }
@@ -325,6 +336,7 @@ button {
   align-items: center;
   position: fixed;
   top: 40px;
+  z-index: 100;
   background-color: #fff;
   margin-bottom: 40px;
   & > div {
