@@ -92,7 +92,7 @@ export default {
   computed:{
     transferbtntype(){
      let flag = this.walletlist.filter(item=>[this.vm.walletIn,this.vm.walletOut].includes(item.id)).every(val=>val.coin!='获取异常')
-     return vm.dealCoin != ''&& flag
+     return this.vm.dealCoin != ''&& flag
     }
   },
   methods: {

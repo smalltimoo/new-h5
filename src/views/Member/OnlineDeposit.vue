@@ -56,9 +56,10 @@
           <span class="title">{{$t('member.onlineDeposit.od8')}}</span>
           <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
         </div>
-        <div class="pay-way">
+        <div class="pay-way" >
+          <!-- <el-scrollbar class="pay-way"> -->
           <div
-            :class="{active: tab=='wechat'}"
+            class="pay-way-line" :class="{active: tab=='wechat'}"
             v-if="rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('wx')).length>0"
             @click="mSelectRechargeType('wechat',rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('wx'))[0].list)"
           >
@@ -66,19 +67,19 @@
             <span>{{$t('member.onlineDeposit.od10')}}</span>
           </div>
           <div
-            :class="{active: tab=='alpay'}"
+            class="pay-way-line" :class="{active: tab=='alpay'}"
             v-if="rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('alpay')).length>0"
             @click="mSelectRechargeType('alpay',rechargeTypes.filter(item=>item.rechargeTypeIcon.includes('alpay'))[0].list)"
           >
             <img :src="getpaysrc('alpay')">
             <span>{{$t('member.onlineDeposit.od9')}}</span>
           </div>
-          <div :class="{active: tab=='bank'}" @click="mSelectRechargeType('bank',companyAccounts)">
+          <div class="pay-way-line" :class="{active: tab=='bank'}" @click="mSelectRechargeType('bank',companyAccounts)">
             <img :src="getpaysrc('bank')">
             <span>{{$t('member.onlineDeposit.od11')}}</span>
           </div>
            <div
-            :class="{active: tab=='wangying'}"
+            class="pay-way-line" :class="{active: tab=='wangying'}"
             v-if="rechargeTypes.filter(item=>item.id==7).length>0 && lang != 'th'"
             @click="mSelectRechargeType('wangying',rechargeTypes.filter(item=>item.id==7)[0].list)"
           >
@@ -86,7 +87,7 @@
             <span>{{$t('member.onlineDeposit.od33')}}</span>
           </div>
           <div
-            :class="{active: tab=='yunshanfu'}"
+            class="pay-way-line" :class="{active: tab=='yunshanfu'}"
             v-if="rechargeTypes.filter(item=>item.id==9).length>0 && lang != 'th'"
             @click="mSelectRechargeType('yunshanfu',rechargeTypes.filter(item=>item.id==9)[0].list)"
           >
@@ -94,7 +95,7 @@
             <span>{{$t('member.onlineDeposit.od32')}}</span>
           </div>
           <div
-            :class="{active: tab=='yinglian'}"
+            class="pay-way-line" :class="{active: tab=='yinglian'}"
             v-if="rechargeTypes.filter(item=>item.id==12).length>0 && lang != 'th'"
             @click="mSelectRechargeType('yinglian',rechargeTypes.filter(item=>item.id==12)[0].list)"
           >
@@ -102,7 +103,7 @@
             <span>{{$t('member.onlineDeposit.od34')}}</span>
           </div>
           <div
-            :class="{active: tab=='scan'}"
+            class="pay-way-line" :class="{active: tab=='scan'}"
             @click="mSelectRechargeType('scan',rechargeOther)"
             v-if="rechargeOther.length>0"
           >
@@ -110,6 +111,7 @@
             <span>{{$t('member.onlineDeposit.od12')}}</span>
           </div>
         </div>
+        <!-- </el-scrollbar> -->
         <div class="pay-account">
           <RadioGroup
             v-model="id"

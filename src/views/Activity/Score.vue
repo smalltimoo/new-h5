@@ -52,7 +52,7 @@
       <div class="product">
         <!-- <div class="title">{{$t('score.hotExchange')}}</div> -->
         <ul class="products">
-          <li @click="mJumpDraw">
+          <li @click="mJumpDraw" v-if="isDraw">
             <div class="product-img">
               <img :src="imgurl" width="105px">
             </div>

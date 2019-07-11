@@ -22,10 +22,11 @@
               <p class="name">{{cLoginUser.userName2}}</p>
               <div
                 class="fillinfo"
-                @click="$router.push({name:'safecenter',params:{to:'accountInfo'}})"
+                @click="complete?$router.push({name:'safecenter',params:{to:'accountInfo'}}):$router.push({name:'Home'})"
               >
                 <span class="icon icon_left"></span>
-                <span class="text">快速完善资料</span>
+                <span class="text" v-if="complete">快速完善资料</span>
+                <span class="text" v-else>去打码</span>
                 <span class="icon icon_right"></span>
               </div>
             </div>
@@ -201,6 +202,7 @@ export default {
       agnetLevel: "",
       isDraw: false,
       memberLevel: 0,
+      complete:true,
       walletlist: [{ coin: 0 }],
       totalCoins: "",
       routePanel: [
@@ -279,6 +281,10 @@ export default {
       if (result.code == 0) {
         this.agnetLevel = result.data.agnetLevel;
         this.memberLevel = result.data.memberLevel;
+        if(this.$i18n.locale =='zh'){
+          this.complete = [result.data.realName,result.data.email,result.data.qq,result.data.weixin].some(item=>item=='')?true:false
+        }else
+           this.complete = [result.data.realName,result.data.email,result.lineNum,result.data.telegram].some(item=>item=='')?true:false
         this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);
       }
     });

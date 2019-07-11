@@ -337,7 +337,8 @@
             </div>
             <div>
               <span>邮箱</span>
-              <span v-text="userdatainfo.email"></span>
+              <span v-text="userdatainfo.email" v-if="userdatainfo.email"></span>
+               <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
             </div>
             <div>
               <span>qq</span>

@@ -601,7 +601,7 @@ export default {
 .game_block a.game_link:nth-child(6),
 .game_block a.game_link:nth-child(7) {
   width: 204px;
-  height: 88px;
+  height: 89px;
   float: right;
   margin-right: 11px;
 }
