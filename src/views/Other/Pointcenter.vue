@@ -74,6 +74,7 @@ export default {
       vm: {},
       givePoint:'',
       integral: "",
+      complete:false,
       checkInVm: {},
       prilist: [
         {
@@ -113,6 +114,10 @@ export default {
       this.$http.get("/memberUser/memberinfo.json").then(result => {
         if (result.code == 0) {
           this.integral = result.data.integral;
+          if(this.$i18n.locale =='zh'){
+          this.prilist[3].type = [result.data.realName,result.data.email,result.data.qq,result.data.weixin].some(item=>item=='')?0:1
+        }else
+           this.prilist[3].type = [result.data.realName,result.data.email,result.lineNum,result.data.telegram].some(item=>item=='')?0:1
         }
       });
     },
