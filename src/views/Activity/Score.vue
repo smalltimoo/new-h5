@@ -274,9 +274,17 @@
         <span class="comfirm" @click="confirmOrder">{{$t('score.querendingdan')}}</span>
       </div>
     </Drawer>
-    <van-dialog v-model="duihuan" :confirm-button-text="'查看订单'" style="width: 296px;height: 295px;">
-      <span>恭喜你，兑换成功</span>
-      <span>已扣除你500积分，还剩余200积分</span>
+    <van-dialog v-model="duihuansuccess" :confirm-button-text="'查看订单'" style="width: 296px;height: 295px;" @confirm="duihuansuccess=false;buy=false;order=true">
+      <img :src="rows.img" alt="" height="133">
+      <img src="../../assets/images/score/querendingdan@2x.png" alt="" height="44" style="margin-top:-27px;">
+      <span class="result">恭喜你，兑换成功</span>
+      <span class="detail">已扣除你500积分，还剩余200积分</span>
+    </van-dialog>
+    <van-dialog v-model="duihuanfaile"  :confirm-button-text="'去打码'" style="width: 296px;height: 295px;" @confirm="duihuanfaile = false;buy=false">
+     <img :src="rows.img" alt="" height="133">
+     <img src="../../assets/images/score/querendingdan@2x.png" alt="" height="44" style="margin-top:-27px;">
+      <span class="result">很遗憾，兑换失败</span>
+      <span class="detail">因您的积分不足抵扣商品额度，兑换失败</span>
     </van-dialog>
   </div>
 </template>
@@ -292,7 +300,8 @@ export default {
       logo: this.$t("score.score"),
       dingdanqueren: "订单确认",
       jifendingdan: "积分订单",
-      duihuan: false,
+      duihuansuccess: false,
+      duihuanfaile:false,
       amount: "",
       agnetLevel: "",
       isDraw: false,
@@ -363,7 +372,15 @@ export default {
       // } else {
       return this.products;
       // }
-    }
+    },
+    getBanner() {
+      var mobileBanner = this.$store.getters.getSysPicObj.mobileMallBanner;
+      var banner = [];
+      if (mobileBanner != undefined && mobileBanner != "") {
+        let bs = mobileBanner.slice().split(",");
+        return bs.map(item => {return {content:item}})
+      }
+    },
   },
   methods: {
     notgoback(data) {
@@ -479,15 +496,16 @@ export default {
           if (result.code == 0) {
             //兑换成功！
             // this.$Message.success(this.$t("store.order.order12"));
-            this.duihuan = true;
+            this.duihuansuccess = true;
             // this.mInit();
             this.mPullData();
             this.mPullScoreDetail();
+            this.buy = false;
           } else {
-            this.$Message.error(result.message);
+            // this.$Message.error(result.message);
+            this.duihuanfaile = true;
           }
 
-          this.buy = false;
         });
     },
     hasMemberAddress() {
@@ -504,7 +522,7 @@ export default {
     neiStyle() {
       setTimeout(() => {
         let self = this;
-        let data = this.swipeinfo;
+        let data = this.getBanner;
         //轮盘
         self.ScoreS = new iSlider(document.getElementById("usercard"), data, {
           isLooping: 1,
@@ -547,32 +565,39 @@ export default {
 }
 .score {
   /deep/  .usercard {
+      ul,li {
+        border-radius: 5px;
+      }
       .islider-dot-wrap {
         z-index: 1000;
       }
     }
     /deep/ .van-dialog {
-      background: url("~@/assets/images/score/querendingdan@2x.png");
+      border-radius: 6px;
+      // background: url("~@/assets/images/score/querendingdan@2x.png");
 
-      background-position: bottom left;
-      background-size: 100% 70%;
+      // background-position: bottom left;
+      // background-size: 100% 70%;
     }
     /deep/ .van-dialog__content {
-      margin-top: 50%;
+      // margin-top: 50%;
       display: flex;
       flex-direction: column;
       span {
         margin: 5px 0;
       }
-      span:nth-child(1) {
+      span.result {
         font-size: 18px;
         letter-spacing: 0px;
         color: #4892ff;
+        margin-top: 12px;
       }
-      span:nth-child(2) {
+      span.detail {
         font-size: 12px;
         letter-spacing: 0px;
         color: #909399;
+        margin-top:16px;
+        margin-bottom:16px;
       }
     }
     /deep/ .van-button__text {

@@ -42,7 +42,7 @@
                   @click="showDatePicker($event,1)"
                 >
               </div>
-    
+
             </div>
 
             <div class="search_buttons">
@@ -137,7 +137,7 @@ export default {
         orderBy: "id desc",
         rows: 20
       },
-      
+
       ivuScrollContainerHeight: 620,
       fromRoute: {}
     };
@@ -523,7 +523,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: inherit;
+    padding: 0;
   }
   .btns.active {
     background-color: #3d7eff;

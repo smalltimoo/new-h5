@@ -1,5 +1,5 @@
 <template>
-  <van-dialog class="main" v-model="active" title="线路选择">
+  <van-dialog class="main" v-model="openStatus" title="线路选择">
     <h3>
       当前线路：
       <font>{{line}}</font>
@@ -9,40 +9,51 @@
 </template>
 <script>
 export default {
+  props: {
+    panelShow: {
+      type:Boolean
+    }
+  },
   data() {
     return {
       value: "",
-      active: false,
+      openStatus:this.panelShow,
+      // panelShow: false,
       columns: [],
-      line: process.env.VUE_APP_BASE_API
+      line: ''
     };
   },
-  props: {
-    isShow: Boolean
-  },
+
   methods: {
     minit() {
       this.$http
         .post("http://192.168.0.168:8082/memberApiList.json")
         .then(result => {
           if (result.code == 0) {
-            this.columns = JSON.parse(result.data);
+            let speed = ['很快(推荐)','较快','一般'];
+            this.columns = JSON.parse(result.data).map((item,index)=>{
+              return {
+                text:`线路${index+1}`,
+                path:item,
+                speed:speed[index]
+              }
+            });
           }
         });
     },
     onChange(...a) {
-       this.$http.defaults.baseURL = a[1];
+       this.$http.defaults.baseURL = a[1].path;
       //  process.env.VUE_APP_BASE_API = a[1];
-       this.line = a[1];
+       this.line = a[1].text;
     },
     onConfirm(value) {
       // this.value = value;
-      this.$emit("CB_dialog", false);
+      this.$emit("close", false);
     }
   },
   watch: {
-    isShow: function() {
-      this.active = this.isShow;
+    panelShow(val) {
+      this.openStatus = val;
     }
   },
   created() {

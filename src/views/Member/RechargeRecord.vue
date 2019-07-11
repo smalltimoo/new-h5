@@ -529,7 +529,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: inherit;
+    padding: 0;
   }
   .btns.active {
     background-color: #3d7eff;

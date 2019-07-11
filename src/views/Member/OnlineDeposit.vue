@@ -280,6 +280,7 @@
                   style="margin-left: 8px;margin-right: 8px"
                 >
                 <span>支付宝闪充-10s到账</span>
+                <i class="el-icon-arrow-right"></i>
             </div>
             <div
               style="width: 100%;"
@@ -293,6 +294,7 @@
                   style="margin-left: 8px;margin-right: 8px"
                 >
                 <span>微信闪充-10s到账</span>
+                 <span class="rightsanjiao"></span>
             </div>
         </div>
       </div>
@@ -574,7 +576,12 @@ export default {
               ele.selected = i === 0;
               ele.list.forEach(item => (item.checked = false));
             });
-            this.rechargeTypes = result.data.apis;
+            this.rechargeTypes = result.data.apis.map(item=>{
+               item.list.sort((a,b)=>{
+                return a.sort-b.sort|| a.apiid-b.apiid
+              })
+              return item
+            })
             this.rechargeOther = result.data.others;
 
             this.mSelectRechargeType(
@@ -995,6 +1002,17 @@ export default {
      font-size: 12px;
      //border-bottom: solid 1px #f3f3f3;
      padding-left: 10px;
+     border-bottom:1px solid #f3f3f3;
+     .rightsanjiao {
+      width: 12.5px;
+      height: 12.5px;
+      display: inline-block;
+      border-top: 2px solid #e5e5e5;
+      border-right: 2px solid #e5e5e5;
+      transform: rotate(45deg);
+      position:absolute;
+      right:10px;
+    }
  }
 }
 </style>

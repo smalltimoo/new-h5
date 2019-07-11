@@ -142,7 +142,7 @@ export default {
     }
   },
   created() {
-    if (this.cNeedLogin == true) {
+    if (this.cNeedLogin) {
       this.$http.post("/getLoginUser.json").then(result => {
         if (result.code == 0 && result.data != null) {
           this.$store.dispatch(types.SAVE_LOGIN_USER, result.data);

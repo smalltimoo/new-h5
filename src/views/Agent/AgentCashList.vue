@@ -21,7 +21,7 @@
         <!-- 菜单容器 -->
         <section class="el-container is-vertical" v-show="manageTypesearch == '4'">
           <div class="searchVM">
-           
+
             <div>
               <span>类别</span>
                <el-select v-model="searchVM.gameCompanyId" placeholder="请选择" class="type">
@@ -50,7 +50,7 @@
                   @click="showDatePicker($event,1)"
                 >
               </div>
-    
+
             </div>
 
             <div class="search_buttons">
@@ -440,7 +440,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: inherit;
+    padding: 0;
   }
   .btns.active {
     background-color: #3d7eff;

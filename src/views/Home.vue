@@ -183,12 +183,12 @@ export default {
       var banner = [];
       if (mobileBanner != undefined && mobileBanner != "") {
         let bs = mobileBanner.slice().split(",");
-        bs.map(item => {
+        return bs.map(item => {return {content:item}})
           // banner.push({ imgUrl: item });
-          banner.push({ content: item });
-        });
+          // banner.push({ content: item });
+        // });
       }
-      return banner;
+      // return banner;
     },
     cQQ1() {
       let sysInfo = this.$store.getters.getSysInfo;
@@ -214,9 +214,10 @@ export default {
           if (result.data) {
             this.isDraw = result.data;
             if (this.isDraw) {
+              let sysInfo = this.$store.getters.getSysInfo;
+              this.drawBanner = sysInfo.rouletteSlide;
               this.getBanner.push({
-                imgUrl: this.drawBanner,
-                isDraw: this.isDraw
+                content: this.drawBanner,
               });
             }
           }
@@ -334,7 +335,7 @@ export default {
     },
 
     //文字横向滚动
-    ScrollImgLeft() {console.info('-------------------------------------------------------------------------')
+    ScrollImgLeft() {
       var speed = 50; //初始化速度 也就是字体的整体滚动速度
       var MyMar = null; //初始化一个变量为空 用来存放获取到的文本内容
       var scroll_begin = document.getElementById("scroll_begin"); //获取滚动的开头id
@@ -410,9 +411,9 @@ export default {
     this.activity();
     // this._initSwiper();
     this.requireimg();
-    this.$nextTick(vm => {
-      this.ScrollImgLeft();
-    });
+    // this.$nextTick(vm => {
+    //   this.ScrollImgLeft();
+    // });
 
     // window.onscroll = function () {
     //     let scrollheight = document.body.scrollTop == 0 ? document.documentElement.scrollTop
