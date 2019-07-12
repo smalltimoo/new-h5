@@ -578,7 +578,7 @@ export default {
             });
             this.rechargeTypes = result.data.apis.map(item=>{
                item.list.sort((a,b)=>{
-                return a.sort-b.sort|| a.apiid-b.apiid
+                return a.sort-b.sort|| a.id-b.id
               })
               return item
             })

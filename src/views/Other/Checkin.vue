@@ -131,8 +131,6 @@ export default {
     getClass(...a){
       if(this.vm2.signDates === undefined) return
       return this.vm2.signDates.includes(a[1].day)?'is-selected': diffcurrentday(a[1].day) === 'before'?'miss-selected':a[1].type=='current-month'?'current-month':''
-      // return diffcurrentday(a[1].day) === 'before'?(this.vm2.signDates.includes(a[1].day) ? 'is-selected' : 'miss-selected'):''
-    // return this.vm2.signDates.includes(data.day) ? 'is-selected' : ''
     },
     getSignDays() {
       this.$http.get("/memberUser/getSignDays.json").then(result => {

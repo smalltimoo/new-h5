@@ -194,7 +194,7 @@
         :logo="dingdanqueren"
         :showIcon="true"
         :showLogo="true"
-        :jifen="(amount/100).toFixed(2)"
+        :jifen="(this.vm.integral/100).toFixed(2)"
         @notgoback="notgoback"
       ></header-component>
       <div class="buy">
@@ -278,7 +278,7 @@
       <img :src="rows.img" alt="" height="133">
       <img src="../../assets/images/score/querendingdan@2x.png" alt="" height="44" style="margin-top:-27px;">
       <span class="result">恭喜你，兑换成功</span>
-      <span class="detail">已扣除你500积分，还剩余200积分</span>
+      <span class="detail">已扣除你{{duihuansuccessvm.ded}}积分，还剩余{{duihuansuccessvm.rem}}积分</span>
     </van-dialog>
     <van-dialog v-model="duihuanfaile"  :confirm-button-text="'去打码'" style="width: 296px;height: 295px;" @confirm="duihuanfaile = false;buy=false">
      <img :src="rows.img" alt="" height="133">
@@ -319,6 +319,10 @@ export default {
           content: require("../../assets/images/pointmall/banner@2x.png")
         }
       ],
+      duihuansuccessvm:{
+        ded:0,
+        rem:0
+      },
       searchVM: {
         typeId: "", //类型
         orderBy: "id desc",
@@ -489,6 +493,10 @@ export default {
         this.$router.push({name:'safecenter',params:{to:'addaddress'}})
         return;
       }
+      if(!this.rows.stockquantity){
+         this.$Message.warning('库存不足！'); //获取余额失败
+         return false;
+      }
       this.$http
         .post("/imo/exchange.json", { id: this.rows.id, buyNum: this.number })
         .then(result => {
@@ -496,6 +504,11 @@ export default {
           if (result.code == 0) {
             //兑换成功！
             // this.$Message.success(this.$t("store.order.order12"));
+            console.info(this.number * this.rows.currentPrice,(this.vm.integral/100).toFixed(2) - this.number * this.rows.currentPrice)
+            this.duihuansuccessvm = {
+              ded:this.number * this.rows.currentPrice ,
+              rem:(this.vm.integral/100).toFixed(2) - this.number * this.rows.currentPrice
+            }
             this.duihuansuccess = true;
             // this.mInit();
             this.mPullData();

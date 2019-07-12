@@ -835,8 +835,8 @@ export default {
             it15: '游戏厅操作失败',
             it16: '游戏厅未返回，请联系客服',
             it17: '额度转换',
-            inputNumber: '请输入整数！'
-
+            inputNumber: '请输入整数！',
+            getMoneyError:'获取余额失败'
         },
         financeDeposit: {
             fd1: '线下充值',

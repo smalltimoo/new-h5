@@ -164,7 +164,7 @@ export default {
     },
     cGongGaosTitle() {
       let temp = this.cGongGaosTop1.sort((a,b)=>a.id-b.id);
-      return  temp[temp.length-1].content.split('&');
+      return  temp.length?temp[temp.length-1].content.split('&'):[];
     },
     cLists() {
       let [...temp] = this.cGongGaosTop0;
