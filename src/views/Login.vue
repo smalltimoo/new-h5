@@ -408,7 +408,7 @@ export default {
         });
     },
     CB_dialog(val) {
-      this.isshowLines = data;
+      this.isshowLines = val;
     },
     getCode() {
       if (this.getCodes) {

@@ -52,9 +52,12 @@
     </div>
     <div class="container" v-if="tabType=='0'">
       <div class="recharge it">
+        <div class="_wrap">
         <div>
           <span class="title">{{$t('member.onlineDeposit.od8')}}</span>
           <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
+        </div>
+        <span class="btn_cuserver" @click="mOpenCService">{{$t('member.onlineDeposit.od71')}}</span>
         </div>
         <div class="pay-way" >
           <!-- <el-scrollbar class="pay-way"> -->
@@ -268,41 +271,14 @@
               </Radio>
             </div>
           </RadioGroup>
-           <div
-              style="width: 100%;"
-              v-if="'alpay'==tab"
-              class="quickpay"
-              @click="mOpenCService"
-            >
-             <img
-                  src="../../assets/images/alipay.png"
-                  width="20px"
-                  style="margin-left: 8px;margin-right: 8px"
-                >
-                <span>支付宝闪充-10s到账</span>
-                <i class="el-icon-arrow-right"></i>
-            </div>
-            <div
-              style="width: 100%;"
-              v-if="'wechat'==tab"
-              class="quickpay"
-              @click="mOpenCService"
-            >
-             <img
-                  src="../../assets/images/wechat.png"
-                  width="20px"
-                  style="margin-left: 8px;margin-right: 8px"
-                >
-                <span>微信闪充-10s到账</span>
-                 <span class="rightsanjiao"></span>
-            </div>
         </div>
       </div>
       <div class="recharge" style="margin-top: 14px;">
-        <div>
-          <span class="title">{{$t('member.onlineDeposit.od5')}}</span>
-          <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
-        </div>
+          <div>
+            <span class="title">{{$t('member.onlineDeposit.od5')}}</span>
+            <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
+          </div>
+
         <div class="input-panel" style="padding-left:0">
           <span style="font-size: 16px">
             <b>{{$t('symbol.t1')}}</b>
@@ -317,7 +293,7 @@
         <div class="recommend" v-if="moneys.length>0">
           <span
             v-for="(item,index) in moneys"
-            v-if="index<5"
+            v-if="item"
             :key="index"
             :class="{active: activeAmount==item}"
             @click="amount=item;activeAmount=amount"

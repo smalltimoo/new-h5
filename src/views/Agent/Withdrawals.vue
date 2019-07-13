@@ -26,7 +26,7 @@
     >
       <span class="bankTypeName">{{bankInfo.bankTypeName}}</span>
       <div class="account"></div>
-      <span class="drawAddress">姓名：{{bankInfo.drawAddress}}</span>
+      <span class="drawAccountName">姓名：{{bankInfo.drawAccountName}}</span>
     </div>
 
     <div class="recharge" style="margin-top: 14px;">

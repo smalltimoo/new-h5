@@ -1,53 +1,87 @@
 <template>
-  <van-dialog class="main" v-model="openStatus" title="线路选择" @confirm="onConfirm">
-    <h3>
-      当前线路：
-      <font>{{line}}</font>
-    </h3>
-    <van-picker :columns="columns"  @change="onChange"/>
+  <van-dialog
+    class="main"
+    v-model="openStatus"
+    title="客服中心"
+    @confirm="onConfirm"
+    show-cancel-button
+    closeOnPopstate
+    @cancel="onCancel"
+  >
+    <van-picker ref="picker" :columns="columns" />
   </van-dialog>
 </template>
 <script>
+// import window from "../mixins/window";
 export default {
   props: {
     panelShow: {
-      type:Boolean
+      type: Boolean
     }
   },
   data() {
     return {
       value: "",
-      openStatus:this.panelShow,
+      openStatus: this.panelShow,
       // panelShow: false,
       columns: [],
-      line: ''
+      agentQQ: ""
     };
   },
-
+  computed: {
+    cQQ1() {
+      let sysInfo = this.$store.getters.getSysInfo;
+      this.agentQQ = sysInfo.agentQQ;
+      return sysInfo.customQQ ? sysInfo.customQQ : "";
+    },
+    cQQ2() {
+      if (process.env.VUE_APP_ISAPP == "TRUE") {
+        let qq = process.env.VUE_APP_QQ;
+        return qq ? qq : "";
+      }
+    }
+  },
   methods: {
     minit() {
-      this.$http
-        .post("http://192.168.0.168:8082/memberApiList.json")
-        .then(result => {
-          if (result.code == 0) {
-            let speed = ['很快(推荐)','较快','一般'];
-            this.columns = JSON.parse(result.data).map((item,index)=>{
-              return {
-                text:`线路${index+1}`,
-                path:item,
-                speed:speed[index]
-              }
-            });
-          }
-        });
+      this.columns = [
+        {
+          id: 1,
+          text: this.$t("customservice")
+        },
+        {
+          id: 2,
+          text: this.cQQ1
+        },
+        {
+          id: 3,
+          text: this.cQQ2
+        },
+        {
+          id: 4,
+          text: this.agentQQ
+        },
+        {
+          id: 5,
+          text: this.sysInfo.lineUrl
+        }
+      ].filter(ele => ele.text);
     },
-    onChange(...a) {
-       this.$http.defaults.baseURL = a[1].path;
-      //  process.env.VUE_APP_BASE_API = a[1];
-       this.line = a[1].text;
+    onCancel(value) {
+      this.$emit("close", false);
     },
-    onConfirm(value) {
-      // this.value = value;
+    onConfirm() {
+      let values = this.$refs.picker.getValues();
+      let value = values[0]
+      switch (value.id) {
+        case 1:
+          this.mOpenCService();
+          break;
+        default:
+          window.open(
+            `mqqwpa://im/chat?chat_type=wpa&uin=${value.text}&version=1&src_type=web`
+          );
+          break;
+      }
       this.$emit("close", false);
     }
   },
@@ -65,7 +99,7 @@ export default {
 <style lang="less" scoped>
 .main {
   width: 300px;
-  height: 416px;
+  height: 380px;
   margin: 0 auto;
   /deep/ .van-dialog__header {
     height: 90px;
@@ -76,7 +110,7 @@ export default {
     box-shadow: 0px 3px 11px 0px rgba(0, 123, 188, 0.75);
   }
   /deep/ .van-button__text {
-    width: 230px;
+    width: 120px;
     height: 34px;
     line-height: 2;
     background-color: #3d7eff;
@@ -86,6 +120,7 @@ export default {
     color: #ffffff;
     display: inline-block;
     font-size: 16px;
+    cursor: pointer;
   }
   /deep/ .van-picker-column__item {
     background: #fff;

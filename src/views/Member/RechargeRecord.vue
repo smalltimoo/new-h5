@@ -320,7 +320,7 @@ export default {
 }
 
 .mui-scalable {
-  background-color: #efeff4 !important;
+  // background-color: #efeff4 !important;
 }
 
 .rowbg {

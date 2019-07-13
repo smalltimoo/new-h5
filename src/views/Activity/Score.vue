@@ -1,6 +1,11 @@
 <template>
   <div class="score">
-    <header-component :logo="logo" :showIcon="false" :showLogo="true" :jifen="(vm.integral/100).toFixed(2)"></header-component>
+    <header-component
+      :logo="logo"
+      :showIcon="false"
+      :showLogo="true"
+      :jifen="(vm.integral/100).toFixed(2)"
+    ></header-component>
     <div class="container">
       <div class="usercard">
         <div id="usercard"></div>
@@ -12,21 +17,21 @@
           <!-- 签到 -->
           <router-link :to="{name:'checkin'}">
             <div>
-              <img src="../../assets/images/pointmall/jifen4@2x.png" height="43.5">
+              <img src="../../assets/images/pointmall/jifen4@2x.png" height="43.5" />
             </div>
             <span>{{this.$t('score.score1')}}</span>
           </router-link>
           <!-- 积分中心 -->
           <router-link :to="{name:'pointcenter'}">
             <div>
-              <img src="../../assets/images/pointmall/jifen3@2x.png" height="43.5">
+              <img src="../../assets/images/pointmall/jifen3@2x.png" height="43.5" />
             </div>
             <span>{{this.$t('score.score2')}}</span>
           </router-link>
           <!-- 积分明细 -->
           <router-link :to="{name:'pointdetails'}">
             <div>
-              <img src="../../assets/images/pointmall/jifen2@2x.png" height="43.5">
+              <img src="../../assets/images/pointmall/jifen2@2x.png" height="43.5" />
             </div>
             <span>{{this.$t('score.score3')}}</span>
           </router-link>
@@ -34,7 +39,7 @@
           <!-- <router-link :to="{name:'pointorder'}"> -->
           <a href="#" @click="mPullScoreDetail">
             <div>
-              <img src="../../assets/images/pointmall/jifen1@2x.png" height="43.5">
+              <img src="../../assets/images/pointmall/jifen1@2x.png" height="43.5" />
             </div>
             <span>{{this.$t('score.score4')}}</span>
           </a>
@@ -54,16 +59,16 @@
         <ul class="products">
           <li @click="mJumpDraw" v-if="isDraw">
             <div class="product-img">
-              <img :src="imgurl" width="105px">
+              <img :src="imgurl" width="105px" />
             </div>
-           <div class="product_props">
+            <div class="product_props">
               <div class="product-name" v-text="'幸运大转盘'"></div>
               <div class="product-name" v-text="'积分抽奖活动'"></div>
-               <div class="use">
-              <span>{{(vm.integral/100).toFixed(2)}}{{$t('score.degits')}}</span>
-              <span> 2{{$t('score.degits')}}</span>
-              <!-- <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span> -->
-            </div>
+              <div class="use">
+                <span>{{(vm.integral/100).toFixed(2)}}{{$t('score.degits')}}</span>
+                <span>2{{$t('score.degits')}}</span>
+                <!-- <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span> -->
+              </div>
             </div>
 
             <!--<div class="use">-->
@@ -73,18 +78,17 @@
           </li>
           <li v-for="item in productData" :key="item.id" @click="mOrder(item)">
             <div class="product-img">
-              <img :src="item.img" height="100%">
+              <img :src="item.img" height="100%" />
             </div>
             <div class="product_props">
               <div class="product-name" v-text="item.title"></div>
               <div class="product-name" v-text="item.typeName"></div>
               <div class="use">
-              <!-- <span>{{$t('symbol.t1')}}{{item.originalPrice}}</span> -->
-              <span>{{item.currentPrice}} {{$t('score.degits')}}</span>
-              <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span>
+                <!-- <span>{{$t('symbol.t1')}}{{item.originalPrice}}</span> -->
+                <span>{{item.currentPrice}} {{$t('score.degits')}}</span>
+                <span class="aready">{{item.doneNum}} {{$t('score.degits2')}}</span>
+              </div>
             </div>
-            </div>
-
           </li>
         </ul>
       </div>
@@ -94,7 +98,7 @@
     <Drawer :closable="false" v-model="record" width="100" class="score-drawer">
       <div class="header">
         <div class="header-left">
-          <Icon type="ios-arrow-back" class="icon-menu" @click="record=false"/>
+          <Icon type="ios-arrow-back" class="icon-menu" @click="record=false" />
         </div>
         <div
           class="header-middle"
@@ -138,7 +142,7 @@
 
     <Drawer :closable="false" v-model="order" width="100" class="order-drawer">
       <header-component
-      :showyue="false"
+        :showyue="false"
         :logo="jifendingdan"
         :showIcon="true"
         :showLogo="true"
@@ -152,7 +156,7 @@
         v-if="dataList.length>0"
       >
         <div class="order-content">
-          <img :src="item.orderImg" class="order-img">
+          <img :src="item.orderImg" class="order-img" />
           <div class="order-panel">
             <div class="order-title">
               <span v-text="item.stateStr"></span>
@@ -190,7 +194,8 @@
                 <div class="header-middle" style="font-size: 14px; font-weight: bold">{{$t('score.confirmOrder')}}</div>
                 <div class="header-right"></div>
       </div>-->
-      <header-component :showyue="false"
+      <header-component
+        :showyue="false"
         :logo="dingdanqueren"
         :showIcon="true"
         :showLogo="true"
@@ -209,13 +214,16 @@
           </div>
           <div class="add-address" v-else>
             {{$t('score.addAddress')}}
-          &nbsp;
-          <i class="el-icon-circle-plus-outline" style="font-size: 20px"></i>
+            &nbsp;
+            <i
+              class="el-icon-circle-plus-outline"
+              style="font-size: 20px"
+            ></i>
           </div>
         </router-link>
 
         <div class="order-content">
-          <img :src="rows.img" class="order-img">
+          <img :src="rows.img" class="order-img" />
           <div class="order-panel">
             <div>
               <div class="flex">
@@ -239,7 +247,7 @@
         <!-- <div class="note peisong">
           <span>留言备注:</span>
           <input type="text" :placeholder="'这里可以留言哦'" v-model="content" class="text">
-        </div> -->
+        </div>-->
         <div style="padding: 10px; font-size: 16px">
           <b>{{$t('score.dingdan')}}</b>
         </div>
@@ -262,7 +270,7 @@
         <!-- <div class="flex content">
           <span>运费:</span>
           <span>+50 积分</span>
-        </div> -->
+        </div>-->
         <div class="flex total">
           <span>{{$t('score.yingfuheji')}}:</span>
           <span>{{number * rows.currentPrice}} {{$t('score.degits')}}</span>
@@ -274,15 +282,35 @@
         <span class="comfirm" @click="confirmOrder">{{$t('score.querendingdan')}}</span>
       </div>
     </Drawer>
-    <van-dialog v-model="duihuansuccess" :confirm-button-text="'查看订单'" style="width: 296px;height: 295px;" @confirm="duihuansuccess=false;buy=false;order=true">
-      <img :src="rows.img" alt="" height="133">
-      <img src="../../assets/images/score/querendingdan@2x.png" alt="" height="44" style="margin-top:-27px;">
+    <van-dialog
+      v-model="duihuansuccess"
+      :confirm-button-text="'查看订单'"
+      style="width: 296px;height: 295px;"
+      @confirm="duihuansuccess=false;buy=false;order=true"
+    >
+      <img :src="rows.img" alt height="133" />
+      <img
+        src="../../assets/images/score/querendingdan@2x.png"
+        alt
+        height="44"
+        style="margin-top:-27px;"
+      />
       <span class="result">恭喜你，兑换成功</span>
       <span class="detail">已扣除你{{duihuansuccessvm.ded}}积分，还剩余{{duihuansuccessvm.rem}}积分</span>
     </van-dialog>
-    <van-dialog v-model="duihuanfaile"  :confirm-button-text="'去打码'" style="width: 296px;height: 295px;" @confirm="duihuanfaile = false;buy=false">
-     <img :src="rows.img" alt="" height="133">
-     <img src="../../assets/images/score/querendingdan@2x.png" alt="" height="44" style="margin-top:-27px;">
+    <van-dialog
+      v-model="duihuanfaile"
+      :confirm-button-text="'去打码'"
+      style="width: 296px;height: 295px;"
+      @confirm="duihuanfaile = false;buy=false"
+    >
+      <img :src="rows.img" alt height="133" />
+      <img
+        src="../../assets/images/score/querendingdan@2x.png"
+        alt
+        height="44"
+        style="margin-top:-27px;"
+      />
       <span class="result">很遗憾，兑换失败</span>
       <span class="detail">因您的积分不足抵扣商品额度，兑换失败</span>
     </van-dialog>
@@ -293,7 +321,7 @@
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
 import headerComponent from "@/common/Header.vue";
-import imgurl from '../../assets/images/score/scoretu1@2x.png'
+import imgurl from "../../assets/images/score/scoretu1@2x.png";
 export default {
   data() {
     return {
@@ -301,7 +329,7 @@ export default {
       dingdanqueren: "订单确认",
       jifendingdan: "积分订单",
       duihuansuccess: false,
-      duihuanfaile:false,
+      duihuanfaile: false,
       amount: "",
       agnetLevel: "",
       isDraw: false,
@@ -319,9 +347,9 @@ export default {
           content: require("../../assets/images/pointmall/banner@2x.png")
         }
       ],
-      duihuansuccessvm:{
-        ded:0,
-        rem:0
+      duihuansuccessvm: {
+        ded: 0,
+        rem: 0
       },
       searchVM: {
         typeId: "", //类型
@@ -382,14 +410,16 @@ export default {
       var banner = [];
       if (mobileBanner != undefined && mobileBanner != "") {
         let bs = mobileBanner.slice().split(",");
-        return bs.map(item => {return {content:item}})
+        return bs.map(item => {
+          return { content: item };
+        });
       }
-    },
+    }
   },
   methods: {
     notgoback(data) {
       this.buy = data;
-      this.order = data
+      this.order = data;
     },
     mGetCoin() {
       this.mLoading(true);
@@ -489,13 +519,13 @@ export default {
       // this.$router.push({name:'confirmorder',params:{number:1,rows:item}})
     },
     confirmOrder() {
-      if(!this.hasAddress){
-        this.$router.push({name:'safecenter',params:{to:'addaddress'}})
+      if (!this.hasAddress) {
+        this.$router.push({ name: "safecenter", params: { to: "addaddress" } });
         return;
       }
-      if(!this.rows.stockquantity){
-         this.$Message.warning('库存不足！'); //获取余额失败
-         return false;
+      if (!this.rows.stockquantity) {
+        this.$Message.warning("库存不足！"); //获取余额失败
+        return false;
       }
       this.$http
         .post("/imo/exchange.json", { id: this.rows.id, buyNum: this.number })
@@ -504,11 +534,17 @@ export default {
           if (result.code == 0) {
             //兑换成功！
             // this.$Message.success(this.$t("store.order.order12"));
-            console.info(this.number * this.rows.currentPrice,(this.vm.integral/100).toFixed(2) - this.number * this.rows.currentPrice)
+            console.info(
+              this.number * this.rows.currentPrice,
+              (this.vm.integral / 100).toFixed(2) -
+                this.number * this.rows.currentPrice
+            );
             this.duihuansuccessvm = {
-              ded:this.number * this.rows.currentPrice ,
-              rem:(this.vm.integral/100).toFixed(2) - this.number * this.rows.currentPrice
-            }
+              ded: this.number * this.rows.currentPrice,
+              rem:
+                (this.vm.integral / 100).toFixed(2) -
+                this.number * this.rows.currentPrice
+            };
             this.duihuansuccess = true;
             // this.mInit();
             this.mPullData();
@@ -518,7 +554,6 @@ export default {
             // this.$Message.error(result.message);
             this.duihuanfaile = true;
           }
-
         });
     },
     hasMemberAddress() {
@@ -553,11 +588,11 @@ export default {
     this.$store.commit("CHANGE_TAB", "Score");
     this.mPullData();
     this.neiStyle();
-     if(document.documentElement.lang === 'zh'){
-                this.imgurl = imgurl
-            }else{
-                // this.imgurl = imgurl_en
-            }
+    if (document.documentElement.lang === "zh") {
+      this.imgurl = imgurl;
+    } else {
+      // this.imgurl = imgurl_en
+    }
     // this.mInit();
   }
 };
@@ -577,55 +612,55 @@ export default {
   }
 }
 .score {
-  /deep/  .usercard {
-      ul,li {
-        border-radius: 5px;
-      }
-      .islider-dot-wrap {
-        z-index: 1000;
-      }
+  /deep/ .usercard {
+    ul,
+    li {
+      border-radius: 5px;
     }
-    /deep/ .van-dialog {
-      border-radius: 6px;
-      // background: url("~@/assets/images/score/querendingdan@2x.png");
+    .islider-dot-wrap {
+      z-index: 1000;
+    }
+  }
+  /deep/ .van-dialog {
+    border-radius: 6px;
+    // background: url("~@/assets/images/score/querendingdan@2x.png");
 
-      // background-position: bottom left;
-      // background-size: 100% 70%;
+    // background-position: bottom left;
+    // background-size: 100% 70%;
+  }
+  /deep/ .van-dialog__content {
+    // margin-top: 50%;
+    display: flex;
+    flex-direction: column;
+    span {
+      margin: 5px 0;
     }
-    /deep/ .van-dialog__content {
-      // margin-top: 50%;
-      display: flex;
-      flex-direction: column;
-      span {
-        margin: 5px 0;
-      }
-      span.result {
-        font-size: 18px;
-        letter-spacing: 0px;
-        color: #4892ff;
-        margin-top: 12px;
-      }
-      span.detail {
-        font-size: 12px;
-        letter-spacing: 0px;
-        color: #909399;
-        margin-top:16px;
-        margin-bottom:16px;
-      }
+    span.result {
+      font-size: 18px;
+      letter-spacing: 0px;
+      color: #4892ff;
+      margin-top: 12px;
     }
-    /deep/ .van-button__text {
-      width: 230px;
-      height: 34px;
-      display: flex;
-      margin: 0 auto;
-      justify-content: center;
-      align-items: center;
-      color: #fff;
-      background-color: #3d7eff;
-      border-radius: 15px;
-      box-shadow: rgba(0,0,0,.5) 0px 0px 5px;
+    span.detail {
+      font-size: 12px;
+      letter-spacing: 0px;
+      color: #909399;
+      margin-top: 16px;
+      margin-bottom: 16px;
     }
-
+  }
+  /deep/ .van-button__text {
+    width: 230px;
+    height: 34px;
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: #3d7eff;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 0px 5px;
+  }
 }
 </style>
 

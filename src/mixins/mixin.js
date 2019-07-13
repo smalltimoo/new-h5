@@ -142,7 +142,7 @@ export default {
         mFormatDate(value, fmt) {
             return dateFormat(value, fmt);
         },
-        mOpenCService() {console.info(12)
+        mOpenCService() {
             let sysInfo = this.$store.getters.getSysInfo;
             if (sysInfo.customUrl) {
                 this.$router.push({

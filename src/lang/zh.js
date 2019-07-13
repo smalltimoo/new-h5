@@ -548,6 +548,8 @@ export default {
             od32:'云闪付',
             od33:'网银',
             od34:'银联',
+
+            od71:"闪充10s到账"
         },
         userMember: {
             um1: '请登录',

@@ -1,14 +1,15 @@
 <template>
   <div class="header hasApp">
     <div class="header-left">
-      <Icon type="ios-arrow-back" v-if="showIcon" class="icon-menu" @click.stop="back"/>
+      <Icon type="ios-arrow-back" v-if="showIcon" class="icon-menu" @click.stop="back" />
       <span class="logo" v-if="showLogo">{{logo}}</span>
     </div>
     <div class="header-right">
-      <router-link  :to="{name:'Login',params:{type:'islogin'}}" class="yue" v-if="cNeedLogin">登录</router-link>
+      <router-link :to="{name:'Login',params:{type:'islogin'}}" class="yue" v-if="cNeedLogin">登录</router-link>
       <div class="yue" v-else-if="showyue">余额:{{yue}}</div>
       <div class="yue" v-else>积分:{{jifen}}</div>
-      <Poptip trigger="click" placement="bottom-end">
+      <i @click="isshowservice = true" class="icon-menu message"></i>
+      <!-- <Poptip trigger="click" placement="bottom-end">
         <i class="icon-menu message"></i>
         <ul slot="content">
           <li class="icon-kefu" @click="mOpenCService">{{$t('customservice')}}</li>
@@ -33,28 +34,46 @@
             >{{sysInfo.lineUrl}}</a>
           </li>
         </ul>
-      </Poptip>
+      </Poptip> -->
+
     </div>
+    <c-service :panelShow="isshowservice" @close="CB_dialog"></c-service>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import cService from "@/common/CService.vue";
 export default {
   name: "Header",
   props: ["showIcon", "showLogo", "logo","showyue","jifen"],
+  components:{
+    cService
+  },
   data() {
     return {
-      // logo:'ss',
       yue: '',
-      // jifen:2000
+      agentQQ:'',
+      isshowservice:false,
     };
   },
   computed: {
     ...mapState({
       theme: state => state.common.theme,
       sysPicObj: state => state.common.sysPicObj
-    })
+    }),
+    cQQ1() {
+      let sysInfo = this.$store.getters.getSysInfo;
+      this.drawBanner = sysInfo.rouletteSlide;
+      this.agentQQ = sysInfo.agentQQ;
+      return sysInfo.customQQ ? sysInfo.customQQ : "";
+    },
+    cQQ2() {
+      if (process.env.VUE_APP_ISAPP == "TRUE") {
+        let qq = process.env.VUE_APP_QQ;
+        return qq ? qq : "";
+      }
+    }
   },
   methods: {
     back() {
@@ -65,17 +84,19 @@ export default {
         this.$router.go(-1); //返回上一层
       }
     },
-    
+    CB_dialog (data){
+      this.isshowservice = data;
+    }
   },
+
   created () {
      this.$http.post("/memberUser/memberamount.json").then((result)=>{
       if(result.code == 0){
         this.yue = (result.data/100).toFixed(2)
       }
      })
-      // this.yue = await this.mgetToalCoin();
     }
-};
+}
 </script>
 
 <style lang="less" >

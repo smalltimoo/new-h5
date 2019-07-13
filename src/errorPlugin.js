@@ -3,8 +3,8 @@
 /**
  * 全局异常处理
  * @param {
- * } error 
- * @param {*} vm 
+ * } error
+ * @param {*} vm
  */
 const errorHandler = (error, vm, info) => {
     console.error('抛出全局异常')
@@ -17,8 +17,8 @@ let GlobalError = {
         /**
          * 全局异常处理
          * @param {
-         * } error 
-         * @param {*} vm 
+         * } error
+         * @param {*} vm
          */
         Vue.config.errorHandler = errorHandler
         Vue.mixin({

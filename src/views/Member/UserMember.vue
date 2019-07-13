@@ -7,7 +7,7 @@
           <div class="name_block">
             <div class="icon user-logo"></div>
             <div class="user-name" v-if="cLoginUser.userName2">
-              <span class="level-ico level_img_vip0" v-if="memberLevel==0"></span> 
+              <span class="level-ico level_img_vip0" v-if="memberLevel==0"></span>
               <span class="level-ico level_img_vip1" v-else-if="memberLevel==1"></span>
               <span class="level-ico level_img_vip2" v-else-if="memberLevel==2"></span>
               <span class="level-ico level_img_vip3" v-else-if="memberLevel==3"></span>
@@ -247,7 +247,7 @@ export default {
         //   text: "",
         //   routeName: "shareapp"
         // },
-        
+
       ],
       countInfo: [
         {
@@ -383,6 +383,13 @@ export default {
   },
   created() {
     this.$store.commit("CHANGE_TAB", "UserMember");
+  },
+  beforeRouteLeave(to,from,next){
+    if(['membercentre','helpcenter'].includes(to.name)){
+       this.$Message.warning('该功能暂未开通，敬请期待！');
+       return;
+    }
+    next()
   }
 };
 </script>

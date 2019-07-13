@@ -23,9 +23,9 @@
             <el-select v-model="searchVm.integralType" placeholder="请选择" class="type" @change="searchpoint">
               <el-option
                 v-for="item in jifenoptions"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                :key="item.id"
+                :label="item.value"
+                :value="item.id"
               ></el-option>
             </el-select>
             <!-- <el-date-picker
@@ -189,7 +189,10 @@ export default {
         .post("/memberCoin/integralTypes.json", {})
         .then(result => {
           if (result.code == 0) {
-            this.jifenoptions = result.data.integralTypes;
+            this.jifenoptions = result.data.integralTypes.map(item=>{
+              item.id = String(item.id);
+              return item
+            });
             this.jifenoptions.unshift({id:'0',value:'所有'})
           }
         });

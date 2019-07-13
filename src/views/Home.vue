@@ -190,18 +190,6 @@ export default {
       }
       // return banner;
     },
-    cQQ1() {
-      let sysInfo = this.$store.getters.getSysInfo;
-      this.drawBanner = sysInfo.rouletteSlide;
-      this.agentQQ = sysInfo.agentQQ;
-      return sysInfo.customQQ ? sysInfo.customQQ : "";
-    },
-    cQQ2() {
-      if (process.env.VUE_APP_ISAPP == "TRUE") {
-        let qq = process.env.VUE_APP_QQ;
-        return qq ? qq : "";
-      }
-    }
   },
   methods: {
     changeTheme(theme) {

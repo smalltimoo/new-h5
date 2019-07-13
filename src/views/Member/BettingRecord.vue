@@ -335,7 +335,7 @@ export default {
 // }
 
 .mui-scalable {
-  background-color: #efeff4 !important;
+  // background-color: #efeff4 !important;
 }
 
 .rowbg {
@@ -512,12 +512,15 @@ export default {
   justify-content: space-between;
 }
 
-.searchVM { padding-top:10px;
-  width: 100%;
+.searchVM {
+ padding-top:10px;
+  width: 351px;
+  margin: 0 auto;
   display: flex;
-  padding: 10px;
+  // padding: 10px;
   flex-wrap: wrap;
-  background-color: #f3f3f3;
+  justify-content: space-between;
+  z-index: 99;
   & > div {
     display: flex;
     justify-content: space-between;

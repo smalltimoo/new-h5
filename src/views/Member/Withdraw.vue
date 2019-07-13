@@ -1,10 +1,10 @@
 <template>
   <div class="withdraw">
      <router-link :to="{name:'safecenter',params:{to:'bandBank'}}" v-if="bindBank" class="user_bank_card bandbank">
-   
+
       <div class="wrap">
-             <span class="icon"></span>     
-             <span class="text">点击此处添加银行卡</span> 
+             <span class="icon"></span>
+             <span class="text">点击此处添加银行卡</span>
     </div>
      </router-link>
     <div
@@ -14,7 +14,7 @@
     >
       <span class="bankTypeName">{{bankInfo.bankTypeName}}</span>
       <div class="account"></div>
-      <span class="drawAddress">姓名：{{bankInfo.drawAddress}}</span>
+      <span class="drawAccountName">姓名：{{bankInfo.drawAccountName}}</span>
     </div>
 
     <div class="recharge" style="margin-top: 14px;">
@@ -57,7 +57,7 @@
         <span style="font-size:15px;color:#4c4c4c" class="title">{{$t('member.onlineDeposit.os13')}}</span>
         <span style="font-size:15px;color:#bfc2cc" class="tmux">{{$t('member.onlineDeposit.os14')}}</span>
       </div>
-      <el-input :type="'password'" v-model="vm.coinpwd" placeholder="请输入提款密码" maxlength="8"></el-input>
+      <el-input :type="'password'" v-model="vm.coinpwd" placeholder="请输入提款密码" maxlength="6"></el-input>
       <cube-button
         :active="true"
         @click="mSave"
