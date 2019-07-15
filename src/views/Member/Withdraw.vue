@@ -55,7 +55,7 @@
       </div>
       <div>
         <span style="font-size:15px;color:#4c4c4c" class="title">{{$t('member.onlineDeposit.os13')}}</span>
-        <span style="font-size:15px;color:#bfc2cc" class="tmux">{{$t('member.onlineDeposit.os14')}}</span>
+        <!-- <span style="font-size:15px;color:#bfc2cc" class="tmux">{{$t('member.onlineDeposit.os14')}}</span> -->
       </div>
       <el-input :type="'password'" v-model="vm.coinpwd" placeholder="请输入提款密码" maxlength="6"></el-input>
       <cube-button

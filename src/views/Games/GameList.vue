@@ -291,7 +291,7 @@ button {
 
 .A-game-content-wrapper {
   width: 100%;
-  margin-top: 50px;
+  margin-top: 100px;
 }
 .MG_game .Game {
   //   font-size: 0;

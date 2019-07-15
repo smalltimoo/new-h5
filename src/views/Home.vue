@@ -286,7 +286,7 @@ export default {
           let data2 = this.activities.map((item, idx) => {
             item.content = `
                                         <div class="active_title">
-                                          <span>${
+                                          <span style="display: inline-block;text-align:left;width: 160px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">${
                                             item.activityTitle
                                           }</span>
                                           <span>${item.endTimeStr}</span>

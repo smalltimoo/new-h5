@@ -184,6 +184,8 @@ export default {
                 result.message,
                 360 - 20 - (360 / 8) * result.message
               );
+            }else{
+               this.$Message.warning(result.message); //没有更多记录了
             }
           })
           .catch(error => {

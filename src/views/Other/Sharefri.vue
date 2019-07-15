@@ -9,7 +9,7 @@
         <span class="btn" @click="$router.push({name:'sharefri'})">一键复制</span>
         <span style="margin-top:-10px;" @click="$router.push({name:'sharerecord'})">
           点击查看邀请记录
-          <img src="../../assets/images/share/jiantou@2x.png" height="10" alt>
+          <!-- <img src="../../assets/images/share/jiantou@2x.png" height="10" alt> -->
         </span>
       </div>
       <div class="tips">

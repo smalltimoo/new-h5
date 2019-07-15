@@ -8,7 +8,7 @@
     closeOnPopstate
     @cancel="onCancel"
   >
-    <van-picker ref="picker" :columns="columns" />
+    <van-picker ref="picker" :columns="columns" :visible-item-count="3" />
   </van-dialog>
 </template>
 <script>
@@ -46,25 +46,30 @@ export default {
       this.columns = [
         {
           id: 1,
-          text: this.$t("customservice")
+          text: this.$t("customservice"),
+          value: this.$t("customservice")
         },
         {
           id: 2,
-          text: this.cQQ1
+          text: 'QQ:'+this.cQQ1,
+          value:this.cQQ1
         },
         {
           id: 3,
-          text: this.cQQ2
+          text: 'QQ:'+this.cQQ2,
+          value:this.cQQ2
         },
         {
           id: 4,
-          text: this.agentQQ
+          text: 'QQ:'+this.agentQQ,
+          value:this.agentQQ
         },
         {
           id: 5,
-          text: this.sysInfo.lineUrl
+          text: 'Line:'+this.sysInfo.lineUrl,
+          value:this.sysInfo.lineUrl
         }
-      ].filter(ele => ele.text);
+      ].filter((ele,i) => ele.value);
     },
     onCancel(value) {
       this.$emit("close", false);
@@ -78,7 +83,7 @@ export default {
           break;
         default:
           window.open(
-            `mqqwpa://im/chat?chat_type=wpa&uin=${value.text}&version=1&src_type=web`
+            `mqqwpa://im/chat?chat_type=wpa&uin=${value.value.split(':')[1]}&version=1&src_type=web`
           );
           break;
       }
@@ -99,7 +104,7 @@ export default {
 <style lang="less" scoped>
 .main {
   width: 300px;
-  height: 380px;
+  height: 300px;
   margin: 0 auto;
   /deep/ .van-dialog__header {
     height: 90px;

@@ -266,6 +266,9 @@ export default {
   /deep/.el-calendar-table thead th {
     padding-right: 10px;
   }
+  /deep/ td.next{
+    display: none;
+  }
 
   .rule {
     width: 351px;

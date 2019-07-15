@@ -32,7 +32,7 @@
     <div class="recharge" style="margin-top: 14px;">
       <div>
         <span class="title">{{$t('member.onlineDeposit.os6')}}</span>
-        <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
+        <!-- <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span> -->
       </div>
       <div class="input-panel" style="padding-left:0">
         <span style="font-size: 16px">

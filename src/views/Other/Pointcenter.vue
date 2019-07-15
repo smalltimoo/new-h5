@@ -100,7 +100,7 @@ export default {
         },
         {
           title: "完善资料",
-          desc: "完善资料可获得积分",
+          desc: "快速完善资料",
           img: "wanshan",
           type: 0,
           routeName: "safecenter",

@@ -102,17 +102,19 @@ export default {
         .post("/managerGame/getWalletCoinsForLoad.json")
         .then(result => {
           if (result.code === 0) {
-            [this.vm.walletOut,this.vm.walletIn] = [
-              result.data.gamecompays[0].id,
-              result.data.gamecompays[1].id
-            ];
+
             this.options = this.walletlist = result.data.gamecompays.map(
               (item, index) => {
+                item.id = String(item.id)
                 item.loading = true;
                 item.coin = 0;
                 return item;
               }
             );
+            [this.vm.walletOut,this.vm.walletIn] = [
+              result.data.gamecompays[0].id,
+              result.data.gamecompays[1].id
+            ];
             this.walletlist.forEach((val, index) => {
               if(index) this.mGetCoin(val, index);
               else this.getMemberAmount()
@@ -193,7 +195,7 @@ export default {
       }).finally(()=>{
         this.createLocalData();
       })
-      
+
     },
 
     trans() {

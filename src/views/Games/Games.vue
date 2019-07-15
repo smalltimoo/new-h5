@@ -107,8 +107,8 @@ export default {
     }),
     selectedGames() {
       return Object.values(this.companyCustomGames).filter((item, idx) => {
-        if (idx < 20)
-          item.mobileImg = require(`@/assets/images/games/${idx}.png`);
+        // if (idx < 20)
+        //   item.mobileImg = require(`@/assets/images/games/${idx}.png`);
         if (this.gameType == 0) {
           return item.state == 3 || item.state == 2;
         } else if (this.gameType == 2) {
@@ -165,7 +165,6 @@ export default {
         });
     },
     mEnterGame(roomId, gameId, comGameType, gameName, gameCompanyId) {
-      console.info(12);
       if (!this.toNeedLogin()) {
         return;
       }
@@ -251,7 +250,6 @@ export default {
     this.showApp = localStorage.getItem("showApp") ? false : true;
     this.drawGame();
     this.allGame();
-    console.info(this);
     let params = this.$route.params;
     if (params && params.typeId) {
       switch (params.typeId) {

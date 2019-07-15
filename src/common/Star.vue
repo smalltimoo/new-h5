@@ -1,12 +1,13 @@
 <template>
   <div>
-    <div class="star mb-10" :class="starType">
-      <div v-if="type == 'flor'" class="gou" v-for="(itemClass,index) in itemClassess" :key="index">
+    <div class="star mb-10 gou_wrap" :class="starType" v-if="type == 'flor'">
+      <div  class="gou" v-for="(itemClass,index) in itemClassess" :key="index">
         <span class="star-item" :class="itemClass" :key="index"></span>
         <span class="week">{{week[index]}}</span>
       </div>
-
-      <span
+    </div>
+    <div class="star mb-10 " :class="starType"  v-if="type == 'star'">
+    <span
         class="star-item"
         v-if="type=='star'"
         v-for="(itemClass,index) in itemClassess"
@@ -74,6 +75,9 @@ export default {
   height: 33px;
   margin: 0 auto;
   justify-content: space-between;
+}
+.star.gou_wrap {
+  width: 312px;
 }
 .star-48 .star-item {
   width: 33px;

@@ -57,7 +57,7 @@
           <span class="title">{{$t('member.onlineDeposit.od8')}}</span>
           <span class="tmux">{{$t('member.onlineDeposit.od6')}}</span>
         </div>
-        <span class="btn_cuserver" @click="mOpenCService">{{$t('member.onlineDeposit.od71')}}</span>
+        <!-- <span class="btn_cuserver" @click="mOpenCService">{{$t('member.onlineDeposit.od71')}}</span> -->
         </div>
         <div class="pay-way" >
           <!-- <el-scrollbar class="pay-way"> -->
@@ -325,7 +325,7 @@
     </div>
 
     <Drawer :closable="false" v-model="underlineDrawer" width="100" class="underline-drawer notback">
-      <headerComponent :showIcon="draw" :showLogo="true" :logo="logo" @notgoback="notgoback"></headerComponent>
+      <headerComponent :showIcon="draw" :showyue="true" :showLogo="true" :logo="logo" @notgoback="notgoback"></headerComponent>
       <!-- <div class="header">
         <div class="header-left">
           <Icon type="ios-arrow-back" class="icon-menu" @click="underlineDrawer=false"/>
