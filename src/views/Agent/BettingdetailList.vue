@@ -1,5 +1,5 @@
 ﻿<template>
-  <div class="main-body" style="height:620px;">
+  <div class="main-body" style="height:620px;margin-top:80px;">
     <!-- 侧滑导航根容器 -->
     <div class="mui-off-canvas-wrap mui-scalable">
       <!-- 主页面容器 -->

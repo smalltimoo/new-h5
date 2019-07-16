@@ -16,7 +16,7 @@ export default {
         sysPicObj: {},
         apigetnum: 0,
         systemSettings: {},
-        
+
         ...loadingState
     },
     getters: {

@@ -106,6 +106,7 @@
 import slist from "@/mixins/list";
 import { dateFormat } from "../../assets/lib/util";
 import headerComponent from "@/common/Header.vue";
+import {betweenday} from '@/global'
 require("../../style/mui/index.less");
 var vue;
 let currenttime;
@@ -126,11 +127,11 @@ export default {
       activeClass: -1,
       dataList: [],
       searchVM: {
-        gameCompanyId: -1,
+        gameCompanyId:'-1',
         orderBy: "id desc",
         rows: 20,
-        startTime: "", //查询起始时间
-        endTime: "" //查询结束时间
+        startDate: "", //查询起始时间
+        endDate: "" //查询结束时间
       },
       pickerOptions: {
         shortcuts: [
@@ -176,12 +177,14 @@ export default {
   },
   methods: {
     mInit() {
+      [this.searchVM.startDate,this.searchVM.endDate] = betweenday()
       this.$http.get("/managerGame/gameBetInit.json").then(result => {
         if (result.code == 0) {
           let gcs = result.data.gamecompays;
           gcs.unshift({ id: -1, value: this.$t("member.bettingRecord.br13") });
           gcs.forEach((ele, i) => {
             ele.checked = i === 0;
+            ele.id = String(ele.id);
           });
           this.initData.gamecompays = gcs;
           this.initData.gametypes = result.data.gametypes;

@@ -5,20 +5,17 @@
         <Icon type="ios-arrow-back" class="icon-menu" @click.stop="goBack"/>
         <span class="logo">{{logo}}</span>
       </div>
-      <div class="header-right">
+      <div class="header-right" style="margin-right: 15px;">
         <div class="yue">分红余额:{{cAgentCashBalance.toFixed(2)}}</div>
       </div>
     </div>
-    <router-link :to="{name:'UserBankCard'}" v-if="bindBank">
-      <div style="display: flex;align-items: center">
-        <Icon
-          type="md-add-circle"
-          style="font-size: 20px;color: #9b9b9b;;font-weight: 300;margin-top: -2px"
-        />&nbsp;&nbsp;
-        <span>{{ $t('agentMember.addBank')}}</span>
+    <router-link :to="{name:'safecenter',params:{to:'bandBank'}}" v-if="bindBank" class="user_bank_card bandbank">
+      <div class="wrap">
+          <span class="icon"></span>
+          <span class="text">点击此处添加银行卡</span>
       </div>
-      <Icon type="ios-arrow-forward" style="font-size: 16px;color: #9b9b9b;;font-weight: 300"/>
-    </router-link>
+     </router-link>
+
     <div
       class="user_bank_card"
       v-else
@@ -113,15 +110,20 @@ export default {
       createLocalData() {
       this.$http.post("/memberUser/getbindbank.json").then(result => {
         if (result.code === 0) {
-          this.bankInfo = result.data;
-          this.account = this.plusXing(this.bankInfo.account, 0, 4);
-          let i = 0;
-          let $accountDom = $(".account");
-          while (i * 4 <= this.account.length + 1) {
-            $accountDom.append(
-              `<span class="count_li">${this.account.substr(4 * i, 4)}</span>`
-            );
-            i++;
+          if (result.data == null) {
+            this.bindBank = true;
+            this.$Message.warning(this.$t("member.withdrawals.wa15")); //请先绑定银行卡
+          }else{
+              this.bankInfo = result.data;
+              this.account = this.plusXing(this.bankInfo.account, 0, 4);
+              let i = 0;
+              let $accountDom = $(".account");
+              while (i * 4 <= this.account.length + 1) {
+                $accountDom.append(
+                  `<span class="count_li">${this.account.substr(4 * i, 4)}</span>`
+                );
+                i++;
+              }
           }
         }
       });
@@ -316,6 +318,27 @@ export default {
   }
   /deep/ .el-input {
     padding-left:0
+  }
+    .bandbank {
+      background-color: #3d73ff;
+      padding: 0;
+      margin: 0 auto;
+      .wrap {
+        width: 113px;
+        height: 61px;
+        display: flex;
+        margin: 0 auto;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        .icon {
+          width: 37px;
+          height: 37px;
+          // border: solid 2px #ffffff;
+          background: url('~@/assets/images/default/jia@2x.png');
+          background-size: cover;
+        }
+      }
   }
 }
 </style>

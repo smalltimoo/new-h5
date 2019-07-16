@@ -100,11 +100,14 @@
           </div>
           <div>
             <span>配送地址</span>
-            <span v-text="addrVm.address"></span>
+            <el-cascader
+              v-model="addrVm.address1"
+              :options="provinces"
+            ></el-cascader>
           </div>
           <div>
             <!-- //todo -->
-            <span></span>
+            <span v-text="addrVm.detailAddress"></span>
           </div>
 
           <div class="info" style="margin-top: 20px;font-size:12px;">
@@ -143,14 +146,14 @@
           <div>
             <span>配送地址</span>
             <el-cascader
-              v-model="addrVm.address"
+              v-model="addrVm.address1"
               :options="provinces"
               :props="{ expandTrigger: 'hover' }"
               @change="handleChange"
             ></el-cascader>
           </div>
           <div>
-            <el-input placeholder="请填写详细地址(街道,楼牌号等)" v-model="addrVm.detailAddr"></el-input>
+            <el-input placeholder="请填写详细地址(街道,楼牌号等)" v-model="addrVm.detailAddress"></el-input>
           </div>
           <cube-button :active="true" @click="mSaveAdd" class="save-btn">
             <span>{{ $t('member.withdrawals.wa11') }}</span>
@@ -401,6 +404,8 @@ export default {
       },
       addrVm: {
         address: [],
+        address1: [],
+        detailAddress:'',
         memberName: "",
         phone: ""
       },
@@ -756,27 +761,33 @@ export default {
       });
     },
     mSaveAdd() {
-      if (!this.vm.memberName) {
+      if (!this.addrVm.memberName) {
         this.$refs.tip1.show();
         return;
       }
-      if (!this.vm.phone) {
+      if (!this.addrVm.phone) {
         this.$refs.tip2.show();
         return;
       }
-      if (!this.vm.address) {
-        this.$refs.tip3.show();
+      if (!this.addrVm.address1) {
+        this.$Message.success('请填写收货地址！');
         return;
       }
+      if (!this.addrVm.detailAddress) {
+         this.$Message.success('请填写详细收货地址！');
+        return;
+      }
+      this.addrVm.address = this.addrVm.address1+','+this.addrVm.detailAddress
       this.mLoading(true);
       this.$http
-        .post("/memberUser/saveMemberAddress.json", this.vm)
+        .post("/memberUser/saveMemberAddress.json", this.addrVm)
         .then(result => {
           this.mLoading(false);
           if (result.code == 0) {
             //恭喜，设置成功！
             this.$Message.success(this.$t("member.receiving.receive13"));
-            this.mInit();
+            // this.mInit();
+            this.$route.replace({name:'safecenter'});
           } else {
             this.$Message.error(result.message);
           }
@@ -841,6 +852,12 @@ export default {
     this.$http.get("/memberUser/getMemberAddress.json").then(result => {
       if (result.code == 0) {
         this.addrVm = !!result.data ? result.data : {};
+        console.info(this.addrVm)
+        if(this.addrVm){
+          this.addrVm.address1 = this.addrVm.address.split(',');
+          this.addrVm.detailAddress =  this.addrVm.address1.pop();
+          this.addrVm.address1;
+        }
         // this.addr = result.data;
         this.userInfo[1].type = result.data ? true : false;
       }
@@ -854,15 +871,15 @@ export default {
           if (provincesRes.code === 0) {
             let list = provincesRes.data.list ? provincesRes.data.list : [];
             list.forEach(pro => {
-              pro.value = pro.id;
+              pro.value =String(pro.id);
               pro.label = pro.province;
               pro.citieVos &&
                 pro.citieVos.forEach(city => {
-                  city.value = city.id;
+                  city.value = String(city.id);
                   city.label = city.city;
                   city.areas &&
                     city.areas.forEach(area => {
-                      area.value = area.id;
+                      area.value = String(area.id);
                       area.label = area.area;
                     });
                   city.children = city.areas;

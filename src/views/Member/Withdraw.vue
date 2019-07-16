@@ -1,11 +1,10 @@
 <template>
   <div class="withdraw">
      <router-link :to="{name:'safecenter',params:{to:'bandBank'}}" v-if="bindBank" class="user_bank_card bandbank">
-
       <div class="wrap">
-             <span class="icon"></span>
-             <span class="text">点击此处添加银行卡</span>
-    </div>
+          <span class="icon"></span>
+          <span class="text">点击此处添加银行卡</span>
+      </div>
      </router-link>
     <div
       class="user_bank_card"

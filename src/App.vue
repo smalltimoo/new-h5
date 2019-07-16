@@ -98,24 +98,6 @@ export default {
       this.onLine = type === "online";
       this.onLine?this.goBack():this.$router.push({name:'404',params:{type:'network'}})
     },
-    mGetCoin() {
-      this.mLoading(true);
-      this.$http
-        .post("/managerGame/getWalletCoinsForLoad.json")
-        .then(result => {
-          let comp = result.data.gamecompays.map(
-              (item, index) => {
-                item.loading = true;
-                item.coin = 0;
-                return item;
-              }
-            );
-         localStorage.setItem("walletcoinsList", JSON.stringify(comp));
-        })
-        .catch(err => {
-          console.info(this.$t("member.userMember.um24")); //获取余额失败
-        });
-    },
   },
   mounted() {
     this.alertDownloadApp();
@@ -123,7 +105,7 @@ export default {
     window.addEventListener("online", this.updateOnlineStatus);
     window.addEventListener("offline", this.updateOnlineStatus);
     this.$nextTick((vm)=>{
-      this.mGetCoin()
+      this.mGetCoins()
     })
   },
   created() {

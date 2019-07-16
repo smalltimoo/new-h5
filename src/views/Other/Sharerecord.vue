@@ -89,6 +89,7 @@
 var _this;
 let currenttime;
 import headerComponent from "@/common/Header.vue";
+import {betweenday} from '@/global'
 export default {
   name: "sharefri",
   data() {
@@ -160,6 +161,7 @@ export default {
   },
   methods: {
     mInit() {
+      [this.searchVm.startDate,this.searchVm.endDate] = betweenday()
       // 用户抽奖信息
       this.$http.get("/memberUser/getInviteSum.json").then(result => {
         if (result.code == 0) {

@@ -191,16 +191,26 @@ export default {
         mgetToalCoin() {
             return this.$http.post("/memberUser/memberamount.json")
         },
-        mGetCoin() {
+        CB_dialog(field){
+            this[field] = false;
+        },
+        mGetCoins() {
             this.mLoading(true);
             this.$http
-                .post("/managerGame/getWalletCoins.json")
-                .then(result => {
-                    this.walletlist = result.data.walletlist;
-                })
-                .catch(err => {
-                    console.info(this.$t("member.userMember.um24")); //获取余额失败
-                });
-        },
+              .post("/managerGame/getWalletCoinsForLoad.json")
+              .then(result => {
+                let comp = result.data.gamecompays.map(
+                    (item, index) => {
+                      item.loading = true;
+                      item.coin = 0;
+                      return item;
+                    }
+                  );
+               localStorage.setItem("walletcoinsList", JSON.stringify(comp));
+              })
+              .catch(err => {
+                console.info(this.$t("member.userMember.um24")); //获取余额失败
+              });
+          },
     }
 };

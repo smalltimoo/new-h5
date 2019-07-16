@@ -102,6 +102,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/deep/ .van-dialog {
+    border-radius: 10px;
+  }
 .main {
   width: 300px;
   height: 300px;

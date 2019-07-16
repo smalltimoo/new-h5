@@ -185,7 +185,7 @@
       </div>
       <div style="height: 20px;"></div>
     </div>
-    <line-selectdlg :is-show="isshowLines" @close="CB_dialog"></line-selectdlg>
+    <line-selectdlg :panelShow="isshowLines" @close="CB_dialog('isshowLines')"></line-selectdlg>
   </div>
 </template>
 <script>

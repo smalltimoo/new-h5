@@ -22,33 +22,9 @@
       </div>
       <div class="header-right">
         <div class="yue">余额:{{yue}}</div>
-        <Poptip trigger="click" placement="bottom-end">
-          <i class="icon-menu message"></i>
-          <ul slot="content">
-            <li class="icon-kefu" @click="mOpenCService">{{$t('customservice')}}</li>
-            <li class="icon-qq" :style="{display:cQQ1||cQQ2?'block':'none'}">
-              <a
-                v-if="cQQ1"
-                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ1+'&version=1&src_type=web'"
-              >{{cQQ1}}</a>
-              <a
-                v-if="cQQ2"
-                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+cQQ2+'&version=1&src_type=web'"
-              >{{cQQ2}}</a>
-            </li>
-            <li class="icon-agent" v-if="agentQQ">
-              <a
-                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'"
-              >{{agentQQ}}</a>
-            </li>
-            <li class="icon-line" v-if="sysInfo.lineUrl">
-              <a
-                :href="'mqqwpa://im/chat?chat_type=wpa&uin='+agentQQ+'&version=1&src_type=web'"
-              >{{sysInfo.lineUrl}}</a>
-            </li>
-          </ul>
-        </Poptip>
-      </div>
+      <i @click="isshowservice = true" class="icon-menu message"></i>
+    </div>
+    <c-service :panelShow="isshowservice" @close="CB_dialog('isshowservice')"></c-service>
     </div>
     <div class="container" v-if="tabType=='0'">
       <div class="recharge it">
@@ -458,15 +434,17 @@
 </template>
 <script>
 import win from "@/mixins/window";
+import mixin from "@/mixins/mixin"
 import transfer from "./Transfer.vue";
 import withdraw from "./Withdraw.vue";
 import headerComponent from "@/common/Header.vue"
+import cService from "@/common/CService.vue";
 // import { setInterval, clearInterval, setTimeout } from "timers";
 
 const moment = require("moment");
 
 export default {
-  mixins: [win],
+  mixins: [win,mixin],
   data() {
     return {
       draw:true,
@@ -480,6 +458,7 @@ export default {
       tabType: "0",
       activeAmount: 0,
       balance: 0,
+      isshowservice:false,
       tab: "wechat",
       id: "",
       underlineTypes: [],
@@ -509,7 +488,8 @@ export default {
   components: {
     transfer,
     withdraw,
-    headerComponent
+    headerComponent,
+    cService
   },
   computed: {},
   watch: {

@@ -78,7 +78,7 @@ export default {
       options: [],
       ovalue1: "",
       ovalue2: "",
-
+walletlist:[],
       loading: false,
       vm: {
         walletIn: "",
@@ -97,40 +97,39 @@ export default {
   },
   methods: {
     createLocalData() {
-      // this.options = this.walletlist = localStorage.getItem('walletcoinsList');
-      this.$http
-        .post("/managerGame/getWalletCoinsForLoad.json")
-        .then(result => {
-          if (result.code === 0) {
+      if(localStorage.getItem('walletcoinsList')){
+        this.options = this.walletlist = JSON.parse(localStorage.getItem('walletcoinsList'));
+      }else{
+        this.mGetCoins()
+      }
 
-            this.options = this.walletlist = result.data.gamecompays.map(
-              (item, index) => {
-                item.id = String(item.id)
-                item.loading = true;
-                item.coin = 0;
-                return item;
-              }
-            );
+      // this.$http
+      //   .post("/managerGame/getWalletCoinsForLoad.json")
+      //   .then(result => {
+      //     if (result.code === 0) {
+
+            // this.options = this.walletlist = result.data.gamecompays.map(
+            //   (item, index) => {
+            //     item.id = String(item.id)
+            //     item.loading = true;
+            //     item.coin = 0;
+            //     return item;
+            //   }
+            // );
             [this.vm.walletOut,this.vm.walletIn] = [
-              result.data.gamecompays[0].id,
-              result.data.gamecompays[1].id
+              this.walletlist[0].id,
+              this.walletlist[1].id
             ];
             this.walletlist.forEach((val, index) => {
               if(index) this.mGetCoin(val, index);
               else this.getMemberAmount()
             });
-          }
-        });
-
-      // this.options = this.walletlist = JSON.parse(
-      //   sessionStorage.getItem("walletcoinsList")
-      // ).map(item => {
-      //   item.loading = false;
-      //   return item;
-      // });
+          // }
+        // });
     },
     getMemberAmount(){
       this.walletlist[0].loading = true;
+      this.walletlist[0].coin = ''
         this.$http
         .get("/memberUser/memberamount.json")
         .then(result => {
@@ -160,6 +159,7 @@ export default {
     mGetCoin(item, index) {
       // this.mLoading(true);
       item.loading = true;
+      item.coin = '';
       this.$http
         .get("/managerGame/getWalletCoin.json?id=" + item.id)
         .then(result => {

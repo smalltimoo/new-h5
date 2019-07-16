@@ -122,6 +122,7 @@
 import slist from "@/mixins/list";
 import { dateFormat } from "../../assets/lib/util";
 import headerComponent from "@/common/Header.vue";
+import {betweenday} from '@/global'
 require("../../style/mui/index.less");
 var vue;
 let currenttime;
@@ -176,6 +177,7 @@ export default {
   },
   methods: {
     mInit() {
+      [this.searchVm.startDate,this.searchVm.endDate] = betweenday()
       this.$http.get("/memberCoin/coinindex.json").then(result => {
         if (result.code == 0) {
           let gcs = result.data.actionTypes;

@@ -298,6 +298,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.main-body {
+  margin-top:80px;
+}
 .rowbg {
   // width: 375px;
   // height: 110px;

@@ -24,7 +24,7 @@
     </div>
 
     <div class="mui-content" v-if="manageType == '1'">
-      <transactions-detaillist 
+      <transactions-detaillist
         class="mui-content2"
         :username="$route.query.username"
         :manageTypesearch="manageTypesearch"
@@ -350,13 +350,13 @@ export default {
   display: flex;
   position: fixed;
   background-color: white;
-  padding-left: 10px;
+  padding-left: 20px;
   z-index: 999;
   width: 80%;
   justify-content: flex-start;
   align-items: center;
   margin-top: -14px;
-  
+
   & > div {
     float: left;
     min-width: 40px;
@@ -383,7 +383,7 @@ export default {
   }
 }
 .mui-content2 {
-  padding-top: 50px;
+  padding-top: 34px;
 }
 .searchVm { padding-top:10px;
   width: 100%;
@@ -424,7 +424,7 @@ export default {
   height: 40px;
   background-color: #fff;
   z-index: 999;
-  top: 44px;
+  top: 46px;
 }
 .manage-type::-webkit-scrollbar {
   color: #fff;

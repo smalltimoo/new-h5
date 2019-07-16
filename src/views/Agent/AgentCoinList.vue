@@ -429,7 +429,7 @@ export default {
   white-space: nowrap;
 }
 
-.searchVM { padding-top:10px;
+.searchVM { padding-top:44px;
   // width: 351px;
   width:100%;
   margin: 0 auto;

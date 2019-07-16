@@ -1,12 +1,12 @@
 <template>
-  <div class="memberAgent" style="height:620px;">
+  <div class="memberAgent" style="height:620px;margin-top:80px;">
     <!-- 侧滑导航根容器 -->
     <div class="mui-off-canvas-wrap mui-scalable">
       <!-- 主页面容器 -->
       <div class="mui-inner-wrap">
         <!-- 菜单容器 -->
 
-        <section class="el-container is-vertical" v-show="manageTypesearch == 2">
+        <section class="el-container is-vertical" style="padding-top:11px;" v-show="manageTypesearch == 2">
           <div class="searchVM">
             <!-- <div>
               <span> {{$t('agent.transactionsdetailList.transactionsdetailList1')}}</span>

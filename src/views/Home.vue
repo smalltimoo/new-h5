@@ -48,7 +48,7 @@
           :to="{name:'Games',params:{typeId:item.typeId}}"
           :key="index"
         >
-          <el-image :src="item.mobileImgUrl" :fit="'cover'">
+          <el-image :src="item.mobileImgUrl" >
             <div slot="placeholder" class="image-slot">
               加载中
               <span class="dot">...</span>
@@ -584,6 +584,7 @@ export default {
   height: 188px;
   float: left;
   margin-left: 11px;
+  overflow: hidden;
 }
 .game_block a.game_link:nth-child(3),
 .game_block a.game_link:nth-child(4),
@@ -593,12 +594,18 @@ export default {
   height: 89px;
   float: right;
   margin-right: 11px;
+  overflow: hidden;
 }
 .game_block {
   height: 524px;
 }
 .game_block a.game_link {
   margin: 6px;
+  .el-image {
+    width: 100%;
+    height:100%;
+    background-size: cover;
+  }
   img {
     width: 100%;
     height: 100%;

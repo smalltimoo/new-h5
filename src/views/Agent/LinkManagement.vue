@@ -256,6 +256,7 @@ import window from "@/mixins/window";
 import slist from "@/mixins/list";
 // require('../../style/mui/index.less')
 import headerComponent from "@/common/Header.vue";
+import {betweenday} from '@/global'
 var _this = this;
 export default {
   mixins: [window, slist],
@@ -440,6 +441,7 @@ export default {
   },
   created() {
     _this = this;
+    [this.searchVm.startTime,this.searchVm.endTime] = betweenday()
     let from_name = this.$route.query.name;
     switch (from_name) {
       case "AgentrEportforms":
