@@ -23,20 +23,20 @@
       <el-card class="box-card box-card2">
         <div class="title">
           <span>我的邀请</span>
-          <router-link :to="{name:'AssetsOverView'}">
+          <a>
             邀请规则
             <i class="el-icon-arrow-right"></i>
-          </router-link>
+          </a>
         </div>
         <div class="usercount" @click="$router.push({name:'sharerecord'})">
           <div class="count_item">
-            <span v-if="vm.inviteCount">{{vm.inviteCount}}</span>
+            <span v-if="vm.inviteCount!=undefined">{{vm.inviteCount}}</span>
             <i class="el-icon-loading" v-else></i>
             <span style="font-size: 12px">成功分享</span>
           </div>
           <el-divider direction="vertical"></el-divider>
           <div class="count_item">
-            <span v-if="vm.giveAmount">{{vm.giveAmount}}</span>
+            <span v-if="vm.giveAmount!=undefined">{{vm.giveAmount}}</span>
             <i class="el-icon-loading" v-else></i>
             <span>获得积分</span>
           </div>

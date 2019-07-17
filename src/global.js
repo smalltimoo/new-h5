@@ -138,7 +138,7 @@ export const getMyDate = function (str) {
  * 计算时间区间
  * @param {*} str
  */
-export const betweenday =  (timebetween = 3600 * 1000 * 24 * 30 * 3, diff)=> {
+export const betweenday =  (timebetween = 0, diff)=> {
   const end = new Date();
   const start = new Date();
   // start = ();

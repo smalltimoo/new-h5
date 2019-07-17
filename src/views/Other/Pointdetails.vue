@@ -76,13 +76,13 @@
           </div>
           <div class="pri_main">
             <div>
-              <p class="pri_title">{{item.remark}}</p>
+              <p class="pri_title">{{item.integralTypeStr}}</p>
               <p class="pri_desc" v-if="item.integral>0" style="font-size:16px;color:#f03838">+{{(item.integral/100).toFixed(2)}}</p>
               <p class="pri_desc" v-else style="font-size:16px;color:#fb9736">{{(item.integral/100).toFixed(2)}}</p>
             </div>
             <div>
               <p class="pri_title" style="font-size:13px;color:#909399">{{item.operateTimeStr}}</p>
-              <p class="pri_desc" style="font-size:12px;color:#909399">{{item.integralTypeStr}}</p>
+              <p class="pri_desc" style="font-size:12px;color:#909399" v-text="item.integral>0?'积分赠送':'积分扣除'">{{item.integralTypeStr}}</p>
             </div>
           </div>
         </div>
@@ -127,7 +127,7 @@ export default {
         shortcuts: [
           {
             text: "今日",
-            value: 1
+            value: 0
           },
           {
             text: "最近三天",
@@ -220,7 +220,7 @@ export default {
           max: new Date(2020, 9, 20),
           value: new Date(),
           onSelect: this.selectHandle,
-          format: { year: "YY年", month: "MM月", date: "第 D 日" }
+          format: { year: "YYYY", month: "MM", date: "DD" }
         });
       }
       this.datePicker.show();
@@ -228,12 +228,12 @@ export default {
     selectHandle(date, selectedVal, selectedText) {
       // console.info(date, selectedVal, selectedText);
       if(currenttime == 1) {
-        this.searchVm.endOperateTime =  selectedVal.join("/")
+        this.searchVm.endOperateTime =  selectedVal.join("-")
       }else{
-        this.searchVm.startOperateTime =  selectedVal.join("/")
+        this.searchVm.startOperateTime =  selectedVal.join("-")
       }
       this.searchpoint();
-      // this.$set(this.searchVm.time, currenttime, selectedVal.join("/"));
+      // this.$set(this.searchVm.time, currenttime, selectedVal.join("-"));
     }
   },
   created() {

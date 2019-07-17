@@ -4,8 +4,6 @@
     <div class="mui-off-canvas-wrap mui-scalable">
       <!-- 主页面容器 -->
       <div class="mui-inner-wrap">
-        <!-- <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true" ></header-component> -->
-        <!-- 主页面内容容器 -->
         <div class="header hasApp">
           <div class="header-left">
             <Icon type="ios-arrow-back" class="icon-menu" @click.stop="goBack"/>
@@ -15,41 +13,59 @@
             <div class="yue">余额:{{yue}}</div>
             <span class="shaixuan-room" @click="showSearch = !showSearch">
               筛选
-              <span class="icon-shaixuan" :class="{selected:showSearch}"></span>
+              <span class="icon-shaixuan"></span>
             </span>
           </div>
         </div>
         <div class="container">
         <section class="el-container is-vertical" v-show="showSearch">
-          <div class="searchVM">
+          <div class="searchVm">
             <el-select
-              v-model="searchVM.gameCompanyId"
+              v-model="searchVm.actionType"
               placeholder="请选择"
               class="type"
               @change="mSearch"
             >
               <el-option
-                v-for="item in initData.gamecompays"
+                v-for="item in initData.actionTypes"
                 :key="item.id"
                 :label="item.value"
                 :value="item.id"
               ></el-option>
             </el-select>
+            <!-- <el-date-picker
+             ref="time"
+             class="time"
+              v-model="searchVm.time"
+              type="daterange"
+              range-separator="~"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期">
+            </el-date-picker>-->
             <div class="time">
               <input
                 type="text"
-                v-model="searchVM.startTime"
+                v-model="searchVm.startDate"
                 readonly
                 @click="showDatePicker($event,0)"
               >
               <font>~</font>
               <input
                 type="text"
-                v-model="searchVM.endTime"
+                v-model="searchVm.endDate"
                 readonly
                 @click="showDatePicker($event,1)"
               >
             </div>
+            <!-- <Date-picker
+              ref="time"
+              class="time"
+              :value="searchVm.time"
+              format="yyyy/MM/dd"
+              type="daterange"
+              placement="center-end"
+              placeholder="选择日期"
+            ></Date-picker>-->
             <el-button
               class="btns"
               :class="activeClass == index ? 'active':''"
@@ -63,40 +79,40 @@
           <span class="desc">暂无记录</span>
                 <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
         </div>
-            <Scroll
-              v-if="dataList&&dataList.length>0"
-              :on-reach-bottom="mReachBottom"
-              :height="ivuScrollContainerHeight"
-              style="margin-bottom: 30px"
-            >
-              <div v-for="(item,i) in dataList" :key="i" style="background-color:#f3f3f3">
-                <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
-                <div class="rowbg el-row">
-                  <div class="grid-content grid-content1">
-                    <div>
-                      <span class="num">{{item.investAmount / 100}}</span>
-                      <span class="user">{{ $t('member.bettingRecord.br8') }}</span>
-                    </div>
-                    <div style="align-items:flex-end">
-                      <span class="btn success" style="margin-bottom:9px;">{{item.gameCompanyName}}</span>
-                      <span class="user">{{item.createTimeStr}}</span>
-                    </div>
-                  </div>
-                  <div class="grid-content grid-content3">
-                    <span
-                      class="num"
-                    >有效金额&nbsp;&nbsp;￥{{item.validAmount / 100}}</span>
-                    <span>
-                      输赢金额&nbsp;&nbsp;
-                      <font
-                        style="color:#3d7eff"
-                      >￥{{item.bunkoAmount / 100}}</font>
-                    </span>
-                  </div>
+        <!-- 主页面内容容器 -->
+        <Scroll
+          v-if="dataList&&dataList.length>0"
+          ref="ivuScrollContainer"
+          :on-reach-bottom="mReachBottom"
+          :height="ivuScrollContainerHeight"
+        >
+          <div v-for="(item,i) in dataList" :key="i" style="background-color:#f3f3f3">
+            <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
+            <div class="rowbg el-row">
+              <div class="grid-content grid-content1">
+                <div>
+                  <span class="num">{{item.amount / 100}}</span>
+                  <span class="user">{{$t('agent.transactionsdetailList.transactionsdetailList9')}}</span>
+                </div>
+                <div style="align-items:flex-end">
+                  <span class="btn success" style="margin-bottom:9px;">{{item.actionTypeStr}}</span>
+                  <span class="user">{{item.createTimeStr}}</span>
                 </div>
               </div>
-            </Scroll>
-
+              <div class="grid-content grid-content3">
+                <span
+                  class="num"
+                >{{ $t("member.rechargeRecord.rr6") }}&nbsp;&nbsp;￥{{item.beforeAmount/100}}</span>
+                <span>
+                  {{ $t("member.rechargeRecord.rr7") }}&nbsp;&nbsp;
+                  <font
+                    style="color:#3d7eff"
+                  >￥{{item.afterAmount/100}}</font>
+                </span>
+              </div>
+            </div>
+          </div>
+        </Scroll>
       </div>
       </div>
     </div>
@@ -114,25 +130,21 @@ export default {
   mixins: [slist],
   data() {
     return {
-      logo: "投注记录",
+      logo: "交易记录",
       yue: Number,
-      showSearch: false,
       initData: {
-        gamecompays: [],
-        gametypes: [],
-        games: [],
+        actionTypes: [],
         total: 0
       },
       showSearch: false,
-      activeClass: -1,
       dataList: [],
-      searchVM: {
-        gameCompanyId:'-1',
-        orderBy: "id desc",
-        rows: 20,
-        startTime: "", //查询起始时间
-        endTime: "" //查询结束时间
+      searchVm: {
+        startDate: "",
+        endDate: "",
+        actionType: '-1',
       },
+      activeClass: -1,
+      jifenoptions: [],
       pickerOptions: {
         shortcuts: [
           {
@@ -153,146 +165,114 @@ export default {
           }
         ]
       },
-      totalDama: 0,
       ivuScrollContainerHeight: 620
     };
-  },
-  computed: {
-    gameRoomName() {
-      let rooms = this.initData.gamecompays.filter(
-        item => this.searchVM.gameCompanyId == item.id
-      );
-      if (rooms.length > 0) {
-        return rooms[0].value;
-      } else {
-        return "";
-      }
-    }
-  },
-  mounted() {
-    this.mPullData();
   },
   components: {
     headerComponent
   },
+  mounted() {
+    this.mPullData();
+    this.getamount();
+  },
   methods: {
     mInit() {
-      [this.searchVM.startTime,this.searchVM.endTime] = betweenday()
-      this.$http.get("/managerGame/gameBetInit.json").then(result => {
+      [this.searchVm.startDate,this.searchVm.endDate] = betweenday()
+      this.$http.get("/memberCoin/coinindex.json").then(result => {
         if (result.code == 0) {
-          let gcs = result.data.gamecompays;
-          gcs.unshift({ id: -1, value: this.$t("member.bettingRecord.br13") });
+          let gcs = result.data.actionTypes;
+          gcs.unshift({ id: '-1', value: this.$t("member.rechargeRecord.rr9") });
           gcs.forEach((ele, i) => {
             ele.checked = i === 0;
-            ele.id = String(ele.id);
+            ele.id = String(ele.id)
+            // ele.label = ele.value;
+            // ele.value = +ele.id;
           });
-          this.initData.gamecompays = gcs;
-          this.initData.gametypes = result.data.gametypes;
-          this.mSearch(1);
+          this.initData.actionTypes = result.data.actionTypes;
+        }
+      });
+    },
+    getamount() {
+      this.$http.post("/memberUser/memberamount.json").then(result => {
+        if (result.code == 0) {
+          console.info(result.data);
+          this.yue = (result.data / 100).toFixed(2);
         }
       });
     },
     mPullData() {
       this.mLoading(true);
-      var params = Object.assign({}, this.searchVM);
-      if(params.gameCompanyId == '-1') params.gameCompanyId =''
-      this.$http
-        .post("/managerGame/memberGameOrders.json", params)
-        .then(result => {
-          if (result.code == 0) {
-            this.initData.total = result.total;
-            this.dataList = !!result.rows ? result.rows : [];
-            this.totalDama = this.dataList.reduce((sum, current) => {
-              return sum + current.validAmount / 100;
-            }, 0);
-          } else {
-            this.mLoading(false);
-          }
-        })
-        .catch(error => {
-          this.mLoading(false);
-        });
+      var params = Object.assign({}, this.searchVm);
+      this.$http.post("/memberCoin/coinlist.json", params).then(result => {
+        if (result.code == 0) {
+          this.initData.total = result.total;
+          this.dataList = !!result.rows ? result.rows : [];
+        }
+        this.mLoading(false);
+      });
     },
     mReachBottom() {
       return new Promise(resolve => {
         this.mLoading(true);
         if (
           parseInt(
-            this.initData.total / (this.searchVM.rows * this.searchVM.page)
+            this.initData.total / (this.searchVm.rows * this.searchVm.page)
           ) > 0
         ) {
-          ++this.searchVM.page;
-          this.searchVM.start = (this.searchVM.page - 1) * this.searchVM.rows;
-          this.searchVM.limit = this.searchVM.rows;
-          var params = Object.assign({}, this.searchVM);
-          this.$http
-            .post("/managerGame/memberGameOrders.json", params)
-            .then(result => {
-              if (result.code == 0) {
-                this.initData.total = result.total;
-                if (!!result.rows && result.rows.length > 0) {
-                  this.dataList = this.dataList.concat(result.rows);
-                  this.totalDama = this.dataList.reduce((sum, current) => {
-                    return sum + current.validAmount / 100;
-                  }, 0);
-                }
-                resolve();
+          ++this.searchVm.page;
+          this.searchVm.start = (this.searchVm.page - 1) * this.searchVm.rows;
+          this.searchVm.limit = this.searchVm.rows;
+          var params = Object.assign({}, this.searchVm);
+          this.$http.post("/memberCoin/coinlist.json", params).then(result => {
+            if (result.code == 0) {
+              this.initData.total = result.total;
+              if (!!result.rows && result.rows.length > 0) {
+                this.dataList = this.dataList.concat(result.rows);
               }
-            });
+              resolve();
+            }
+          });
         } else {
           this.mLoading(false);
-          this.$Message.warning(this.$t("member.bettingRecord.br14")); //没有更多记录了
+          this.$Message.warning(this.$t("member.rechargeRecord.rr10")); //没有更多记录了
           resolve();
         }
       });
     },
-
-    mShowSearch(operate) {
-      if (operate == "open") {
-        mui(".mui-off-canvas-wrap")
-          .offCanvas()
-          .show();
-
-        this.open = true;
-      } else {
-        mui(".mui-off-canvas-wrap")
-          .offCanvas()
-          .close();
-        this.open = false;
-      }
-
-      $(".mui-content").click(() => {
-        if (this.open) {
-          mui(".mui-off-canvas-wrap")
-            .offCanvas()
-            .close();
-          this.open = false;
-        }
-      });
+    mOnResize() {
+      setTimeout(() => {
+        this.ivuScrollContainerHeight =
+          window.innerHeight - this.$refs.TopHeader.offsetHeight;
+      }, 500);
     },
     clickBtn(value, index) {
       this.activeClass = index;
       const end = new Date();
       const start = new Date();
       // start = ();
-      this.searchVM.startTime = this.getMyDate(
+      this.searchVm.startDate = this.getMyDate(
         start.getTime() - 3600 * 1000 * 24 * value
       );
-      this.searchVM.endTime = this.getMyDate(end);
+      this.searchVm.endDate = this.getMyDate(end);
       // let picker = this.$refs.time.$options;
       // start.setTime(start.getTime() - 3600 * 1000 * 24 * 1);
       // picker.$emit('pick', [start, end]);
-      this.$nextTick(vm => {
-        this.mSearch();
-      });
+      this.$nextTick(vm=>{
+          this.mSearch();
+      })
     },
-
-    getamount() {
-      this.$http.post("/memberUser/memberamount.json").then(result => {
-        if (result.code == 0) {
-          this.yue = (result.data / 100).toFixed(2);
-        }
-      });
+    mSearch() {
+      this.$http
+        .post("/memberCoin/coinlist.json", this.searchVm)
+        .then(result => {
+          if (result.code == 0) {
+            this.dataList = result.rows;
+          }
+        });
+    },
+    getpaysrc(a) {
+      // return require(`../../assets/images/membercentre/${a}@2x.png`);
+      return "";
     },
     showDatePicker(event, index) {
       currenttime = index;
@@ -311,31 +291,35 @@ export default {
     selectHandle(date, selectedVal, selectedText) {
       // console.info(date, selectedVal, selectedText);
       if (currenttime == 1) {
-        this.searchVM.endTime = selectedVal.join("-");
+        this.searchVm.endDate = selectedVal.join("-");
       } else {
-        this.searchVM.startTime = selectedVal.join("-");
+        this.searchVm.startDate = selectedVal.join("-");
       }
       this.mSearch();
-      // this.$set(this.searchVM.time, currenttime, selectedVal.join("-"));
+      // this.$set(this.searchVm.time, currenttime, selectedVal.join("-"));
     }
   },
   created() {
     vue = this;
     this.mInit();
-    this.getamount();
   }
 };
 </script>
 
 <style lang="less" scoped>
+.header-right {
+  .yue {
+    margin-right: 80px;
+  }
+}
 .mui-bar .mui-title {
   margin-top: 10px;
   text-align: center;
 }
 
-// .mui-content {
-//     margin-top: 80px;
-// }
+.mui-content {
+  margin-top: 0px;
+}
 
 .mui-scalable {
   // background-color: #efeff4 !important;
@@ -343,7 +327,7 @@ export default {
 
 .rowbg {
   margin: 5px 10px 10px 10px;
-  padding: 10px 15px;
+  padding: 10px;
   border-bottom: 1px solid #f3f3f3;
   background-color: #ffffff;
   box-shadow: 0px 1px 5px 0px rgba(201, 201, 201, 0.8);
@@ -357,8 +341,8 @@ export default {
   border-radius: 2px;
   font-size: 14px;
   color: #fff;
-  height: 28px;
-  line-height: 28px;
+  height: 30px;
+  line-height: 30px;
   margin-bottom: 10px;
   min-width: 76px;
 }
@@ -399,14 +383,6 @@ export default {
   background-color: #2d8cf0;
 }
 
-.failed {
-  background-color: #b58c2a;
-}
-
-.wait {
-  background-color: #007bc9;
-}
-
 .info {
   width: 100%;
   display: flex;
@@ -415,24 +391,12 @@ export default {
   padding: 0 5px;
 }
 
-.dama {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  margin-top: 43px;
-  font-size: 14px;
-  background-color: #2d8cf0;
-  height: 40px;
-  display: flex;
-  color: #fff;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 15px;
-  z-index: 99;
-}
-
 .rowbg {
+  // width: 375px;
+  // height: 110px;
+  // background-color: #ffffff;
+  // border-radius: 2px;
+  // display: flex;
   margin: 5px 0 10px;
   padding: 10px 15px;
   // display: flex;
@@ -514,50 +478,12 @@ export default {
   border: none;
   justify-content: space-between;
 }
-
-.searchVM {
- padding-top:10px;
-  width: 351px;
-  margin: 0 auto;
-  display: flex;
-  // padding: 10px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  z-index: 99;
-  & > div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-    & > span {
-      min-width: 80px;
-    }
-  }
-  .search_buttons {
-    padding-left: 80px;
-    display: flex;
-    justify-content: space-between;
-    /deep/ & > button {
-      width: 136px;
-      height: 25px;
-      line-height: 25px;
-      background-color: #3d7eff;
-      border-radius: 6px;
-      color: #f3f3f3;
-      padding: 0;
-      text-align: center;
-    }
-  }
-  /deep/ .el-input__inner {
-    width: 260px;
-  }
-}
 .el-container {
   background: #fff;
   width: 100%;
   height: 100px;
 }
-.searchVM { padding-top:10px;
+.searchVm { padding-top:10px;
   width: 351px;
   margin: 0 auto;
   display: flex;
@@ -628,11 +554,6 @@ export default {
   }
   /deep/ .el-input__inner {
     width: 260px;
-  }
-}
-.header-right {
-  .yue {
-    margin-right: 80px;
   }
 }
 </style>

@@ -633,6 +633,7 @@ input {
     line-height: 18px;
     letter-spacing: 1px;
     color: #4c4c4c;
+    border-bottom:none!important;
   .icon-shaixuan {
     background: url("../assets/images/shaixuan@2x.png") 50% 50% no-repeat;
     vertical-align: bottom;
@@ -641,9 +642,15 @@ input {
     width:20px;
     height: 18px;
   }
-  selected {
-    background: url("../assets/images/shaixuan_selected@2x.png") 50% 50% no-repeat;
-  }
+
+}
+.shaixuan-room.active .icon-shaixuan {
+  background: url("../assets/images/shaixuan_selected@2x.png") 50% 50% no-repeat;
+  vertical-align: bottom;
+    background-size: cover;
+    display: inline-block;
+    width:20px;
+    height: 18px;
 }
 .ivu-date-picker-rel {
   width: 100%;

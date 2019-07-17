@@ -151,6 +151,7 @@ export default {
       this.$http.get("/memberUser/getSignDays.json").then(result => {
         if (result.code == 0) {
           this.checkInVm = result.data;
+          this.givePoint = (result.data.daySignGiveAmount/100).toFixed(2)
         }
       });
     }

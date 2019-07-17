@@ -1,63 +1,51 @@
 <template>
   <div class="main-body">
-    <!-- 侧滑导航根容器 -->
-    <div class="mui-off-canvas-wrap mui-scalable">
-      <!-- 主页面容器 -->
-      <div class="mui-inner-wrap">
-        <div class="header hasApp">
-          <div class="header-left">
-            <Icon type="ios-arrow-back" class="icon-menu" @click.stop="goBack"/>
-            <span class="logo">{{logo}}</span>
-          </div>
-          <div class="header-right">
-            <div class="yue">余额:{{yue}}</div>
-            <span class="shaixuan-room" @click="showSearch = !showSearch">
-              筛选
-              <span class="icon-shaixuan"></span>
-            </span>
-          </div>
-        </div>
-        <div class="container">
-        <section class="el-container is-vertical" v-show="showSearch">
-          <div class="searchVm">
-            <el-select
-              v-model="searchVm.actionType"
-              placeholder="请选择"
-              class="type"
-              @change="mSearch"
-            >
-              <el-option
-                v-for="item in initData.actionTypes"
-                :key="item.id"
-                :label="item.value"
-                :value="item.id"
-              ></el-option>
-            </el-select>
-            <!-- <el-date-picker
-             ref="time"
-             class="time"
-              v-model="searchVm.time"
-              type="daterange"
-              range-separator="~"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期">
-            </el-date-picker>-->
-            <div class="time">
-              <input
-                type="text"
-                v-model="searchVm.startDate"
-                readonly
-                @click="showDatePicker($event,0)"
+    <header-component :showyue="true" :logo="logo" :showIcon="true" :showLogo="true"></header-component>
+    <div class="container">
+      <div class="manage-type">
+        <div :class="{active: manageType=='1'}" @click="changeTab('1')">流水</div>
+        <div :class="{active: manageType=='2'}" @click="changeTab('2')">充值</div>
+        <div :class="{active: manageType=='3'}" @click="changeTab('3')">提现</div>
+        <div :class="{active: manageType=='4'}" @click="changeTab('4')">转账</div>
+        <span class="shaixuan-room" :class="{active:manageTypesearch}" @click="changsearch" style="top:16px;">
+          筛选
+          <span class="icon-shaixuan"></span>
+        </span>
+        <!-- </div> -->
+      </div>
+      <div class="mui-content" v-if="manageType == '1'">
+        <div class="mui-content2">
+          <section class="el-container is-vertical" v-show="manageTypesearch==1">
+            <div class="searchVm">
+              <el-select
+                v-model="searchVm.actionType"
+                placeholder="请选择"
+                class="type"
+                @change="mSearch"
               >
-              <font>~</font>
-              <input
-                type="text"
-                v-model="searchVm.endDate"
-                readonly
-                @click="showDatePicker($event,1)"
-              >
-            </div>
-            <!-- <Date-picker
+                <el-option
+                  v-for="item in initData.actionTypes"
+                  :key="item.id"
+                  :label="item.value"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+              <div class="time">
+                <input
+                  type="text"
+                  v-model="searchVm.startTime"
+                  readonly
+                  @click="showDatePicker($event,0)"
+                />
+                <font>~</font>
+                <input
+                  type="text"
+                  v-model="searchVm.endTime"
+                  readonly
+                  @click="showDatePicker($event,1)"
+                />
+              </div>
+              <!-- <Date-picker
               ref="time"
               class="time"
               :value="searchVm.time"
@@ -65,91 +53,368 @@
               type="daterange"
               placement="center-end"
               placeholder="选择日期"
-            ></Date-picker>-->
-            <el-button
-              class="btns"
-              :class="activeClass == index ? 'active':''"
-              v-for="(item,index) in pickerOptions.shortcuts"
-              :key="index"
-              @click="clickBtn(item.value,index)"
-            >{{item.text}}</el-button>
+              ></Date-picker>-->
+              <el-button
+                class="btns"
+                :class="activeClass == index ? 'active':''"
+                v-for="(item,index) in pickerOptions.shortcuts"
+                :key="index"
+                @click="clickBtn(item.value,index)"
+              >{{item.text}}</el-button>
+            </div>
+          </section>
+          <div class="no-list" v-if="!datalist1||datalist1.length==0">
+            <span class="desc">暂无记录</span>
+            <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
           </div>
-        </section>
-        <div class="no-list" v-if="!dataList||dataList.length==0">
-          <span class="desc">暂无记录</span>
-                <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
-        </div>
-        <!-- 主页面内容容器 -->
-        <Scroll
-          v-if="dataList&&dataList.length>0"
-          ref="ivuScrollContainer"
-          :on-reach-bottom="mReachBottom"
-          :height="ivuScrollContainerHeight"
-        >
-          <div v-for="(item,i) in dataList" :key="i" style="background-color:#f3f3f3">
-            <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
-            <div class="rowbg el-row">
-              <div class="grid-content grid-content1">
-                <div>
-                  <span class="num">{{item.amount / 100}}</span>
-                  <span class="user">{{$t('agent.transactionsdetailList.transactionsdetailList9')}}</span>
+          <Scroll
+            v-if="datalist1&&datalist1.length>0"
+            ref="ivuScrollContainer"
+            :on-reach-bottom="mReachBottom"
+            :height="ivuScrollContainerHeight"
+          >
+            <div v-for="(item,i) in datalist1" :key="i" style="background-color:#f3f3f3">
+              <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
+              <div class="rowbg el-row">
+                <div class="grid-content grid-content1">
+                  <div>
+                    <span class="num">{{item.amount / 100}}</span>
+                    <span
+                      class="user"
+                    >{{$t('agent.transactionsdetailList.transactionsdetailList9')}}</span>
+                  </div>
+                  <div style="align-items:flex-end">
+                    <span class="btn success" style="margin-bottom:9px;">{{item.actionTypeStr}}</span>
+                    <span class="user">{{item.createTimeStr}}</span>
+                  </div>
                 </div>
-                <div style="align-items:flex-end">
-                  <span class="btn success" style="margin-bottom:9px;">{{item.actionTypeStr}}</span>
-                  <span class="user">{{item.createTimeStr}}</span>
+                <div class="grid-content grid-content3">
+                  <span
+                    class="num"
+                  >{{ $t("member.rechargeRecord.rr6") }}&nbsp;&nbsp;￥{{item.beforeAmount/100}}</span>
+                  <span>
+                    {{ $t("member.rechargeRecord.rr7") }}&nbsp;&nbsp;
+                    <font
+                      style="color:#3d7eff"
+                    >￥{{item.afterAmount/100}}</font>
+                  </span>
                 </div>
-              </div>
-              <div class="grid-content grid-content3">
-                <span
-                  class="num"
-                >{{ $t("member.rechargeRecord.rr6") }}&nbsp;&nbsp;￥{{item.beforeAmount/100}}</span>
-                <span>
-                  {{ $t("member.rechargeRecord.rr7") }}&nbsp;&nbsp;
-                  <font
-                    style="color:#3d7eff"
-                  >￥{{item.afterAmount/100}}</font>
-                </span>
               </div>
             </div>
-          </div>
-        </Scroll>
+          </Scroll>
+        </div>
       </div>
+      <div class="mui-content" v-if="manageType == '2'">
+        <div class="mui-content2">
+          <section class="el-container is-vertical" v-show="manageTypesearch==2">
+            <div class="searchVm">
+              <el-select
+                v-model="searchVm.actionType"
+                placeholder="请选择"
+                class="type"
+                @change="mSearch"
+              >
+                <el-option
+                  v-for="item in initData.actionTypes"
+                  :key="item.id"
+                  :label="item.value"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+              <div class="time">
+                <input
+                  type="text"
+                  v-model="searchVm.startTime"
+                  readonly
+                  @click="showDatePicker($event,0)"
+                />
+                <font>~</font>
+                <input
+                  type="text"
+                  v-model="searchVm.endTime"
+                  readonly
+                  @click="showDatePicker($event,1)"
+                />
+              </div>
+              <!-- <Date-picker
+              ref="time"
+              class="time"
+              :value="searchVm.time"
+              format="yyyy/MM/dd"
+              type="daterange"
+              placement="center-end"
+              placeholder="选择日期"
+              ></Date-picker>-->
+              <el-button
+                class="btns"
+                :class="activeClass == index ? 'active':''"
+                v-for="(item,index) in pickerOptions.shortcuts"
+                :key="index"
+                @click="clickBtn(item.value,index)"
+              >{{item.text}}</el-button>
+            </div>
+          </section>
+          <div class="no-list" v-if="!datalist2||datalist2.length==0">
+            <span class="desc">暂无记录</span>
+            <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+          </div>
+          <Scroll
+            v-if="datalist2&&datalist2.length>0"
+            ref="ivuScrollContainer"
+            :on-reach-bottom="mReachBottom"
+            :height="ivuScrollContainerHeight"
+          >
+            <div v-for="(item,i) in datalist2" :key="i" style="background-color:#f3f3f3">
+              <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
+              <div class="rowbg el-row">
+                <div class="grid-content grid-content1">
+                  <div>
+                    <span class="num">{{item.depositAmount / 100}}</span>
+                    <span
+                      class="user"
+                    >充值金额</span>
+                  </div>
+                  <div style="align-items:flex-end">
+                    <span class="btn" :class="{success:[1,3].includes(item.depositState),priamy:!([1,3].includes(item.depositState))}" style="margin-bottom:9px;">{{item.depositStateStr}}</span>
+                    <span class="user">{{item.createTimeStr}}</span>
+                  </div>
+                </div>
+                <div class="grid-content grid-content3">
+                  <span
+                    class="num"
+                  >赠送金额&nbsp;&nbsp;￥{{item.benefitAmount/100}}</span>
+                  <span>
+                    结算&nbsp;&nbsp;
+                    <font
+                      style="color:#3d7eff"
+                    >￥{{item.realAmount / 100}}</font>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Scroll>
+        </div>
+      </div>
+      <div class="mui-content" v-if="manageType == '3'">
+        <div class="mui-content2">
+          <section class="el-container is-vertical" v-show="manageTypesearch==3">
+            <div class="searchVm">
+              <el-select
+                v-model="searchVm.actionType"
+                placeholder="请选择"
+                class="type"
+                @change="mSearch"
+              >
+                <el-option
+                  v-for="item in initData.actionTypes"
+                  :key="item.id"
+                  :label="item.value"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+              <div class="time">
+                <input
+                  type="text"
+                  v-model="searchVm.startTime"
+                  readonly
+                  @click="showDatePicker($event,0)"
+                />
+                <font>~</font>
+                <input
+                  type="text"
+                  v-model="searchVm.endTime"
+                  readonly
+                  @click="showDatePicker($event,1)"
+                />
+              </div>
+              <!-- <Date-picker
+              ref="time"
+              class="time"
+              :value="searchVm.time"
+              format="yyyy/MM/dd"
+              type="daterange"
+              placement="center-end"
+              placeholder="选择日期"
+              ></Date-picker>-->
+              <el-button
+                class="btns"
+                :class="activeClass == index ? 'active':''"
+                v-for="(item,index) in pickerOptions.shortcuts"
+                :key="index"
+                @click="clickBtn(item.value,index)"
+              >{{item.text}}</el-button>
+            </div>
+          </section>
+          <div class="no-list" v-if="!datalist3||datalist3.length==0">
+            <span class="desc">暂无记录</span>
+            <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+          </div>
+          <Scroll
+            v-if="datalist3&&datalist3.length>0"
+            ref="ivuScrollContainer"
+            :on-reach-bottom="mReachBottom"
+            :height="ivuScrollContainerHeight"
+          >
+            <div v-for="(item,i) in datalist3" :key="i" style="background-color:#f3f3f3">
+              <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
+              <div class="rowbg el-row">
+                <div class="grid-content grid-content1">
+                  <div>
+                    <span class="num">{{item.drawAmount / 100}}</span>
+                    <span
+                      class="user"
+                    >提现金额</span>
+                  </div>
+                  <div style="align-items:flex-end">
+                    <span class="btn success" :class="{success:item.state == 1||item.state == 3,priamy:item.state==2||item.state==4,faile:!([1,2,3,4].includes(item.state)) }" style="margin-bottom:9px;">{{item.stateStr}}</span>
+                    <span class="user">{{item.createTimeStr}}</span>
+                  </div>
+                </div>
+                <div class="grid-content grid-content3">
+                  <span
+                    class="num"
+                  >手续费&nbsp;&nbsp;￥{{item.commissionAmount/100}}</span>
+                  <span>
+                    结算&nbsp;&nbsp;
+                    <font
+                      style="color:#3d7eff"
+                    >￥{{item.realAmount/100}}</font>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Scroll>
+        </div>
+      </div>
+      <div class="mui-content" v-if="manageType == '4'">
+        <div class="mui-content2">
+          <section class="el-container is-vertical" v-show="manageTypesearch==4">
+            <div class="searchVm">
+              <el-select
+                v-model="searchVm.actionType"
+                placeholder="请选择"
+                class="type"
+                @change="mSearch"
+              >
+                <el-option
+                  v-for="item in initData.actionTypes"
+                  :key="item.id"
+                  :label="item.value"
+                  :value="item.id"
+                ></el-option>
+              </el-select>
+              <div class="time">
+                <input
+                  type="text"
+                  v-model="searchVm.startTime"
+                  readonly
+                  @click="showDatePicker($event,0)"
+                />
+                <font>~</font>
+                <input
+                  type="text"
+                  v-model="searchVm.endTime"
+                  readonly
+                  @click="showDatePicker($event,1)"
+                />
+              </div>
+              <!-- <Date-picker
+              ref="time"
+              class="time"
+              :value="searchVm.time"
+              format="yyyy/MM/dd"
+              type="daterange"
+              placement="center-end"
+              placeholder="选择日期"
+              ></Date-picker>-->
+              <el-button
+                class="btns"
+                :class="activeClass == index ? 'active':''"
+                v-for="(item,index) in pickerOptions.shortcuts"
+                :key="index"
+                @click="clickBtn(item.value,index)"
+              >{{item.text}}</el-button>
+            </div>
+          </section>
+          <div class="no-list" v-if="!datalist4||datalist4.length==0">
+            <span class="desc">暂无记录</span>
+            <router-link :to="{name:'Home'}" class="btn">去打码</router-link>
+          </div>
+          <Scroll
+            v-if="datalist4&&datalist4.length>0"
+            ref="ivuScrollContainer"
+            :on-reach-bottom="mReachBottom"
+            :height="ivuScrollContainerHeight"
+          >
+            <div v-for="(item,i) in datalist4" :key="i" style="background-color:#f3f3f3">
+              <!-- <div style="font-size: 12px">{{item.createTimeStr}}</div> -->
+              <div class="rowbg el-row">
+                <div class="grid-content grid-content1">
+                  <div>
+                    <span class="num">{{item.transferAmount / 100}}</span>
+                    <span
+                      class="user"
+                    >提现金额</span>
+                  </div>
+                  <div style="align-items:flex-end">
+                    <span class="btn" :class="{success:item.transType == 2,priamy:item.transType == 1}" style="margin-bottom:9px;">{{item.transTypeStr}}</span>
+                    <span class="user">{{item.createTimeStr}}</span>
+                  </div>
+                </div>
+                <div class="grid-content grid-content3">
+                  <span
+                    class="num"
+                  >转前金额&nbsp;&nbsp;￥{{item.beforeTransfer/100}}</span>
+                  <span>
+                    转入金额&nbsp;&nbsp;
+                    <font
+                      style="color:#3d7eff"
+                    >￥{{item.afterTransfer/100}}</font>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Scroll>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import window from "@/mixins/window";
 import slist from "@/mixins/list";
-import { dateFormat } from "../../assets/lib/util";
+// require('../../style/mui/index.less')
 import headerComponent from "@/common/Header.vue";
-import {betweenday} from '@/global'
-require("../../style/mui/index.less");
-var vue;
+import { betweenday } from "@/global";
+import { swap } from "../../global";
+var _this = this;
 let currenttime;
 export default {
-  mixins: [slist],
+  mixins: [window, slist],
   data() {
     return {
       logo: "交易记录",
-      yue: Number,
+      datalist1: [],
+      datalist2: [],
+      datalist3: [],
+      datalist4: [],
+      show: false,
       initData: {
         actionTypes: [],
         total: 0
       },
-      showSearch: false,
-      dataList: [],
-      searchVm: {
-        startDate: "",
-        endDate: "",
-        actionType: '-1',
-      },
+      currenttime: 1,
+      manageType: "1",
+      manageTypesearch: 0,
+      ivuScrollContainerHeight: 620,
+
       activeClass: -1,
       jifenoptions: [],
       pickerOptions: {
         shortcuts: [
           {
             text: "今日",
-            value: 1
+            value: 0
           },
           {
             text: "最近三天",
@@ -165,51 +430,180 @@ export default {
           }
         ]
       },
-      ivuScrollContainerHeight: 620
+      options: [
+        {
+          label: this.$t("agent.AgentrEportforms.all"),
+          value: "-1"
+        },
+        {
+          label: this.$t("agent.AgentrEportforms.memberUser"),
+          value: "1"
+        },
+        {
+          label: this.$t("agent.AgentrEportforms.proxy"),
+          value: "2"
+        }
+      ],
+      showSearch: false,
+      searchVm: {
+        startTime: "",
+        endTime: "",
+        actionType: "-1"
+      }
     };
   },
+  mounted() {},
   components: {
     headerComponent
   },
-  mounted() {
-    this.mPullData();
-    this.getamount();
-  },
   methods: {
     mInit() {
-      [this.searchVm.startDate,this.searchVm.endDate] = betweenday()
-      this.$http.get("/memberCoin/coinindex.json").then(result => {
-        if (result.code == 0) {
-          let gcs = result.data.actionTypes;
-          gcs.unshift({ id: '-1', value: this.$t("member.rechargeRecord.rr9") });
-          gcs.forEach((ele, i) => {
-            ele.checked = i === 0;
-            ele.id = String(ele.id)
-            // ele.label = ele.value;
-            // ele.value = +ele.id;
-          });
-          this.initData.actionTypes = result.data.actionTypes;
+      let url;
+      let params = {};
+      let type = "get";
+      let data;
+      if (this.manageType == 4) {
+        let gcs = [{ id: "1", value: "转出" }, { id: "2", value: "转入" }];
+        gcs.unshift({
+          id: "-1",
+          value: this.$t("member.rechargeRecord.rr9")
+        });
+        this.initData.actionTypes = gcs;
+      } else {
+        switch (this.manageType) {
+          case "1":
+            url = "/managerGame/gameBetInit.json";
+            data = "gamecompays";
+            break;
+          case "2":
+            url = "/memberCoin/rechargeindex.json";
+            data = "depositStates"
+            break;
+
+          case "3":
+            url = "/memberCoin/cashindex.json";
+            data="drawStates";
+            params = {
+              lineCountry: this.$store.getters.getSysInfo.lineCountry
+            };
+            type = "post";
+            break;
         }
+        this.$http[type](url, params).then(result => {
+          if (result.code == 0) {
+            console.info(result.data);
+            let gcs = result.data[data];
+            gcs.unshift({
+              id: "-1",
+              value: this.$t("member.rechargeRecord.rr9")
+            });
+            gcs.forEach((ele, i) => {
+              ele.checked = i === 0;
+              ele.id = String(ele.id);
+            });
+            this.initData.actionTypes = result.data[data];
+          }
+        });
+      }
+
+      // if (localStorage.getItem("walletcoinsList")) {
+      //   this.initData.actionTypes = JSON.parse(
+      //     localStorage.getItem("walletcoinsList")
+      //   );
+      //   this.initData.actionTypes.unshift({
+      //     id: "-1",
+      //     value: this.$t("member.rechargeRecord.rr9")
+      //   });
+      // } else {
+      //   this.$http
+      //     .get("/managerGame/getWalletCoinsForLoad.json")
+      //     .then(result => {
+      //       if (result.code == 0) {
+      //         let gcs = result.data.gamecompays;
+      //         gcs.unshift({
+      //           id: "-1",
+      //           value: this.$t("member.rechargeRecord.rr9")
+      //         });
+      //         gcs.forEach((ele, i) => {
+      //           ele.checked = i === 0;
+      //           ele.id = String(ele.id);
+      //         });
+      //         this.initData.actionTypes = result.data.gamecompays;
+      //       }
+      //     });
+      // }
+    },
+    changeTab(tabIndex) {
+      this.manageType = tabIndex;
+      this.manageTypesearch = false;
+      this.searchVm.actionType = '-1';
+      this.mInit();
+      this.mSearch();
+    },
+    changsearch() {
+      let map = {
+        islist1: {
+          show: () => (this.manageTypesearch = 1),
+          not: () => (this.manageTypesearch = 0)
+        },
+        islist2: {
+          show: () => (this.manageTypesearch = 2),
+          not: () => (this.manageTypesearch = 0)
+        },
+        islist3: {
+          show: () => (this.manageTypesearch = 3),
+          not: () => (this.manageTypesearch = 0)
+        },
+        islist4: {
+          show: () => (this.manageTypesearch = 4),
+          not: () => (this.manageTypesearch = 0)
+        }
+      };
+      let firstKey = `islist${this.manageType}`;
+      let lastKey = !this.manageTypesearch ? "show" : "not";
+      return map[firstKey][lastKey]();
+    },
+    mOnResize() {
+      this.ivuScrollContainerHeight =
+        window.innerHeight - this.$refs.TopHeader.offsetHeight;
+    },
+    mTouzhu(rows) {
+      this.$router.push({
+        path: "./mjiaoyi",
+        query: { username: rows.username, name: "BettingdetailList" }
       });
     },
-    getamount() {
-      this.$http.post("/memberUser/memberamount.json").then(result => {
-        if (result.code == 0) {
-          console.info(result.data);
-          this.yue = (result.data / 100).toFixed(2);
-        }
+    mJiaoyi(rows) {
+      // this.$router.push({
+      //     path: "./transactionsdetaillist",
+      //     query: {username: rows.username}
+      // });
+      this.$router.push({
+        path: "./mjiaoyi",
+        query: { username: rows.username, name: "" }
       });
     },
-    mPullData() {
-      this.mLoading(true);
-      var params = Object.assign({}, this.searchVm);
-      this.$http.post("/memberCoin/coinlist.json", params).then(result => {
-        if (result.code == 0) {
-          this.initData.total = result.total;
-          this.dataList = !!result.rows ? result.rows : [];
-        }
-        this.mLoading(false);
-      });
+    mShow(rows) {
+      this.show = true;
+    },
+    mClose(rows) {},
+    showDatePicker(event, index) {
+      this.currenttime = index;
+      if (!this.datePicker) {
+        this.datePicker = this.$createDatePicker({
+          title: "请选择开始时间",
+          min: new Date(2008, 7, 8),
+          max: new Date(2020, 9, 20),
+          value: new Date(),
+          onSelect: this.selectHandle,
+          format: { year: "YYYY", month: "MM", date: "DD" }
+        });
+      }
+      this.datePicker.show();
+    },
+    selectHandle(date, selectedVal, selectedText) {
+      console.info(date, selectedVal, selectedText);
+      this.$set(this.searchVm.time, this.currenttime, selectedVal.join("-"));
     },
     mReachBottom() {
       return new Promise(resolve => {
@@ -222,53 +616,59 @@ export default {
           ++this.searchVm.page;
           this.searchVm.start = (this.searchVm.page - 1) * this.searchVm.rows;
           this.searchVm.limit = this.searchVm.rows;
-          var params = Object.assign({}, this.searchVm);
-          this.$http.post("/memberCoin/coinlist.json", params).then(result => {
-            if (result.code == 0) {
-              this.initData.total = result.total;
-              if (!!result.rows && result.rows.length > 0) {
-                this.dataList = this.dataList.concat(result.rows);
-              }
-              resolve();
-            }
-          });
+          this.mSearch();
         } else {
           this.mLoading(false);
-          this.$Message.warning(this.$t("member.rechargeRecord.rr10")); //没有更多记录了
+          //没有更多记录了
+          this.mAlert(_this.$t("agent.AgentrEportforms.noMoreRecords"));
           resolve();
         }
       });
-    },
-    mOnResize() {
-      setTimeout(() => {
-        this.ivuScrollContainerHeight =
-          window.innerHeight - this.$refs.TopHeader.offsetHeight;
-      }, 500);
     },
     clickBtn(value, index) {
       this.activeClass = index;
       const end = new Date();
       const start = new Date();
       // start = ();
-      this.searchVm.startDate = this.getMyDate(
+      this.searchVm.startTime = this.getMyDate(
         start.getTime() - 3600 * 1000 * 24 * value
       );
-      this.searchVm.endDate = this.getMyDate(end);
+      this.searchVm.endTime = this.getMyDate(end);
       // let picker = this.$refs.time.$options;
       // start.setTime(start.getTime() - 3600 * 1000 * 24 * 1);
       // picker.$emit('pick', [start, end]);
-      this.$nextTick(vm=>{
-          this.mSearch();
-      })
+      this.$nextTick(vm => {
+        this.mSearch();
+      });
     },
     mSearch() {
-      this.$http
-        .post("/memberCoin/coinlist.json", this.searchVm)
-        .then(result => {
-          if (result.code == 0) {
-            this.dataList = result.rows;
-          }
-        });
+      let tid = ["actionType", "state", "state", "transType"];
+      let url;
+      let params = Object.assign({},this.searchVm);
+      if (params.actionType == "-1") params.actionType = "";
+      params[tid[this.manageType - 1]] = params.actionType;
+
+      switch (this.manageType) {
+        case "1":
+          params.startDate = params.startTime;
+          params.endDate = params.endTime;
+          url = "/memberCoin/coinlist.json";
+          break;
+        case "2":
+          url = "/memberCoin/rechargelist.json";
+          break;
+        case "4":
+          url = "/memberCoin/queryTransfer.json";
+          break;
+        case "3":
+          url = "/memberCoin/cashlist.json";
+          break;
+      }
+      this.$http.post(url, params).then(result => {
+        if (result.code == 0) {
+          this[`datalist${this.manageType}`] = result.rows;
+        }
+      });
     },
     getpaysrc(a) {
       // return require(`../../assets/images/membercentre/${a}@2x.png`);
@@ -283,7 +683,7 @@ export default {
           max: new Date(2020, 9, 20),
           value: new Date(),
           onSelect: this.selectHandle,
-          format: { year: "YY年", month: "MM月", date: "第 D 日" }
+          format: { year: "YYYY", month: "MM", date: "DD" }
         });
       }
       this.datePicker.show();
@@ -291,40 +691,163 @@ export default {
     selectHandle(date, selectedVal, selectedText) {
       // console.info(date, selectedVal, selectedText);
       if (currenttime == 1) {
-        this.searchVm.endDate = selectedVal.join("/");
+        this.searchVm.endTime = selectedVal.join("-");
       } else {
-        this.searchVm.startDate = selectedVal.join("/");
+        this.searchVm.startTime = selectedVal.join("-");
       }
       this.mSearch();
-      // this.$set(this.searchVm.time, currenttime, selectedVal.join("/"));
+      // this.$set(this.searchVm.time, currenttime, selectedVal.join("-"));
     }
   },
   created() {
-    vue = this;
+    _this = this;
     this.mInit();
+    [this.searchVm.startTime, this.searchVm.endTime] = betweenday();
+    let from_name = this.$route.query.name;
+    switch (from_name) {
+      case "AgentrEportforms":
+        this.manageType = "2";
+        break;
+    }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.header-right {
-  .yue {
-    margin-right: 80px;
-  }
-}
 .mui-bar .mui-title {
   margin-top: 10px;
   text-align: center;
 }
 
 .mui-content {
-  margin-top: 0px;
+  margin: 44px 0;
 }
 
-.mui-scalable {
-  // background-color: #efeff4 !important;
+.rowbg {
+  // width: 375px;
+  // height: 110px;
+  // background-color: #ffffff;
+  // border-radius: 2px;
+  // display: flex;
+  margin: 5px 0 10px;
+  padding: 10px 15px;
+  border-bottom: 1px solid #f3f3f3;
+  background-color: #ffffff;
+  box-shadow: 0px 1px 5px 0px rgba(201, 201, 201, 0.8);
+  border-radius: 2px;
+  /deep/ .ivu-btn {
+    border-radius: 2px;
+    width: 60px;
+    height: 19px;
+  }
+  /deep/ .ivu-btn-info {
+    border-color: #377eff;
+    background-color: #3d7eff;
+  }
+  /deep/ .ratio {
+    border-color: #fb9736;
+    background-color: #fb9736;
+  }
+  /deep/ .delete {
+    border-color: #3d7eff;
+    background-color: #3d7eff;
+  }
 }
 
+.Save {
+  display: block;
+  //   padding: 0 10px;
+  text-align: center;
+  border-radius: 2px;
+  font-size: 11px;
+  color: #f5f5f5;
+  height: 17px;
+  line-height: 17px;
+  //   margin-bottom: 10px;
+  min-width: 96px;
+}
+.bg-purple-dark {
+  text-align: left;
+  width: 100%;
+  height: 40px;
+  font-size: 12px;
+  line-height: 40px;
+  margin-top: 17px;
+  border-top: 1px solid #f5f5f5;
+  border-bottom: 1px solid #f5f5f5;
+}
+.grid-content {
+  width: 100%;
+  display: flex;
+  //   margin-top: 3px;
+  justify-content: space-between;
+}
+.grid-content1 {
+  height: 20px;
+  .num {
+    width: 60px;
+    // height: 15px;
+    // font-family: PingFangSC-Regular;
+    font-size: 20px;
+    color: #3d7eff;
+    text-align: center;
+  }
+}
+
+.success {
+  background-color: #3d7eff!important;
+  color: #fff!important;
+}
+.priamy {
+ background-color: #C6C6C6!important;
+ color: #fff!important;
+}
+.faile {
+ background-color: #DD9D43!important;
+ color: #fff!important;
+}
+
+.manage-type {
+  overflow: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
+  display: flex;
+  position: fixed;
+  background-color: white;
+  padding-left: 10px;
+  z-index: 999;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+
+  & > div {
+    float: left;
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 20px;
+    font-size: 16px;
+    height: 40px;
+  }
+  .active {
+    border-bottom: 2px solid #3d7eff;
+    color: #3d7eff;
+  }
+}
+.buttonsgroup {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  /deep/ & > button {
+    padding: inherit;
+  }
+}
+.mui-content2 {
+  padding-top: 50px;
+}
 .rowbg {
   margin: 5px 10px 10px 10px;
   padding: 10px;
@@ -483,7 +1006,8 @@ export default {
   width: 100%;
   height: 100px;
 }
-.searchVm { padding-top:10px;
+.searchVm {
+  padding-top: 10px;
   width: 351px;
   margin: 0 auto;
   display: flex;
@@ -556,4 +1080,44 @@ export default {
     width: 260px;
   }
 }
+
+/deep/ .van-dialog {
+  width: 300px;
+  height: 300px;
+
+  background-image: url("../../assets/images/agent/tangchuang@2x.png");
+  background-size: 100% 100%;
+  .userbasic_body {
+    padding-top: 50px;
+    padding-left: 23px;
+  }
+  .van-dialog__header {
+    padding-top: 32px;
+    font-size: 24px;
+    color: #fff;
+  }
+  ul li {
+    text-align: left;
+    color: #606266;
+    height: 30px;
+    line-height: 30px;
+    & > span {
+      font-size: 15px;
+    }
+  }
+}
+/deep/.el-container {
+  background-color: #fff;
+}
+/deep/ .time {
+  width: 245px;
+  height: 34px;
+  line-height: 34px;
+  background-color: #ededed;
+  input {
+    width: 118px;
+    background-color: #ededed;
+  }
+}
 </style>
+

@@ -141,7 +141,9 @@ walletlist:[],
         })
         .catch(err => {
           //获取余额失败
-          this.mAlert(this.$t("member.indoorTransfer.getMoneyError"));
+          // this.mAlert(this.$t("member.indoorTransfer.getMoneyError"));
+          this.walletlist[0].coin = '获取异常';
+          this.walletlist[0].loading = false;
         });
     },
     selectoptionsa(a) {
@@ -173,7 +175,8 @@ walletlist:[],
         })
         .catch(err => {
           //获取余额失败
-          this.mAlert(this.$t("member.indoorTransfer.getMoneyError"));
+         this.walletlist[index].coin = '获取异常'
+         item.loading = false;
         });
     },
     recyc() {

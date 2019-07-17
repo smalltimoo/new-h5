@@ -142,7 +142,7 @@
             <div class="login-check">
               <Checkbox v-model="savenp" style="float:left;">&nbsp;{{$t('login.rememberAccount')}}</Checkbox>
               <!-- 记住密码-->
-              <span style="font-size: 12px" @click="mOpenCService">{{$t('login.losePwd')}}?</span>
+              <span style="font-size: 12px" @click="mOpenCService">{{$t('login.losePwd')}}</span>
             </div>
             <input type="button" class="btn-login" :value="$t('login.login')" @click="mLogin" />
             <!-- <div class="reg">

@@ -117,6 +117,7 @@
                 <span>
                   {{$t('member.onlineDeposit.od9')}}
                   <span v-if="it.typeid==5">APP</span>
+                  <span v-if="it.typeid==16" style="margin-left: -3px;display: inline-block;margin-top: 1px;">转银行卡</span>
                 </span>&nbsp;&nbsp;&nbsp;
                 <span>{{$t('member.onlineDeposit.od13')}}:{{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}}</span>
                 <span class="radio-id">{{ it.apiid}}</span>
@@ -139,6 +140,7 @@
                 <span>
                   {{$t('member.onlineDeposit.od10')}}
                   <span v-if="it.typeid==4">app</span>
+                  <span v-if="it.typeid==15" style="margin-left: -3px;display: inline-block;margin-top: 1px;">转银行卡</span>
                 </span>&nbsp;&nbsp;&nbsp;
                 <span>{{$t('member.onlineDeposit.od13')}}:&nbsp; {{ it.minMoney}} - {{it.maxMoney}} {{$t('member.onlineDeposit.od14')}}</span>
                 <span class="radio-id">{{ it.apiid}}</span>

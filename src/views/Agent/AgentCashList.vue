@@ -269,7 +269,7 @@ export default {
           max: new Date(2020, 9, 20),
           value: new Date(),
           onSelect: this.selectHandle,
-          format: { year: "YY年", month: "MM月", date: "第 D 日" }
+          format: { year: "YYYY", month: "MM", date: "DD" }
         });
       }
       this.datePicker.show();
@@ -277,12 +277,12 @@ export default {
     selectHandle(date, selectedVal, selectedText) {
       // console.info(date, selectedVal, selectedText);
       if (currenttime == 1) {
-        this.searchVM.endTime = selectedVal.join("/");
+        this.searchVM.endTime = selectedVal.join("-");
       } else {
-        this.searchVM.startTime = selectedVal.join("/");
+        this.searchVM.startTime = selectedVal.join("-");
       }
       this.mSearch();
-      // this.$set(this.searchVM.time, currenttime, selectedVal.join("/"));
+      // this.$set(this.searchVM.time, currenttime, selectedVal.join("-"));
     },
   },
   created() {

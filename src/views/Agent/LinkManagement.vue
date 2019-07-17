@@ -397,14 +397,14 @@ export default {
           max: new Date(2020, 9, 20),
           value: new Date(),
           onSelect: this.selectHandle,
-          format: { year: "YY年", month: "MM月", date: "第 D 日" }
+          format: { year: "YYYY", month: "MM", date: "DD" }
         });
       }
       this.datePicker.show();
     },
     selectHandle(date, selectedVal, selectedText) {
       console.info(date, selectedVal, selectedText);
-      this.$set(this.searchVm.time, this.currenttime, selectedVal.join("/"));
+      this.$set(this.searchVm.time, this.currenttime, selectedVal.join("-"));
     },
     mReachBottom() {
       return new Promise(resolve => {

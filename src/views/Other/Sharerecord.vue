@@ -18,20 +18,20 @@
       <div class="usercount usercount1">
         <div class="count_item">
           <span style="color:#303133">分享总收益</span>
-          <span v-if="vm.giveAmount" style="color:#3d7eff;font-size:60px">{{(vm.giveAmount/100).toFixed(2)}}</span>
+          <span v-if="vm.giveAmount!=undefined" style="color:#3d7eff;font-size:60px">{{(vm.giveAmount/100).toFixed(2)}}</span>
           <i style="color:#3d7eff;font-size:60px" class="el-icon-loading" v-else></i>
         </div>
       </div>
       <div class="usercount">
         <div class="count_item">
           <span style>今日分享人数</span>
-          <span v-if="vm.dayInviteCount">{{vm.dayInviteCount}}</span>
+          <span v-if="vm.dayInviteCount!=undefined">{{vm.dayInviteCount}}</span>
           <i class="el-icon-loading" v-else></i>
         </div>
         <el-divider direction="vertical"></el-divider>
         <div class="count_item">
           <span>总分享人数</span>
-          <span v-if="vm.inviteCount">{{vm.inviteCount}}</span>
+          <span v-if="vm.inviteCount!=undefined">{{vm.inviteCount}}</span>
           <i class="el-icon-loading" v-else></i>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default {
         shortcuts: [
           {
             text: "今日",
-            value: 1
+            value: 0
           },
           {
             text: "最近三天",
@@ -194,7 +194,7 @@ export default {
           max: new Date(2020, 9, 20),
           value: new Date(),
           onSelect: this.selectHandle,
-          format: { year: "YY年", month: "MM月", date: "第 D 日" }
+          format: { year: "YYYY", month: "MM", date: "DD" }
         });
       }
       this.datePicker.show();
@@ -202,12 +202,12 @@ export default {
     selectHandle(date, selectedVal, selectedText) {
       // console.info(date, selectedVal, selectedText);
       if (currenttime == 1) {
-        this.searchVm.endDate = selectedVal.join("/");
+        this.searchVm.endDate = selectedVal.join("-");
       } else {
-        this.searchVm.startDate = selectedVal.join("/");
+        this.searchVm.startDate = selectedVal.join("-");
       }
       this.mSearch();
-      // this.$set(this.searchVm.time, currenttime, selectedVal.join("/"));
+      // this.$set(this.searchVm.time, currenttime, selectedVal.join("-"));
     },
     clickBtn(value, index) {
       this.activeClass = index;
