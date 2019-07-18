@@ -7,6 +7,11 @@ Vue.use(Router)
 export default new Router({
   linkActiveClass: 'current',
   routes: [{
+      path: "*",
+      name: "404",
+      component: () => import("../common/Newpage.vue")
+    },
+    {
       path: '/',
       redirect: '/home'
     },
@@ -240,16 +245,11 @@ export default new Router({
           path: "mjiaoyi",
           name: "mjiaoyi",
           component: () => import("../views/Agent/MjiaoyiComponent.vue")
-        },{
+        }, {
           //如何升级
           path: "haoup",
           name: "haoup",
           component: () => import("../views/Member/Haoup.vue")
-        },
-        {
-          path: "*",
-          name: "404",
-          component: () => import("../common/Newpage.vue")
         },
 
 

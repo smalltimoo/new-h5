@@ -452,7 +452,9 @@ export default {
       }
     };
   },
-  mounted() {},
+  mounted() {
+    this.changeTab('1');
+  },
   components: {
     headerComponent
   },

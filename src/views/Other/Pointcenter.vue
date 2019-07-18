@@ -158,7 +158,6 @@ export default {
   },
   created() {
     this.mInit();
-    this.getPoint();
     this.queryIntegral();
     this.getSignDays();
   }

@@ -142,7 +142,7 @@
             <div class="login-check">
               <Checkbox v-model="savenp" style="float:left;">&nbsp;{{$t('login.rememberAccount')}}</Checkbox>
               <!-- 记住密码-->
-              <span style="font-size: 12px" @click="mOpenCService">{{$t('login.losePwd')}}</span>
+              <span style="font-size: 12px" @click.stop="mOpenCService">{{$t('login.losePwd')}}</span>
             </div>
             <input type="button" class="btn-login" :value="$t('login.login')" @click="mLogin" />
             <!-- <div class="reg">
@@ -358,7 +358,7 @@ export default {
           }
           this.mLoading(false);
         })
-        .catch(result => {
+        .catch(result => {console.info(131)
           this.mLoading(false);
           this.$Message.error(result.message);
           this.isLogining = false;
@@ -426,7 +426,6 @@ export default {
             this.getCodes = true;
             clearInterval(timer);
             $(".bg-code").text(this.$t("login.alert8"));
-            console.log(1);
           }
         }, 1000);
 

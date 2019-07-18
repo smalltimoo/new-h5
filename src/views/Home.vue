@@ -190,6 +190,13 @@ export default {
       }
       // return banner;
     },
+    getBannerLink() {
+      var mobileBannerLink = this.$store.getters.getSysPicObj.mobileBannerLink;
+      var banner = [];
+      if (mobileBannerLink != undefined && mobileBannerLink != "") {
+        return bs = mobileBannerLink.slice().split(",");
+      }
+    },
   },
   methods: {
     changeTheme(theme) {
@@ -289,7 +296,7 @@ export default {
                                           <span style="display: inline-block;text-align:left;width: 160px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">${
                                             item.activityTitle
                                           }</span>
-                                          <span>${item.endTimeStr}</span>
+                                          <span style="width:120px;display:inline-block">${item.endTimeStr}</span>
                                         </div>
                                         <img src="${item.mobileImg}">
                                       `;
@@ -304,15 +311,15 @@ export default {
               isOverspread: 1,
               isAutoplay: true,
               animateTime: 800,
-              animateType: "depth",
+              animateType: "flow",
               fixPage: false
             }
           );
           self.L.delegate("click", "img", function(ev) {
             ev = ev || window.event;
             let imgUrl = ev.srcElement.currentSrc;
-            let item = _this.activities.find(ele => ele.mobileImg == imgUrl);
-            _this.$router.push({ name: "Discount", query: { id: item.id } })``;
+            let index = _this.getBanner.findIndex(ele => ele.content == imgUrl);
+            window.open(this.getBannerLink[index])
           });
         }
       });
@@ -355,14 +362,20 @@ export default {
           document.getElementById("iSlider-wrapper"),
           data,
           {
+            // isLooping: 1,
+            // // isOverspread: 1,
+            // isAutoplay: true,
+            // animateTime: 800,
+            // animateType: "depth",
+            // isDebug: true,
+            // depth: ".9",
+            // fixPage: false
+
             isLooping: 1,
-            // isOverspread: 1,
-            isAutoplay: true,
+            isOverspread: 1,
+            isAutoplay: 0,
             animateTime: 800,
-            animateType: "depth",
-            isDebug: true,
-            depth: ".9",
-            fixPage: false
+            animateType: 'flow'
           },
           300
         );
@@ -387,8 +400,10 @@ export default {
       });
     },
   },
-  mounted() {
-    this.neiStyle();
+  mounted() {console.info('created')
+    this.$nextTick(vm=>{
+      this.neiStyle();
+    })
   },
   created() {
     _this = this;
@@ -444,7 +459,7 @@ export default {
   width: 348px;
   height: 67px;
   background-color: #ffffff;
-  margin: 0px auto 10px;
+  margin: 10px auto 10px;
   box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
 
@@ -557,7 +572,7 @@ export default {
       margin: 0;
       padding: 0;
       height: 164px;
-      width: 294px;
+      width: 326px;
       overflow: hidden;
       display: -webkit-box;
       border-radius: 5px;
@@ -704,4 +719,51 @@ export default {
     bottom: 15px;
  }
 </style>
+
+<style >
+ #iSlider-wrapper {
+            height: 100%;/* 设置高度 */
+            width: 100%;
+            overflow: hidden;
+            position: absolute;
+        }
+        #iSlider-wrapper ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #iSlider-wrapper li {
+            position: absolute;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            -webkit-box-align: center;
+            list-style: none;
+        }
+        #iSlider-wrapper li img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+        #iSlider-wrapper .goods_item img{
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        #iSlider-wrapper p{
+            background: #fff;
+            color: #333;
+            text-align: center;
+            line-height: 2.0;
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+        }
+</style>
+
 

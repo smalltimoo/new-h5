@@ -5,7 +5,7 @@
       <div class="chanpin"></div>
       <div class="panel">
         <span class="link">我的邀请码&nbsp;&nbsp;{{tid}}</span>
-        <span class="link">下载地址&nbsp;&nbsp;{{sysPicObj.appUrl}}</span>
+        <span class="link">下载地址&nbsp;&nbsp;{{downloadurl}}</span>
         <span class="btn" @click="$router.push({name:'sharefri'})">一键复制</span>
         <span style="margin-top:-10px;" @click="$router.push({name:'sharerecord'})">
           点击查看邀请记录
@@ -34,7 +34,8 @@ export default {
       vm: {},
       logo: "分享好友",
       balanceIntegral: 0,
-      tid:Number
+      tid:Number,
+      downloadurl:''
     };
   },
   components: {
@@ -48,24 +49,30 @@ export default {
   },
   methods: {
     mInit() {
-      // 用户抽奖信息
       this.$http.get("/memberUser/getInviteSum.json").then(result => {
         if (result.code == "0") {
           this.vm = result.data;
         }
       });
-      // 用户积分信息
       this.$http.get("/memberUser/memberinfo.json").then(result => {
         if (result.code == "0") {
           this.balanceIntegral = parseInt(result.data.integral / 100);
           this.tid = result.data.id
         }
       });
+    },
+    getDownLoadUrl(){
+      this.$http.get("/sysImage/queryAppVersion.json").then(result => {
+              if (result.code == "0") {
+                this.downloadurl = result.data;
+              }
+            });
     }
   },
   created() {
     _this = this;
     this.mInit();
+    this.getDownLoadUrl();
   },
   beforeDestroy: function() {
     $(".HomeWrapper").removeClass("bg-color");

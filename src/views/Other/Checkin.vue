@@ -351,7 +351,7 @@ export default {
       margin: 0.64rem auto;
     }
     .el-divider__text.is-center {
-      left: 14%;
+      left: 12%;
       transform: translateX(-5%);
       font-size: 12px;
       color: #4892ff;

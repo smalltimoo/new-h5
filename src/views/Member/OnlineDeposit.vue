@@ -838,6 +838,10 @@ export default {
         this.$Message.warning(this.$t("member.financeDeposit.fd31")); //请输入打款人姓名
         return;
       }
+      if (/\d/gi.test(this.vmunderline.underlineAccountName)) {
+        this.$Message.warning(this.$t("真实姓名不能包含数字")); //请输入打款人姓名
+        return;
+      }
       this.mLoading(true);
       this.nextLoading = true;
       let params = Object.assign({}, this.vmunderline); //先检查是否给手续费

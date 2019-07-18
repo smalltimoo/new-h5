@@ -115,7 +115,7 @@ export default {
             if (this.$store.getters.getNeedLogin) {
                 this.$store.dispatch(types.LOGINOUT_USER);
                 this.$store.dispatch(types.COMMON_GONGGAO, this);
-                if (this.$route.name !== "Login" && this.$route.name !== "Home" && this.$route.name !== "Score" && this.$route.name !== "Discount" && this.tab !== "Score") {
+                if ( !["Login","Home","Score","Discount","CustomerService","Games"].includes(this.$route.name)&& this.tab !== "Score") {
                     this.mConfirm(this.$t('mixin.pleaseLogin'), () => {
                         this.$router.push({
                             name: 'Login'
@@ -143,6 +143,7 @@ export default {
             return dateFormat(value, fmt);
         },
         mOpenCService() {
+            console.info(1)
             let sysInfo = this.$store.getters.getSysInfo;
             if (sysInfo.customUrl) {
                 this.$router.push({
@@ -159,6 +160,7 @@ export default {
         },
         mmLogin(userName, password, vcode) {
             return new Promise((ok, error) => {
+                console.info(ok,error)
                 this.$http
                     .post("/login.json", {
                         username: userName,

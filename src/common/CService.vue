@@ -51,17 +51,17 @@ export default {
         },
         {
           id: 2,
-          text: 'QQ:'+this.cQQ1,
+          text: '客服QQ:'+this.cQQ1,
           value:this.cQQ1
         },
         {
           id: 3,
-          text: 'QQ:'+this.cQQ2,
+          text: '客服QQ:'+this.cQQ2,
           value:this.cQQ2
         },
         {
           id: 4,
-          text: 'QQ:'+this.agentQQ,
+          text: '代理QQ:'+this.agentQQ,
           value:this.agentQQ
         },
         {

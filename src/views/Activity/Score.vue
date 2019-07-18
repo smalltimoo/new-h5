@@ -254,7 +254,7 @@
         <div class="flex content">
           <span>{{$t('score.goumai')}}:</span>
           <span class="calculate">
-            <div @click="number>0 ? number-- : null">-</div>
+            <div @click="number>1 ? number-- : null">-</div>
             <div>{{ number}}</div>
             <div @click="number<1000 ? number++ : null">+</div>
           </span>
@@ -533,12 +533,6 @@ export default {
           this.mLoading(false);
           if (result.code == 0) {
             //兑换成功！
-            // this.$Message.success(this.$t("store.order.order12"));
-            console.info(
-              this.number * this.rows.currentPrice,
-              (this.vm.integral / 100).toFixed(2) -
-                this.number * this.rows.currentPrice
-            );
             this.duihuansuccessvm = {
               ded: this.number * this.rows.currentPrice,
               rem:
@@ -549,7 +543,7 @@ export default {
             // this.mInit();
             this.mPullData();
             this.mPullScoreDetail();
-            this.buy = false;
+            // this.buy = false;
           } else {
             // this.$Message.error(result.message);
             this.duihuanfaile = true;
@@ -581,6 +575,13 @@ export default {
           isDebug: true,
           plugins: ["dot"]
         });
+
+        // self.ScoreS.delegate("click", "img", function(ev) {
+        //     ev = ev || window.event;
+        //     let imgUrl = ev.srcElement.currentSrc;
+        //     let item = _this.getBanner.findIndex(ele => ele.content == imgUrl);
+        //     _this.$router.push({ name: "Discount", query: { id: item.id } });
+        //   });
       });
     }
   },

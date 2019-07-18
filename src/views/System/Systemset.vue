@@ -10,12 +10,12 @@
         :inactive-text="item.text"
       ></el-switch>
       <div class="line set_sys" style="margin-top:50px;">
-        <span>{{this.$t('member.systemSet.s5')}}</span>
+        <span @click="clearData">{{this.$t('member.systemSet.s5')}}</span>
       </div>
       <!-- <div class="line set_sys">
         <span>{{this.$t('member.systemSet.s6')}}</span>
         <span>{{version}}</span>
-      </div> -->
+      </div>-->
       <div class="line set_sys">
         <span>{{this.$t('member.systemSet.s7')}}</span>
         <span class="rightsanjiao"></span>
@@ -28,6 +28,7 @@
 import headerComponent from "@/common/Header.vue";
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
+import { setTimeout } from 'timers';
 export default {
   name: "systemset",
   components: {
@@ -44,14 +45,38 @@ export default {
       logo: this.$t("member.systemSet.s0"),
       version: "V1.6.0",
       switchList: [
-        { text: this.$t("member.systemSet.s1"), value: true },
-        { text: this.$t("member.systemSet.s2"), value: true },
-        { text: this.$t("member.systemSet.s3"), value: true },
+        // { text: this.$t("member.systemSet.s1"), value: true },
+        // { text: this.$t("member.systemSet.s2"), value: true },
+        // { text: this.$t("member.systemSet.s3"), value: true },
         // { text: this.$t("member.systemSet.s4"), value: false }
       ]
     };
   },
   methods: {
+    clearData() {
+      const toast = this.$toast.loading({
+        duration: 0, // 持续展示 toast
+        forbidClick: true, // 禁用背景点击
+        loadingType: "spinner",
+        mark:true,
+        className:'toast-clear',
+        message: "开始清理缓存"
+      });
+      let second = 0;
+      const timer = setInterval(() => {
+        second+=parseInt(Math.random()*(200-10+1)+10,10);
+        if (second<1000) {
+          toast.message = `已清理 ${second} KB`;
+        } else {
+          clearInterval(timer);
+          toast.message = `清理完成!已清理 ${second} KB`;
+          setTimeout(()=>{
+            toast.clear();
+          },2000)
+
+        }
+      }, 1000);
+    },
     mLoginOut() {
       //确定要退出账号吗
       this.mConfirm(this.$t("member.userMember.um25"), () => {
@@ -81,10 +106,16 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+ /deep/ .toast-clear {
+    width:180px!important;
+  }
 .systemset {
-//   .container {
-//     // dis
-//   }
+  //   .container {
+  //     // dis
+  //   }
+  .page-body {
+    padding-top: 0;
+  }
   /deep/ .line {
     width: 351px;
     margin: 0 auto;

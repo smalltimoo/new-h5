@@ -154,7 +154,8 @@ export default {
           this.winnerList = result.data;
           this.luckyDrawTimes = result.message <= 0 ? 0 : result.message;
           this.$nextTick(() => {
-            awards_scroll();
+            awards_scroll('awards_info');
+            awards_scroll('cls');
           });
         }
       });
@@ -235,7 +236,7 @@ export default {
 
     changeBtn(type) {
       this.btn_active = type == "winner" ? true : false;
-      type == "winner" ? awards_scroll() : "";
+      type == "winner" ? awards_scroll('awards_info') : awards_scroll('owner');
     }
   },
   created() {
@@ -249,11 +250,15 @@ export default {
   }
 };
 
-function awards_scroll() {
-  $(".awards_info").myScroll({
+function awards_scroll(cls) {
+  $("."+cls).myScroll({
     speed: 40, //数值越大，速度越慢
     rowHeight: 20 //li的高度
   });
+  // $(".owner").myScroll({
+  //   speed: 40, //数值越大，速度越慢
+  //   rowHeight: 20 //li的高度
+  // });
 }
 </script>
 <style>
