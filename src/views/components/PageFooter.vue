@@ -108,18 +108,15 @@ export default {
   },
   mounted() {
     this.animateTab(this.tab);
-    // this.mMemberAmount()
+    this.$bus.$on('CHANGE_TAB_BUS', res => {
+       this.animateTab(res);
+    })
   },
   methods: {
     changeTab(tab) {
       this.$store.commit("CHANGE_TAB", tab);
       this.$router.push({ name: tab });
-      // this.anim = this[tab+'_options']
       this.animateTab(tab);
-      // console.info(this.anim)
-      // this.anim.autoplay = true;
-      // this.anim.play()
-      // this.state.state_home = false
     },
     animateTab(tab) {
       this.prevtab && this[`${this.prevtab}_anim`].goToAndStop(0);
@@ -161,6 +158,9 @@ export default {
     }
 
     this.mbaiduCount();
+  },
+  beforeDestroy(){
+    this.$bus.$off('CHANGE_TAB_BUS');
   }
 };
 </script>

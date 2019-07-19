@@ -33,8 +33,8 @@
                             <span class="join" v-if="item.activityType==10 && item.isJoin=='0'" @click="signed(item)">{{$t('discount.dis6')}}</span>
                             <span class="joined" v-if="item.activityType==10 && item.isJoin=='1'">{{$t('discount.dis7')}}</span>
                         </div>
-                        
-                        
+
+
                     </div>
                     <div class="go"  @click="showDrawer(item)" style="height:14px;">
                         <!-- <span>{{$t('discount.look')}}</span> -->
@@ -94,7 +94,7 @@ import headerComponent from '@/common/Header.vue'
                 this.activityInfo = item;
                 this.drawer = true;
             },
-            signed(item) { 
+            signed(item) {
                 if(this.loading){return;}
                 if (!this.toNeedLogin()) {
                     return;
@@ -145,13 +145,14 @@ import headerComponent from '@/common/Header.vue'
                                 this.showDrawer(this.activities.filter(item => this.id == item.id)[0])
                             }
                         })
-                        
+
                     })
             }
         },
         created() {
             this.mInit();
             this.$store.commit('CHANGE_TAB', "Discount");
+            this.$bus.$emit('CHANGE_TAB_BUS','Discount');
         }
     };
 </script>

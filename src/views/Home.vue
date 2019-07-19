@@ -194,7 +194,7 @@ export default {
       var mobileBannerLink = this.$store.getters.getSysPicObj.mobileBannerLink;
       var banner = [];
       if (mobileBannerLink != undefined && mobileBannerLink != "") {
-        return bs = mobileBannerLink.slice().split(",");
+        return mobileBannerLink.slice().split(",");
       }
     },
   },
@@ -292,14 +292,14 @@ export default {
           this.activities = Object.assign([], result.data.activityVoList);
           let data2 = this.activities.map((item, idx) => {
             item.content = `
-                                        <div class="active_title">
-                                          <span style="display: inline-block;text-align:left;width: 160px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">${
-                                            item.activityTitle
-                                          }</span>
-                                          <span style="width:120px;display:inline-block">${item.endTimeStr}</span>
-                                        </div>
-                                        <img src="${item.mobileImg}">
-                                      `;
+                            <div class="active_title">
+                              <span style="display: inline-block;text-align:left;width: 160px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">${
+                                item.activityTitle
+                              }</span>
+                              <span style="width:120px;display:inline-block">${item.endTimeStr}</span>
+                            </div>
+                            <img src="${item.mobileImg}">
+                          `;
             return item;
           });
           //优惠活动
@@ -318,8 +318,9 @@ export default {
           self.L.delegate("click", "img", function(ev) {
             ev = ev || window.event;
             let imgUrl = ev.srcElement.currentSrc;
-            let index = _this.getBanner.findIndex(ele => ele.content == imgUrl);
-            window.open(this.getBannerLink[index])
+           let item = _this.activities.find(ele => ele.mobileImg == imgUrl);
+            if(item) _this.$router.push({ name: "Discount", query: { id: item.id } })
+            else return;
           });
         }
       });
@@ -375,13 +376,24 @@ export default {
             isOverspread: 1,
             isAutoplay: 0,
             animateTime: 800,
-            animateType: 'flow'
+            animateType: 'flow',
+            fixPage: false
           },
           300
         );
         self.S.delegate("click", "img", function(ev) {
           ev = ev || window.event;
           let imgUrl = ev.srcElement.currentSrc;
+          let index = _this.getBanner.findIndex(ele => ele.content == imgUrl);
+            // window.open(_this.getBannerLink[index])
+            if(_this.isDraw&&index == _this.getBanner.length-1){
+              // 幸运大转盘
+              if (!_this.toNeedLogin()) {
+                return;
+              }
+              _this.$router.push({ name: "Draw" });
+            }else if(_this.getBannerLink[index]) location.href = _this.getBannerLink[index]
+            else return
         });
       });
     },
@@ -408,6 +420,7 @@ export default {
   created() {
     _this = this;
     this.$store.commit("CHANGE_TAB", "Home");
+    this.$bus.$emit('CHANGE_TAB_BUS','Home');
     this.showApp = localStorage.getItem("showApp") ? false : true;
     this.drawGame();
     this.allGame();

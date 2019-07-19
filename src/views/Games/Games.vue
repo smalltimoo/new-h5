@@ -246,7 +246,6 @@ export default {
   },
   created() {
     _this = this;
-    this.$store.commit("CHANGE_TAB", "Home");
     this.showApp = localStorage.getItem("showApp") ? false : true;
     this.drawGame();
     this.allGame();

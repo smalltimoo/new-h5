@@ -48,7 +48,7 @@
               <div class="fillinfo">
                 {{$t('agentMember.am9')}}
                 <!-- <span class="icon icon_left"></span> -->
-                <span class="text" v-text="parseFloat(sumAgent.totalTeamCashTotal/100).toFixed(2)"></span>
+                <span class="text" v-text="parseFloat(sumAgent.totalTeamRakebackAmount/100).toFixed(2)"></span>
                 <!-- <span class="icon icon_right"></span> -->
                 {{$t('yuan')}}
               </div>
@@ -57,36 +57,36 @@
           <router-link :to="{name:'AgentDrawing'}" class="qiandao">{{$t('agentMember.am4')}}</router-link>
           <!-- <div class="qiandao">{{$t('agentMember.am4')}}</div> -->
         </div>
-        <div class="usercount deposit">
+        <div class="usercount deposit" @click="$router.push({name:'mjiaoyi',query:{name:'MembermanAgement'}})">
           <div class="count_item">
-            <router-link :to="{name:'Score'}">
+            <a>
               <span>
                 {{sumAgent.totalNum}}
-                <span style="font-size: 12px">{{$t('fen')}}</span>
+                <!-- <span style="font-size: 12px">{{$t('fen')}}</span> -->
               </span>
               <span>{{$t('agentMember.am8')}}</span>
-            </router-link>
+            </a>
           </div>
           <el-divider direction="vertical"></el-divider>
           <div class="count_item">
-            <router-link :to="{name:'AssetsOverView'}">
+            <a>
               <span v-text="sumAgent.agentNum ? sumAgent.agentNum : 0"></span>
               <span>{{$t('agentMember.am7')}}</span>
-            </router-link>
+            </a>
           </div>
           <el-divider direction="vertical"></el-divider>
           <div class="count_item">
-            <router-link :to="{name:'AssetsOverView'}">
-              <span v-text="sumAgent.totalTeamRakebackAmount/100"></span>
+            <a>
+              <span v-text="(sumAgent.totalTeamRakebackAmount/100).toFixed(2)"></span>
               <span>{{$t('agentMember.am9')}}</span>
-            </router-link>
+            </a>
           </div>
           <el-divider direction="vertical"></el-divider>
           <div class="count_item">
-            <router-link :to="{name:'AssetsOverView'}">
+            <a>
               <span v-text="parseFloat(sumAgent.totalTeamCashTotal/100).toFixed(2)"></span>
               <span>{{$t('agentMember.am10')}}</span>
-            </router-link>
+            </a>
           </div>
         </div>
       </div>

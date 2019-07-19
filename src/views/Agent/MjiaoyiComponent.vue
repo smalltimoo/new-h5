@@ -95,6 +95,27 @@ export default {
     };
   },
   mounted() {
+    let from_name = this.$route.query.name;
+    console.info(from_name)
+    switch (from_name) {
+      //代理报表
+      case "MembermanAgement":
+        this.manageType = "2";
+        break;
+      case "bettingDetailList":
+        this.manageType = "5";
+        break;
+      case "agentCashList":
+        this.manageType = "4";
+        break;
+      case "agentCoinList":
+        this.manageType = "3";
+        break;
+      default:
+        this.manageType = "1";
+        break;
+    }
+
     this.mPullData();
   },
   components: {
@@ -232,26 +253,7 @@ export default {
   created() {
     _this = this;
     // this.mReachBottom();
-    let from_name = this.$route.query.name;
-    switch (from_name) {
-      //代理报表
-      case "membermanAgement":
-        this.manageType = "2";
-        break;
-      case "bettingDetailList":
-        this.manageType = "5";
-        break;
-      case "agentCashList":
-        this.manageType = "4";
-        break;
-      case "agentCoinList":
-        this.manageType = "3";
-        break;
-      default:
-        this.manageType = "1";
-        break;
-    }
-  }
+   }
 };
 </script>
 

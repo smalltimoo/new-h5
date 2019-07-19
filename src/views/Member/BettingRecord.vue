@@ -381,7 +381,9 @@ export default {
 .ivu-divider-inner-text {
   color: #4c4c4c;
 }
-
+/deep/ .ivu-scroll-content {
+  padding-bottom: 60px;
+}
 .mui-off-canvas-left,
 .mui-off-canvas-right {
   background-color: #fff;
@@ -635,4 +637,5 @@ export default {
     margin-right: 80px;
   }
 }
+
 </style>

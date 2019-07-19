@@ -16,7 +16,7 @@
         <span>{{this.$t('member.systemSet.s6')}}</span>
         <span>{{version}}</span>
       </div>-->
-      <div class="line set_sys">
+      <div class="line set_sys" @click="$router.push({name:'Aboutme'})">
         <span>{{this.$t('member.systemSet.s7')}}</span>
         <span class="rightsanjiao"></span>
       </div>

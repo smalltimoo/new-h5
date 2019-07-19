@@ -887,6 +887,7 @@ export default {
   created() {
     this.lang = document.documentElement.lang;
     this.$store.commit("CHANGE_TAB", "OnlineDeposit");
+    this.$bus.$emit('CHANGE_TAB_BUS','OnlineDeposit');
     if (this.cNeedLogin) {
       this.$router.push({ name: "Login" });
     } else {

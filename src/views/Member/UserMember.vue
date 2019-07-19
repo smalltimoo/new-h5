@@ -317,7 +317,8 @@ export default {
         this.mLoading(false);
       })
       .catch(err => {
-        this.$Message.warning(this.$t("member.userMember.um24")); //获取余额失败
+        // this.$Message.warning(this.$t("member.userMember.um24")); //获取余额失败
+         console.info(this.$t("member.userMember.um24")); //获取余额失败
       });
     },
     drawGame() {
@@ -383,6 +384,7 @@ export default {
   },
   created() {
     this.$store.commit("CHANGE_TAB", "UserMember");
+    this.$bus.$emit('CHANGE_TAB_BUS','UserMember');
   },
   beforeRouteLeave(to,from,next){
     if(['membercentre','helpcenter'].includes(to.name)){

@@ -378,6 +378,10 @@ export default {
     headerComponent
   },
   mounted() {
+    let params = this.$route.params;
+    if(params.type == 'isDraw'){
+      this.isDraw = true;
+    }
     if (!this.toNeedLogin()) {
       return;
     }
@@ -438,7 +442,8 @@ export default {
           this.mLoading(false);
         })
         .catch(err => {
-          this.$Message.warning(this.$t("member.userMember.um24")); //获取余额失败
+          // this.$Message.warning(this.$t("member.userMember.um24")); //获取余额失败
+           console.info(this.$t("member.userMember.um24")); //获取余额失败
         });
     },
     drawGame() {
@@ -587,6 +592,8 @@ export default {
   },
   created() {
     this.$store.commit("CHANGE_TAB", "Score");
+    this.$bus.$emit('CHANGE_TAB_BUS','Score');
+    console.info(this)
     this.mPullData();
     this.neiStyle();
     if (document.documentElement.lang === "zh") {

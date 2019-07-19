@@ -252,7 +252,11 @@ export default new Router({
           component: () => import("../views/Member/Haoup.vue")
         },
 
-
+        {
+          path: "aboutme",
+          name: "Aboutme",
+          component: () => import("../views/Member/Aboutme.vue")
+        },
 
         {
           path: "checkin",

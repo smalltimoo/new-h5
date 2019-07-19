@@ -14,6 +14,8 @@ import api from'./api/api'
 import Cube from 'cube-ui';
 import Vant from 'vant';
 import veRIng from 'v-charts/lib/ring.common'
+import bus from '@/utils/bus'
+Vue.prototype.$bus = bus;
 
     Vue.component(veRIng.name, veRIng)
 /**全局处理异常 */

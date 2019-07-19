@@ -35,7 +35,6 @@
       <div class="recommend" v-if="moneys.length>0">
         <span
           v-for="(item,index) in moneys"
-          v-if="index<5"
           :key="index"
           :class="{active: activeAmount==item}"
           @click="vm.dealcoin=item;activeAmount=vm.dealcoin"
@@ -44,12 +43,12 @@
       <div class="can_withdraw">
         <span>
           {{$t('member.onlineDeposit.os11')}}
-          <span class="count">{{parseInt(yue)}}</span>
+          <span class="count">{{parseInt($parent.yue)}}</span>
           {{$t('yuan')}}
         </span>
         <span
           class="all_withdraw"
-          @click="vm.dealcoin = parseInt(yue)"
+          @click="vm.dealcoin = parseInt($parent.yue)"
         >{{$t('member.onlineDeposit.os12')}}</span>
       </div>
       <div>
@@ -127,7 +126,7 @@ export default {
           this.bankInfo = result.data;
           this.account = this.plusXing(this.bankInfo.account, 0, 4);
           let i = 0;
-          let $accountDom = $(".account");
+          let $accountDom = $(".account").html('');
           while (i * 4 <= this.account.length + 1) {
             $accountDom.append(
               `<span class="count_li">${this.account.substr(4 * i, 4)}</span>`
@@ -286,7 +285,7 @@ export default {
   created() {
     this.createLocalData();
     this.$parent.moneys = [];
-    this.yue = this.$parent.yue;
+    // this.yue = this.$parent.yue;
   }
 };
 </script>

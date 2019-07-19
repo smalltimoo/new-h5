@@ -45,7 +45,6 @@
       <!-- <div class="recommend" v-if="moneys.length>0">
         <span
           v-for="(item,index) in moneys"
-          v-if="index<5"
           :key="index"
           :class="{active: activeAmount==item}"
           @click="vm.dealcoin=item;activeAmount=vm.dealcoin"
@@ -64,9 +63,9 @@
       </div>
       <div>
         <span style="font-size:15px;color:#4c4c4c" class="title">{{$t('member.onlineDeposit.os13')}}</span>
-        <span style="font-size:15px;color:#bfc2cc" class="tmux">{{$t('member.onlineDeposit.os14')}}</span>
+        <!-- <span style="font-size:15px;color:#bfc2cc" class="tmux">{{$t('member.onlineDeposit.os14')}}</span> -->
       </div>
-      <el-input class="paddingLeft0" style="padding-left:0" :type="'password'" v-model="vm.coinpwd" placeholder="请输入提款密码" maxlength="8"></el-input>
+      <el-input class="paddingLeft0" style="padding-left:0" :type="'password'" v-model="vm.coinpwd" placeholder="请输入6位提款密码" maxlength="8"></el-input>
       <cube-button
         :active="true"
         @click="mSave"

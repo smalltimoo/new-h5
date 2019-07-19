@@ -12,6 +12,7 @@
   </van-dialog>
 </template>
 <script>
+import { setTimeout } from "timers";
 // import window from "../mixins/window";
 export default {
   props: {
@@ -31,6 +32,7 @@ export default {
   computed: {
     cQQ1() {
       let sysInfo = this.$store.getters.getSysInfo;
+      console.info(sysInfo);
       this.agentQQ = sysInfo.agentQQ;
       return sysInfo.customQQ ? sysInfo.customQQ : "";
     },
@@ -42,48 +44,61 @@ export default {
     }
   },
   methods: {
-    minit() {
-      this.columns = [
-        {
-          id: 1,
-          text: this.$t("customservice"),
-          value: this.$t("customservice")
-        },
-        {
-          id: 2,
-          text: '客服QQ:'+this.cQQ1,
-          value:this.cQQ1
-        },
-        {
-          id: 3,
-          text: '客服QQ:'+this.cQQ2,
-          value:this.cQQ2
-        },
-        {
-          id: 4,
-          text: '代理QQ:'+this.agentQQ,
-          value:this.agentQQ
-        },
-        {
-          id: 5,
-          text: 'Line:'+this.sysInfo.lineUrl,
-          value:this.sysInfo.lineUrl
-        }
-      ].filter((ele,i) => ele.value);
+    mInit() {
+      if (!Object.keys(this.$store.getters.getSysInfo).length) {
+        setTimeout(() => {
+          this.mInit();
+        }, 500);
+      } else {
+        this.columns = [
+          {
+            id: 1,
+            text: this.$t("customservice"),
+            value: this.$t("customservice")
+          },
+          {
+            id: 2,
+            text: "客服QQ:" + this.cQQ1,
+            value: this.cQQ1
+          },
+          {
+            id: 3,
+            text: "客服QQ:" + this.cQQ2,
+            value: this.cQQ2
+          },
+          {
+            id: 4,
+            text: "代理QQ:" + this.agentQQ,
+            value: this.agentQQ
+          },
+          {
+            id: 5,
+            text: "Line:" + this.sysInfo.lineUrl,
+            value: this.sysInfo.lineUrl
+          }
+        ].filter((ele, i) => {
+          if((this.$i18n.locale == 'th' && [2,3,4].includes(ele.id))||(this.$i18n.locale == 'zh' && ele.id == 5)){
+            ele.value = ''
+          }
+          return ele.value
+          });
+      }
     },
     onCancel(value) {
       this.$emit("close", false);
     },
     onConfirm() {
       let values = this.$refs.picker.getValues();
-      let value = values[0]
+      let value = values[0];
       switch (value.id) {
         case 1:
           this.mOpenCService();
           break;
         default:
           window.open(
-            `mqqwpa://im/chat?chat_type=wpa&uin=${value.value.split(':')[1]}&version=1&src_type=web`
+            `mqqwpa://im/chat?chat_type=wpa&uin=${
+              value.value.split(":")[1]
+            }&version=1&src_type=web`
           );
           break;
       }
@@ -95,16 +110,19 @@ export default {
       this.openStatus = val;
     }
   },
-  created() {
-    this.minit();
+  created() {},
+  mounted() {
+    this.$nextTick(vm => {
+      this.mInit();
+    });
   }
 };
 </script>
 
 <style lang="less" scoped>
 /deep/ .van-dialog {
-    border-radius: 10px;
-  }
+  border-radius: 10px;
+}
 .main {
   width: 300px;
   height: 300px;

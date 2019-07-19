@@ -45,7 +45,6 @@
       <div class="recommend" v-if="moneys.length>0">
         <span
           v-for="(item,index) in moneys"
-          v-if="index<5"
           :key="index"
           :class="{active: activeAmount==item}"
           @click="vm.dealCoin=item;activeAmount=vm.dealCoin"
@@ -295,7 +294,7 @@ walletlist:[],
         color: #3d7eff;
       }
       span.name {
-        font-size: 14px;
+        font-size: 12px;
         color: #606266;
       }
     }

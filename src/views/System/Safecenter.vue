@@ -100,10 +100,7 @@
           </div>
           <div>
             <span>配送地址</span>
-            <el-cascader
-              v-model="addrVm.address1"
-              :options="provinces"
-            ></el-cascader>
+            <el-cascader v-model="addrVm.address1" :options="provinces"></el-cascader>
           </div>
           <div>
             <!-- //todo -->
@@ -331,27 +328,47 @@
             <div>
               <span>真实姓名</span>
               <span v-text="userdatainfo.realName" v-if="userdatainfo.realName"></span>
-              <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
+              <span
+                class="info notsetinfo"
+                @click="currentInput = true"
+                v-else-if="!currentInput"
+              >{{ $t('member.userLimit.ul17') }}</span>
+              <van-field v-if="!userdatainfo.realName&&currentInput" v-model="saveuserdatainfo.realName" placeholder="请输入真实姓名" />
             </div>
             <div>
               <span>手机号码</span>
               <span v-text="userdatainfo.mobile" v-if="userdatainfo.mobile"></span>
-              <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
+              <span class="info notsetinfo" v-else>{{ $t('member.userLimit.ul17') }}</span>
             </div>
             <div>
               <span>邮箱</span>
               <span v-text="userdatainfo.email" v-if="userdatainfo.email"></span>
-               <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
+              <span
+                class="info notsetinfo"
+                @click="currentInput = true"
+                v-else-if="!currentInput"
+              >{{ $t('member.userLimit.ul17') }}</span>
+              <van-field v-if="!userdatainfo.email&&currentInput" v-model="saveuserdatainfo.email" placeholder="请输入邮箱" />
             </div>
             <div>
               <span>qq</span>
               <span v-text="userdatainfo.qq" v-if="userdatainfo.qq"></span>
-              <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
+              <span
+                class="info notsetinfo"
+                @click="currentInput = true"
+                v-else-if="!currentInput"
+              >{{ $t('member.userLimit.ul17') }}</span>
+              <van-field v-if="!userdatainfo.qq&&currentInput" v-model="saveuserdatainfo.qq" placeholder="请输入qq" />
             </div>
             <div>
               <span>微信</span>
               <span v-text="userdatainfo.weixin" v-if="userdatainfo.weixin"></span>
-              <span class="info" v-else>{{ $t('member.userLimit.ul17') }}</span>
+              <span
+                class="info notsetinfo"
+                @click="currentInput = true"
+                v-else-if="!currentInput"
+              >{{ $t('member.userLimit.ul17') }}</span>
+              <van-field v-if="!userdatainfo.weixin&&currentInput" v-model="saveuserdatainfo.weixin" placeholder="请输入微信" />
             </div>
           </div>
           <div class="line title">
@@ -368,6 +385,12 @@
               <span v-text="userdatainfo.lastLoginStr"></span>
             </div>
           </div>
+          <cube-button
+            v-if="currentInput"
+            :active="true"
+            @click="saveuserinfo"
+            class="save-btn"
+          >保存账户信息</cube-button>
         </div>
       </section>
     </van-popup>
@@ -378,6 +401,7 @@ import headerComponent from "@/common/Header.vue";
 import types from "@/store/mutation-types";
 import { mapState } from "vuex";
 import { userInfo } from "os";
+import { setTimeout } from 'timers';
 export default {
   name: "safecenter",
   components: {
@@ -389,6 +413,7 @@ export default {
       callbackUri: state => state.common.callbackUri
     })
   },
+  inject:["reload"],
   data() {
     return {
       logo: this.$t("member.userMember.um21"),
@@ -402,10 +427,11 @@ export default {
         password: "",
         truePassword: ""
       },
+      currentInput: false,
       addrVm: {
         address: [],
         address1: [],
-        detailAddress:'',
+        detailAddress: "",
         memberName: "",
         phone: ""
       },
@@ -470,11 +496,18 @@ export default {
         username: "",
         realName: "",
         mobile: "",
+        email:'',
         qq: "",
         weixin: "",
         createTimeStr: "",
         lastLoginStr: "",
         id: 0
+      },
+      saveuserdatainfo: {
+        realName: "",
+        email: "",
+        qq: "",
+        weixin: ""
       }
     };
   },
@@ -571,6 +604,53 @@ export default {
           }
         });
       });
+    },
+    saveuserinfo() {
+      this.mLoading(true);
+      if (!(/^[\u4e00-\u9fa5a-zA-Z]*$/.test(this.saveuserdatainfo.realName))) {
+        this.$Message.error('请正确填写真实姓名！');
+        return;
+      }
+      this.saveuserdatainfo.realName = this.saveuserdatainfo.realName||this.userdatainfo.realName
+      this.saveuserdatainfo.qq = this.saveuserdatainfo.qq||this.userdatainfo.qq
+      this.saveuserdatainfo.weixin = this.saveuserdatainfo.weixin||this.userdatainfo.weixin
+      this.saveuserdatainfo.email = this.saveuserdatainfo.email||this.userdatainfo.email
+      if (
+        !(
+          this.saveuserdatainfo.realName ||
+          this.saveuserdatainfo.qq ||
+          this.saveuserdatainfo.weixin||
+          this.saveuserdatainfo.email
+        )
+      ) {
+        this.$Message.error("填写不规范！");
+        return;
+      }
+
+      // if(this.lineNum != null && this.lineNum != ""){
+      //     this.vm.lineNum = this.lineNum;
+      // }
+      // if(this.telegram != null && this.telegram != ""){
+      //     this.vm.telegram = this.telegram;
+      // }
+      this.$http
+        .post("memberUser/updateinfo.json", this.saveuserdatainfo)
+        .then(result => {
+          if (result.code == 0) {
+            this.mLoading(false);
+            this.$Message.success("修改成功");
+            // this.$router.push({
+            //   name: "safecenter",
+            //   params: { to: "accountInfo" }
+            // });
+            setTimeout(()=>{
+              this.reload();
+            },500)
+          } else {
+            this.mLoading(false);
+            this.$Message.error(result.message);
+          }
+        });
     },
     mNewPswSave() {
       if (this.passwordVm.password == "") {
@@ -770,14 +850,15 @@ export default {
         return;
       }
       if (!this.addrVm.address1) {
-        this.$Message.success('请填写收货地址！');
+        this.$Message.success("请填写收货地址！");
         return;
       }
       if (!this.addrVm.detailAddress) {
-         this.$Message.success('请填写详细收货地址！');
+        this.$Message.success("请填写详细收货地址！");
         return;
       }
-      this.addrVm.address = this.addrVm.address1+','+this.addrVm.detailAddress
+      this.addrVm.address =
+        this.addrVm.address1 + "," + this.addrVm.detailAddress;
       this.mLoading(true);
       this.$http
         .post("/memberUser/saveMemberAddress.json", this.addrVm)
@@ -787,7 +868,9 @@ export default {
             //恭喜，设置成功！
             this.$Message.success(this.$t("member.receiving.receive13"));
             // this.mInit();
-            this.$route.replace({name:'safecenter'});
+            setTimeout(()=>{
+              this.reload();
+            },500)
           } else {
             this.$Message.error(result.message);
           }
@@ -818,6 +901,7 @@ export default {
         this.userdatainfo.username = result.data.username;
         this.userdatainfo.realName = result.data.realName;
         this.userdatainfo.mobile = result.data.mobile;
+        this.userdatainfo.email = result.data.email;
         this.userdatainfo.qq = result.data.qq;
         this.userdatainfo.weixin = result.data.weixin;
         this.userdatainfo.createTimeStr = result.data.createTimeStr;
@@ -852,10 +936,10 @@ export default {
     this.$http.get("/memberUser/getMemberAddress.json").then(result => {
       if (result.code == 0) {
         this.addrVm = !!result.data ? result.data : {};
-        console.info(this.addrVm)
-        if(this.addrVm){
-          this.addrVm.address1 = this.addrVm.address.split(',');
-          this.addrVm.detailAddress =  this.addrVm.address1.pop();
+        console.info(this.addrVm);
+        if (this.addrVm) {
+          this.addrVm.address1 = this.addrVm.address.split(",");
+          this.addrVm.detailAddress = this.addrVm.address1.pop();
           this.addrVm.address1;
         }
         // this.addr = result.data;
@@ -871,7 +955,7 @@ export default {
           if (provincesRes.code === 0) {
             let list = provincesRes.data.list ? provincesRes.data.list : [];
             list.forEach(pro => {
-              pro.value =String(pro.id);
+              pro.value = String(pro.id);
               pro.label = pro.province;
               pro.citieVos &&
                 pro.citieVos.forEach(city => {
@@ -1036,6 +1120,12 @@ export default {
   }
   .setshipaddr > div:last-child {
     border-bottom: 0;
+  }
+  .notsetinfo{
+    color:#3d7eff;
+  }
+  /deep/ .van-field__control {
+    text-align: right;
   }
 }
 </style>

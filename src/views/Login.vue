@@ -358,7 +358,7 @@ export default {
           }
           this.mLoading(false);
         })
-        .catch(result => {console.info(131)
+        .catch(result => {
           this.mLoading(false);
           this.$Message.error(result.message);
           this.isLogining = false;

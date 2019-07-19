@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <router-view v-if="isRouterAlive"></router-view>
     <Modal
       v-model="winVisible"
       @on-visible-change="mWinVisibleChange"
@@ -32,8 +32,14 @@ export default {
   data: () => ({
     winVisible: false,
     onLine: navigator.onLine,
-    walletlist:[]
+    walletlist:[],
+    isRouterAlive:true
   }),
+  provide(){
+    return {
+      reload:this.reload
+    }
+  },
   mixins: [win],
   components: {},
   computed: {
@@ -98,6 +104,12 @@ export default {
       this.onLine = type === "online";
       this.onLine?this.goBack():this.$router.push({name:'404',params:{type:'network'}})
     },
+    reload(){
+      this.isRouterAlive = false;
+      this.$nextTick(vm=>{
+        this.isRouterAlive = true
+      })
+    }
   },
   mounted() {
     this.alertDownloadApp();
