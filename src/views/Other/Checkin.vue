@@ -8,9 +8,13 @@
           <div>
             <span>我的积分</span>
             <el-divider direction="vertical"></el-divider>
-            <span>
+            <span v-if="vm2.isSign">
               今日已领取
               <font style="color:#317cfd">{{vm2.dayIntegral/100}}</font>积分
+            </span>
+            <span v-else>
+              今日签到即可领取
+              <font style="color:#317cfd">{{vm2.givePoint/100}}</font>积分
             </span>
           </div>
         </div>
@@ -79,7 +83,8 @@ export default {
       },
       vm2: {},
       activityRules: [],
-      checkInVm: {}
+      checkInVm: {},
+      givePoint:''
     };
   },
   methods: {
@@ -123,6 +128,7 @@ export default {
             // this.vm2.isSign = 1;
             this.getSignDays();
             this.queryIntegral();
+            this.getPoint();
           }else{
             this.$Message.warning(result.message);
           }
@@ -131,6 +137,15 @@ export default {
     getClass(...a){
       if(this.vm2.signDates === undefined) return
       return this.vm2.signDates.includes(a[1].day)?'is-selected': diffcurrentday(a[1].day) === 'before'?'miss-selected':a[1].type=='current-month'?'current-month':''
+    },
+    getPoint(){
+      this.$http
+        .get("/memberUser/daySignGiveAmount.json", {})
+        .then(result => {
+          if (result.code == 0) {
+            this.givePoint = result.data;
+          }
+        });
     },
     getSignDays() {
       this.$http.get("/memberUser/getSignDays.json").then(result => {
@@ -145,6 +160,7 @@ export default {
     this.queryIntegral();
     this.getActivityRules();
     this.getSignDays();
+    this.getPoint();
   }
 };
 </script>
