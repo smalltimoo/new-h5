@@ -52,7 +52,7 @@
     "stylus-loader": "^3.0.2",
     "ts-loader": "^6.0.2",
     "typescript": "^3.5.1",
-    "vant": "^1.6.22",
+    "vant": "^2.2.14",
     "vue-ajax-loading": "^1.0.1",
     "vue-cli-plugin-cube-ui": "^0.2.4",
     "vue-cute-rate": "^1.0.2",
